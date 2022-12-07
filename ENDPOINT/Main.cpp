@@ -22,6 +22,8 @@ void Main()
 	while (System::Update())
 	{
 		font(U"eNdPoInD").draw();
+
+		font(U"Ogain").draw(Scene::Center());
 	}
 }
 
