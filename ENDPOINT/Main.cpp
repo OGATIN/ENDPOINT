@@ -16,9 +16,11 @@ void Main()
 
 	Vec2 position = { 0,0 };
 
+	Font font{50};
+
 	while (System::Update())
 	{
-		
+		font(U"eNdPoInD").draw();
 	}
 }
 
