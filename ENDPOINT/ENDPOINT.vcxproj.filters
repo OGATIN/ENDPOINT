@@ -147,7 +147,7 @@
     <ClCompile Include="..\Finish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Game.cpp">
+    <ClCompile Include="..\Stage1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\GameClear.cpp">
@@ -166,6 +166,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Title.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Stage2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Stage3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Stage4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -809,7 +818,7 @@
     <ClInclude Include="..\Finish.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Game.h">
+    <ClInclude Include="..\Stage1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\GameClear.h">
@@ -828,6 +837,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Siv3D0_6_5_1280x720_60fps_20221107.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Stage2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Stage3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Stage4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
