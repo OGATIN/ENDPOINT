@@ -12,8 +12,9 @@ void Main()
 
 	float hitpoint;
 
-
 	float demage;
+
+	Vec2 position = { 0,0 };
 
 	while (System::Update())
 	{
