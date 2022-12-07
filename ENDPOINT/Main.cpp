@@ -7,8 +7,6 @@ void Main()
 
 	int wtf;
 
-	int a;
-
 	Texture tei;
 
 	float hitpoint;
