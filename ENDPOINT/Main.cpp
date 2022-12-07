@@ -13,6 +13,8 @@ void Main()
 	float hitpoint;
 >>>>>>> ogatinworkspace
 
+	float demage;
+
 	while (System::Update())
 	{
 		
