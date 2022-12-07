@@ -1,0 +1,7 @@
+#include"Title.h"
+#include"Game.h"
+#include"GameOver.h"
+#include"GameClear.h"
+#include"Credit.h"
+#include"SetUp.h"
+#include"Finish.h"
