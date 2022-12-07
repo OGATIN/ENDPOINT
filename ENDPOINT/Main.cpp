@@ -7,6 +7,8 @@ void Main()
 
 	int a;
 
+	float demage;
+
 	while (System::Update())
 	{
 		
