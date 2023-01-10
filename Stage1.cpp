@@ -19,5 +19,5 @@ void Stage1::update()
 
 void Stage1::draw() const
 {
-
+	test.resized(1280).draw();
 }

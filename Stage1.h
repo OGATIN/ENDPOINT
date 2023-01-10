@@ -4,7 +4,7 @@
 class Stage1 : public App::Scene
 {
 private:
-      
+    Texture test{U"ëfçﬁ/ëfçﬁ/3.MAP/6.í¨ îwåi.png"};
 
 public:
 
