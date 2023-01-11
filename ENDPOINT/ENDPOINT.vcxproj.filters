@@ -141,40 +141,40 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Credit.cpp">
+    <ClCompile Include="Credit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Finish.cpp">
+    <ClCompile Include="Finish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\GameClear.cpp">
+    <ClCompile Include="GameClear.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\GameOver.cpp">
+    <ClCompile Include="GameOver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Main.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\SetUp.cpp">
+    <ClCompile Include="MainGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Stage1.cpp">
+    <ClCompile Include="SetUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Stage2.cpp">
+    <ClCompile Include="Stage1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Stage3.cpp">
+    <ClCompile Include="Stage2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Stage4.cpp">
+    <ClCompile Include="Stage3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\stdafx.cpp">
+    <ClCompile Include="Stage4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Title.cpp">
+    <ClCompile Include="Title.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -809,46 +809,43 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Base.h">
+    <ClInclude Include="Base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Credit.h">
+    <ClInclude Include="Credit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Finish.h">
+    <ClInclude Include="Finish.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\GameClear.h">
+    <ClInclude Include="GameClear.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\GameOver.h">
+    <ClInclude Include="GameOver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Scene.h">
+    <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\SetUp.h">
+    <ClInclude Include="SetUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Siv3D0_6_5_1280x720_60fps_20221107.h">
+    <ClInclude Include="Siv3D0_6_5_1280x720_60fps_20221107.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Stage1.h">
+    <ClInclude Include="Stage1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Stage2.h">
+    <ClInclude Include="Stage2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Stage3.h">
+    <ClInclude Include="Stage3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Stage4.h">
+    <ClInclude Include="Stage4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\source\repos\teiActionGame\teiActionGame\Title.h">
+    <ClInclude Include="Title.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
