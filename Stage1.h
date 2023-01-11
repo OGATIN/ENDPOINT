@@ -1,11 +1,14 @@
 #pragma once
 #include"Base.h"
 
+
 class Stage1 : public App::Scene
 {
 private:
-    Texture test{U"‘fŞ/‘fŞ/3.MAP/6.’¬ ”wŒi.png"};
-
+    Texture BackScreen      { U"‘fŞ/3.MAP/6.’¬ ”wŒi.png" };
+    Texture House1          { U"‘fŞ/3.MAP/home.png" };
+    Texture House2          { U"‘fŞ/3.MAP/‚Q.’b–è‰®AƒAƒCƒeƒ€ƒVƒ‡ƒbƒvA‰ÁHê.png" };
+    Texture UnderGround     { U"‘fŞ/3.MAP/4.ƒ}ƒbƒvƒ`ƒbƒv.png" };
 public:
 
     Stage1(const InitData& init)
@@ -20,8 +23,6 @@ public:
     void draw() const override;
 
     void Initialize();//‰Šú‰»
-
-    
 };
 
 
