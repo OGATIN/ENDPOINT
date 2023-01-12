@@ -113,12 +113,12 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConfigGauge.cpp" />
     <ClCompile Include="Credit.cpp" />
     <ClCompile Include="Finish.cpp" />
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="SetUp.cpp" />
     <ClCompile Include="Stage1.cpp" />
     <ClCompile Include="Stage2.cpp" />
@@ -325,6 +325,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.h" />
+    <ClInclude Include="ConfigGauge.h" />
     <ClInclude Include="Credit.h" />
     <ClInclude Include="Finish.h" />
     <ClInclude Include="GameClear.h" />

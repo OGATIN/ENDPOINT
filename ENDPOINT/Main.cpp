@@ -1,15 +1,16 @@
-#include"Scene.h"
+ï»¿#include"Scene.h"
 
 void Main()
 {
-	//‰f‘œo—Íİ’è
-	Window::Resize(DisplayResolution::HD_1280x720);//ƒEƒBƒ“ƒhƒEƒTƒCƒYİ’è
-	Scene::SetBackground(ColorF(0.3, 0.3, 0.3));//ƒV[ƒ“‚ÌF‚ğŠDF‚Éİ’è
+	//æ˜ åƒå‡ºåŠ›è¨­å®š
+	Window::Resize(DisplayResolution::HD_1280x720);//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºè¨­å®š
+	Scene::SetBackground(ColorF(0.3, 0.3, 0.3));//ã‚·ãƒ¼ãƒ³ã®è‰²ã‚’ç°è‰²ã«è¨­å®š
 	
 
-	//ƒV[ƒ“ŠÇ—
+	//ã‚·ãƒ¼ãƒ³ç®¡ç†
 	SceneManager<SceneName, GameData> manager;
 
+	manager.add<SetUp>(SceneName::SetUp);
 	manager.add<Stage1>(SceneName::Stage1);
 	manager.add<Stage2>(SceneName::Stage2);
 	manager.add<Stage3>(SceneName::Stage3);
@@ -18,7 +19,6 @@ void Main()
 	manager.add<GameOver>(SceneName::GameOver);
 	manager.add<GameClear>(SceneName::GameClear);
 	manager.add<Credit>(SceneName::Credit);
-	manager.add<SetUp>(SceneName::SetUp);
 	manager.add<Finish>(SceneName::Finish);
 
 

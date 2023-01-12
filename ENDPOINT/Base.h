@@ -1,36 +1,36 @@
-# include <Siv3D.hpp>
+ï»¿# include <Siv3D.hpp>
 #pragma once
 
 struct GameData
 {
-    /*‘S‘Ì‚Åg‚¤•Ï”*/
-    
+    /*å…¨ä½“ã§ä½¿ã†å¤‰æ•°*/
+	//éŸ³é‡
+	inline static double MainVolume = 1.0;  //ãƒ¡ã‚¤ãƒ³éŸ³é‡(ã™ã¹ã¦ã®éŸ³é‡ã¯ã“ã®å€¤ã«ä¾å­˜ã™ã‚‹)
+	inline static double BGMVolume = 0.1;   //BGMã®éŸ³é‡(BGNã®å€¤ã¯MainVolume ï¼Š BGMVolumeã®è¨ˆç®—çµæœä¾å­˜)
+	inline static double EffectVolume = 0.1;//åŠ¹æœéŸ³ã®éŸ³é‡(åŠ¹æœéŸ³ã®å€¤ã¯MainVolume * EffectVolumeã®è¨ˆç®—çµæœä¾å­˜)
+
+	//è¨­å®šç”»é¢ã§ä½¿ã†éŸ³é‡è¨­å®š
+	inline static int selectMainVolume = 5;   //ä¸»éŸ³é‡ã®å¤§ãã•
+	inline static int selectEffectVolume = 5; //åŠ¹æœéŸ³ã®å¤§ãã•
+	inline static int selectBGMVolume = 5;  //BGMã®å¤§ãã•
 };
 
 enum class SceneName
 {
-     Title   // ƒAƒjƒ[ƒVƒ‡ƒ“•t‚«ƒ^ƒCƒgƒ‹ƒƒS•\¦
-    , Stage1    // ƒQ[ƒ€–{•Ò(ƒXƒe[ƒW1)
-    , Stage2    // ƒQ[ƒ€–{•Ò(ƒXƒe[ƒW2)
-    , Stage3    // ƒQ[ƒ€–{•Ò(ƒXƒe[ƒW3)
-    , Stage4    // ƒQ[ƒ€–{•Ò(ƒXƒe[ƒW4)
-    , GameOver // ƒQ[ƒ€ƒI[ƒo[
-    , GameClear // ŠJ”­Ò‚â‹¦—ÍÒ‚ÌƒXƒ^ƒbƒtƒ[ƒ‹
+     Title   // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ä»˜ãã‚¿ã‚¤ãƒˆãƒ«ãƒ­ã‚´è¡¨ç¤º
+    , Stage1    // ã‚²ãƒ¼ãƒ æœ¬ç·¨(ã‚¹ãƒ†ãƒ¼ã‚¸1)
+    , Stage2    // ã‚²ãƒ¼ãƒ æœ¬ç·¨(ã‚¹ãƒ†ãƒ¼ã‚¸2)
+    , Stage3    // ã‚²ãƒ¼ãƒ æœ¬ç·¨(ã‚¹ãƒ†ãƒ¼ã‚¸3)
+    , Stage4    // ã‚²ãƒ¼ãƒ æœ¬ç·¨(ã‚¹ãƒ†ãƒ¼ã‚¸4)
+    , GameOver // ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼
+    , GameClear // é–‹ç™ºè€…ã‚„å”åŠ›è€…ã®ã‚¹ã‚¿ãƒƒãƒ•ãƒ­ãƒ¼ãƒ«
     , Credit
     , SetUp
     , Finish
-    , Other// ‘¼‚É•K—v‚Ì‚ª‚ ‚ê‚Î’Ç‰Á‚·‚é
+    , Other// ä»–ã«å¿…è¦ã®ãŒã‚ã‚Œã°éšæ™‚è¿½åŠ ã™ã‚‹
 };
 
 using App = SceneManager<SceneName, GameData>;
 
-enum class Movement
-{
-    Up
-    , Down
-    , Right
-    , Left
-    , Natural
-};
 
 
