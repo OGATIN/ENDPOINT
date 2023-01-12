@@ -81,6 +81,20 @@ void SetUp::update()
 		}
 		break;
 	case SetUp::NowScene::AudioConfig:
+		//戻る
+		if (SimpleGUI::ButtonAt(U"戻る", Vec2(Scene::Width() - 70, Scene::Height() - 30)))
+		{
+			selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+			selectScene = NowScene::MenuSelect;
+		}
+
+		mainVolumeGauge.CreateGauge();
+		BGMVolumeGauge.CreateGauge();
+		SEVolumeGauge.CreateGauge();
+
+		GameData::selectMainVolume = mainVolumeGauge.selectVolume;
+		GameData::selectEffectVolume = BGMVolumeGauge.selectVolume;
+		GameData::selectBGMVolume = SEVolumeGauge.selectVolume;
 		break;
 	case SetUp::NowScene::KeyConfig:
 		break;
@@ -120,10 +134,12 @@ void SetUp::draw() const
 		}
 		break;
 	case SetUp::NowScene::AudioConfig:
-		//ゲージ描画
+		//ゲージ描画,デバッグモードなら当たり判定も描画
 		mainVolumeGauge.GaugeDraw();
 		BGMVolumeGauge.GaugeDraw();
 		SEVolumeGauge.GaugeDraw();
+
+		font30(SetUpMenuName[0]).draw(10,10,Palette::White);
 		break;
 	case SetUp::NowScene::KeyConfig:
 		break;

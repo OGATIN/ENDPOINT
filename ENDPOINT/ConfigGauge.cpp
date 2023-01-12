@@ -43,7 +43,7 @@ void ConfigGauge::CreateGauge()
 	for (int ix = 0; ix < gaugeCount + 1; ix++)
 	{
 		RectF cell(gaugeRect.x - 5 + (int)(widthSpace * ix), gaugeRect.y - 5, (int)widthSpace, (int)widthSpace);
-		cell.draw(ColorF{ 1.0, 0.0, 0.0, 0.5 }).drawFrame(1, Palette::Blue);
+		
 
 		if (MouseL.down() && cell.mouseOver())
 		{
