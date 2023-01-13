@@ -1,4 +1,4 @@
-#include "Title.h"
+﻿#include "Title.h"
 
 Title::~Title()
 {
@@ -18,5 +18,5 @@ void Title::update()
 
 void Title::draw() const
 {
-	
+	titleNameFont_GameTitle(U"E N D POINT").drawAt(TitleNameFontpos, Palette::Orange);
 }

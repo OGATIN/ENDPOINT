@@ -10,11 +10,11 @@ void Main()
 	//シーン管理
 	SceneManager<SceneName, GameData> manager;
 
+	manager.add<Title>(SceneName::Title);
 	manager.add<Stage1>(SceneName::Stage1);
 	manager.add<Stage2>(SceneName::Stage2);
 	manager.add<Stage3>(SceneName::Stage3);
 	manager.add<Stage4>(SceneName::Stage4);
-	manager.add<Title>(SceneName::Title);
 	manager.add<GameOver>(SceneName::GameOver);
 	manager.add<GameClear>(SceneName::GameClear);
 	manager.add<Credit>(SceneName::Credit);
