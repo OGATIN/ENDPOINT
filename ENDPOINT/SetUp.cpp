@@ -154,9 +154,6 @@ void SetUp::update()
 	default:
 		break;
 	}
-	
-	
-
 }
 
 
