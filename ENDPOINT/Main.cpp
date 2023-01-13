@@ -5,12 +5,11 @@ void Main()
 	//映像出力設定
 	Window::Resize(DisplayResolution::HD_1280x720);//ウィンドウサイズ設定
 	Scene::SetBackground(ColorF(0.3, 0.3, 0.3));//シーンの色を灰色に設定
-	
+	SetUp setUp;
 
 	//シーン管理
 	SceneManager<SceneName, GameData> manager;
 
-	manager.add<SetUp>(SceneName::SetUp);
 	manager.add<Stage1>(SceneName::Stage1);
 	manager.add<Stage2>(SceneName::Stage2);
 	manager.add<Stage3>(SceneName::Stage3);
@@ -30,5 +29,13 @@ void Main()
 		{
 			break;
 		}
+
+		if (KeyZ.down())
+		{
+			setUp.isEnable = true;
+		}
+		setUp.SetUpEnable();
 	}
+
+	
 }

@@ -1,4 +1,4 @@
-#include"Title.h"
+﻿#include"Title.h"
 #include"Stage1.h"
 #include"Stage2.h"
 #include"Stage3.h"
@@ -6,5 +6,4 @@
 #include"GameOver.h"
 #include"GameClear.h"
 #include"Credit.h"
-#include"SetUp.h"
 #include"Finish.h"

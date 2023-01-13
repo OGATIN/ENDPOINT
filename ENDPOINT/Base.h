@@ -25,7 +25,6 @@ enum class SceneName
     , GameOver // ゲームオーバー
     , GameClear // 開発者や協力者のスタッフロール
     , Credit
-    , SetUp
     , Finish
     , Other// 他に必要のがあれば随時追加する
 };
