@@ -1,4 +1,5 @@
 ﻿#include "SetUp.h"
+#undef System
 
 
 void SetUp::Initialize()
@@ -13,14 +14,25 @@ void SetUp::Initialize()
 	BGMVolumeGauge.AudioSet(selectAudio, GameData::MainVolume * GameData::EffectVolume);
 	SEVolumeGauge.AudioSet(selectAudio, GameData::MainVolume * GameData::EffectVolume);
 
+	isEnable = true;
 	isFirst = false;
 }
 
 void SetUp::SetUpEnable()
 {
+	//最初のループでは読まない,ESCAPEが押されたら設定画面を閉じて初期化フラグを立てる
+	if (KeyEscape.down() && not isFirst)
+	{
+		isEnable = false;
+		isFirst = true;
+	}
+
 	if (isEnable)
 	{
-		Initialize();
+		if (isFirst)
+		{
+			Initialize();
+		}
 		update();
 		draw();
 	}
@@ -30,9 +42,8 @@ void SetUp::update()
 {
 	///todoList:
 	// 選択音に音量調整のボリュームが適応されてない
-	// MAPを作る
-	// タイトルから飛んだ時違うやつ表示
-	// ESCを使えるようにする
+	// キャラのサイズ感確認
+	// タイトルから飛んだ時違うやつ表示、二重で表示されないようにするべし
 	// フォントの書体を変える,UIデザイン煮詰める
 	// マウスだけでなくキーにも対応
 	// 
@@ -95,8 +106,8 @@ void SetUp::update()
 			case 5:
 				if (MenuHitBox[i].mouseOver() && MouseL.down())
 				{
-					isEnable = false;
 					selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+					System::Exit();
 				}
 				break;
 			}

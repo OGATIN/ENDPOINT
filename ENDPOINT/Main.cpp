@@ -1,10 +1,12 @@
 ﻿#include"Scene.h"
+#undef System
 
 void Main()
 {
 	//映像出力設定
 	Window::Resize(DisplayResolution::HD_1280x720);//ウィンドウサイズ設定
 	Scene::SetBackground(ColorF(0.3, 0.3, 0.3));//シーンの色を灰色に設定
+	System::SetTerminationTriggers(UserAction::CloseButtonClicked);// エスケープキーを押しても終了しないようになる
 	SetUp setUp;
 
 	//シーン管理
@@ -25,12 +27,15 @@ void Main()
 
 	while (System::Update())
 	{
+		// ウィンドウタイトルに直近のフレームレートを表示
+		Window::SetTitle(Profiler::FPS());
+
 		if (!manager.update())
 		{
 			break;
 		}
 
-		if (KeyZ.down())
+		if (KeyEscape.down())
 		{
 			setUp.isEnable = true;
 		}
