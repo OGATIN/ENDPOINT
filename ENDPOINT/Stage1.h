@@ -13,7 +13,7 @@ private:
     Texture House3          { U"Material/3.MAP/2.加工.png" };
     Texture House4          { U"Material/3.MAP/2.鍛冶屋.png" };
     Texture UnderGround     { U"Material/3.MAP/4.マップチップ.png" };
-    Texture player          { U"Material/1.img/棒人間_待機モーション/棒人間_待機モーション_0000.png" };
+    Texture player          { U"Material/1.img/1.待機モーション.png" };
 public:
 
     Stage1(const InitData& init)

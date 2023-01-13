@@ -33,5 +33,5 @@ void Stage1::update()
 }
 void Stage1::draw() const
 {
-	player.draw(400,300);
+	player(0,0,320,320).draw(400, 300);
 }
