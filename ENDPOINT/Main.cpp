@@ -5,6 +5,7 @@ void Main()
 {
 	//映像出力設定
 	Window::Resize(DisplayResolution::HD_1280x720);//ウィンドウサイズ設定
+	Window::SetStyle(WindowStyle::Sizable);//ウィンドウを手動でリサイズできるようにする
 	Scene::SetBackground(ColorF(0.3, 0.3, 0.3));//シーンの色を灰色に設定
 	System::SetTerminationTriggers(UserAction::CloseButtonClicked);// エスケープキーを押しても終了しないようになる
 	SetUp setUp;
