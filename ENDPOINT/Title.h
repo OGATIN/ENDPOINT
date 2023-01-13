@@ -13,11 +13,11 @@ public:
 	String Menu_End = U"終わる";
 
 
-	Font titleNameFont_GameTitle	{ 70,U"素材/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };
-	Font titleNameFont_New			{ 30,U"素材/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };
-	Font titleNameFont_Continue		{ 30,U"素材/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };
-	Font titleNameFont_Setting		{ 30,U"素材/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };
-	Font titleNameFont_End			{ 30,U"素材/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };
+	Font titleNameFont_GameTitle	{ 70,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };
+	Font titleNameFont_New			{ 30,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };
+	Font titleNameFont_Continue		{ 30,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };
+	Font titleNameFont_Setting		{ 30,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };
+	Font titleNameFont_End			{ 30,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };
 
 	//Vec2 TitleNameFontpos{ 640,100 };
 
