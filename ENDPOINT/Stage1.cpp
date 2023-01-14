@@ -8,7 +8,10 @@ Stage1::~Stage1()
 
 void Stage1::Initialize()
 {
-
+	if (not BasicStatData) // もし読み込みに失敗したら
+	{
+		throw Error{ U"基礎ステータスデータ.csv が存在しません。" };
+	}
 }
 
 void Stage1::update()
@@ -25,6 +28,8 @@ void Stage1::update()
 			UnderGround(MapSize * 15, MapSize * 1, MapSize, MapSize).scaled(2).draw(i * MapSize * 2, 621 + MapSize * 2 * j);//土
 		}
 	}
+
+	Player.playerStatus.DaseStatusDrow();
 }
 void Stage1::draw() const
 {

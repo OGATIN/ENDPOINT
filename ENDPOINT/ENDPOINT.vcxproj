@@ -182,6 +182,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
+    <None Include="App\ConfigData\スキルポイントステータスデータ.csv" />
+    <None Include="App\ConfigData\ノックバック倍率.csv" />
+    <None Include="App\ConfigData\基礎ステータスデータ.csv" />
+    <None Include="App\ConfigData\武器ステータス.csv" />
+    <None Include="App\ConfigData\経験値ボーダー.csv" />
+    <None Include="App\ConfigData\装備ステータス.csv" />
+    <None Include="App\ConfigData\隙管理.csv" />
+    <None Include="App\ConfigData\魔法その他.csv" />
+    <None Include="App\ConfigData\魔法スキルポイントステータスデータ.csv" />
     <None Include="App\dll\soundtouch\SoundTouch_x64.dll" />
     <None Include="App\engine\font\fontawesome\fontawesome-brands.otf.zstdcmp" />
     <None Include="App\engine\font\fontawesome\fontawesome-solid.otf.zstdcmp" />
