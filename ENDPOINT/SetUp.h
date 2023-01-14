@@ -21,6 +21,8 @@ public:
 
 	NowScene selectScene = NowScene::MenuSelect;
 
+	int menuID = 0;
+
 	Audio selectAudio{ U"素材/4.SE/「いてっ！」.mp3" };
 
 	ConfigGauge mainVolumeGauge;

@@ -46,18 +46,42 @@ void SetUp::update()
 	// タイトルから飛んだ時違うやつ表示、二重で表示されないようにするべし
 	// フォントの書体を変える,UIデザイン煮詰める
 	// マウスの消去
-	// マウスだけでなくキーにも対応
-	// 
+	// menuIDの初期化
+	// ゲージのキー対応
 	
 	//シーン管理
 	switch (selectScene)
 	{
 	case SetUp::NowScene::MenuSelect:
 
+		if (KeyUp.down() || KeyW.down())
+		{
+			menuID -= 1;
+
+			if (menuID < 0)
+			{
+				menuID = MenuNumber - 1;
+			}
+		}
+
+		if (KeyDown.down() || KeyS.down())
+		{
+			menuID += 1;
+
+			if (menuID > MenuNumber - 1)
+			{
+				menuID = 0;
+			}
+		}
+
 		for (int i = 0; i < MenuNumber; i++)
 		{
-			//当たり判定とマウスが交差していたらフラグを立てる
 			if (MenuHitBox[i].mouseOver())
+			{
+				menuID = i;
+			}
+
+			if (i == menuID)
 			{
 				isSelectMenu[i] = true;
 			}
@@ -65,53 +89,54 @@ void SetUp::update()
 			{
 				isSelectMenu[i] = false;
 			}
+		}
 
-			//シーン遷移
-			switch (i)
+		
+
+		switch (menuID)
+		{
+		case 0:
+			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
 			{
-			case 0:
-				if (MenuHitBox[i].mouseOver() && MouseL.down())
-				{
-					selectScene = NowScene::AudioConfig;
-					selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
-				}
-				break;
-			case 1:
-				if (MenuHitBox[i].mouseOver() && MouseL.down())
-				{
-					selectScene = NowScene::KeyConfig;
-					selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
-				}
-				break;
-			case 2:
-				if (MenuHitBox[i].mouseOver() && MouseL.down())
-				{
-					selectScene = NowScene::Save;
-					selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
-				}
-				break;
-			case 3:
-				if (MenuHitBox[i].mouseOver() && MouseL.down())
-				{
-					selectScene = NowScene::Load;
-					selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
-				}
-				break;
-			case 4:
-				if (MenuHitBox[i].mouseOver() && MouseL.down())
-				{
-					selectScene = NowScene::Explanation;
-					selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
-				}
-				break;
-			case 5:
-				if (MenuHitBox[i].mouseOver() && MouseL.down())
-				{
-					selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
-					System::Exit();
-				}
-				break;
+				selectScene = NowScene::AudioConfig;
+				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
 			}
+			break;
+		case 1:
+			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+			{
+				selectScene = NowScene::KeyConfig;
+				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+			}
+			break;
+		case 2:
+			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+			{
+				selectScene = NowScene::Save;
+				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+			}
+			break;
+		case 3:
+			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+			{
+				selectScene = NowScene::Load;
+				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+			}
+			break;
+		case 4:
+			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+			{
+				selectScene = NowScene::Explanation;
+				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+			}
+			break;
+		case 5:
+			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+			{
+				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+				System::Exit();
+			}
+			break;
 		}
 		break;
 	case SetUp::NowScene::AudioConfig:
