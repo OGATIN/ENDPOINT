@@ -1,18 +1,31 @@
 ﻿#pragma once
 
+enum class StateType
+{
+	WAIT, WAIK, RUN, JUMP, RECEIVE, ATTACK,MAGIC, GUARD, NOTSTAMINA,
+};
 
 class AnimationClass
 {
-	//public:
-	//	Vec2 pos;
+public:
+	Texture waiting;
 
+	Vec2 pos = {400,425};
+	Rect cutPos = { 0,0,360,360 };
 
-	//	AnimationClass(){};
-	//	//AnimationClass(CSV AnimationData)
-	//	//{
+	Stopwatch currentTime;
 
-	//	//};
+	//デバック用フォント
+	Font font30{ 30 };
 
-	//	//void Reload(CSV AnimationData);
+	AnimationClass(){};
+	AnimationClass(Texture wait)
+	{
+		waiting = wait;
+	};
+
+ 	void Reload(Texture wait);/*CSV AnimationData*/
+	void TimeDrow();
+	void Wait();
 };
 

@@ -9,7 +9,7 @@ class StatusClass
 {
 public:
 
-	int level = 1;//プレイヤーのレベル
+	int level = 30;//プレイヤーのレベル
 
 	double hitPoints = 0;//HP
 	double stamina = 0;//スタミナ

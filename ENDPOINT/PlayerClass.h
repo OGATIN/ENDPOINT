@@ -5,14 +5,22 @@
 class PlayerClass
 {
 public:
-	StatusClass playerStatus;
+	StatusClass playerStatus;//ステータス
 
+	AnimationClass playerAnimation;//アニメーション
+
+	StateType state = StateType::WAIT;
 
 	PlayerClass() {};
-	PlayerClass(CSV statusData)
+	PlayerClass(Texture _wait,CSV statusData)
 	{
 		playerStatus.Reload(statusData);
+		playerAnimation.Reload(_wait);
 	};
+
+	void StateManagement();
+	void MotionStart();
+	void MotionStop();
 
 };
 

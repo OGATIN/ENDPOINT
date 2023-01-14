@@ -4,6 +4,7 @@
 
 Stage1::~Stage1()
 {
+	
 }
 
 void Stage1::Initialize()
@@ -12,12 +13,20 @@ void Stage1::Initialize()
 	{
 		throw Error{ U"基礎ステータスデータ.csv が存在しません。" };
 	}
+
+	//ストップウォッチスタート
+	Player.MotionStart();
 }
 
 void Stage1::update()
 {
-	BackScreen.resized(Scene::Width()).draw();
+	if (KeySpace.down())
+	{
+		//一時停止
+		Player.MotionStop();
+	}
 
+	BackScreen.resized(Scene::Width()).draw();
 
 	for (int i = 0; i < Scene::Width()/32; i++)
 	{
@@ -29,8 +38,16 @@ void Stage1::update()
 		}
 	}
 
-	Player.playerStatus.DaseStatusDrow();
+
+	//状態管理
+	Player.StateManagement();
+
+	//デバック用
+	Player.playerStatus.DaseStatusDrow();//ステータスの表示
+	Player.playerAnimation.TimeDrow();//時間の表示
+
 }
+
 void Stage1::draw() const
 {
 }
