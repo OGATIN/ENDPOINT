@@ -14,6 +14,7 @@ void Main()
 	SceneManager<SceneName, GameData> manager;
 
 	manager.add<Title>(SceneName::Title);
+	manager.add<Town>(SceneName::Town);
 	manager.add<Stage1>(SceneName::Stage1);
 	manager.add<Stage2>(SceneName::Stage2);
 	manager.add<Stage3>(SceneName::Stage3);

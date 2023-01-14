@@ -18,6 +18,7 @@ struct GameData
 enum class SceneName
 {
      Title   // アニメーション付きタイトルロゴ表示
+    , Town    // 町
     , Stage1    // ゲーム本編(ステージ1)
     , Stage2    // ゲーム本編(ステージ2)
     , Stage3    // ゲーム本編(ステージ3)

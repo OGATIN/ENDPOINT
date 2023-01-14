@@ -177,6 +177,9 @@
     <ClCompile Include="ConfigGauge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Town.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -849,6 +852,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ConfigGauge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Town.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
