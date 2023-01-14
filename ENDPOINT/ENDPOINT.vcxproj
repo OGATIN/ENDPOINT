@@ -113,6 +113,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationClass.cpp" />
     <ClCompile Include="ConfigGauge.cpp" />
     <ClCompile Include="Credit.cpp" />
     <ClCompile Include="Finish.cpp" />
@@ -124,6 +125,7 @@
     <ClCompile Include="Stage2.cpp" />
     <ClCompile Include="Stage3.cpp" />
     <ClCompile Include="Stage4.cpp" />
+    <ClCompile Include="StatusClass.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -325,12 +327,14 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationClass.h" />
     <ClInclude Include="Base.h" />
     <ClInclude Include="ConfigGauge.h" />
     <ClInclude Include="Credit.h" />
     <ClInclude Include="Finish.h" />
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameOver.h" />
+    <ClInclude Include="PlayerClass.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SetUp.h" />
     <ClInclude Include="Siv3D0_6_5_1280x720_60fps_20221107.h" />
@@ -338,6 +342,7 @@
     <ClInclude Include="Stage2.h" />
     <ClInclude Include="Stage3.h" />
     <ClInclude Include="Stage4.h" />
+    <ClInclude Include="StatusClass.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Town.h" />

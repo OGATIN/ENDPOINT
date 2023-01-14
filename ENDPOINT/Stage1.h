@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include"Base.h"
+#include"PlayerClass.h"
 
 
 class Stage1 : public App::Scene
