@@ -6,13 +6,13 @@ void SetUp::Initialize()
 {
 	//最初の情報定義
 	mainVolumeGauge.Set(mainVolumeGaugeRect, GameData::selectMainVolume, U"マスター");
-	BGMVolumeGauge.Set(BGMVolumeGaugeRect, GameData::selectEffectVolume, U"BGM");
-	SEVolumeGauge.Set(SEVolumeGaugeRect, GameData::selectBGMVolume, U"SE");
+	BGMVolumeGauge.Set(BGMVolumeGaugeRect, GameData::selectBGMVolume, U"BGM");
+	SEVolumeGauge.Set(SEVolumeGaugeRect, GameData::selectSEVolume, U"SE");
 
 	//音量定義
-	mainVolumeGauge.AudioSet(selectAudio, GameData::MainVolume * GameData::EffectVolume);
-	BGMVolumeGauge.AudioSet(selectAudio, GameData::MainVolume * GameData::EffectVolume);
-	SEVolumeGauge.AudioSet(selectAudio, GameData::MainVolume * GameData::EffectVolume);
+	mainVolumeGauge.AudioSet(selectAudio, GameData::MainVolume);
+	BGMVolumeGauge.AudioSet(selectAudio, GameData::MainVolume * GameData::BGMVolume);
+	SEVolumeGauge.AudioSet(selectAudio, GameData::MainVolume * GameData::SEVolume);
 
 	isEnable = true;
 	isFirst = false;
@@ -41,13 +41,16 @@ void SetUp::SetUpEnable()
 void SetUp::update()
 {
 	///todoList:
-	// 選択音に音量調整のボリュームが適応されてない
+	// ●ゲージのキー対応23/1/16
+	// ●フォントの書体を変える,UIデザイン煮詰める23/1/16
 	// キャラのサイズ感確認
+	// 選択音に音量調整のボリュームが適応されてない
 	// タイトルから飛んだ時違うやつ表示、二重で表示されないようにするべし
-	// フォントの書体を変える,UIデザイン煮詰める
 	// マウスの消去
 	// menuIDの初期化
-	// ゲージのキー対応
+	// 長押しした時の処理
+
+	ConfigGauge* gauges[] = { &mainVolumeGauge ,&BGMVolumeGauge,&SEVolumeGauge };
 	
 	//シーン管理
 	switch (selectScene)
@@ -91,7 +94,7 @@ void SetUp::update()
 			}
 		}
 
-		
+
 
 		switch (menuID)
 		{
@@ -99,41 +102,41 @@ void SetUp::update()
 			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
 			{
 				selectScene = NowScene::AudioConfig;
-				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			}
 			break;
 		case 1:
 			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
 			{
 				selectScene = NowScene::KeyConfig;
-				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			}
 			break;
 		case 2:
 			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
 			{
 				selectScene = NowScene::Save;
-				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			}
 			break;
 		case 3:
 			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
 			{
 				selectScene = NowScene::Load;
-				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			}
 			break;
 		case 4:
 			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
 			{
 				selectScene = NowScene::Explanation;
-				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			}
 			break;
 		case 5:
 			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
 			{
-				selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 				System::Exit();
 			}
 			break;
@@ -143,23 +146,60 @@ void SetUp::update()
 		//戻る
 		if (SimpleGUI::ButtonAt(U"戻る", Vec2(Scene::Width() - 70, Scene::Height() - 30)))
 		{
-			selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+			selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			selectScene = NowScene::MenuSelect;
 		}
 
-		mainVolumeGauge.CreateGauge();
-		BGMVolumeGauge.CreateGauge();
-		SEVolumeGauge.CreateGauge();
+		
+		if (KeyS.down() || KeyDown.down())
+		{
+			gaugeID += 1;
+
+			if (gaugeID > 2)
+			{
+				gaugeID = 0;
+			}
+		}
+
+		if (KeyW.down() || KeyUp.down())
+		{
+			gaugeID -= 1;
+
+			if (gaugeID < 0)
+			{
+				gaugeID = 2;
+			}
+		}
+
+		for (auto& gauge : gauges)
+		{
+			gauge->CreateGauge();
+
+			gauge->isSelect = false;
+		}
+
+		gauges[gaugeID]->isSelect = true;
+
+
+
+		for (int i = 0; i < 3; i++)
+		{
+
+			if (gauges[i]->gaugeRect.mouseOver())
+			{
+				gaugeID = i;
+			}
+		}
 
 		GameData::selectMainVolume = mainVolumeGauge.selectVolume;
-		GameData::selectEffectVolume = BGMVolumeGauge.selectVolume;
+		GameData::selectSEVolume = BGMVolumeGauge.selectVolume;
 		GameData::selectBGMVolume = SEVolumeGauge.selectVolume;
 		break;
 	case SetUp::NowScene::KeyConfig:
 		//戻る
 		if (SimpleGUI::ButtonAt(U"戻る", Vec2(Scene::Width() - 70, Scene::Height() - 30)))
 		{
-			selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+			selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			selectScene = NowScene::MenuSelect;
 		}
 		break;
@@ -167,7 +207,7 @@ void SetUp::update()
 		//戻る
 		if (SimpleGUI::ButtonAt(U"戻る", Vec2(Scene::Width() - 70, Scene::Height() - 30)))
 		{
-			selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+			selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			selectScene = NowScene::MenuSelect;
 		}
 		break;
@@ -175,7 +215,7 @@ void SetUp::update()
 		//戻る
 		if (SimpleGUI::ButtonAt(U"戻る", Vec2(Scene::Width() - 70, Scene::Height() - 30)))
 		{
-			selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+			selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			selectScene = NowScene::MenuSelect;
 		}
 		break;
@@ -183,7 +223,7 @@ void SetUp::update()
 		//戻る
 		if (SimpleGUI::ButtonAt(U"戻る", Vec2(Scene::Width() - 70, Scene::Height() - 30)))
 		{
-			selectAudio.playOneShot(GameData::MainVolume * GameData::EffectVolume);
+			selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			selectScene = NowScene::MenuSelect;
 		}
 		break;

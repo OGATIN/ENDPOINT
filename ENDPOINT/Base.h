@@ -7,12 +7,12 @@ struct GameData
 	//音量
 	inline static double MainVolume = 1.0;  //メイン音量(すべての音量はこの値に依存する)
 	inline static double BGMVolume = 0.1;   //BGMの音量(BGNの値はMainVolume ＊ BGMVolumeの計算結果依存)
-	inline static double EffectVolume = 0.1;//効果音の音量(効果音の値はMainVolume * EffectVolumeの計算結果依存)
+	inline static double SEVolume = 0.1;//効果音の音量(効果音の値はMainVolume * EffectVolumeの計算結果依存)
 
 	//設定画面で使う音量設定
 	inline static int selectMainVolume = 5;   //主音量の大きさ
-	inline static int selectEffectVolume = 5; //効果音の大きさ
 	inline static int selectBGMVolume = 5;  //BGMの大きさ
+	inline static int selectSEVolume = 5; //効果音の大きさ
 };
 
 enum class SceneName
