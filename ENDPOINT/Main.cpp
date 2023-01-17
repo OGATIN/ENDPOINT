@@ -27,7 +27,7 @@ void Main()
 
 
 
-	while (System::Update())
+	while (System60::Update())
 	{
 		// ウィンドウタイトルに直近のフレームレートを表示
 		Window::SetTitle(Profiler::FPS());

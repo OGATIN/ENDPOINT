@@ -42,12 +42,12 @@ public:
 			magicPoint = magicPoint + Parse<double>(statusData[8][i]);
 			magicPower = magicPower + Parse<double>(statusData[9][i]);
 		}
-
 	};
 
 
 	void Reload(CSV statusData);
 
-	void DaseStatusDrow();
+	void DaseStatusUpdate();
+	void DaseStatusDrow()const;
 };
 

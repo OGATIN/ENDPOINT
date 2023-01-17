@@ -15,8 +15,11 @@ public:
 	Vec2 velocity = {0,0};
 	Rect hitBox = {0,0,0,0};
 
-	double gravity = 0.2;
-	bool isJamp = false;
+	double gravity = 0.5;
+	bool isJump = false;
+
+	int jumpPower = 10;
+	int playerSpeed = 5;
 
 	PlayerClass() {};
 	PlayerClass(Texture _wait,CSV statusData)
@@ -30,10 +33,14 @@ public:
 	int GetBottom();
 	int GetLeft();
 	int GetRight();
+
 	void StateManagement();
 	void StateManagementDraw()const;
 	void MotionStart();
 	void MotionStop();
+
+	void PlayerUpdate();
+	void PlayerDraw()const;
 
 };
 

@@ -337,6 +337,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="0_6_6_1280x720_60fps.h" />
     <ClInclude Include="AnimationClass.h" />
     <ClInclude Include="Base.h" />
     <ClInclude Include="ConfigGauge.h" />
@@ -347,7 +348,6 @@
     <ClInclude Include="PlayerClass.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SetUp.h" />
-    <ClInclude Include="Siv3D0_6_5_1280x720_60fps_20221107.h" />
     <ClInclude Include="Stage1.h" />
     <ClInclude Include="Stage2.h" />
     <ClInclude Include="Stage3.h" />

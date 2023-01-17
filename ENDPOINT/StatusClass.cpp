@@ -16,7 +16,34 @@ void StatusClass::Reload(CSV statusData)
 	}
 }
 
-void StatusClass::DaseStatusDrow()
+void StatusClass::DaseStatusUpdate()
+{
+	switch (magicType)
+	{
+	case MagicType::NONE:
+		magicTypeMame = { U"---" };
+		break;
+	case MagicType::FIREBALL:
+		magicTypeMame = { U"火球" };
+		break;
+	case MagicType::THUNDER:
+		magicTypeMame = { U"サンダー" };
+		break;
+	case MagicType::STATUSUP:
+		magicTypeMame = { U"ステータスアップ" };
+		break;
+	case MagicType::HEEL:
+		magicTypeMame = { U"ヒール" };
+		break;
+	case MagicType::TIME:
+		magicTypeMame = { U"タイム" };
+		break;
+	default:
+		break;
+	}
+}
+
+void StatusClass::DaseStatusDrow()const
 {
 	font30(U"レベル ", level).draw(0, font30.height() * 0);
 	font30(U"HP ", hitPoints).draw(0, font30.height()* 1);
@@ -28,29 +55,5 @@ void StatusClass::DaseStatusDrow()
 	font30(U"魔法 ", magicTypeMame).draw(0, font30.height() * 7);
 	font30(U"MP ", magicPoint).draw(0, font30.height() * 8);
 	font30(U"魔力 ", magicPower).draw(0, font30.height() * 9);
-
-	switch (magicType)
-	{
-	case MagicType::NONE:
-		magicTypeMame = { U"---" };
-		break;
-	case MagicType::FIREBALL:
-		magicTypeMame = {U"火球"};
-		break;
-	case MagicType::THUNDER:
-		magicTypeMame = {U"サンダー"};
-		break;
-	case MagicType::STATUSUP:
-		magicTypeMame = {U"ステータスアップ"};
-		break;
-	case MagicType::HEEL:
-		magicTypeMame = {U"ヒール"};
-		break;
-	case MagicType::TIME:
-		magicTypeMame = {U"タイム"};
-		break;
-	default:
-		break;
-	}
 
 }
