@@ -19,7 +19,7 @@ void Title::update()
 		{
 		case MENU::New:
 			changeScene(SceneName::Stage1);
-			break;
+			[[fallthrough]];
 		default:
 			break;
 		}
