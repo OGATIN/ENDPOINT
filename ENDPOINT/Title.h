@@ -40,6 +40,7 @@ public:
 	mutable Rect titleNameFont_ContinueRect	{continueRectX,	340,	continuerectWidth,	rectHeight};
 	mutable Rect titleNameFont_SettingRect	{settingRectX,	385,	settingrectWidth,	rectHeight};
 	mutable Rect titleNameFont_EndRect		{endRectX,		440,	endrectWidth,		rectHeight};
+
 	/*
 	mutable Rect titleNameFont_NewRect		{TitleNameFontpos.x - 75,TitleNameFontpos.y + 190,140,30};
 	mutable Rect titleNameFont_ContinueRect	{TitleNameFontpos.x - 90,TitleNameFontpos.y + 240,170,30};
