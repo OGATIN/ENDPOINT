@@ -51,6 +51,7 @@ void SetUp::update()
 	// 長押しした時の処理
 	// マップとの当たり判定
 	// 重力の実装
+	//animationclass作成
 
 	//positionがanimationclass
 	//playerの当たり判定の情報をposition差分のRect作成,CSV
