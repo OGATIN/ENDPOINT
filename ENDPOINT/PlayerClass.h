@@ -38,7 +38,10 @@ public:
 	void StateManagementDraw()const;
 	void MotionStart();
 	void MotionStop();
+	void Jump();
+	void Move();
 
+	void Initialize();
 	void PlayerUpdate();
 	void PlayerDraw()const;
 

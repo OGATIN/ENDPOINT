@@ -783,9 +783,9 @@
     <None Include="App\ConfigData\武器ステータス.csv" />
     <None Include="App\ConfigData\経験値ボーダー.csv" />
     <None Include="App\ConfigData\装備ステータス.csv" />
-    <None Include="App\ConfigData\隙管理.csv" />
     <None Include="App\ConfigData\魔法その他.csv" />
     <None Include="App\ConfigData\魔法スキルポイントステータスデータ.csv" />
+    <None Include="App\ConfigData\アニメーションデータ.csv" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="App\example\test.mp3">

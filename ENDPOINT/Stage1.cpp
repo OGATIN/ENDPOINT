@@ -14,36 +14,11 @@ void Stage1::Initialize()
 		throw Error{ U"基礎ステータスデータ.csv が存在しません。" };
 	}
 
-	//初期座標
-	Player.position = { 400,425 };
-
-	//初期移動量
-	Player.velocity = { 0,0 };
-
-	//ストップウォッチスタート
-	Player.MotionStart();
+	Player.Initialize();
 }
 
 void Stage1::update()
 {
-	if (KeySpace.down())
-	{
-		//一時停止
-		Player.MotionStop();
-	}
-
-
-
-	//当たり判定更新
-	Player.hitBox = Player.GetHitRect();
-
-	//座標更新
-	Player.position += Player.velocity;
-
-
-	//重力加算
-	Player.velocity.y += Player.gravity;
-
 	//床と触れていたら移動をやめて座標補正(仮)
 	if (Player.GetBottom() > 590)
 	{
@@ -53,27 +28,7 @@ void Stage1::update()
 		Player.position.y = 590 - ((int)Player.playerAnimation.waitPosDifference.y + (int)Player.hitBox.h);
 	}
 
-	//↑が押されたらジャンプ
-	if (KeyUp.down())
-	{
-		Player.velocity.y = - Player.jumpPower;
-	}
-
-	//左右移動(仮)
-	if (KeyRight.pressed()|| KeyD.down())
-	{
-		Player.position.x += Player.playerSpeed;
-	}
-	if (KeyLeft.pressed() || KeyA.down())
-	{
-		Player.position.x -= Player.playerSpeed;
-	}
-
-	//状態管理
-	Player.StateManagement();
-
-	//デバック用
-	Player.playerStatus.DaseStatusUpdate();//ステータスの表示
+	Player.PlayerUpdate();
 }
 
 void Stage1::draw() const
@@ -90,13 +45,8 @@ void Stage1::draw() const
 		}
 	}
 
-	//画像描画
-	Player.StateManagementDraw();
+	Player.PlayerDraw();
 
-
-	//デバック用
-	Player.playerStatus.DaseStatusDrow();//ステータスの表示
-	Player.playerAnimation.TimeDrow();//時間の表示
 	font(Player.position).draw(450, 0);
 	font(Player.velocity).draw(450, 30);
 	font(Cursor::Pos()).draw(650, 0);
