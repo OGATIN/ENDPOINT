@@ -49,6 +49,11 @@ void SetUp::update()
 	// マウスの消去
 	// menuIDの初期化
 	// 長押しした時の処理
+	// マップとの当たり判定
+	// 重力の実装
+
+	//positionがanimationclass
+	//playerの当たり判定の情報をposition差分のRect作成,CSV
 
 	ConfigGauge* gauges[] = { &mainVolumeGauge ,&BGMVolumeGauge,&SEVolumeGauge };
 	

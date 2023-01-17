@@ -11,6 +11,13 @@ public:
 
 	StateType state = StateType::WAIT;
 
+	Vec2 position = {0,0};
+	Vec2 velocity = {0,0};
+	Rect hitBox = {0,0,0,0};
+
+	double gravity = 0.2;
+	bool isJamp = false;
+
 	PlayerClass() {};
 	PlayerClass(Texture _wait,CSV statusData)
 	{
@@ -18,7 +25,13 @@ public:
 		playerAnimation.Reload(_wait);
 	};
 
+	Rect GetHitRect();
+	int GetTop();
+	int GetBottom();
+	int GetLeft();
+	int GetRight();
 	void StateManagement();
+	void StateManagementDraw()const;
 	void MotionStart();
 	void MotionStop();
 

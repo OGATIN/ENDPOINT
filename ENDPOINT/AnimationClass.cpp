@@ -26,9 +26,12 @@ void AnimationClass::Wait()
 	{
 		currentTime.restart();
 	}
+}
 
+void AnimationClass::WaitDraw(Vec2 position)const
+{
 	//描画
-	waiting(cutPos.x * cutPos.w, cutPos.y * cutPos.h, cutPos.w, cutPos.h).resized(200).draw(pos);
+	waiting(cutPos.x * cutPos.w, cutPos.y * cutPos.h, cutPos.w, cutPos.h).resized(200).draw(position);
 }
 
 

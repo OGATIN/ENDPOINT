@@ -10,8 +10,9 @@ class AnimationClass
 public:
 	Texture waiting;
 
-	Vec2 pos = {400,425};
 	Rect cutPos = { 0,0,360,360 };
+
+	Rect waitPosDifference = { 62,30,35,130 };
 
 	Stopwatch currentTime;
 
@@ -27,5 +28,6 @@ public:
  	void Reload(Texture wait);/*CSV AnimationData*/
 	void TimeDrow();
 	void Wait();
+	void WaitDraw(Vec2 position)const;
 };
 

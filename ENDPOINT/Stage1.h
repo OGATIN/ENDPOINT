@@ -18,6 +18,8 @@ private:
 
 	PlayerClass Player{ waitingMotionPNG,BasicStatData};
 
+	Font font{ 30 };
+
 public:
 
     Stage1(const InitData& init)
