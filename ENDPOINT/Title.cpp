@@ -61,6 +61,9 @@ void Title::draw() const
 	titleNameFont_GameTitle(U"E N D POINT").drawAt(Scene::Center().x,100, Palette::Orange);
 
 	titleNameFont_NewRect.x = Scene::Center().x - (int)(titleNameFont_New(Menu_New).region().w / 2);
+	titleNameFont_ContinueRect.x = Scene::Center().x - (int)(titleNameFont_Continue(Menu_Continue).region().w / 2);
+	titleNameFont_SettingRect.x = Scene::Center().x - (int)(titleNameFont_Setting(Menu_Setting).region().w / 2);
+	titleNameFont_EndRect.x = Scene::Center().x - (int)(titleNameFont_End(Menu_End).region().w / 2);
 
 	FontColor = titleNameFont_NewRect.mouseOver() ? Palette::Orange : Palette::White;
 	if (FontColor == Palette::Orange) { ColorFlag = true; }

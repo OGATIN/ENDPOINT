@@ -30,16 +30,16 @@ public:
 
 
 	const int newRectX				= (const int)(Scene::Center().x - titleNameFont_New(Menu_New).region().w / 2);
-	const int ContinueRectX			= (const int)(Scene::Center().x - titleNameFont_Continue(Menu_Continue).region().w / 2);
-	const int SettingRectX			= (const int)(Scene::Center().x - titleNameFont_Setting(Menu_Setting).region().w / 2);
-	const int EndRectX				= (const int)(Scene::Center().x - titleNameFont_End(Menu_End).region().w / 2);
+	const int continueRectX			= (const int)(Scene::Center().x - titleNameFont_Continue(Menu_Continue).region().w / 2);
+	const int settingRectX			= (const int)(Scene::Center().x - titleNameFont_Setting(Menu_Setting).region().w / 2);
+	const int endRectX				= (const int)(Scene::Center().x - titleNameFont_End(Menu_End).region().w / 2);
 	
 	
 
 	mutable Rect titleNameFont_NewRect		{newRectX,		290,	newrectWidth,		rectHeight};
-	mutable Rect titleNameFont_ContinueRect	{ContinueRectX,	340,	continuerectWidth,	rectHeight};
-	mutable Rect titleNameFont_SettingRect	{SettingRectX,	385,	settingrectWidth,	rectHeight};
-	mutable Rect titleNameFont_EndRect		{EndRectX,		440,	endrectWidth,		rectHeight};
+	mutable Rect titleNameFont_ContinueRect	{continueRectX,	340,	continuerectWidth,	rectHeight};
+	mutable Rect titleNameFont_SettingRect	{settingRectX,	385,	settingrectWidth,	rectHeight};
+	mutable Rect titleNameFont_EndRect		{endRectX,		440,	endrectWidth,		rectHeight};
 	/*
 	mutable Rect titleNameFont_NewRect		{TitleNameFontpos.x - 75,TitleNameFontpos.y + 190,140,30};
 	mutable Rect titleNameFont_ContinueRect	{TitleNameFontpos.x - 90,TitleNameFontpos.y + 240,170,30};
