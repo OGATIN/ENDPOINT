@@ -26,7 +26,7 @@ public:
 	};
 
  	void Reload(Texture wait);/*CSV AnimationData*/
-	void TimeDrow();
+	void TimeDrow()const;
 	void Wait();
 	void WaitDraw(Vec2 position)const;
 };

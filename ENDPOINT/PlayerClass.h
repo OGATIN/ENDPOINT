@@ -16,7 +16,10 @@ public:
 	Rect hitBox = {0,0,0,0};
 
 	double gravity = 0.2;
-	bool isJamp = false;
+	bool isJump = false;
+
+	int jumpPower = 8;
+	int playerSpeed = 3;
 
 	PlayerClass() {};
 	PlayerClass(Texture _wait,CSV statusData)
