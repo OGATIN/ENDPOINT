@@ -48,6 +48,7 @@ public:
 
 	void Reload(CSV statusData);
 
-	void DaseStatusDrow();
+	void DaseStatusUpdate();
+	void DaseStatusDrow()const;
 };
 

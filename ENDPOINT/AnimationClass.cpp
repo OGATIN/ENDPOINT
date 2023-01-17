@@ -6,7 +6,7 @@ void AnimationClass::Reload(Texture wait)
 	waiting = wait;
 }
 
-void AnimationClass::TimeDrow()
+void AnimationClass::TimeDrow()const
 {
 	font30(currentTime.ms()).draw(Scene::Width() - font30(currentTime.ms()).region().w, 0);
 }
