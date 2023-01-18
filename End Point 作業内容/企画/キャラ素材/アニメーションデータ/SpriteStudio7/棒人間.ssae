@@ -292,8 +292,13 @@
 		<meshList />
 	</Model>
 	<cellmapNames>
+<<<<<<< HEAD
 		<value>各部位.ssce</value>
 		<value>体.ssce</value>
+=======
+		<value>体.ssce</value>
+		<value>各部位.ssce</value>
+>>>>>>> Noteみらい
 		<value>頭.ssce</value>
 	</cellmapNames>
 	<animeList>
@@ -378,7 +383,11 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
@@ -866,6 +875,7 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
 									<name>体</name>
 								</value>
@@ -873,6 +883,9 @@
 							<key time="4">
 								<value>
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
@@ -1474,12 +1487,15 @@
 							<key time="0">
 								<value>
 									<mapId>2</mapId>
+<<<<<<< HEAD
 									<name>頭</name>
 								</value>
 							</key>
 							<key time="4">
 								<value>
 									<mapId>2</mapId>
+=======
+>>>>>>> Noteみらい
 									<name>頭</name>
 								</value>
 							</key>
@@ -1624,13 +1640,21 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
 							<key time="2">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
@@ -2295,13 +2319,21 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
@@ -2718,6 +2750,9 @@
 							<key time="0" ipType="linear">
 								<value>-1.2359619</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>-0.059574127</value>
+							</key>
 							<key time="7" ipType="linear">
 								<value>-1.2359619</value>
 							</key>
@@ -2725,6 +2760,9 @@
 						<attribute tag="POSY">
 							<key time="0" ipType="linear">
 								<value>1.7670212</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-0.76361084</value>
 							</key>
 							<key time="7" ipType="linear">
 								<value>1.7670212</value>
@@ -3110,13 +3148,21 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
 							<key time="10">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
@@ -3928,7 +3974,7 @@
 			</partAnimes>
 		</anime>
 		<anime>
-			<name>6.魔法</name>
+			<name>6.攻撃魔法モーション</name>
 			<order>7</order>
 			<overrideSettings>1</overrideSettings>
 			<settings>
@@ -4023,13 +4069,21 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
@@ -4605,7 +4659,7 @@
 			</partAnimes>
 		</anime>
 		<anime>
-			<name>7.受けモーション</name>
+			<name>7.補助魔法モーション</name>
 			<order>8</order>
 			<overrideSettings>1</overrideSettings>
 			<settings>
@@ -4700,13 +4754,716 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
+<<<<<<< HEAD
 									<mapId>1</mapId>
+=======
+									<mapId>0</mapId>
+									<name>体</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>1.272522</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>1.2725221</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>1.272522</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-29</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-33.465115</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-29</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="7">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>左上腕</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="7">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-1.6867218</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-1.6867218</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>51.337894</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>51.337894</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>-24.411133</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-12.852988</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-24.411133</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="7">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>左下腕</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="7">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-0.02180481</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-0.02180481</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-27.717289</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-27.717289</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>25.192421</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>9.5660791</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>25.192421</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="7">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>右上腕</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="7">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-0.50528717</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-0.50528717</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>50.878513</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>50.878513</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>371.42841</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>538.94891</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>371.42841</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>1.0389777</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>1.0389777</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>1</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>1</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="7">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>右下腕</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="7">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>0.028841019</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0.028841019</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-27.152302</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-27.152302</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>11.523958</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-0.72692508</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>11.523958</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>0.93526721</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0.93526721</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>1</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>1</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="7">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>左上足</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="7">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-1.2359619</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-1.2359619</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>1.7670212</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>1.7670212</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>-4.0490198</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-16.196154</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-4.0490198</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="7">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>右上足</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="7">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-0.7570343</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-0.7570343</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>0.91270447</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0.91270447</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>12.353774</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>23.73941</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>12.353774</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="7">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>右下足</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="7">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>0.17120218</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0.17120218</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-27.406878</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-27.406878</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>-10.335285</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-10.335285</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>0.93526721</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0.93526721</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>1.2342317</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>1.2342317</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="7">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>頭</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>2</mapId>
+									<name>頭</name>
+								</value>
+							</key>
+							<key time="7">
+								<value>
+									<mapId>2</mapId>
+									<name>頭</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>1.8932648</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>1.8932648</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>68.702515</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>68.702515</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="7">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+			</partAnimes>
+		</anime>
+		<anime>
+			<name>8.受けモーション</name>
+			<order>10</order>
+			<overrideSettings>1</overrideSettings>
+			<settings>
+				<fps>10</fps>
+				<frameCount>8</frameCount>
+				<sortMode>prio</sortMode>
+				<canvasSize>320 320</canvasSize>
+				<pivot>0 0</pivot>
+				<bgColor>FF323232</bgColor>
+				<gridSize>32</gridSize>
+				<gridColor>FF808080</gridColor>
+				<ik_depth>3</ik_depth>
+				<startFrame>0</startFrame>
+				<endFrame>7</endFrame>
+				<bgSettings>
+					<value>
+						<imagePath></imagePath>
+						<imageDisp>1</imageDisp>
+						<imageOffset>0 0</imageOffset>
+						<imageCanvas>0 0</imageCanvas>
+						<imagePivot>0 0</imagePivot>
+					</value>
+					<value>
+						<imagePath></imagePath>
+						<imageDisp>1</imageDisp>
+						<imageOffset>0 0</imageOffset>
+						<imageCanvas>0 0</imageCanvas>
+						<imagePivot>0 0</imagePivot>
+					</value>
+				</bgSettings>
+				<outStartNum>0</outStartNum>
+			</settings>
+			<labels />
+			<guidelines>
+				<value>
+					<lineType>2</lineType>
+					<dispType>2</dispType>
+					<position>-7</position>
+					<color>FFF8F810</color>
+				</value>
+			</guidelines>
+			<isSetup>0</isSetup>
+			<partAnimes>
+				<partAnime>
+					<partName>root</partName>
+					<attributes>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-5</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-5</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-1</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>-1</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>1.8072917</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>1.8072917</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>1.7916667</value>
+							</key>
+							<key time="7" ipType="linear">
+								<value>1.7916667</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="7">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>体</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>0</mapId>
+									<name>体</name>
+								</value>
+							</key>
+							<key time="7">
+								<value>
+									<mapId>0</mapId>
+>>>>>>> Noteみらい
 									<name>体</name>
 								</value>
 							</key>
@@ -5292,6 +6049,537 @@
 								<value>0</value>
 							</key>
 							<key time="7">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+			</partAnimes>
+		</anime>
+		<anime>
+			<name>8.防御モーション</name>
+			<order>9</order>
+			<overrideSettings>1</overrideSettings>
+			<settings>
+				<fps>10</fps>
+				<frameCount>8</frameCount>
+				<sortMode>prio</sortMode>
+				<canvasSize>320 320</canvasSize>
+				<pivot>0 0</pivot>
+				<bgColor>FF323232</bgColor>
+				<gridSize>32</gridSize>
+				<gridColor>FF808080</gridColor>
+				<ik_depth>3</ik_depth>
+				<startFrame>0</startFrame>
+				<endFrame>7</endFrame>
+				<bgSettings>
+					<value>
+						<imagePath></imagePath>
+						<imageDisp>1</imageDisp>
+						<imageOffset>0 0</imageOffset>
+						<imageCanvas>0 0</imageCanvas>
+						<imagePivot>0 0</imagePivot>
+					</value>
+					<value>
+						<imagePath></imagePath>
+						<imageDisp>1</imageDisp>
+						<imageOffset>0 0</imageOffset>
+						<imageCanvas>0 0</imageCanvas>
+						<imagePivot>0 0</imagePivot>
+					</value>
+				</bgSettings>
+				<outStartNum>0</outStartNum>
+			</settings>
+			<labels />
+			<guidelines>
+				<value>
+					<lineType>2</lineType>
+					<dispType>2</dispType>
+					<position>-7</position>
+					<color>FFF8F810</color>
+				</value>
+			</guidelines>
+			<isSetup>0</isSetup>
+			<partAnimes>
+				<partAnime>
+					<partName>root</partName>
+					<attributes>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-5</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-1</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>1.8072917</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>1.7916667</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>体</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>0</mapId>
+									<name>体</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>1.272522</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-29</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>0.87315828</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>左上腕</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-1.6867218</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>51.337894</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>66.080391</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-21.375805</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>左下腕</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-0.02180481</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-27.717289</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>114.5666</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>29.376682</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>0.95599157</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>1.0490984</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>右上腕</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-0.50528717</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>50.878513</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>414.11383</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>374.22064</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>1.0389777</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>1</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>右下腕</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>0.028841019</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-27.152302</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>130.53728</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>0.93526721</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>1</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>左上足</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-1.2359619</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>1.7670212</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>-4.0490198</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-2.1001503</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>左下足</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-0.039248288</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-27.388597</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>-10.335285</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>0.93526721</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>1.2342317</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>右上足</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-0.7570343</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>0.91270447</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>12.353774</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>12.451366</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>右下足</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>1</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>0.17120218</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-27.406878</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>-10.335285</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>0.93526721</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>1.2342317</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>頭</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>2</mapId>
+									<name>頭</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>1.8932648</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>4.3558807</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>68.702515</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>67.018616</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
 								<value>0</value>
 							</key>
 						</attribute>

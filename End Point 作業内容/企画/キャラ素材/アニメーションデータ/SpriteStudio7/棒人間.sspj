@@ -193,7 +193,11 @@
 		<value>棒人間.ssae</value>
 	</animepackNames>
 	<lastAnimeFile>棒人間.ssae</lastAnimeFile>
+<<<<<<< HEAD
 	<lastAnimeName>2.歩きモーション</lastAnimeName>
+=======
+	<lastAnimeName>8.防御モーション</lastAnimeName>
+>>>>>>> Noteみらい
 	<lastPart></lastPart>
 	<lastCellMapFile>各部位.ssce</lastCellMapFile>
 	<lastCell>各部位</lastCell>
