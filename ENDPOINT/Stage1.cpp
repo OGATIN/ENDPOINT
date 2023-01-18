@@ -19,16 +19,17 @@ void Stage1::Initialize()
 
 void Stage1::update()
 {
-	//床と触れていたら移動をやめて座標補正(仮)
-	if (Player.GetBottom() > 590)
-	{
-		Player.velocity.y = 0;
+	////床と触れていたら移動をやめて座標補正(仮)
+	//if (Player.GetBottom() > 590)
+	//{
+	//	Player.velocity.y = 0;
 
-		//プレイヤー座標が透過部分も込みなので当たり判定の座標に補正しなければならない
-		Player.position.y = 590 - ((int)Player.playerAnimation.waitPosDifference.y + (int)Player.hitBox.h);
-	}
+	//	//プレイヤー座標が透過部分も込みなので当たり判定の座標に補正しなければならない
+	//	Player.position.y = 590 - ((int)Player.playerAnimation.waitPosDifference.y + (int)Player.hitBox.h);
+	//}
 
-	Player.PlayerUpdate();
+	//Player.AnimationProcess();
+	Player.StateManagement();
 }
 
 void Stage1::draw() const
@@ -45,7 +46,7 @@ void Stage1::draw() const
 		}
 	}
 
-	Player.PlayerDraw();
+	Player.StateManagementDraw();
 
 	font(Player.position).draw(450, 0);
 	font(Player.velocity).draw(450, 30);

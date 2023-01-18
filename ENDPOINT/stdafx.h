@@ -5,3 +5,4 @@
 # include "0_6_6_1280x720_60fps.h"
 #include"StatusClass.h"
 #include"AnimationClass.h"
+#include"GameObject.h"

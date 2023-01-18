@@ -16,7 +16,7 @@ private:
 	CSV BasicStatData {U"ConfigData/基礎ステータスデータ.csv"};
 	//CSV AnimationData {U"ConfigData/隙管理.csv"};
 
-	PlayerClass Player{ waitingMotionPNG,BasicStatData};
+	GameObject Player;
 
 	Font font{ 30 };
 

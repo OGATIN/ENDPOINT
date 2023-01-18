@@ -1,6 +1,49 @@
 ﻿#include "stdafx.h"
 #include "AnimationClass.h"
 
+double AnimationClass::OnePatternMotionTime()
+{
+	return motionTime / animationPattern;
+}
+
+void AnimationClass::TextureWidthHeightSet()
+{
+	widthSize  = texture.width() / animationPattern;
+	heightSize = texture.height() / 1;
+}
+
+void AnimationClass::PatternSet()
+{
+	startPattern = 0;
+	endPattern = animationPattern;
+	currentPattern = startPattern;
+}
+
+void AnimationClass::PatternLoop()
+{
+	//タイル遷移
+	if (currentTime.ms() > OnePatternMotionTime())
+	{
+		currentPattern += 1;
+		currentTime.restart();
+	}
+
+	//ループ
+	if (currentPattern > endPattern)
+	{
+		currentPattern = startPattern;
+	}
+}
+
+void AnimationClass::Initialize()
+{
+	TextureWidthHeightSet();
+
+	PatternSet();
+
+	currentTime.start();
+}
+
 void AnimationClass::Reload(Texture wait)
 {
 	waiting = wait;

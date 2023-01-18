@@ -31,9 +31,11 @@ public:
 
 	int endPattern = 0;			//切り取り位置(終)
 
-	int widthSize = 0;
+	int widthSize = 0;			//画像一枚の横幅
 
-	int heightSize = 0;
+	int heightSize = 0;			//画像一枚の縦幅
+
+	int currentPattern = 0;	//現在選択してるタイル
 
 	//デバック用フォント
 	Font font30{ 30 };
@@ -47,22 +49,37 @@ public:
 	AnimationClass(Texture _texture,CSV animationData, int currentMotion)
 	{
 		texture				= _texture;
-		activeTime			= activeTime		+ Parse<double>(animationData[currentMotion][1]);
-		recoveryTime		= recoveryTime		+ Parse<double>(animationData[currentMotion][2]);
-		attackTechnique		= attackTechnique	+ Parse<double>(animationData[currentMotion][3]);
-		motionTime			= motionTime		+ Parse<double>(animationData[currentMotion][5]);
-		animationPattern	= animationPattern	+ Parse<int>   (animationData[currentMotion][6]);
-		startPattern		= startPattern		+ Parse<int>   (animationData[currentMotion][7]);
-		endPattern			= endPattern		+ Parse<int>   (animationData[currentMotion][8]);
+		activeTime			= Parse<double>(animationData[currentMotion][1]);
+		recoveryTime		= Parse<double>(animationData[currentMotion][2]);
+		attackTechnique		= Parse<double>(animationData[currentMotion][3]);
+		motionTime			= Parse<double>(animationData[currentMotion][5]);
+		animationPattern	= Parse<int>   (animationData[currentMotion][6]);
 
-		texture.width() / widthSize;
-		texture.height() / heightSize;
+		Initialize();
 	};
 
+	
+	/// @brief 初期定義
+	void Initialize();
 
- 	void Reload(Texture wait);/*CSV AnimationData*/
-	void TimeDrow()const;
-	void Wait();
-	void WaitDraw(Vec2 position)const;
+	//bool isNotAnimation();
+
+	/// @brief １パターンあたりの時間を求める
+	/// @return １パターンあたりの時間
+	double OnePatternMotionTime();
+
+	/// @brief 画像一枚の縦幅と横幅をセット
+	void TextureWidthHeightSet();
+
+	/// @brief startPatternとendPatternをセット
+	void PatternSet();
+
+	void PatternLoop();
+
+
+	//void Reload(Texture wait);/*CSV AnimationData*/
+	//void TimeDrow()const;
+	//void Wait();
+	//void WaitDraw(Vec2 position)const;
 };
 
