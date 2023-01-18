@@ -9,7 +9,7 @@ class StatusClass
 {
 public:
 
-	int level = 30;//プレイヤーのレベル
+	int level = 1;//プレイヤーのレベル
 
 	double hitPoints = 0;//HP
 	double stamina = 0;//スタミナ
@@ -47,7 +47,7 @@ public:
 
 	void Reload(CSV statusData);
 
-	void DaseStatusUpdate();
+	void StatusUpdate();
 	void DaseStatusDrow()const;
 };
 

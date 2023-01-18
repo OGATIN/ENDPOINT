@@ -24,17 +24,17 @@ public:
 	PlayerClass(Texture _wait,CSV statusData)
 	{
 		playerStatus.Reload(statusData);
-		playerAnimation.Reload(_wait);
+		//playerAnimation.Reload(_wait);
 	};
 
-	Rect GetHitRect();
+	/*Rect GetHitRect();
 	int GetTop();
 	int GetBottom();
 	int GetLeft();
 	int GetRight();
 
 	void StateManagement();
-	void StateManagementDraw()const;
+	void StateManagementDraw()const;*/
 	void MotionStart();
 	void MotionStop();
 	void Jump();

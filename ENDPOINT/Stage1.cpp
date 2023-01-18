@@ -11,10 +11,12 @@ void Stage1::Initialize()
 {
 	if (not BasicStatData) // もし読み込みに失敗したら
 	{
-		throw Error{ U"基礎ステータスデータ.csv が存在しません。" };
+		throw Error{ U"アニメーションデータ.csv が存在しません。" };
 	}
 
 	Player.Initialize();
+
+	Player.MotionStart();
 }
 
 void Stage1::update()
@@ -29,7 +31,14 @@ void Stage1::update()
 	//}
 
 	//Player.AnimationProcess();
+
+
 	Player.StateManagement();
+
+	if (KeyEnter.down())
+	{
+		Player.MotionStop();
+	}
 }
 
 void Stage1::draw() const
@@ -47,9 +56,13 @@ void Stage1::draw() const
 	}
 
 	Player.StateManagementDraw();
+	Player.waitMotion.DebugDrow();
+	Player.status.DaseStatusDrow();
 
-	font(Player.position).draw(450, 0);
-	font(Player.velocity).draw(450, 30);
-	font(Cursor::Pos()).draw(650, 0);
-	Player.hitBox.drawFrame(2, Palette::Green);
+	//font(Player.position).draw(450, 0);
+	//font(Player.velocity).draw(450, 30);
+	//font(Cursor::Pos()).draw(650, 0);
+	//Player.hitBox.drawFrame(2, Palette::Green);
+
+
 }

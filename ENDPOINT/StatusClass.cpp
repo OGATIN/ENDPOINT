@@ -16,7 +16,7 @@ void StatusClass::Reload(CSV statusData)
 	}
 }
 
-void StatusClass::DaseStatusUpdate()
+void StatusClass::StatusUpdate()
 {
 	switch (magicType)
 	{

@@ -14,9 +14,9 @@ private:
 	Texture waitingMotionPNG{ U"Material/1.img/1.待機モーション.png" };
 
 	CSV BasicStatData {U"ConfigData/基礎ステータスデータ.csv"};
-	//CSV AnimationData {U"ConfigData/隙管理.csv"};
+	CSV AnimationData {U"ConfigData/アニメーションデータ.csv"};
 
-	GameObject Player;
+	GameObject Player = { waitingMotionPNG ,AnimationData ,BasicStatData };
 
 	Font font{ 30 };
 
