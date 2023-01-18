@@ -88,7 +88,7 @@
 		<interpolationType>linear</interpolationType>
 		<coordUnit>rate</coordUnit>
 		<renderingSettings>
-			<outputFolder>C:/Users/mirai/OneDrive/デスクトップ/アニメーション</outputFolder>
+			<outputFolder>C:/Users/mirai/OneDrive/ドキュメント/GitHub/ENDPOINT/End Point 作業内容/企画/キャラ素材/アニメーションデータ/アニメーション</outputFolder>
 			<outputType>PNGs</outputType>
 			<bgColor>FF646464</bgColor>
 			<addAnimeName>1</addAnimeName>
@@ -193,10 +193,10 @@
 		<value>棒人間.ssae</value>
 	</animepackNames>
 	<lastAnimeFile>棒人間.ssae</lastAnimeFile>
-	<lastAnimeName>7.受けモーション</lastAnimeName>
-	<lastPart>root</lastPart>
-	<lastCellMapFile>頭.ssce</lastCellMapFile>
-	<lastCell>頭</lastCell>
+	<lastAnimeName>2.歩きモーション</lastAnimeName>
+	<lastPart></lastPart>
+	<lastCellMapFile>各部位.ssce</lastCellMapFile>
+	<lastCell>各部位</lastCell>
 	<lastEffectFile></lastEffectFile>
 	<setupmode>0</setupmode>
 	<expandAnimation />

@@ -98,7 +98,7 @@
 				<alphaBlendType>mix</alphaBlendType>
 				<show>1</show>
 				<locked>0</locked>
-				<expandAttribute>0</expandAttribute>
+				<expandAttribute>1</expandAttribute>
 				<expandChildren>1</expandChildren>
 				<refCellTag></refCellTag>
 				<maskInfluence>1</maskInfluence>
@@ -196,7 +196,7 @@
 				<maskInfluence>1</maskInfluence>
 			</value>
 			<value>
-				<name>各部位</name>
+				<name>左下足</name>
 				<arrayIndex>7</arrayIndex>
 				<parentIndex>6</parentIndex>
 				<type>normal</type>
@@ -292,9 +292,9 @@
 		<meshList />
 	</Model>
 	<cellmapNames>
-		<value>頭.ssce</value>
 		<value>各部位.ssce</value>
 		<value>体.ssce</value>
+		<value>頭.ssce</value>
 	</cellmapNames>
 	<animeList>
 		<anime>
@@ -378,7 +378,7 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
@@ -419,7 +419,7 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -460,7 +460,7 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -501,7 +501,7 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -552,7 +552,7 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -600,7 +600,7 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -641,7 +641,7 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -682,7 +682,7 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -730,7 +730,7 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
@@ -776,7 +776,7 @@
 			<overrideSettings>1</overrideSettings>
 			<settings>
 				<fps>10</fps>
-				<frameCount>8</frameCount>
+				<frameCount>5</frameCount>
 				<sortMode>prio</sortMode>
 				<canvasSize>320 320</canvasSize>
 				<pivot>0 0</pivot>
@@ -785,7 +785,7 @@
 				<gridColor>FF808080</gridColor>
 				<ik_depth>3</ik_depth>
 				<startFrame>0</startFrame>
-				<endFrame>7</endFrame>
+				<endFrame>4</endFrame>
 				<bgSettings>
 					<value>
 						<imagePath></imagePath>
@@ -822,9 +822,15 @@
 							<key time="0" ipType="linear">
 								<value>-5</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>-5</value>
+							</key>
 						</attribute>
 						<attribute tag="POSY">
 							<key time="0" ipType="linear">
+								<value>-1</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>-1</value>
 							</key>
 						</attribute>
@@ -832,14 +838,23 @@
 							<key time="0" ipType="linear">
 								<value>1.8072917</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>1.8072917</value>
+							</key>
 						</attribute>
 						<attribute tag="SCLY">
 							<key time="0" ipType="linear">
 								<value>1.7916667</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>1.7916667</value>
+							</key>
 						</attribute>
 						<attribute tag="HIDE">
 							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="4">
 								<value>0</value>
 							</key>
 						</attribute>
@@ -851,7 +866,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
+									<name>体</name>
+								</value>
+							</key>
+							<key time="4">
+								<value>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
@@ -860,9 +881,15 @@
 							<key time="0" ipType="linear">
 								<value>1.272522</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>1.272522</value>
+							</key>
 						</attribute>
 						<attribute tag="POSY">
 							<key time="0" ipType="linear">
+								<value>-29</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>-29</value>
 							</key>
 						</attribute>
@@ -870,14 +897,23 @@
 							<key time="0" ipType="linear">
 								<value>0</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
 						</attribute>
 						<attribute tag="PRIO">
 							<key time="0" ipType="linear">
 								<value>0</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
 						</attribute>
 						<attribute tag="HIDE">
 							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="4">
 								<value>0</value>
 							</key>
 						</attribute>
@@ -889,7 +925,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="4">
+								<value>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -898,9 +940,15 @@
 							<key time="0" ipType="linear">
 								<value>-1.6867218</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>-1.6867218</value>
+							</key>
 						</attribute>
 						<attribute tag="POSY">
 							<key time="0" ipType="linear">
+								<value>51.337894</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>51.337894</value>
 							</key>
 						</attribute>
@@ -908,17 +956,26 @@
 							<key time="0" ipType="linear">
 								<value>-24.411133</value>
 							</key>
-							<key time="4" ipType="linear">
+							<key time="2" ipType="linear">
 								<value>6.8197112</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-24.411133</value>
 							</key>
 						</attribute>
 						<attribute tag="PRIO">
 							<key time="0" ipType="linear">
 								<value>0</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
 						</attribute>
 						<attribute tag="HIDE">
 							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="4">
 								<value>0</value>
 							</key>
 						</attribute>
@@ -930,7 +987,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="4">
+								<value>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -939,9 +1002,15 @@
 							<key time="0" ipType="linear">
 								<value>-0.02180481</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>-0.02180481</value>
+							</key>
 						</attribute>
 						<attribute tag="POSY">
 							<key time="0" ipType="linear">
+								<value>-27.717289</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>-27.717289</value>
 							</key>
 						</attribute>
@@ -949,14 +1018,23 @@
 							<key time="0" ipType="linear">
 								<value>25.192421</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>25.192421</value>
+							</key>
 						</attribute>
 						<attribute tag="PRIO">
 							<key time="0" ipType="linear">
 								<value>0</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
 						</attribute>
 						<attribute tag="HIDE">
 							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="4">
 								<value>0</value>
 							</key>
 						</attribute>
@@ -968,7 +1046,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="4">
+								<value>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -977,9 +1061,15 @@
 							<key time="0" ipType="linear">
 								<value>-0.50528717</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>-0.50528717</value>
+							</key>
 						</attribute>
 						<attribute tag="POSY">
 							<key time="0" ipType="linear">
+								<value>50.878513</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>50.878513</value>
 							</key>
 						</attribute>
@@ -987,12 +1077,18 @@
 							<key time="0" ipType="linear">
 								<value>371.42841</value>
 							</key>
-							<key time="4" ipType="linear">
+							<key time="2" ipType="linear">
 								<value>333.38956</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>371.42841</value>
 							</key>
 						</attribute>
 						<attribute tag="SCLX">
 							<key time="0" ipType="linear">
+								<value>1.0389777</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>1.0389777</value>
 							</key>
 						</attribute>
@@ -1000,14 +1096,23 @@
 							<key time="0" ipType="linear">
 								<value>1</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>1</value>
+							</key>
 						</attribute>
 						<attribute tag="PRIO">
 							<key time="0" ipType="linear">
 								<value>0</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
 						</attribute>
 						<attribute tag="HIDE">
 							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="4">
 								<value>0</value>
 							</key>
 						</attribute>
@@ -1019,7 +1124,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="4">
+								<value>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -1028,9 +1139,15 @@
 							<key time="0" ipType="linear">
 								<value>0.028841019</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0.028841019</value>
+							</key>
 						</attribute>
 						<attribute tag="POSY">
 							<key time="0" ipType="linear">
+								<value>-27.152302</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>-27.152302</value>
 							</key>
 						</attribute>
@@ -1038,9 +1155,15 @@
 							<key time="0" ipType="linear">
 								<value>11.523958</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>11.523958</value>
+							</key>
 						</attribute>
 						<attribute tag="SCLX">
 							<key time="0" ipType="linear">
+								<value>0.93526721</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>0.93526721</value>
 							</key>
 						</attribute>
@@ -1048,14 +1171,23 @@
 							<key time="0" ipType="linear">
 								<value>1</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>1</value>
+							</key>
 						</attribute>
 						<attribute tag="PRIO">
 							<key time="0" ipType="linear">
 								<value>0</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
 						</attribute>
 						<attribute tag="HIDE">
 							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="4">
 								<value>0</value>
 							</key>
 						</attribute>
@@ -1067,7 +1199,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="4">
+								<value>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -1076,9 +1214,15 @@
 							<key time="0" ipType="linear">
 								<value>-1.2359619</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>-1.2359619</value>
+							</key>
 						</attribute>
 						<attribute tag="POSY">
 							<key time="0" ipType="linear">
+								<value>1.7670212</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>1.7670212</value>
 							</key>
 						</attribute>
@@ -1086,17 +1230,101 @@
 							<key time="0" ipType="linear">
 								<value>-4.0490198</value>
 							</key>
-							<key time="4" ipType="linear">
+							<key time="2" ipType="linear">
 								<value>17.713673</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-4.0490198</value>
 							</key>
 						</attribute>
 						<attribute tag="PRIO">
 							<key time="0" ipType="linear">
 								<value>0</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
 						</attribute>
 						<attribute tag="HIDE">
 							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="4">
+								<value>0</value>
+							</key>
+						</attribute>
+					</attributes>
+				</partAnime>
+				<partAnime>
+					<partName>左下足</partName>
+					<attributes>
+						<attribute tag="CELL">
+							<key time="0">
+								<value>
+									<mapId>0</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="4">
+								<value>
+									<mapId>0</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+						</attribute>
+						<attribute tag="POSX">
+							<key time="0" ipType="linear">
+								<value>-0.078659594</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-0.078659594</value>
+							</key>
+						</attribute>
+						<attribute tag="POSY">
+							<key time="0" ipType="linear">
+								<value>-26.83185</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-26.83185</value>
+							</key>
+						</attribute>
+						<attribute tag="ROTZ">
+							<key time="0" ipType="linear">
+								<value>-10.335285</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>-10.335285</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLX">
+							<key time="0" ipType="linear">
+								<value>0.93526721</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>0.93526721</value>
+							</key>
+						</attribute>
+						<attribute tag="SCLY">
+							<key time="0" ipType="linear">
+								<value>1.2342317</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>1.2342317</value>
+							</key>
+						</attribute>
+						<attribute tag="PRIO">
+							<key time="0" ipType="linear">
+								<value>0</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
+						</attribute>
+						<attribute tag="HIDE">
+							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="4">
 								<value>0</value>
 							</key>
 						</attribute>
@@ -1108,7 +1336,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="4">
+								<value>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -1117,9 +1351,15 @@
 							<key time="0" ipType="linear">
 								<value>-0.7570343</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>-0.7570343</value>
+							</key>
 						</attribute>
 						<attribute tag="POSY">
 							<key time="0" ipType="linear">
+								<value>0.91270447</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>0.91270447</value>
 							</key>
 						</attribute>
@@ -1127,17 +1367,26 @@
 							<key time="0" ipType="linear">
 								<value>12.353774</value>
 							</key>
-							<key time="4" ipType="linear">
+							<key time="2" ipType="linear">
 								<value>-6.9504671</value>
+							</key>
+							<key time="4" ipType="linear">
+								<value>12.353774</value>
 							</key>
 						</attribute>
 						<attribute tag="PRIO">
 							<key time="0" ipType="linear">
 								<value>0</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
 						</attribute>
 						<attribute tag="HIDE">
 							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="4">
 								<value>0</value>
 							</key>
 						</attribute>
@@ -1149,7 +1398,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
+									<name>各部位</name>
+								</value>
+							</key>
+							<key time="4">
+								<value>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -1158,9 +1413,15 @@
 							<key time="0" ipType="linear">
 								<value>0.17120218</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0.17120218</value>
+							</key>
 						</attribute>
 						<attribute tag="POSY">
 							<key time="0" ipType="linear">
+								<value>-27.406878</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>-27.406878</value>
 							</key>
 						</attribute>
@@ -1168,9 +1429,15 @@
 							<key time="0" ipType="linear">
 								<value>-10.335285</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>-10.335285</value>
+							</key>
 						</attribute>
 						<attribute tag="SCLX">
 							<key time="0" ipType="linear">
+								<value>0.93526721</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>0.93526721</value>
 							</key>
 						</attribute>
@@ -1178,14 +1445,23 @@
 							<key time="0" ipType="linear">
 								<value>1.2342317</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>1.2342317</value>
+							</key>
 						</attribute>
 						<attribute tag="PRIO">
 							<key time="0" ipType="linear">
 								<value>0</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
 						</attribute>
 						<attribute tag="HIDE">
 							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="4">
 								<value>0</value>
 							</key>
 						</attribute>
@@ -1197,7 +1473,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
+									<name>頭</name>
+								</value>
+							</key>
+							<key time="4">
+								<value>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
@@ -1206,9 +1488,15 @@
 							<key time="0" ipType="linear">
 								<value>1.8932648</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>1.8932648</value>
+							</key>
 						</attribute>
 						<attribute tag="POSY">
 							<key time="0" ipType="linear">
+								<value>68.702515</value>
+							</key>
+							<key time="4" ipType="linear">
 								<value>68.702515</value>
 							</key>
 						</attribute>
@@ -1216,14 +1504,23 @@
 							<key time="0" ipType="linear">
 								<value>0</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
 						</attribute>
 						<attribute tag="PRIO">
 							<key time="0" ipType="linear">
 								<value>0</value>
 							</key>
+							<key time="4" ipType="linear">
+								<value>0</value>
+							</key>
 						</attribute>
 						<attribute tag="HIDE">
 							<key time="0">
+								<value>0</value>
+							</key>
+							<key time="4">
 								<value>0</value>
 							</key>
 						</attribute>
@@ -1327,13 +1624,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
 							<key time="2">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
@@ -1386,13 +1683,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="2">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -1445,13 +1742,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="2">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -1504,13 +1801,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="2">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -1579,13 +1876,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="2">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -1654,13 +1951,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="2">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -1713,13 +2010,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="2">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -1772,13 +2069,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="2">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -1847,13 +2144,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
 							<key time="2">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
@@ -1998,13 +2295,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
@@ -2084,13 +2381,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -2167,13 +2464,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -2232,13 +2529,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -2322,13 +2619,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -2406,13 +2703,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -2489,13 +2786,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -2560,13 +2857,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -2641,13 +2938,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
@@ -2813,13 +3110,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
 							<key time="10">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
@@ -2896,13 +3193,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="10">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -3010,13 +3307,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="10">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -3124,13 +3421,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="10">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -3235,13 +3532,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="10">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -3346,13 +3643,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="10">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -3414,13 +3711,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="10">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -3482,13 +3779,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="10">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -3575,13 +3872,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
 							<key time="10">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
@@ -3726,13 +4023,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
@@ -3785,13 +4082,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -3844,13 +4141,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -3903,13 +4200,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -3981,13 +4278,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -4059,13 +4356,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -4118,13 +4415,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -4177,13 +4474,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -4252,13 +4549,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
@@ -4403,13 +4700,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>2</mapId>
+									<mapId>1</mapId>
 									<name>体</name>
 								</value>
 							</key>
@@ -4465,13 +4762,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -4527,13 +4824,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -4589,13 +4886,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -4667,13 +4964,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -4742,13 +5039,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -4799,93 +5096,18 @@
 					</attributes>
 				</partAnime>
 				<partAnime>
-					<partName>各部位</partName>
-					<attributes>
-						<attribute tag="CELL">
-							<key time="0">
-								<value>
-									<mapId>1</mapId>
-									<name>各部位</name>
-								</value>
-							</key>
-							<key time="7">
-								<value>
-									<mapId>1</mapId>
-									<name>各部位</name>
-								</value>
-							</key>
-						</attribute>
-						<attribute tag="POSX">
-							<key time="0" ipType="linear">
-								<value>-0.35545403</value>
-							</key>
-							<key time="7" ipType="linear">
-								<value>-0.35545403</value>
-							</key>
-						</attribute>
-						<attribute tag="POSY">
-							<key time="0" ipType="linear">
-								<value>-26.323359</value>
-							</key>
-							<key time="7" ipType="linear">
-								<value>-26.323359</value>
-							</key>
-						</attribute>
-						<attribute tag="ROTZ">
-							<key time="0" ipType="linear">
-								<value>-11.841911</value>
-							</key>
-							<key time="7" ipType="linear">
-								<value>-11.841911</value>
-							</key>
-						</attribute>
-						<attribute tag="SCLX">
-							<key time="0" ipType="linear">
-								<value>1</value>
-							</key>
-							<key time="7" ipType="linear">
-								<value>1</value>
-							</key>
-						</attribute>
-						<attribute tag="SCLY">
-							<key time="0" ipType="linear">
-								<value>1.3096439</value>
-							</key>
-							<key time="7" ipType="linear">
-								<value>1.3096439</value>
-							</key>
-						</attribute>
-						<attribute tag="PRIO">
-							<key time="0" ipType="linear">
-								<value>0</value>
-							</key>
-							<key time="7" ipType="linear">
-								<value>0</value>
-							</key>
-						</attribute>
-						<attribute tag="HIDE">
-							<key time="0">
-								<value>0</value>
-							</key>
-							<key time="7">
-								<value>0</value>
-							</key>
-						</attribute>
-					</attributes>
-				</partAnime>
-				<partAnime>
 					<partName>右上足</partName>
 					<attributes>
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -4941,13 +5163,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>1</mapId>
+									<mapId>0</mapId>
 									<name>各部位</name>
 								</value>
 							</key>
@@ -5016,13 +5238,13 @@
 						<attribute tag="CELL">
 							<key time="0">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
 							<key time="7">
 								<value>
-									<mapId>0</mapId>
+									<mapId>2</mapId>
 									<name>頭</name>
 								</value>
 							</key>
