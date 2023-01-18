@@ -1,5 +1,4 @@
-﻿#include"StatusClass.h"
-#include"AnimationClass.h"
+﻿
 #pragma once
 
 class PlayerClass

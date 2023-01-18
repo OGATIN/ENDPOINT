@@ -9,6 +9,7 @@ class AnimationClass
 {
 public:
 	Texture waiting;
+	Texture texture;
 
 	Rect cutPos = { 0,0,360,360 };
 
@@ -30,6 +31,10 @@ public:
 
 	int endPattern = 0;			//切り取り位置(終)
 
+	int widthSize = 0;
+
+	int heightSize = 0;
+
 	//デバック用フォント
 	Font font30{ 30 };
 
@@ -39,20 +44,21 @@ public:
 		waiting = wait;
 	};
 
-	AnimationClass(CSV animationData)
+	AnimationClass(Texture _texture,CSV animationData, int currentMotion)
 	{
-		for (int i = 1; i <= animationPattern; i++)
-		{
-			/*hitPoints = hitPoints + Parse<double>(statusData[1][i]);
-			stamina = stamina + Parse<double>(statusData[2][i]);
-			mental = mental + Parse<double>(statusData[3][i]);
-			power = power + Parse<double>(statusData[4][i]);
-			protection = protection + Parse<double>(statusData[5][i]);
-			weight = weight + Parse<double>(statusData[6][i]);
-			magicPoint = magicPoint + Parse<double>(statusData[8][i]);
-			magicPower = magicPower + Parse<double>(statusData[9][i]);*/
-		}
+		texture				= _texture;
+		activeTime			= activeTime		+ Parse<double>(animationData[currentMotion][1]);
+		recoveryTime		= recoveryTime		+ Parse<double>(animationData[currentMotion][2]);
+		attackTechnique		= attackTechnique	+ Parse<double>(animationData[currentMotion][3]);
+		motionTime			= motionTime		+ Parse<double>(animationData[currentMotion][5]);
+		animationPattern	= animationPattern	+ Parse<int>   (animationData[currentMotion][6]);
+		startPattern		= startPattern		+ Parse<int>   (animationData[currentMotion][7]);
+		endPattern			= endPattern		+ Parse<int>   (animationData[currentMotion][8]);
+
+		texture.width() / widthSize;
+		texture.height() / heightSize;
 	};
+
 
  	void Reload(Texture wait);/*CSV AnimationData*/
 	void TimeDrow()const;
