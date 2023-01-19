@@ -23,7 +23,7 @@ public:
 
 	//デバック用フォント
 	Font font30{ 30 };
-	Stopwatch elapsedTime;
+	double elapsedTime = 0;
 
 
 

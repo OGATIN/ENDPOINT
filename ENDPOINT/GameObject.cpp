@@ -20,7 +20,6 @@ void GameObject::MotionStart()
 	{
 	case StateType::WAIT:
 		waitMotion.currentTime.start();
-		waitMotion.elapsedTime.start();
 		break;
 	case StateType::WAIK:
 		break;
@@ -43,17 +42,17 @@ void GameObject::MotionStart()
 	}
 }
 
+
 void GameObject::MotionStop()
 {
 	//ストップウォッチが停止しているか
-	if (waitMotion.currentTime.isRunning() && waitMotion.elapsedTime.isRunning())
+	if (waitMotion.currentTime.isRunning())
 	{
 		//計測中なら停止(経過時間はそのまま)
 		switch (state)
 		{
 		case StateType::WAIT:
 			waitMotion.currentTime.pause();
-			waitMotion.elapsedTime.pause();
 			break;
 		case StateType::WAIK:
 			break;
@@ -82,7 +81,6 @@ void GameObject::MotionStop()
 		{
 		case StateType::WAIT:
 			waitMotion.currentTime.resume();
-			waitMotion.elapsedTime.resume();
 			break;
 		case StateType::WAIK:
 			break;
