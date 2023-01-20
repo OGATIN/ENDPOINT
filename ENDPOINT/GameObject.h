@@ -18,6 +18,8 @@ public:
 
 	double gravity = 0.5;
 	bool isJump = false;
+	bool isMotionLock = false;
+	bool isHit = false;
 
 	int jumpPower = 10;
 	int charaSpeed = 5;
