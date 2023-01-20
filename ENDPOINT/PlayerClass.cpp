@@ -141,40 +141,4 @@ void PlayerClass::Initialize()
 	MotionStart();
 }
 
-//void PlayerClass::PlayerUpdate()
-//{
-//	//当たり判定更新
-//	hitBox = GetHitRect();
-//
-//	//座標更新
-//	position += velocity;
-//
-//	//重力加算
-//	velocity.y += gravity;
-//
-//	//状態管理
-//	StateManagement();
-//
-//	Jump();
-//
-//	Move();
-//
-//	//デバック用
-//	playerStatus.DaseStatusUpdate();//ステータスの表示
-//
-//	if (KeySpace.down())
-//	{
-//		//一時停止
-//		MotionStop();
-//	}
-//}
-//
-//void PlayerClass::PlayerDraw() const
-//{
-//	//画像描画
-//	StateManagementDraw();
-//
-//	//デバック用
-//	playerStatus.DaseStatusDrow();//ステータスの表示
-//	//playerAnimation.TimeDrow();//時間の表示
-//}
+

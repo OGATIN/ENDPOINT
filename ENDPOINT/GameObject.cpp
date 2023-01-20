@@ -106,11 +106,19 @@ void GameObject::MotionStop()
 
 void GameObject::Jump()
 {
-	//↑が押されたらジャンプ
-	if (KeyUp.down())
+	velocity.y = -jumpPower;
+}
+
+void GameObject::Walk()
+{
+	if (isMirror)
 	{
-		velocity.y = -jumpPower;
+		position.x += charaSpeed;
 	}
+	else
+	{
+		position.x -= charaSpeed;
+	}	
 }
 
 void GameObject::Move()
@@ -129,7 +137,10 @@ void GameObject::Move()
 
 void GameObject::StateManagement()
 {
-	Update();
+	/*Update();*/
+
+	ChangeState();
+
 
 	switch (state)
 	{
@@ -137,6 +148,8 @@ void GameObject::StateManagement()
 		waitMotion.PatternLoop();
 		break;
 	case StateType::WAIK:
+		walkMotion.PatternLoop();
+		Walk();
 		break;
 	case StateType::RUN:
 		break;
@@ -165,6 +178,7 @@ void GameObject::StateManagementDraw() const
 		waitMotion.Draw(position);
 		break;
 	case StateType::WAIK:
+		walkMotion.Draw(position);
 		break;
 	case StateType::RUN:
 		break;
@@ -204,11 +218,25 @@ void GameObject::ChangeState()
 		if (not isMotionLock && KeyD.pressed() || KeyRight.pressed())
 		{
 			state = StateType::WAIK;
+			isMirror = false;
+		}
+
+		if (not isMotionLock && KeyA.pressed() || KeyLeft.pressed())
+		{
+			state = StateType::WAIK;
+			isMirror = true;
 		}
 
 		if (not isMotionLock && KeyControl.pressed() && KeyD.pressed() || KeyRight.pressed())
 		{
 			state = StateType::RUN;
+			isMirror = false;
+		}
+
+		if (not isMotionLock && KeyControl.pressed() && KeyA.pressed() || KeyLeft.pressed())
+		{
+			state = StateType::RUN;
+			isMirror = true;
 		}
 
 		if (KeySpace.down() && defaultState)
@@ -249,5 +277,8 @@ void GameObject::Initialize()
 
 	//初期移動量
 	velocity = { 0,0 };
+
+	//時間管理用
+	animationTime.start();
 }
 

@@ -1,6 +1,8 @@
 ﻿#include"Scene.h"
 #undef System
 
+
+
 void Main()
 {
 	//映像出力設定
@@ -26,7 +28,6 @@ void Main()
 
 
 
-
 	while (System60::Update())
 	{
 		// ウィンドウタイトルに直近のフレームレートを表示
@@ -43,6 +44,6 @@ void Main()
 		}
 		setUp.SetUpEnable();
 	}
-
-	
 }
+
+

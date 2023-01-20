@@ -2,26 +2,6 @@
 #include "GameObject.h"
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //使ってない
 //void GameObject::AnimationProcess(AnimationClass animation)
 //{
