@@ -70,7 +70,7 @@ public:
 	/// @param statenumber 状態番号
 	void Reload(Texture _texture, CSV animationData, int statenumber);
 
-	void Draw(Vec2 position) const;
+	void Draw(Vec2 position, bool _mirror) const;
 
 	/*デバック用*/
 

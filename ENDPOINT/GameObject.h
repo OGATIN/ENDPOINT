@@ -54,9 +54,10 @@ public:
 	String statename;
 	String weaponname;
 	
-	GameObject(Texture _wait,CSV AnimationData, CSV statusData)
+	GameObject(Texture _animation,Texture _walkTex,CSV AnimationData, CSV statusData)
 	{
-		animation[0][0].Reload(_wait, AnimationData,1);/*@*/
+		animation[0][0].Reload(_animation, AnimationData,1);/*@*/
+		animation[0][1].Reload(_walkTex, AnimationData,2);/*@*/
 		status.Reload(statusData);
 	};
 

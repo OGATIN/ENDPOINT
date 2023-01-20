@@ -25,7 +25,7 @@ void Stage1::update()
 {
 	
 	//床と触れていたら移動をやめて座標補正(仮)
-	if (Player.GetBottom() > 590)
+	if (Player.GetBottom() > 540)
 	{
 		Player.velocity.y = 0;
 

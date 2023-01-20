@@ -60,7 +60,7 @@ private:
 
 
 
-	GameObject Player = { waitingMotionPNG ,AnimationData ,BasicStatData };
+	GameObject Player = { waitingMotionPNG ,walkMotionPNG ,AnimationData ,BasicStatData };
 
 	Font font{ 30 };
 

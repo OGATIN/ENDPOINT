@@ -66,16 +66,14 @@ void GameObject::Jump()
 
 void GameObject::Walk()
 {
-	//if (isMirror)//ベクトルじゃないの？
-	//{
-	//	position.x += charaSpeed;
-	//}
-	//else
-	//{
-	//	position.x -= charaSpeed;
-	//}
-	//
-	
+	if (isMirror)//ベクトルじゃないの？
+	{
+		position.x -= status.weight;
+	}
+	else
+	{
+		position.x += status.weight;
+	}
 }
 
 void GameObject::Move()
@@ -161,7 +159,7 @@ void GameObject::StateManagement()
 
 void GameObject::Draw() const
 {
-	animation[weaponTypeNumber][stateTypeNumber].Draw(position);
+	animation[weaponTypeNumber][stateTypeNumber].Draw(position,isMirror);
 }
 
 void GameObject::ChangeState()
@@ -192,13 +190,13 @@ void GameObject::ChangeState()
 			isMirror = true;
 		}
 
-		if (not isMotionLock && KeyControl.pressed() && KeyD.pressed() || KeyRight.pressed())
+		if (not isMotionLock && KeyControl.pressed() && (KeyD.pressed() || KeyRight.pressed()))
 		{
 			state = StateType::RUN;
 			isMirror = false;
 		}
 
-		if (not isMotionLock && KeyControl.pressed() && KeyA.pressed() || KeyLeft.pressed())
+		if (not isMotionLock && KeyControl.pressed() && (KeyA.pressed() || KeyLeft.pressed()))
 		{
 			state = StateType::RUN;
 			isMirror = true;
