@@ -22,6 +22,7 @@ void Stage1::Initialize()
 
 	//ストップウォッチスタート
 	Player.MotionStart();
+
 }
 
 void Stage1::update()
@@ -78,18 +79,42 @@ void Stage1::update()
 
 void Stage1::draw() const
 {
+
 	BackScreen.resized(Scene::Width()).draw();
 
-	for (int x = 0; x < Scene::Width() / 32; x++)
+	for (int y = 0; y < 25; y++)
 	{
-		UnderGround(MapSize * 2 + 1, MapSize * 1 + 1, MapSize, MapSize).scaled(2).draw(x * MapSize * 2, 558);//草
-		UnderGround(MapSize * 4, MapSize * 0, MapSize, MapSize).scaled(2).draw(x * MapSize * 2, 590);//地面
-		for (int y = 0; y < 10; y++)
+		for (int x = 0; x < 48; x++)
 		{
-			UnderGround(MapSize * 15, MapSize * 1, MapSize, MapSize).scaled(2).draw(x * MapSize * 2, 621 + MapSize * 2 * y);//土
+			switch (mapData[y][x])
+			{
+			case 0:
+				continue;
+			case 1:
+				UnderGround(MapSize * 4, MapSize * 0, MapSize, MapSize).scaled(2).draw(x * MapSize * 2, y * MapSize * 2);//地面
+				break;
+			case 2:
+				UnderGround(MapSize * 15, MapSize * 1, MapSize, MapSize).scaled(2).draw(x * MapSize * 2, y * MapSize * 2);//土
+				break;
+			default:
+				break;
+			}
+
 		}
 	}
+	/*
+	for (int y = 0; y < Scene::Height()/32; y++)
+	{
+		for (int x = 0; x < Scene::Width()/32; x++)
+		{
+			maphitRect.x = x * 32;
+			maphitRect.y = y * 32;
+			maphitRect.drawFrame(3,Palette::Black);
+		}
 
+	}
+	*/
+	
 	//画像描画
 	Player.StateManagementDraw();
 
@@ -101,4 +126,8 @@ void Stage1::draw() const
 	font(Player.velocity).draw(450, 30);
 	font(Cursor::Pos()).draw(650, 0);
 	Player.hitBox.drawFrame(2, Palette::Green);
+	
 }
+
+
+
