@@ -185,7 +185,53 @@ void GameObject::StateManagementDraw() const
 	}
 }
 
+void GameObject::ChangeState()
+{
+	bool defaultState = (state == StateType::WAIT || state == StateType::WAIK || state == StateType::RUN);
 
+	if (isHit)
+	{
+		state == StateType::RECEIVE;
+	}
+
+	if (state != StateType::RECEIVE)
+	{
+		if (not isMotionLock)
+		{
+			state = StateType::WAIT;
+		}
+
+		if (not isMotionLock && KeyD.pressed() || KeyRight.pressed())
+		{
+			state = StateType::WAIK;
+		}
+
+		if (not isMotionLock && KeyControl.pressed() && KeyD.pressed() || KeyRight.pressed())
+		{
+			state = StateType::RUN;
+		}
+
+		if (KeySpace.down() && defaultState)
+		{
+			state = StateType::JUMP;
+		}
+
+		if (KeyZ.down() && defaultState)
+		{
+			state = StateType::ATTACK;
+		}
+
+		if (KeyX.down() && defaultState)
+		{
+			state = StateType::MAGIC;
+		}
+
+		if (KeyShift.pressed() && defaultState)
+		{
+			state = StateType::GUARD;
+		}
+	}
+}
 
 /////////////////////////////////////////////////////////////
 //														   //
