@@ -3,12 +3,27 @@ class GameObject
 {
 public:
 
+
+
+	CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
+
 	AnimationClass waitMotion;
+	AnimationClass walkMotion;
+	AnimationClass runMotion;
+	AnimationClass jumpMotion;
+	AnimationClass receiveMotion;
+	AnimationClass attackMotion;
+	AnimationClass magicMotion;
+	AnimationClass guardMotion;
+	AnimationClass notstaminaMotion;
+
+	AnimationClass animation[9];
 
 	StatusClass status;//ステータス
 
 	StateType state = StateType::WAIT;
 
+	Stopwatch animationTime;
 
 	//Rect waitPosDifference = { 62,30,35,130 };
 	Rect shiftInternalHitRect[1][1] = { { {62,30,35,130} } };  //補正
@@ -21,6 +36,7 @@ public:
 	bool isJump = false;
 	bool isMotionLock = false;
 	bool isHit = false;
+	bool isMirror = false;
 
 	int jumpPower = 10;
 	int charaSpeed = 5;
@@ -44,6 +60,9 @@ public:
 
 	/// @brief ジャンプの処理
 	void Jump();
+
+	/// @brief 歩きの処理
+	void Walk();
 
 	/// @brief 移動の処理
 	void Move();

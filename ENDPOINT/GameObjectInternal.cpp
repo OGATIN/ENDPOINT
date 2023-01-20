@@ -49,6 +49,7 @@ Point GameObject::MapLeftBottom(Vec2 camerapos, Point mapchip_px)
 	});
 }
 
+<<<<<<< HEAD
 
 
 /*
@@ -66,6 +67,8 @@ Rect GameObject::MapsPositionRect(Vec2 camerapos,Vec2 mapchip_px)
 }
 */
 
+=======
+>>>>>>> ogatin
 //使ってない
 //void GameObject::AnimationProcess(AnimationClass animation)
 //{
