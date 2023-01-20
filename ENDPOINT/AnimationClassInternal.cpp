@@ -10,6 +10,7 @@ double AnimationClass::OnePatternMotionTime()
 	return motionTime / endPattern;
 }
 
+
 //void AnimationClass::PatternSet()
 //{
 //	startPattern = 0;//

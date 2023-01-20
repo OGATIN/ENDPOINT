@@ -2,15 +2,18 @@
 
 enum class StateType
 {
-	WAIT = 1, WAIK = 2, RUN = 3, JUMP = 4, RECEIVE, ATTACK,MAGIC, GUARD, NOTSTAMINA,
+	WAIT = 0, WAIK = 1, RUN = 2, JUMP = 3, RECEIVE = 4, ATTACK = 5,MAGIC = 6, GUARD = 7, NOTSTAMINA = 8,
+};
+
+enum class WeaponType
+{
+	FIST = 0, SWORD = 1, HAMMER = 2, CANE = 3
 };
 
 class AnimationClass
 {
 public:
 	Texture texture;			//アニメーションの画像
-
-	Stopwatch currentTime;		//時間
 
 	double motionTime = 0;		//モーション時間(秒),当たり判定のある時間などを考慮せず1モーションが終わるまでの時間
 
@@ -21,8 +24,7 @@ public:
 	Rect cutPos = { 0,0,0,0 };  //画像の切り取り位置
 
 
-	//デバック用フォント
-	Font font30{ 30 };
+	//デバック用
 	double elapsedTime = 0;
 
 
@@ -68,19 +70,10 @@ public:
 	/// @param statenumber 状態番号
 	void Reload(Texture _texture, CSV animationData, int statenumber);
 
-
-	void PatternLoop();
-
-
-	/// @brief 画像表示
-	/// @param position 表示位置 
-	void Draw(Vec2 position)const;
-
+	void Draw(Vec2 position) const;
 
 	/*デバック用*/
 
-	/// @brief {全体時間,経過時間,1枚あたりの時間,切り取り位置} の値を表示
-	void DebugDrow()const;
 
 	/*内部データ用*/
 	/*AnimationClassInternal.cppにあります。*/

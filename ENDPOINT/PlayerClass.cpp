@@ -89,22 +89,22 @@
 
 void PlayerClass::MotionStart()
 {
-	playerAnimation.currentTime.start();//再開にも使えます。
+	//playerAnimation.start();//再開にも使えます。
 }
 
 void PlayerClass::MotionStop()
 {
-	//ストップウォッチが停止しているか
-	if (playerAnimation.currentTime.isRunning())
-	{
-		//計測中なら停止(経過時間はそのまま)
-		playerAnimation.currentTime.pause();
-	}
-	else
-	{
-		//停止中なら計測
-		playerAnimation.currentTime.resume();
-	}
+	////ストップウォッチが停止しているか
+	//if (playerAnimation.currentTime.isRunning())
+	//{
+	//	//計測中なら停止(経過時間はそのまま)
+	//	playerAnimation.currentTime.pause();
+	//}
+	//else
+	//{
+	//	//停止中なら計測
+	//	playerAnimation.currentTime.resume();
+	//}
 }
 
 void PlayerClass::Jump()

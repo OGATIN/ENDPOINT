@@ -23,18 +23,20 @@ void Stage1::Initialize()
 
 void Stage1::update()
 {
-	/*
+	
 	//床と触れていたら移動をやめて座標補正(仮)
 	if (Player.GetBottom() > 590)
 	{
 		Player.velocity.y = 0;
 
-		//プレイヤー座標が透過部分も込みなので当たり判定の座標に補正しなければならない
-		Player.position.y = 590 - ((int)Player.playerAnimation.waitPosDifference.y + (int)Player.hitBox.h);
+		////プレイヤー座標が透過部分も込みなので当たり判定の座標に補正しなければならない
+		//Player.position.y = 590 - ((int)Player.playerAnimation.waitPosDifference.y + (int)Player.hitBox.h);
 	}
-	*/
-
+	
+	Player.Update();
 	Player.StateManagement();
+	Player.PatternLoop();
+	Player.ChangeState();
 
 	if (KeyEnter.down())
 	{
@@ -68,34 +70,36 @@ void Stage1::draw() const
 
 		}
 	}
-	/*
-	for (int y = 0; y < Scene::Height()/32; y++)
-	{
-		for (int x = 0; x < Scene::Width()/32; x++)
-		{
-			maphitRect.x = x * 32;
-			maphitRect.y = y * 32;
-			maphitRect.drawFrame(3,Palette::Black);
-		}
-
-	}
-	*/
 	
 	//画像描画
-	Player.StateManagementDraw();
-	Player.waitMotion.DebugDrow();
+	Player.Draw();
+	Player.StatusDraw();
+	Player.TimeDebuggDraw();
 	Player.status.DaseStatusDrow();
 	Player.hitBox.drawFrame(2, Palette::Green);
 
 
-	/*
+	
 	//デバック用
 	font(Player.position).draw(450, 0);
 	font(Player.velocity).draw(450, 30);
-	font(Cursor::Pos()).draw(650, 0);
+	/*font(Cursor::Pos()).draw(650, 0);
 	Player.hitBox.drawFrame(2, Palette::Green);
 	*/
-	
+
+	/*
+for (int y = 0; y < Scene::Height()/32; y++)
+{
+	for (int x = 0; x < Scene::Width()/32; x++)
+	{
+		maphitRect.x = x * 32;
+		maphitRect.y = y * 32;
+		maphitRect.drawFrame(3,Palette::Black);
+	}
+
+}
+*/
+
 }
 
 

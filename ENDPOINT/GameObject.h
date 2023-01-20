@@ -5,27 +5,33 @@ public:
 
 
 
-	CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
+	//CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
 
-	AnimationClass waitMotion;
-	AnimationClass walkMotion;
-	AnimationClass runMotion;
-	AnimationClass jumpMotion;
-	AnimationClass receiveMotion;
-	AnimationClass attackMotion;
-	AnimationClass magicMotion;
-	AnimationClass guardMotion;
-	AnimationClass notstaminaMotion;
+	//AnimationClass waitMotion;
+	//AnimationClass walkMotion;
+	//AnimationClass runMotion;
+	//AnimationClass jumpMotion;
+	//AnimationClass receiveMotion;
+	//AnimationClass attackMotion;
+	//AnimationClass magicMotion;
+	//AnimationClass guardMotion;
+	//AnimationClass notstaminaMotion;
 
-	AnimationClass animation[9];
+	AnimationClass animation[4][9];//武器の種類×4 各モーションの種類×9
+
+	Stopwatch currentTime;		//時間
 
 	StatusClass status;//ステータス
 
-	StateType state = StateType::WAIT;
+	StateType state = StateType::WAIT;//現在の状態
+
+	WeaponType weapon = WeaponType::FIST;//現在の武器
+
+	int stateTypeNumber = 0;//現在の状態番号
+	int weaponTypeNumber = 0;//現在の武器番号
 
 	Stopwatch animationTime;
 
-	//Rect waitPosDifference = { 62,30,35,130 };
 	Rect shiftInternalHitRect[1][1] = { { {62,30,35,130} } };  //補正
 
 	Vec2 position = { 0,0 };
@@ -42,10 +48,15 @@ public:
 	int charaSpeed = 5;
 
 
+	//デバック用フォント
+	Font font30{ 30 };
+
+	String statename;
+	String weaponname;
 	
 	GameObject(Texture _wait,CSV AnimationData, CSV statusData)
 	{
-		waitMotion.Reload(_wait, AnimationData,1);/*@*/
+		animation[0][0].Reload(_wait, AnimationData,1);/*@*/
 		status.Reload(statusData);
 	};
 
@@ -58,6 +69,9 @@ public:
 
 	void MotionStop();
 
+	//モーションを動かす
+	void PatternLoop();
+
 	/// @brief ジャンプの処理
 	void Jump();
 
@@ -66,17 +80,26 @@ public:
 
 	/// @brief 移動の処理
 	void Move();
+
 	/// @brief 状態に応じた処理を行う
 	void StateManagement();
 
-	/// @brief 状態に応じたテクスチャを描画する
-	void StateManagementDraw()const;
+	/// @brief animationのテクスチャを描画する
+	void Draw()const;
 
 	/// @brief 状態を変化させる処理
 	void ChangeState();
 
+
+
 	//デバック用
 	void Initialize();
+
+	/// @brief 現在の 状態 武器 を表示します。
+	void StatusDraw()const;
+
+	/// @brief 時間関連のデバック
+	void TimeDebuggDraw()const;
 
 
 	
