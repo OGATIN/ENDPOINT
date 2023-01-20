@@ -8,9 +8,9 @@ enum class StateType
 class AnimationClass
 {
 public:
-	Texture texture;
+	Texture texture;			//アニメーションの画像
 
-	Stopwatch currentTime;
+	Stopwatch currentTime;		//時間
 
 	double motionTime = 0;		//モーション時間(秒),当たり判定のある時間などを考慮せず1モーションが終わるまでの時間
 

@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "GameObject.h"
 
-void GameObject::PlayerUpdate()
+void GameObject::Update()
 {
 	//当たり判定更新
 	//hitBox = GetHitRect();
@@ -131,6 +131,8 @@ void GameObject::Move()
 
 void GameObject::StateManagement()
 {
+	Update();
+
 	switch (state)
 	{
 	case StateType::WAIT:
@@ -203,6 +205,5 @@ void GameObject::Initialize()
 
 	//初期移動量
 	velocity = { 0,0 };
-
 }
 
