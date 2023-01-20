@@ -31,19 +31,27 @@ public:
 
 	//機能
 
-	void PlayerUpdate();
+	/// @brief 毎フレーム更新する情報
+	void Update();
 
 	void MotionStart();
 
 	void MotionStop();
 
+	/// @brief ジャンプの処理
 	void Jump();
 
+	/// @brief 移動の処理
 	void Move();
 
+	/// @brief 状態に応じた処理を行う
 	void StateManagement();
 
+	/// @brief 状態に応じたテクスチャを描画する
 	void StateManagementDraw()const;
+
+	/// @brief 状態を変化させる処理
+	void ChangeState();
 
 	//デバック用
 
