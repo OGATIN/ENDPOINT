@@ -10,7 +10,8 @@ public:
 	StateType state = StateType::WAIT;
 
 
-	Rect waitPosDifference = { 62,30,35,130 };
+	//Rect waitPosDifference = { 62,30,35,130 };
+	Rect shiftInternalHitRect[1][1] = { { {62,30,35,130} } };  //補正
 
 	Vec2 position = { 0,0 };
 	Vec2 velocity = { 0,0 };
@@ -25,6 +26,7 @@ public:
 	int charaSpeed = 5;
 
 
+	
 	GameObject(Texture _wait,CSV AnimationData, CSV statusData)
 	{
 		waitMotion.Reload(_wait, AnimationData,1);/*@*/
@@ -45,7 +47,6 @@ public:
 
 	/// @brief 移動の処理
 	void Move();
-
 	/// @brief 状態に応じた処理を行う
 	void StateManagement();
 
@@ -56,15 +57,20 @@ public:
 	void ChangeState();
 
 	//デバック用
-
 	void Initialize();
 
 
-
-
-	//ここから下はGameObjectInternal.cppに
-
+	
 	/*内部データ用*/
+	Rect GetHitRect();
+	int GetTop();
+	int GetBottom();
+	int GetLeft();
+	int GetRight();
+
+
+	Point MapLeftBottom(Vec2 camerapos, Point mapchip_px);
+	Point MapRightBottom(Vec2 camerapos, Point mapchip_px);
 
 
 	//使ってないの
@@ -74,11 +80,6 @@ public:
     //void AnimationProcess(AnimationClass animation);
     //void AnimationDraw(AnimationClass animation,Vec2 position)const;
     //void AnimationHitBox(AnimationClass animation,CSV hitBoxData);
-	//Rect GetHitRect(AnimationClass animation);
-	//int GetTop(AnimationClass animation);
-	//int GetBottom(AnimationClass animation);
-	//int GetLeft(AnimationClass animation);
-	//int GetRight(AnimationClass animation);
 	//void PlayerDraw()const;これいる？
 
 };

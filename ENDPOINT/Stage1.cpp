@@ -85,6 +85,7 @@ void Stage1::draw() const
 	Player.StateManagementDraw();
 	Player.waitMotion.DebugDrow();
 	Player.status.DaseStatusDrow();
+	Player.hitBox.drawFrame(2, Palette::Green);
 
 
 	/*

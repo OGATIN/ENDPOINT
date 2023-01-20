@@ -4,7 +4,7 @@
 void GameObject::Update()
 {
 	//当たり判定更新
-	//hitBox = GetHitRect();
+	hitBox = GetHitRect();
 
 	//座標更新
 	position += velocity;
