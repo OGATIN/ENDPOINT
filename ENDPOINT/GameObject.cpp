@@ -66,13 +66,25 @@ void GameObject::Jump()
 
 void GameObject::Walk()
 {
-	if (isMirror)//ベクトルじゃないの？
+	if (isMirror)
 	{
 		position.x -= status.weight;
 	}
 	else
 	{
 		position.x += status.weight;
+	}
+}
+
+void GameObject::Run()
+{
+	if (isMirror)
+	{
+		position.x -= status.weight * 1.2;
+	}
+	else
+	{
+		position.x += status.weight * 1.2;
 	}
 }
 
@@ -107,10 +119,12 @@ void GameObject::StateManagement()
 		statename = { U"歩き" };
 		break;
 	case StateType::RUN:
+		Run();
 		stateTypeNumber = 2;
 		statename = { U"走り" };
 		break;
 	case StateType::JUMP:
+		Jump();
 		stateTypeNumber = 3;
 		statename = { U"ジャンプ" };
 		break;
