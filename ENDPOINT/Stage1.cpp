@@ -25,7 +25,7 @@ void Stage1::update()
 {
 	
 	//床と触れていたら移動をやめて座標補正(仮)
-	if (Player.GetBottom() > 540)
+	if (Player.GetBottom() > 474)
 	{
 		Player.velocity.y = 0;
 
@@ -80,6 +80,9 @@ void Stage1::update()
 		//一時停止
 		Player.MotionStop();
 	}
+
+	a = { Player.position, Player.animation[0][0].texture.size() };
+
 }
 
 void Stage1::draw() const
@@ -114,7 +117,6 @@ void Stage1::draw() const
 	Player.TimeDebuggDraw();
 	Player.status.DaseStatusDrow();
 	Player.hitBox.drawFrame(2, Palette::Green);
-
 
 	
 	//デバック用

@@ -23,6 +23,7 @@ public:
 
 	Rect cutPos = { 0,0,0,0 };  //画像の切り取り位置
 
+	int size = 400; //画像のピクセル数
 
 	//デバック用
 	double elapsedTime = 0;

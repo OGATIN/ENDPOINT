@@ -55,6 +55,7 @@ public:
 
 	String statename;
 	String weaponname;
+
 	
 	GameObject(Texture _animation,Texture _walkTex,Texture _runTex,Texture _jumpTex,CSV AnimationData, CSV statusData)
 	{

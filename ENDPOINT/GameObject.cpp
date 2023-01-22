@@ -323,7 +323,7 @@ void GameObject::ChangeState()
 void GameObject::Initialize()
 {
 	//初期座標
-	position = { 400,425 };
+	position = { 250,125 };
 
 	//初期移動量
 	velocity = { 0,0 };
