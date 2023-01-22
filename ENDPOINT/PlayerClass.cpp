@@ -38,7 +38,7 @@
 //	case StateType::WAIT:
 //		playerAnimation.Wait();
 //		break;
-//	case StateType::WAIK:
+//	case StateType::WALK:
 //		break;
 //	case StateType::RUN:
 //		break;
@@ -66,7 +66,7 @@
 //	case StateType::WAIT:
 //		playerAnimation.WaitDraw(position);
 //		break;
-//	case StateType::WAIK:
+//	case StateType::WALK:
 //		break;
 //	case StateType::RUN:
 //		break;

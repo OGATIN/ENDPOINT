@@ -12,6 +12,40 @@ void GameObject::Update()
 	//重力加算
 	velocity.y += gravity;
 
+	//重量定義
+	if (status.weight < charaSpeedMax)
+	{
+		charaSpeed = status.weight;
+	}
+	else
+	{
+		charaSpeed = charaSpeedMax;
+	}
+
+	//重量定義
+	if (status.weight < jumpPowerMax)
+	{
+		jumpPower = status.weight;
+	}
+	else
+	{
+		jumpPower = charaSpeedMax;
+	}
+	
+	//Xベクトル減少
+	if (state != StateType::JUMP)
+	{
+		if (velocity.x > 0)
+		{
+			velocity.x -= 1;
+		}
+
+		if (velocity.x < 0)
+		{
+			velocity.x += 1;
+		}
+	}
+	
 }
 
 void GameObject::MotionStart()
@@ -59,72 +93,111 @@ void GameObject::PatternLoop()
 
 }
 
-void GameObject::Jump()
+
+void GameObject::WalkProcess()
+{
+	if (isMirror)
+	{
+		velocity.x = - charaSpeed;
+	}
+	else
+	{
+		velocity.x =  charaSpeed;
+	}
+}
+
+void GameObject::RunProcess()
+{
+	if (isMirror)
+	{
+		velocity.x = - charaSpeed * 1.5;
+	}
+	else
+	{
+		velocity.x = charaSpeed * 1.5;
+	}
+}
+
+//要検討
+void GameObject::JumpProcess()
 {
 	velocity.y = -jumpPower;
 }
 
-void GameObject::Walk()
+void GameObject::ChangeWait()
 {
-	if (isMirror)
+	if (state == StateType::WALK || state == StateType::RUN || state == StateType::JUMP || state == StateType::MAGIC || state == StateType::GUARD || state == StateType::RECEIVE)
 	{
-		position.x -= status.weight;
-	}
-	else
-	{
-		position.x += status.weight;
+		state = StateType::WAIT;
 	}
 }
 
-void GameObject::Run()
+void GameObject::ChangeWalkR()
 {
-	if (isMirror)
+	if (state == StateType::WAIT || state == StateType::RUN)
 	{
-		position.x -= status.weight * 1.2;
-	}
-	else
-	{
-		position.x += status.weight * 1.2;
+		state = StateType::WALK;
+		isMirror = false;
 	}
 }
 
-void GameObject::Move()
+void GameObject::ChangeWalkL()
 {
-	//左右移動(仮)
-	if (KeyRight.pressed() || KeyD.down())
+	if (state == StateType::WAIT || state == StateType::RUN)
 	{
-		position.x += charaSpeed;
-	}
-	if (KeyLeft.pressed() || KeyA.down())
-	{
-		position.x -= charaSpeed;
+		state = StateType::WALK;
+		isMirror = true;
 	}
 }
+
+void GameObject::ChangeRunR()
+{
+	if (state == StateType::WAIT || state == StateType::WALK)
+	{
+		state = StateType::RUN;
+		isMirror = false;
+	}	
+}
+
+void GameObject::ChangeRunL()
+{
+	if (state == StateType::WAIT || state == StateType::WALK)
+	{
+		state = StateType::RUN;
+		isMirror = true;
+	}
+}
+
+void GameObject::ChangeJump()
+{
+	if (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN || state == StateType::RECEIVE)
+	{
+		state = StateType::JUMP;
+	}
+}
+
+
 
 void GameObject::StateManagement()
 {
-	/*Update();*/
-
-	//ChangeState();
-
 	switch (state)
 	{
 	case StateType::WAIT:
 		stateTypeNumber = 0;
 		statename = {U"待機"};
 		break;
-	case StateType::WAIK:
-		Walk();
+	case StateType::WALK:
+		WalkProcess();
 		stateTypeNumber = 1;
 		statename = { U"歩き" };
 		break;
 	case StateType::RUN:
-		Run();
+		RunProcess();
 		stateTypeNumber = 2;
 		statename = { U"走り" };
 		break;
 	case StateType::JUMP:
-		Jump();
+		JumpProcess();
 		stateTypeNumber = 3;
 		statename = { U"ジャンプ" };
 		break;
@@ -178,7 +251,7 @@ void GameObject::Draw() const
 
 void GameObject::ChangeState()
 {
-	bool defaultState = (state == StateType::WAIT || state == StateType::WAIK || state == StateType::RUN);
+	bool defaultState = (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN);
 
 	if (isHit)
 	{
@@ -194,13 +267,13 @@ void GameObject::ChangeState()
 
 		if (not isMotionLock && (KeyD.pressed() || KeyRight.pressed()))
 		{
-			state = StateType::WAIK;
+			state = StateType::WALK;
 			isMirror = false;
 		}
 
 		if (not isMotionLock && (KeyA.pressed() || KeyLeft.pressed()))
 		{
-			state = StateType::WAIK;
+			state = StateType::WALK;
 			isMirror = true;
 		}
 

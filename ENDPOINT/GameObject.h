@@ -44,8 +44,10 @@ public:
 	bool isHit = false;
 	bool isMirror = false;
 
-	int jumpPower = 10;
-	int charaSpeed = 5;
+	const int charaSpeedMax = 10;
+	const int jumpPowerMax = 20;
+	int jumpPower = 0;
+	int charaSpeed = 0;
 
 
 	//デバック用フォント
@@ -75,17 +77,34 @@ public:
 	//モーションを動かす
 	void PatternLoop();
 
-	/// @brief ジャンプの処理
-	void Jump();
-
 	/// @brief 歩きの処理
-	void Walk();
+	void WalkProcess();
 
 	/// @brief 走りの処理
-	void Run();
+	void RunProcess();
 
-	/// @brief 移動の処理
-	void Move();
+	/// @brief ジャンプの処理
+	void JumpProcess();
+
+	/// @brief 待機状態への遷移
+	void ChangeWait();
+
+	/// @brief 歩き状態への遷移(右)
+	void ChangeWalkR();
+
+	/// @brief 歩き状態への遷移(左)
+	void ChangeWalkL();
+
+	/// @brief 走り状態への遷移(右)
+	void ChangeRunR();
+
+	/// @brief 走り状態への遷移(左)
+	void ChangeRunL();
+
+	/// @brief ジャンプ状態への遷移
+	void ChangeJump();
+
+
 
 	/// @brief 状態に応じた処理を行う
 	void StateManagement();
@@ -124,7 +143,7 @@ public:
 	//使ってないの
     //CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
     //Texture waitingMotionPNG{ U"Material/1.img/1.待機モーション.png" };
-    //Texture waikMotionPNG{ U"Material/1.img/1.待機モーション.png" };
+    //Texture WALKMotionPNG{ U"Material/1.img/1.待機モーション.png" };
     //void AnimationProcess(AnimationClass animation);
     //void AnimationDraw(AnimationClass animation,Vec2 position)const;
     //void AnimationHitBox(AnimationClass animation,CSV hitBoxData);

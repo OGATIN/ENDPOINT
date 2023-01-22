@@ -36,7 +36,44 @@ void Stage1::update()
 	Player.Update();
 	Player.StateManagement();
 	Player.PatternLoop();
-	Player.ChangeState();
+	//Player.ChangeState();
+
+	Player.ChangeWait();
+
+
+
+	if (KeyRight.pressed() || KeyD.pressed())
+	{
+		Player.ChangeWalkR();
+	}
+
+	if (KeyLeft.pressed() || KeyA.pressed())
+	{
+		Player.ChangeWalkL();
+	}
+
+	if (KeyControl.pressed() && ( KeyRight.pressed() || KeyD.pressed() ))
+	{
+		Player.ChangeRunR();
+	}
+
+	if (KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed()))
+	{
+		Player.ChangeRunL();
+	}
+
+	//同時入力で停止
+	if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed()) && (KeyRight.pressed() || KeyD.pressed()))
+							  || ((KeyLeft.pressed() || KeyA.pressed()) && (KeyRight.pressed() || KeyD.pressed())))
+	{
+		Player.ChangeWait();
+	}
+
+	if (KeySpace.down() || KeyUp.down())
+	{
+		Player.ChangeJump();
+	}
+
 
 	if (KeyEnter.down())
 	{
