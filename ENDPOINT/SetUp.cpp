@@ -53,6 +53,7 @@ void SetUp::update()
 	// 重力の実装
 	// animationclass作成
 	// CSVファイル読み込み
+	// 移動の後隙
 
 	//positionがanimationclass
 	//playerの当たり判定の情報をposition差分のRect作成,CSV

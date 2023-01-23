@@ -137,10 +137,10 @@ void GameObject::JumpProcess()
 
 void GameObject::ChangeWait()
 {
-	/*if (state == StateType::WALK || state == StateType::RUN || state == StateType::JUMP || state == StateType::MAGIC || state == StateType::GUARD || state == StateType::RECEIVE)
+	if (state == StateType::WALK || state == StateType::RUN || state == StateType::JUMP || state == StateType::MAGIC || state == StateType::GUARD || state == StateType::RECEIVE)
 	{
 		state = StateType::WAIT;
-	}*/
+	}
 }
 
 void GameObject::ChangeWalkR()

@@ -73,9 +73,10 @@ void Stage1::update()
 	}
 
 	//ジャンプ
-	if (KeySpace.pressed() || KeyUp.down())
+	if (KeySpace.down() || KeyUp.down())
 	{
 		Player.ChangeJump();
+		Player.isMotionLock;
 	}
 
 	if (KeyEnter.down())
