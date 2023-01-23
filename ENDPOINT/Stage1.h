@@ -58,8 +58,6 @@ private:
 	CSV BasicStatData {U"ConfigData/基礎ステータスデータ.csv"};
 	CSV AnimationData {U"ConfigData/アニメーションデータ.csv"};
 
-
-
 	GameObject Player = { waitingMotionPNG ,walkMotionPNG ,runMotionPNG,jumpMotionPNG,AnimationData ,BasicStatData };
 
 	Font font{ 30 };

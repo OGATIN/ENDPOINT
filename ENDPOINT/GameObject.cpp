@@ -71,8 +71,7 @@ void GameObject::MotionStop()
 }
 
 void GameObject::PatternLoop()
-{
-
+{ 
 	//タイル遷移
 	if (currentTime.ms() > animation[weaponTypeNumber][stateTypeNumber].OnePatternMotionTime())
 	{
@@ -96,6 +95,7 @@ void GameObject::PatternLoop()
 
 void GameObject::WalkProcess()
 {
+	//反転してる向きに応じて処理
 	if (isMirror)
 	{
 		velocity.x = - charaSpeed;
@@ -104,10 +104,16 @@ void GameObject::WalkProcess()
 	{
 		velocity.x =  charaSpeed;
 	}
+
+	if (state == StateType::WALK && velocity.x == 0)
+	{
+		state = StateType::WAIT;
+	}
 }
 
 void GameObject::RunProcess()
 {
+	//反転してる向きに応じて処理
 	if (isMirror)
 	{
 		velocity.x = - charaSpeed * 1.5;
@@ -115,6 +121,11 @@ void GameObject::RunProcess()
 	else
 	{
 		velocity.x = charaSpeed * 1.5;
+	}
+
+	if (state == StateType::RUN && velocity.x == 0)
+	{
+		state = StateType::WAIT;
 	}
 }
 
@@ -126,10 +137,10 @@ void GameObject::JumpProcess()
 
 void GameObject::ChangeWait()
 {
-	if (state == StateType::WALK || state == StateType::RUN || state == StateType::JUMP || state == StateType::MAGIC || state == StateType::GUARD || state == StateType::RECEIVE)
+	/*if (state == StateType::WALK || state == StateType::RUN || state == StateType::JUMP || state == StateType::MAGIC || state == StateType::GUARD || state == StateType::RECEIVE)
 	{
 		state = StateType::WAIT;
-	}
+	}*/
 }
 
 void GameObject::ChangeWalkR()

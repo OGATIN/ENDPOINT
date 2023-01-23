@@ -2,21 +2,6 @@
 class GameObject
 {
 public:
-
-
-
-	//CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
-
-	//AnimationClass waitMotion;
-	//AnimationClass walkMotion;
-	//AnimationClass runMotion;
-	//AnimationClass jumpMotion;
-	//AnimationClass receiveMotion;
-	//AnimationClass attackMotion;
-	//AnimationClass magicMotion;
-	//AnimationClass guardMotion;
-	//AnimationClass notstaminaMotion;
-
 	AnimationClass animation[4][9];//武器の種類×4 各モーションの種類×9
 
 	Stopwatch currentTime;		//時間
@@ -57,7 +42,7 @@ public:
 	String weaponname;
 
 	
-	GameObject(Texture _animation,Texture _walkTex,Texture _runTex,Texture _jumpTex,CSV AnimationData, CSV statusData)
+	GameObject(Texture _animation, Texture _walkTex, Texture _runTex, Texture _jumpTex, CSV AnimationData, CSV statusData)
 	{
 		animation[0][0].Reload(_animation, AnimationData,1);/*@*/
 		animation[0][1].Reload(_walkTex, AnimationData,2);/*@*/

@@ -84,13 +84,6 @@ public:
 	double OnePatternMotionTime();
 
 
-	//使ってないの
-	///// @brief startPatternとendPatternをセット
-	//void PatternSet();
-
-	///// @brief 画像一枚の縦幅と横幅をセット
-	//void TextureWidthHeightSet();
-
 private:
 };
 

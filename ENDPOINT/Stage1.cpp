@@ -24,6 +24,11 @@ void Stage1::Initialize()
 void Stage1::update()
 {
 	
+	Player.Update();
+	Player.StateManagement();
+	Player.PatternLoop();
+	//Player.ChangeState();
+
 	//床と触れていたら移動をやめて座標補正(仮)
 	if (Player.GetBottom() > 474)
 	{
@@ -32,31 +37,29 @@ void Stage1::update()
 		////プレイヤー座標が透過部分も込みなので当たり判定の座標に補正しなければならない
 		//Player.position.y = 590 - ((int)Player.playerAnimation.waitPosDifference.y + (int)Player.hitBox.h);
 	}
-	
-	Player.Update();
-	Player.StateManagement();
-	Player.PatternLoop();
-	//Player.ChangeState();
 
+	//キー入力で処理
 	Player.ChangeWait();
 
-
-
+	//右歩き
 	if (KeyRight.pressed() || KeyD.pressed())
 	{
 		Player.ChangeWalkR();
 	}
 
+	//左歩き
 	if (KeyLeft.pressed() || KeyA.pressed())
 	{
 		Player.ChangeWalkL();
 	}
 
+	//右ダッシュ
 	if (KeyControl.pressed() && ( KeyRight.pressed() || KeyD.pressed() ))
 	{
 		Player.ChangeRunR();
 	}
 
+	//左ダッシュ
 	if (KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed()))
 	{
 		Player.ChangeRunL();
@@ -69,11 +72,11 @@ void Stage1::update()
 		Player.ChangeWait();
 	}
 
-	if (KeySpace.down() || KeyUp.down())
+	//ジャンプ
+	if (KeySpace.pressed() || KeyUp.down())
 	{
 		Player.ChangeJump();
 	}
-
 
 	if (KeyEnter.down())
 	{
