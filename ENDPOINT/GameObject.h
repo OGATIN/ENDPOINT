@@ -124,6 +124,8 @@ public:
 
 	Point MapLeftBottom(Vec2 camerapos, Point mapchip_px);
 	Point MapRightBottom(Vec2 camerapos, Point mapchip_px);
+	Point MapLeftTop(Vec2 camerapos, Point mapchip_px);
+	Point MapRightTop(Vec2 camerapos, Point mapchip_px);
 
 
 	//使ってないの
