@@ -33,7 +33,7 @@ void GameObject::Update()
 	}
 	
 	//Xベクトル減少
-	if (state != StateType::JUMP)
+	if (state != StateType::FALLING && state != StateType::JUMP)
 	{
 		if (velocity.x > 0)
 		{
@@ -43,6 +43,19 @@ void GameObject::Update()
 		if (velocity.x < 0)
 		{
 			velocity.x += 1;
+		}
+	}
+
+	if (state == StateType::JUMP)
+	{
+		if (velocity.x > 0)
+		{
+			velocity.x -= 0.1;
+		}
+
+		if (velocity.x < 0)
+		{
+			velocity.x += 0.1;
 		}
 	}
 	
@@ -72,12 +85,7 @@ void GameObject::MotionStop()
 
 void GameObject::PatternLoop()
 { 
-	//タイル遷移
-	if (currentTime.ms() > animation[weaponTypeNumber][stateTypeNumber].OnePatternMotionTime())
-	{
-		animation[weaponTypeNumber][stateTypeNumber].cutPos.x++;
-		currentTime.restart();
-	}
+	OnePattern();
 
 	//ループ
 	if (animation[weaponTypeNumber][stateTypeNumber].cutPos.x >= animation[weaponTypeNumber][stateTypeNumber].endPattern)
@@ -89,7 +97,26 @@ void GameObject::PatternLoop()
 
 	//デバック用
 	animation[weaponTypeNumber][stateTypeNumber].elapsedTime = (animation[weaponTypeNumber][stateTypeNumber].OnePatternMotionTime() * animation[weaponTypeNumber][stateTypeNumber].cutPos.x) + currentTime.ms();
+}
 
+void GameObject::OnePattern()
+{
+	//タイル遷移
+	if (currentTime.ms() > animation[weaponTypeNumber][stateTypeNumber].OnePatternMotionTime())
+	{
+		animation[weaponTypeNumber][stateTypeNumber].cutPos.x++;
+		currentTime.restart();
+	}
+}
+
+bool GameObject::isOneLoop()
+{
+	return animation[weaponTypeNumber][stateTypeNumber].cutPos.x >= animation[weaponTypeNumber][stateTypeNumber].endPattern;
+}
+
+void GameObject::WaitProcess()
+{
+	velocity.x = 0;
 }
 
 
@@ -104,11 +131,6 @@ void GameObject::WalkProcess()
 	{
 		velocity.x =  charaSpeed;
 	}
-
-	if (state == StateType::WALK && velocity.x == 0)
-	{
-		state = StateType::WAIT;
-	}
 }
 
 void GameObject::RunProcess()
@@ -122,30 +144,61 @@ void GameObject::RunProcess()
 	{
 		velocity.x = charaSpeed * 1.5;
 	}
-
-	if (state == StateType::RUN && velocity.x == 0)
-	{
-		state = StateType::WAIT;
-	}
 }
 
 //要検討
 void GameObject::JumpProcess()
 {
-	velocity.y = -jumpPower;
+	if (isOneLoop())
+	{
+		velocity.y = -jumpPower;
+		state = StateType::FALLING;
+	}
 }
 
-void GameObject::ChangeWait()
+void GameObject::FallingProcess()
 {
-	if (state == StateType::WALK || state == StateType::RUN || state == StateType::JUMP || state == StateType::MAGIC || state == StateType::GUARD || state == StateType::RECEIVE)
+	if (isLanding)
 	{
 		state = StateType::WAIT;
 	}
 }
 
+void GameObject::LandingProcess()
+{
+
+}
+
+void GameObject::ReceiveProcess()
+{
+}
+
+void GameObject::AttackProcess()
+{
+	if (isOneLoop())
+	{
+		state = StateType::WAIT;
+	}
+}
+
+void GameObject::ChangeWait()
+{
+	if (state == StateType::WALK || state == StateType::RUN/* || state == StateType::JUMP || state == StateType::MAGIC || state == StateType::GUARD || state == StateType::RECEIVE*/)
+	{
+		state = StateType::WAIT;
+	}
+
+	if (velocity.y == 0 && state == StateType::JUMP)
+	{
+		//state = StateType::WAIT;
+	}
+	
+
+}
+
 void GameObject::ChangeWalkR()
 {
-	if (state == StateType::WAIT || state == StateType::RUN)
+	if ((state == StateType::WAIT || state == StateType::RUN))
 	{
 		state = StateType::WALK;
 		isMirror = false;
@@ -154,7 +207,7 @@ void GameObject::ChangeWalkR()
 
 void GameObject::ChangeWalkL()
 {
-	if (state == StateType::WAIT || state == StateType::RUN)
+	if ((state == StateType::WAIT || state == StateType::RUN))
 	{
 		state = StateType::WALK;
 		isMirror = true;
@@ -163,7 +216,7 @@ void GameObject::ChangeWalkL()
 
 void GameObject::ChangeRunR()
 {
-	if (state == StateType::WAIT || state == StateType::WALK)
+	if ((state == StateType::WAIT || state == StateType::WALK))
 	{
 		state = StateType::RUN;
 		isMirror = false;
@@ -172,7 +225,7 @@ void GameObject::ChangeRunR()
 
 void GameObject::ChangeRunL()
 {
-	if (state == StateType::WAIT || state == StateType::WALK)
+	if ((state == StateType::WAIT || state == StateType::WALK))
 	{
 		state = StateType::RUN;
 		isMirror = true;
@@ -181,9 +234,30 @@ void GameObject::ChangeRunL()
 
 void GameObject::ChangeJump()
 {
-	if (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN || state == StateType::RECEIVE)
+	if (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN)
 	{
 		state = StateType::JUMP;
+	}
+}
+
+void GameObject::ChangeFalling()
+{
+	/*if (not isLanding)
+	{
+		state = StateType::FALLING;
+	}*/
+}
+
+void GameObject::ChangeReceive()
+{
+	state = StateType::RECEIVE;
+}
+
+void GameObject::ChangeAttack()
+{
+	if (state == StateType::WAIT)
+	{
+		state = StateType::ATTACK;
 	}
 }
 
@@ -194,42 +268,61 @@ void GameObject::StateManagement()
 	switch (state)
 	{
 	case StateType::WAIT:
+		PatternLoop();
+		WaitProcess();
 		stateTypeNumber = 0;
 		statename = {U"待機"};
 		break;
 	case StateType::WALK:
+		PatternLoop();
 		WalkProcess();
 		stateTypeNumber = 1;
 		statename = { U"歩き" };
 		break;
 	case StateType::RUN:
+		PatternLoop();
 		RunProcess();
 		stateTypeNumber = 2;
 		statename = { U"走り" };
 		break;
 	case StateType::JUMP:
+		OnePattern();
 		JumpProcess();
 		stateTypeNumber = 3;
 		statename = { U"ジャンプ" };
 		break;
-	case StateType::RECEIVE:
+	case StateType::FALLING:
+		PatternLoop();
+		FallingProcess();
 		stateTypeNumber = 4;
+		statename = { U"滞空" };
+		break;
+	case StateType::LANDING:
+		OnePattern();
+		stateTypeNumber = 5;
+		statename = { U"着地" };
+		break;
+	case StateType::RECEIVE:
+		OnePattern();
+		stateTypeNumber = 6;
 		statename = { U"受け" };
 		break;
 	case StateType::ATTACK:
-		stateTypeNumber = 5;
+		OnePattern();
+		stateTypeNumber = 7;
 		statename = { U"攻撃" };
 		break;
 	case StateType::MAGIC:
-		stateTypeNumber = 6;
+		OnePattern();
+		stateTypeNumber = 8;
 		statename = { U"魔法" };
 		break;
 	case StateType::GUARD:
-		stateTypeNumber = 7;
+		stateTypeNumber = 9;
 		statename = { U"ガード" };
 		break;
 	case StateType::NOTSTAMINA:
-		stateTypeNumber = 8;
+		stateTypeNumber = 10;
 		statename = { U"スタミナ切れ" };
 		break;
 	default:
@@ -260,67 +353,7 @@ void GameObject::Draw() const
 	animation[weaponTypeNumber][stateTypeNumber].Draw(position,isMirror);
 }
 
-void GameObject::ChangeState()
-{
-	bool defaultState = (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN);
 
-	if (isHit)
-	{
-		state = StateType::RECEIVE;
-	}
-
-	if (state != StateType::RECEIVE)
-	{
-		if (not isMotionLock)
-		{
-			state = StateType::WAIT;
-		}
-
-		if (not isMotionLock && (KeyD.pressed() || KeyRight.pressed()))
-		{
-			state = StateType::WALK;
-			isMirror = false;
-		}
-
-		if (not isMotionLock && (KeyA.pressed() || KeyLeft.pressed()))
-		{
-			state = StateType::WALK;
-			isMirror = true;
-		}
-
-		if (not isMotionLock && KeyControl.pressed() && (KeyD.pressed() || KeyRight.pressed()))
-		{
-			state = StateType::RUN;
-			isMirror = false;
-		}
-
-		if (not isMotionLock && KeyControl.pressed() && (KeyA.pressed() || KeyLeft.pressed()))
-		{
-			state = StateType::RUN;
-			isMirror = true;
-		}
-
-		if (KeySpace.down() && defaultState)
-		{
-			state = StateType::JUMP;
-		}
-
-		if (KeyZ.down() && defaultState)
-		{
-			state = StateType::ATTACK;
-		}
-
-		if (KeyX.down() && defaultState)
-		{
-			state = StateType::MAGIC;
-		}
-
-		if (KeyShift.pressed() && defaultState)
-		{
-			state = StateType::GUARD;
-		}
-	}
-}
 
 /////////////////////////////////////////////////////////////
 //														   //

@@ -49,16 +49,15 @@ private:
 	Texture fallingMotionPNG	{ U"Material/1.img/1.拳/5.空中モーション.png" };
 	Texture landingMotionPNG	{ U"Material/1.img/1.拳/6.着地モーション.png" };
 	Texture receiveMotionPNG	{ U"Material/1.img/1.拳/10.受けモーション.png" };
-	Texture swordAttackMotionPNG{ U"Material/1.img/1.拳/1.待機モーション.png" };
-	Texture attackMotionPNG		{ U"Material/1.img/1.拳/1.待機モーション.png" };
-	Texture magicMotionPNG		{ U"Material/1.img/1.拳/1.待機モーション.png" };
-	Texture guardMotionPNG		{ U"Material/1.img/1.拳/1.待機モーション.png" };
-	Texture notstaminaMotionPNG	{ U"Material/1.img/1.拳/1.待機モーション.png" };
+	Texture attackMotionPNG		{ U"Material/1.img/1.拳/7.拳モーション.png" };
+	Texture magicMotionPNG		{ U"Material/1.img/1.拳/8.攻撃魔法モーション.png" };
+	Texture guardMotionPNG		{ U"Material/1.img/1.拳/11.防御モーション.png" };
+	Texture notstaminaMotionPNG	{ U"Material/1.img/1.拳/14.スタミナ切れ(待機).png" };
 
 	CSV BasicStatData {U"ConfigData/基礎ステータスデータ.csv"};
 	CSV AnimationData {U"ConfigData/アニメーションデータ.csv"};
 
-	GameObject Player = { waitingMotionPNG ,walkMotionPNG ,runMotionPNG,jumpMotionPNG,AnimationData ,BasicStatData };
+	GameObject Player = { waitingMotionPNG ,walkMotionPNG ,runMotionPNG,jumpMotionPNG,fallingMotionPNG,landingMotionPNG,receiveMotionPNG,attackMotionPNG,AnimationData ,BasicStatData };
 
 	Font font{ 30 };
 

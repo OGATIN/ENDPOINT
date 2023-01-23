@@ -25,18 +25,24 @@ void Stage1::update()
 {
 	
 	Player.Update();
-	Player.StateManagement();
-	Player.PatternLoop();
-	//Player.ChangeState();
-
 	//床と触れていたら移動をやめて座標補正(仮)
-	if (Player.GetBottom() > 474)
+	if (Player.GetBottom() > 480)
 	{
 		Player.velocity.y = 0;
+		Player.isLanding = true;
 
 		////プレイヤー座標が透過部分も込みなので当たり判定の座標に補正しなければならない
 		//Player.position.y = 590 - ((int)Player.playerAnimation.waitPosDifference.y + (int)Player.hitBox.h);
 	}
+	else
+	{
+		Player.isLanding = false;
+	}
+
+	Player.StateManagement();
+	//Player.PatternLoop();
+	//Player.ChangeState();
+
 
 	//キー入力で処理
 	Player.ChangeWait();
@@ -76,7 +82,12 @@ void Stage1::update()
 	if (KeySpace.down() || KeyUp.down())
 	{
 		Player.ChangeJump();
-		Player.isMotionLock;
+	}
+
+	//攻撃
+	if (KeyZ.down())
+	{
+		Player.ChangeAttack();
 	}
 
 	if (KeyEnter.down())
