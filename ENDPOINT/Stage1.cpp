@@ -21,14 +21,28 @@ void Stage1::Initialize()
 
 }
 
+void Stage1::MapCollision()
+{
+	if (mapData[Player.MapLeftBottom({ 0,0 }, { 32,32 }).y][Player.MapLeftBottom({ 0,0 }, { 32,32 }).x] == 1 ||
+		mapData[Player.MapRightBottom({ 0,0 }, { 32,32 }).y][Player.MapRightBottom({ 0,0 }, { 32,32 }).x] == 1
+		)
+	{
+		Player.velocity.y = 0;
+		Player.position = Player.prePosition;
+
+	}
+}
+
 void Stage1::update()
 {
 	
 	Player.Update();
 	Player.StateManagement();
 	Player.PatternLoop();
+	MapCollision();
+	Player.playerCollsioninputoutdeg();
 	//Player.ChangeState();
-
+	/*
 	//床と触れていたら移動をやめて座標補正(仮)
 	if (Player.GetBottom() > 474)
 	{
@@ -38,6 +52,7 @@ void Stage1::update()
 		//Player.position.y = 590 - ((int)Player.playerAnimation.waitPosDifference.y + (int)Player.hitBox.h);
 	}
 
+	*/
 	//キー入力で処理
 	Player.ChangeWait();
 
@@ -121,29 +136,32 @@ void Stage1::draw() const
 	Player.TimeDebuggDraw();
 	Player.status.DaseStatusDrow();
 	Player.hitBox.drawFrame(2, Palette::Green);
+	Player.playerCollsioninputoutdegDraw();
 
 	
 	//デバック用
 	font(Player.position).draw(450, 0);
 	font(Player.velocity).draw(450, 30);
-	/*font(Cursor::Pos()).draw(650, 0);
+
+}
+
+
+
+
+/*
+	font(Cursor::Pos()).draw(650, 0);
 	Player.hitBox.drawFrame(2, Palette::Green);
-	*/
+	
 
-	/*
-for (int y = 0; y < Scene::Height()/32; y++)
-{
-	for (int x = 0; x < Scene::Width()/32; x++)
+	
+	for (int y = 0; y < Scene::Height()/32; y++)
 	{
-		maphitRect.x = x * 32;
-		maphitRect.y = y * 32;
-		maphitRect.drawFrame(3,Palette::Black);
+		for (int x = 0; x < Scene::Width()/32; x++)
+		{
+			maphitRect.x = x * 32;
+			maphitRect.y = y * 32;
+			maphitRect.drawFrame(3,Palette::Black);
+		}
+
 	}
-
-}
 */
-
-}
-
-
-

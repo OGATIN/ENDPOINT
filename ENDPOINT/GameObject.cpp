@@ -9,6 +9,8 @@ void GameObject::Update()
 	//座標更新
 	position += velocity;
 
+	prePosition = position;
+
 	//重力加算
 	velocity.y += gravity;
 
