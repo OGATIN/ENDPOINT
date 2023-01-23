@@ -34,10 +34,29 @@ Point GameObject::MapRightBottom(Vec2 camerapos, Point mapchip_px)
 {
 
 	return (Point{
-	(position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x) / mapchip_px.x,
+	 (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x) / mapchip_px.x,
 	 (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y + shiftInternalHitRect[0][0].h) / mapchip_px.y
 	});
 
+}
+
+//左上
+Point GameObject::MapLeftTop(Vec2 camerapos, Point mapchip_px)
+{
+	return Point(
+		(position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x) / mapchip_px.x,
+		(position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y ) / mapchip_px.y
+	);
+}
+
+
+//右上
+Point GameObject::MapRightTop(Vec2 camerapos, Point mapchip_px)
+{
+	return Point(
+		(position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x + shiftInternalHitRect[0][0].w) / mapchip_px.x,
+		(position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y) / mapchip_px.y
+	);
 }
 
 //右下
@@ -48,6 +67,8 @@ Point GameObject::MapLeftBottom(Vec2 camerapos, Point mapchip_px)
 	 (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y + shiftInternalHitRect[0][0].h) / mapchip_px.y
 	});
 }
+
+
 
 
 
