@@ -17,9 +17,11 @@ public:
 
 	Stopwatch animationTime;
 
-	Rect shiftInternalHitRect[1][1] = { { {62,30,35,130} } };  //補正
+	//Rect shiftInternalHitRect[1][1] = { { {62,30,35,130} } };  //補正
+	Rect shiftInternalHitRect[1][1] = { { {107,139,38,118/*121*/} } };  //補正
 
 	Vec2 position = { 0,0 };
+	Vec2 prePosition;
 	Vec2 velocity = { 0,0 };
 	Rect hitBox = { 0,0,0,0 };
 
@@ -39,6 +41,10 @@ public:
 	String statename;
 	String weaponname;
 
+	RectF textureSize;
+	int a = 0;
+	Circle r = {0,0,1};
+	RectF S;
 	
 	GameObject(Texture _animation, Texture _walkTex, Texture _runTex, Texture _jumpTex, Texture _fallingTex, Texture _landingTex, Texture _receive,Texture _attackTex, CSV AnimationData, CSV statusData)
 	{
@@ -148,11 +154,18 @@ public:
 	int GetLeft();
 	int GetRight();
 
-
+	/*マップの当たり判定*/
 	Point MapLeftBottom(Vec2 camerapos, Point mapchip_px);
 	Point MapRightBottom(Vec2 camerapos, Point mapchip_px);
 	Point MapLeftTop(Vec2 camerapos, Point mapchip_px);
 	Point MapRightTop(Vec2 camerapos, Point mapchip_px);
+
+
+	void playerCollsioninputoutdeg();
+	void playerCollsioninputoutdegDraw()const;
+
+
+
 
 
 	//使ってないの

@@ -79,4 +79,6 @@ public:
     void draw() const override;
 
     void Initialize();//初期化
+
+	void MapCollision(); //マップ用
 };
