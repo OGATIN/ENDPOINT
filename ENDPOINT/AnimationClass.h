@@ -2,7 +2,7 @@
 
 enum class StateType
 {
-	WAIT = 0, WALK = 1, RUN = 2, JUMP = 3, RECEIVE = 4, ATTACK = 5,MAGIC = 6, GUARD = 7, NOTSTAMINA = 8,
+	WAIT = 0, WALK = 1, RUN = 2, JUMP = 3,FALLING = 4, LANDING = 5, RECEIVE = 6, ATTACK = 7,MAGIC = 8, GUARD = 9, NOTSTAMINA = 10,
 };
 
 enum class WeaponType

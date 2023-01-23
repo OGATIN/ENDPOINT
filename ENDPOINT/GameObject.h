@@ -4,11 +4,11 @@ class GameObject
 public:
 	AnimationClass animation[4][9];//武器の種類×4 各モーションの種類×9
 
-	Stopwatch currentTime;		//時間
+	Stopwatch currentTime;//時間
 
 	StatusClass status;//ステータス
 
-	StateType state = StateType::WAIT;//現在の状態
+	StateType state = StateType::FALLING;//現在の状態
 
 	WeaponType weapon = WeaponType::FIST;//現在の武器
 
@@ -24,9 +24,7 @@ public:
 	Rect hitBox = { 0,0,0,0 };
 
 	double gravity = 0.5;
-	bool isJump = false;
-	bool isMotionLock = false;
-	bool isHit = false;
+	bool isLanding = false;
 	bool isMirror = false;
 
 	const int charaSpeedMax = 10;
@@ -42,12 +40,16 @@ public:
 	String weaponname;
 
 	
-	GameObject(Texture _animation, Texture _walkTex, Texture _runTex, Texture _jumpTex, CSV AnimationData, CSV statusData)
+	GameObject(Texture _animation, Texture _walkTex, Texture _runTex, Texture _jumpTex, Texture _fallingTex, Texture _landingTex, Texture _receive,Texture _attackTex, CSV AnimationData, CSV statusData)
 	{
-		animation[0][0].Reload(_animation, AnimationData,1);/*@*/
-		animation[0][1].Reload(_walkTex, AnimationData,2);/*@*/
-		animation[0][2].Reload(_runTex, AnimationData,3);/*@*/
-		animation[0][3].Reload(_jumpTex, AnimationData,4);/*@*/
+		animation[0][0].Reload(_animation, AnimationData,1);
+		animation[0][1].Reload(_walkTex, AnimationData,2);
+		animation[0][2].Reload(_runTex, AnimationData,3);
+		animation[0][3].Reload(_jumpTex, AnimationData,4);
+		animation[0][4].Reload(_fallingTex, AnimationData,5);
+		animation[0][5].Reload(_landingTex, AnimationData,6);
+		animation[0][6].Reload(_receive, AnimationData,7);
+		animation[0][7].Reload(_attackTex, AnimationData,8);
 		status.Reload(statusData);
 	};
 
@@ -63,6 +65,15 @@ public:
 	//モーションを動かす
 	void PatternLoop();
 
+	//一つのモーションを動かす
+	void OnePattern();
+
+	//一つのモーションを動かす
+	bool isOneLoop();
+
+	/// @brief 待機の処理
+	void WaitProcess();
+
 	/// @brief 歩きの処理
 	void WalkProcess();
 
@@ -71,6 +82,18 @@ public:
 
 	/// @brief ジャンプの処理
 	void JumpProcess();
+
+	/// @brief ジャンプの処理
+	void FallingProcess();
+
+	/// @brief ジャンプの処理
+	void LandingProcess();
+
+	/// @brief ジャンプの処理
+	void ReceiveProcess();
+
+	/// @brief ジャンプの処理
+	void AttackProcess();
 
 	/// @brief 待機状態への遷移
 	void ChangeWait();
@@ -90,6 +113,15 @@ public:
 	/// @brief ジャンプ状態への遷移
 	void ChangeJump();
 
+	/// @brief ジャンプ状態への遷移
+	void ChangeFalling();
+
+	/// @brief ジャンプ状態への遷移
+	void ChangeReceive();
+
+	/// @brief ジャンプ状態への遷移
+	void ChangeAttack();
+
 
 
 	/// @brief 状態に応じた処理を行う
@@ -97,11 +129,6 @@ public:
 
 	/// @brief animationのテクスチャを描画する
 	void Draw()const;
-
-	/// @brief 状態を変化させる処理
-	void ChangeState();
-
-
 
 	//デバック用
 	void Initialize();
