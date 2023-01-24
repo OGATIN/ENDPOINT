@@ -44,7 +44,7 @@ public:
 	RectF textureSize;
 	int a = 0;
 	Circle r = {0,0,1};
-	RectF S;
+	RectF S = { 0,0,0,0 };
 	
 	GameObject(Texture _animation, Texture _walkTex, Texture _runTex, Texture _jumpTex, Texture _fallingTex, Texture _landingTex, Texture _receive,Texture _attackTex, CSV AnimationData, CSV statusData)
 	{
