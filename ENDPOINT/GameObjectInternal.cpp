@@ -69,59 +69,7 @@ Point GameObject::MapLeftBottom(Vec2 camerapos, Point mapchip_px)
 	});
 }
 
-void GameObject::playerCollsioninputoutdeg()
-{
-	textureSize = { position,animation[weaponTypeNumber][stateTypeNumber].texture.size() };
 
-	if (MouseL.down())
-	{
-
-		if (a < 2)
-		{
-			a++;
-
-			if (a == 1)
-			{
-				r.center = Cursor::Pos();
-
-			}
-			else
-			{
-				S = { r.center ,Cursor::Pos() - r.center};
-			}
-		}
-
-
-	}
-
-	if (MouseR.down())
-	{
-		if (a > 0)
-		{
-			a--;
-		}
-	}
-
-}
-
-void GameObject::playerCollsioninputoutdegDraw() const
-{
-	textureSize.drawFrame(3, Palette::Green);
-
-	if (a == 1)
-	{
-		r.draw(Palette::Red);
-	}
-
-	if (a == 2)
-	{
-		S.drawFrame(1,Palette::Blue);
-
-	}
-
-	font30(r.center - textureSize.pos,S.size).draw(450, font30.height() * 2);
-	
-}
 
 
 

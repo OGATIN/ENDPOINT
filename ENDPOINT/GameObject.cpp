@@ -1,6 +1,24 @@
 ﻿#include "stdafx.h"
 #include "GameObject.h"
 
+
+void GameObject::Reload(Texture _animation[4][20], CSV AnimationData, CSV statusData)
+{
+
+	for (int j = 0; j < 4; j++)
+	{
+		for (int i = 0; i < 7; i++)
+		{
+			//とりあえず共通のデータはここでロード
+			animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
+
+		}
+	}
+
+	status.Reload(statusData);
+
+}
+
 void GameObject::Update()
 {
 	//当たり判定更新
@@ -390,6 +408,60 @@ void GameObject::TimeDebuggDraw() const
 	font30(U"経過時間 ", animation[weaponTypeNumber][stateTypeNumber].elapsedTime).draw(Scene::Width() - font30(U"経過時間 ", animation[weaponTypeNumber][stateTypeNumber].elapsedTime).region().w, font30.height() * 3);
 	font30(U"1枚あたりの時間 ", currentTime.ms()).draw(Scene::Width() - font30(U"1枚あたりの時間 ", currentTime.ms()).region().w, font30.height() * 4);
 	font30(U"切り取り位置 ", animation[weaponTypeNumber][stateTypeNumber].cutPos).draw(Scene::Width() - font30(U"切り取り位置 ", animation[weaponTypeNumber][stateTypeNumber].cutPos).region().w, font30.height() * 5);
+
+}
+
+void GameObject::playerCollsioninputoutdeg()
+{
+	textureSize = { position,animation[weaponTypeNumber][stateTypeNumber].texture.size() };
+
+	if (MouseL.down())
+	{
+
+		if (clickCount < 2)
+		{
+			clickCount++;
+
+			if (clickCount == 1)
+			{
+				firstPoint.center = Cursor::Pos();
+
+			}
+			else
+			{
+				secondRect = { firstPoint.center ,Cursor::Pos() - firstPoint.center };
+			}
+		}
+
+
+	}
+
+	if (MouseR.down())
+	{
+		if (clickCount > 0)
+		{
+			clickCount--;
+		}
+	}
+
+}
+
+void GameObject::playerCollsioninputoutdegDraw() const
+{
+	textureSize.drawFrame(3, Palette::Green);
+
+	if (clickCount == 1)
+	{
+		firstPoint.draw(Palette::Red);
+	}
+
+	if (clickCount == 2)
+	{
+		secondRect.drawFrame(1, Palette::Blue);
+
+	}
+
+	font30(firstPoint.center - textureSize.pos, secondRect.size).draw(450, font30.height() * 2);
 
 }
 

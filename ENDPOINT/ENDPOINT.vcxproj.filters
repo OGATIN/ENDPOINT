@@ -198,6 +198,9 @@
     <ClCompile Include="GameObjectInternal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -795,6 +798,9 @@
     <None Include="App\ConfigData\魔法その他.csv" />
     <None Include="App\ConfigData\魔法スキルポイントステータスデータ.csv" />
     <None Include="App\ConfigData\アニメーションデータ.csv" />
+    <None Include="App\ConfigData\敵ステータス割り振り.csv">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Media Include="App\example\test.mp3">
@@ -894,6 +900,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

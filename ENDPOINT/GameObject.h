@@ -21,7 +21,7 @@ public:
 	Rect shiftInternalHitRect[1][1] = { { {107,139,38,118/*121*/} } };  //補正
 
 	Vec2 position = { 0,0 };
-	Vec2 prePosition;
+	Vec2 prePosition = { 0,0 };
 	Vec2 velocity = { 0,0 };
 	Rect hitBox = { 0,0,0,0 };
 
@@ -41,25 +41,32 @@ public:
 	String statename;
 	String weaponname;
 
-	RectF textureSize;
-	int a = 0;
-	Circle r = {0,0,1};
-	RectF S;
-	
-	GameObject(Texture _animation, Texture _walkTex, Texture _runTex, Texture _jumpTex, Texture _fallingTex, Texture _landingTex, Texture _receive,Texture _attackTex, CSV AnimationData, CSV statusData)
+	RectF textureSize = {0,0,0,0};
+	int clickCount = 0;
+	Circle firstPoint = {0,0,1};
+	RectF secondRect = {0,0,0,0};
+
+	GameObject();
+
+	GameObject(Texture _animation[4][20], CSV AnimationData, CSV statusData)
 	{
-		animation[0][0].Reload(_animation, AnimationData,1);
-		animation[0][1].Reload(_walkTex, AnimationData,2);
-		animation[0][2].Reload(_runTex, AnimationData,3);
-		animation[0][3].Reload(_jumpTex, AnimationData,4);
-		animation[0][4].Reload(_fallingTex, AnimationData,5);
-		animation[0][5].Reload(_landingTex, AnimationData,6);
-		animation[0][6].Reload(_receive, AnimationData,7);
-		animation[0][7].Reload(_attackTex, AnimationData,8);
+
+		for (int j = 0; j < 4; j++)
+		{
+			for (int i = 0; i < 7; i++)
+			{
+				//とりあえず共通のデータはここでロード
+				animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
+
+			}
+		}
+
 		status.Reload(statusData);
 	};
 
 	//機能
+
+	void Reload(Texture _animation[4][20], CSV AnimationData, CSV statusData);
 
 	/// @brief 毎フレーム更新する情報
 	void Update();
@@ -128,13 +135,13 @@ public:
 	/// @brief ジャンプ状態への遷移
 	void ChangeAttack();
 
-
-
 	/// @brief 状態に応じた処理を行う
 	void StateManagement();
 
 	/// @brief animationのテクスチャを描画する
 	void Draw()const;
+
+
 
 	//デバック用
 	void Initialize();
@@ -144,6 +151,9 @@ public:
 
 	/// @brief 時間関連のデバック
 	void TimeDebuggDraw()const;
+
+	void playerCollsioninputoutdeg();
+	void playerCollsioninputoutdegDraw()const;
 
 
 	
@@ -160,9 +170,6 @@ public:
 	Point MapLeftTop(Vec2 camerapos, Point mapchip_px);
 	Point MapRightTop(Vec2 camerapos, Point mapchip_px);
 
-
-	void playerCollsioninputoutdeg();
-	void playerCollsioninputoutdegDraw()const;
 
 
 

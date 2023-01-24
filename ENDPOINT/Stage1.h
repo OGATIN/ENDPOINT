@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include"Base.h"
 #include"PlayerClass.h"
+#include"EnemyClass.h"
 
 const int mapData[25][48] =
 {
@@ -37,6 +38,7 @@ class Stage1 : public App::Scene
 {
 private:
 	const int MapSize = 16;
+	const Vec2 MapChipSize = { 32,32 };
 
 	
     Texture BackScreen      { U"Material/3.MAP/6.町 背景.png" };
@@ -54,15 +56,24 @@ private:
 	Texture guardMotionPNG		{ U"Material/1.img/1.拳/11.防御モーション.png" };
 	Texture notstaminaMotionPNG	{ U"Material/1.img/1.拳/14.スタミナ切れ(待機).png" };
 
-	CSV BasicStatData {U"ConfigData/基礎ステータスデータ.csv"};
-	CSV AnimationData {U"ConfigData/アニメーションデータ.csv"};
 
-	GameObject Player = { waitingMotionPNG ,walkMotionPNG ,runMotionPNG,jumpMotionPNG,fallingMotionPNG,landingMotionPNG,receiveMotionPNG,attackMotionPNG,AnimationData ,BasicStatData };
+	CSV BasicStatData{ U"ConfigData/基礎ステータスデータ.csv" };
+	CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
+
+	Texture animationPNG[4][20] =
+	{
+		/*0が拳*/{{waitingMotionPNG} ,{walkMotionPNG} ,{runMotionPNG},{jumpMotionPNG},{fallingMotionPNG},{landingMotionPNG},{receiveMotionPNG},{attackMotionPNG}},
+		/*1が剣*/{},
+		/*2が鈍器*/{},
+		/*3が杖*/{},
+		//各20種
+	};
+
+	GameObject Player = { animationPNG ,AnimationData ,BasicStatData };
+
+	Vec2 cameraPos = {0,0};
 
 	Font font{ 30 };
-
-	RectF a;
-
 
 
 public:
