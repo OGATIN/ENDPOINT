@@ -6,3 +6,4 @@
 #include"StatusClass.h"
 #include"AnimationClass.h"
 #include"GameObject.h"
+#include"EnemyClass.h"

@@ -53,12 +53,16 @@ public:
 
 		for (int j = 0; j < 4; j++)
 		{
-			for (int i = 0; i < 7; i++)
+			for (int i = 0; i < 6; i++)
 			{
 				//とりあえず共通のデータはここでロード
 				animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
 
 			}
+
+			//animation[j][7].Reload(_animation[j][7], AnimationData, 8);//
+			//animation[j][7].Reload(_animation[j][7], AnimationData, 9);
+
 		}
 
 		status.Reload(statusData);
@@ -158,7 +162,7 @@ public:
 
 	
 	/*内部データ用*/
-	Rect GetHitRect();
+	Rect GetHitRect()const;
 	int GetTop();
 	int GetBottom();
 	int GetLeft();

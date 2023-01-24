@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "GameObject.h"
 
-Rect GameObject::GetHitRect()
+Rect GameObject::GetHitRect()const
 {
 	return Rect{ (int)position.x + shiftInternalHitRect[0][0].x
 				,(int)position.y + shiftInternalHitRect[0][0].y
