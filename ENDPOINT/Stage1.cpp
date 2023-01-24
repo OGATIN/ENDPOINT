@@ -139,7 +139,6 @@ void Stage1::update()
 		Player.MotionStop();
 	}
 
-<<<<<<< HEAD
 
 	//デバック用
 	Player.playerCollsioninputoutdeg();
@@ -154,7 +153,7 @@ void Stage1::update()
 		Player.MotionEndMagnificationDecrease();
 
 	}
-=======
+
 	if (Player.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))
 	{
 		double _1pVelo = Player.charaSpeed;
@@ -166,7 +165,21 @@ void Stage1::update()
 		}
 	}
 
->>>>>>> ogatin
+	//デバック用
+	Player.playerCollsioninputoutdeg();
+
+	if (Key1.down())
+	{
+		Player.MotionEndMagnificationIncrease();
+	}
+
+	if (Key2.down())
+	{
+		Player.MotionEndMagnificationDecrease();
+
+	}
+
+
 }
 
 void Stage1::draw() const
@@ -212,6 +225,8 @@ void Stage1::draw() const
 	/*font(Cursor::Pos()).draw(650, 0);
 	Player.hitBox.drawFrame(2, Palette::Green);
 	*/
+
+	
 
 }
 
