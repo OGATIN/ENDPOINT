@@ -75,23 +75,14 @@ void Stage1::update()
 
 	
 	Player.Update();
-	//床と触れていたら移動をやめて座標補正(仮)
-	if (Player.GetBottom() > 480)
-	{
-		Player.velocity.y = 0;
-		Player.isLanding = true;
-
-		////プレイヤー座標が透過部分も込みなので当たり判定の座標に補正しなければならない
-		//Player.position.y = 590 - ((int)Player.playerAnimation.waitPosDifference.y + (int)Player.hitBox.h);
-	}
-	else
-	{
-		Player.isLanding = false;
-	}
 
 	Player.StateManagement();
 	//Player.PatternLoop();
 	//Player.ChangeState();
+	MapCollision();
+
+	//デバック用
+	Player.playerCollsioninputoutdeg();
 
 	//キー入力で処理
 	Player.ChangeWait();
@@ -157,8 +148,6 @@ void Stage1::update()
 		Player.MotionStop();
 	}
 
-	a = { Player.position, Player.animation[0][0].texture.size() };
-
 }
 
 void Stage1::draw() const
@@ -191,8 +180,9 @@ void Stage1::draw() const
 	Player.Draw();
 	Player.StatusDraw();
 	Player.TimeDebuggDraw();
-	Player.status.DaseStatusDrow();
+	//Player.status.DaseStatusDrow();
 	Player.hitBox.drawFrame(2, Palette::Green);
+	Player.playerCollsioninputoutdegDraw();
 
 	
 	//デバック用
@@ -202,19 +192,22 @@ void Stage1::draw() const
 	Player.hitBox.drawFrame(2, Palette::Green);
 	*/
 
-	/*
-for (int y = 0; y < Scene::Height()/32; y++)
-{
-	for (int x = 0; x < Scene::Width()/32; x++)
-	{
-		maphitRect.x = x * 32;
-		maphitRect.y = y * 32;
-		maphitRect.drawFrame(3,Palette::Black);
-	}
-
 }
-*/
 
+void Stage1::MapCollision()
+{
+	if (mapData[Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x] == 1 ||
+	mapData[Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).x] == 1
+	)
+	{
+		Player.velocity.y = 0;
+		Player.position = Player.prePosition;
+		Player.isLanding = true;
+	}
+	else
+	{
+		Player.isLanding = false;
+	}
 }
 
 
