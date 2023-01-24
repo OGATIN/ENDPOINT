@@ -49,6 +49,8 @@ public:
 	bool speedChange = false;
 	double motionEndMagnification = 1;//ここが増えるとモーションの終了に時間がかかる
 
+	bool frameNumber = false;
+
 	GameObject() {};
 
 	GameObject(Texture _animation[4][20], CSV AnimationData, CSV statusData)
@@ -164,6 +166,9 @@ public:
 
 	void MotionEndMagnificationIncrease();
 	void MotionEndMagnificationDecrease();
+
+	void MotionFrameSkip();
+	void MotionFrameBack();
 
 
 	

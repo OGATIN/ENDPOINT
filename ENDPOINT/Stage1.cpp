@@ -143,17 +143,6 @@ void Stage1::update()
 	//デバック用
 	Player.playerCollsioninputoutdeg();
 
-	if (Key1.down())
-	{
-		Player.MotionEndMagnificationIncrease();
-	}
-
-	if (Key2.down())
-	{
-		Player.MotionEndMagnificationDecrease();
-
-	}
-
 	if (Player.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))
 	{
 		double _1pVelo = Player.charaSpeed;
@@ -170,12 +159,14 @@ void Stage1::update()
 
 	if (Key1.down())
 	{
-		Player.MotionEndMagnificationIncrease();
+		//Player.MotionEndMagnificationIncrease();
+		Player.MotionFrameSkip();
 	}
 
 	if (Key2.down())
 	{
-		Player.MotionEndMagnificationDecrease();
+		//Player.MotionEndMagnificationDecrease();
+		Player.MotionFrameBack();
 
 	}
 

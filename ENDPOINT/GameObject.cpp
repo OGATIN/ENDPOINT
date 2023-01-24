@@ -2,10 +2,6 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject()
-{
-}
-
 void GameObject::Reload(Texture _animation[4][20], CSV AnimationData, CSV statusData)
 {
 
@@ -418,6 +414,12 @@ void GameObject::TimeDebuggDraw() const
 		font30(U"モーション終了倍率 ", motionEndMagnification).draw(Scene::Width() - font30(U"モーション終了倍率 ", motionEndMagnification).region().w, font30.height() * 6);
 
 	}
+
+	if (frameNumber == true)
+	{
+		font30(U"終了番号 ", animation[weaponTypeNumber][stateTypeNumber].endPattern).draw(Scene::Width() - font30(U"終了番号 ", animation[weaponTypeNumber][stateTypeNumber].endPattern).region().w, font30.height() * 6);
+		font30(U"現在の番号 ", animation[weaponTypeNumber][stateTypeNumber].cutPos.x).draw(Scene::Width() - font30(U"現在の番号 ", animation[weaponTypeNumber][stateTypeNumber].cutPos.x).region().w, font30.height() * 7);
+	}
 }
 
 void GameObject::playerCollsioninputoutdeg()
@@ -486,6 +488,27 @@ void GameObject::MotionEndMagnificationDecrease()
 	speedChange = true;
 
 	motionEndMagnification = motionEndMagnification / 2;
+}
+
+void GameObject::MotionFrameSkip()
+{
+	frameNumber = true;
+
+	animation[weaponTypeNumber][stateTypeNumber].cutPos.x++;
+
+}
+
+void GameObject::MotionFrameBack()
+{
+	frameNumber = true;
+
+	animation[weaponTypeNumber][stateTypeNumber].cutPos.x--;
+
+	if (animation[weaponTypeNumber][stateTypeNumber].cutPos.x < animation[weaponTypeNumber][stateTypeNumber].startPattern)
+	{
+		animation[weaponTypeNumber][stateTypeNumber].cutPos.x = animation[weaponTypeNumber][stateTypeNumber].endPattern - 1;
+	}
+
 }
 
 
