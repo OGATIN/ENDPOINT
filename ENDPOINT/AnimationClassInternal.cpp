@@ -7,7 +7,7 @@
 
 double AnimationClass::OnePatternMotionTime()
 {
-	return motionTime / endPattern;
+	return (motionTime / endPattern);
 }
 
 

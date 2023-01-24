@@ -53,7 +53,6 @@ public:
 		cutPos.h = texture.height();//
 
 
-
 		//使ってないの
 		//activeTime			= Parse<double>(animationData[statenumber][1]);//持続時間(ミリ秒に直して使ってね)
 		//recoveryTime		= Parse<double>(animationData[statenumber][2]);//後隙の時間(ミリ秒に直して使ってね)

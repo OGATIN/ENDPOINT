@@ -81,8 +81,6 @@ void Stage1::update()
 	//Player.ChangeState();
 	MapCollision();
 
-	//デバック用
-	Player.playerCollsioninputoutdeg();
 
 	//キー入力で処理
 	Player.ChangeWait();
@@ -148,6 +146,20 @@ void Stage1::update()
 		Player.MotionStop();
 	}
 
+
+	//デバック用
+	Player.playerCollsioninputoutdeg();
+
+	if (Key1.down())
+	{
+		Player.MotionEndMagnificationIncrease();
+	}
+
+	if (Key2.down())
+	{
+		Player.MotionEndMagnificationDecrease();
+
+	}
 }
 
 void Stage1::draw() const

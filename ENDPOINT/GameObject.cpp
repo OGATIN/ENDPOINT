@@ -116,13 +116,13 @@ void GameObject::PatternLoop()
 	}
 
 	//デバック用
-	animation[weaponTypeNumber][stateTypeNumber].elapsedTime = (animation[weaponTypeNumber][stateTypeNumber].OnePatternMotionTime() * animation[weaponTypeNumber][stateTypeNumber].cutPos.x) + currentTime.ms();
+	animation[weaponTypeNumber][stateTypeNumber].elapsedTime = (animation[weaponTypeNumber][stateTypeNumber].OnePatternMotionTime() * motionEndMagnification * animation[weaponTypeNumber][stateTypeNumber].cutPos.x) + currentTime.ms();
 }
 
 void GameObject::OnePattern()
 {
 	//タイル遷移
-	if (currentTime.ms() > animation[weaponTypeNumber][stateTypeNumber].OnePatternMotionTime())
+	if (currentTime.ms() > (animation[weaponTypeNumber][stateTypeNumber].OnePatternMotionTime() * motionEndMagnification))
 	{
 		animation[weaponTypeNumber][stateTypeNumber].cutPos.x++;
 		currentTime.restart();
@@ -404,11 +404,16 @@ void GameObject::StatusDraw() const
 
 void GameObject::TimeDebuggDraw() const
 {
-	font30(U"全体時間 ", animation[weaponTypeNumber][stateTypeNumber].motionTime).draw(Scene::Width() - font30(U"全体時間 ", animation[weaponTypeNumber][stateTypeNumber].motionTime).region().w, font30.height() * 2);
+	font30(U"全体時間 ", animation[weaponTypeNumber][stateTypeNumber].motionTime * motionEndMagnification).draw(Scene::Width() - font30(U"全体時間 ", animation[weaponTypeNumber][stateTypeNumber].motionTime * motionEndMagnification).region().w, font30.height() * 2);
 	font30(U"経過時間 ", animation[weaponTypeNumber][stateTypeNumber].elapsedTime).draw(Scene::Width() - font30(U"経過時間 ", animation[weaponTypeNumber][stateTypeNumber].elapsedTime).region().w, font30.height() * 3);
 	font30(U"1枚あたりの時間 ", currentTime.ms()).draw(Scene::Width() - font30(U"1枚あたりの時間 ", currentTime.ms()).region().w, font30.height() * 4);
 	font30(U"切り取り位置 ", animation[weaponTypeNumber][stateTypeNumber].cutPos).draw(Scene::Width() - font30(U"切り取り位置 ", animation[weaponTypeNumber][stateTypeNumber].cutPos).region().w, font30.height() * 5);
 
+	if (speedChange == true)
+	{
+		font30(U"モーション終了倍率 ", motionEndMagnification).draw(Scene::Width() - font30(U"モーション終了倍率 ", motionEndMagnification).region().w, font30.height() * 6);
+
+	}
 }
 
 void GameObject::playerCollsioninputoutdeg()
@@ -463,6 +468,20 @@ void GameObject::playerCollsioninputoutdegDraw() const
 
 	font30(firstPoint.center - textureSize.pos, secondRect.size).draw(450, font30.height() * 2);
 
+}
+
+void GameObject::MotionEndMagnificationIncrease()
+{
+	speedChange = true;
+
+	motionEndMagnification = motionEndMagnification * 2;
+}
+
+void GameObject::MotionEndMagnificationDecrease()
+{
+	speedChange = true;
+
+	motionEndMagnification = motionEndMagnification / 2;
 }
 
 

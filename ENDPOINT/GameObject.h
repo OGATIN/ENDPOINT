@@ -17,7 +17,6 @@ public:
 
 	Stopwatch animationTime;
 
-	//Rect shiftInternalHitRect[1][1] = { { {62,30,35,130} } };  //補正
 	Rect shiftInternalHitRect[1][1] = { { {107,139,38,118/*121*/} } };  //補正
 
 	Vec2 position = { 0,0 };
@@ -46,7 +45,11 @@ public:
 	Circle firstPoint = {0,0,1};
 	RectF secondRect = {0,0,0,0};
 
-	GameObject();
+	//時間(タイム作る時にデバックから昇格するかも)
+	bool speedChange = false;
+	double motionEndMagnification = 1;//ここが増えるとモーションの終了に時間がかかる
+
+	GameObject() {};
 
 	GameObject(Texture _animation[4][20], CSV AnimationData, CSV statusData)
 	{
@@ -155,6 +158,9 @@ public:
 	void playerCollsioninputoutdeg();
 	void playerCollsioninputoutdegDraw()const;
 
+	void MotionEndMagnificationIncrease();
+	void MotionEndMagnificationDecrease();
+
 
 	
 	/*内部データ用*/
@@ -169,8 +175,6 @@ public:
 	Point MapRightBottom(Vec2 camerapos, Point mapchip_px);
 	Point MapLeftTop(Vec2 camerapos, Point mapchip_px);
 	Point MapRightTop(Vec2 camerapos, Point mapchip_px);
-
-
 
 
 
