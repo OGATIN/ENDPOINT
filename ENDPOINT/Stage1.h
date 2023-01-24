@@ -73,6 +73,17 @@ private:
 
 	Vec2 cameraPos = {0,0};
 
+	// プレイヤーインデックス (0 - 3)
+	size_t playerIndex = 0;
+	const Array<String> options = Range(1, 4).map([](int32 i) {return U"{}P"_fmt(i); });
+
+	// デッドゾーンを有効にするか
+	bool enableDeadZone = true;
+
+	// 振動 (0.0 - 1.0)
+	XInputVibration vibration;
+
+
 	Font font{ 30 };
 
 

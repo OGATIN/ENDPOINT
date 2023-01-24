@@ -23,38 +23,99 @@ void Stage1::Initialize()
 
 void Stage1::update()
 {
+
+	// 指定したプレイヤーインデックスの XInput コントローラを取得
+	auto controller = XInput(playerIndex);
+
+	// デッドゾーン
+	if (enableDeadZone)
+	{
+		// それぞれデフォルト値を設定
+		controller.setLeftTriggerDeadZone();
+		controller.setRightTriggerDeadZone();
+		controller.setLeftThumbDeadZone();
+		controller.setRightThumbDeadZone();
+	}
+	else
+	{
+		// デッドゾーンを無効化
+		controller.setLeftTriggerDeadZone(DeadZone{});
+		controller.setRightTriggerDeadZone(DeadZone{});
+		controller.setLeftThumbDeadZone(DeadZone{});
+		controller.setRightThumbDeadZone(DeadZone{});
+	}
+
+	// 振動
+	controller.setVibration(vibration);
+
+	// 左トリガー
+	/*{
+		leftTrigger.draw(AlphaF(0.25));
+		leftTrigger.stretched((controller.leftTrigger - 1.0) * leftTrigger.h, 0, 0, 0).draw();
+	}*/
+
+	//// 右トリガー
+	//{
+	//	rightTrigger.draw(AlphaF(0.25));
+	//	rightTrigger.stretched((controller.rightTrigger - 1.0) * rightTrigger.h, 0, 0, 0).draw();
+	//}
+
+
+
+	////Bボタン
+	//{
+	//	controller.buttonB.pressed() ? 1.0 : 0.3 ;
+	//}
+
+	//// View (Back), Menu (Start) ボタン 
+	//{
+	//	controller.buttonView.pressed() ? 1.0 : 0.7;
+	//	controller.buttonMenu.pressed() ? 1.0 : 0.7;
+	//}
+
 	
 	Player.Update();
-	
-	Player.StateManagement();
-	MapCollision();
+	//床と触れていたら移動をやめて座標補正(仮)
+	if (Player.GetBottom() > 480)
+	{
+		Player.velocity.y = 0;
+		Player.isLanding = true;
 
-	//デバック用
-	Player.playerCollsioninputoutdeg();
+		////プレイヤー座標が透過部分も込みなので当たり判定の座標に補正しなければならない
+		//Player.position.y = 590 - ((int)Player.playerAnimation.waitPosDifference.y + (int)Player.hitBox.h);
+	}
+	else
+	{
+		Player.isLanding = false;
+	}
+
+	Player.StateManagement();
+	//Player.PatternLoop();
+	//Player.ChangeState();
 
 	//キー入力で処理
 	Player.ChangeWait();
 
 	//右歩き
-	if (KeyRight.pressed() || KeyD.pressed())
+	if (KeyRight.pressed() || KeyD.pressed() ||  controller.leftThumbX >= 0.8 || controller.buttonRight.pressed())
 	{
 		Player.ChangeWalkR();
 	}
 
 	//左歩き
-	if (KeyLeft.pressed() || KeyA.pressed())
+	if (KeyLeft.pressed() || KeyA.pressed() || controller.leftThumbX <= - 0.8  || controller.buttonLeft.pressed())
 	{
 		Player.ChangeWalkL();
 	}
 
 	//右ダッシュ
-	if (KeyControl.pressed() && ( KeyRight.pressed() || KeyD.pressed() ))
+	if ((KeyControl.pressed() && ( KeyRight.pressed() || KeyD.pressed() )) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX >= 0.8 || controller.buttonRight.pressed()))
 	{
 		Player.ChangeRunR();
 	}
 
 	//左ダッシュ
-	if (KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed()))
+	if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed())) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX <= -0.8 || controller.buttonLeft.pressed()))
 	{
 		Player.ChangeRunL();
 	}
@@ -67,15 +128,27 @@ void Stage1::update()
 	}
 
 	//ジャンプ
-	if (KeySpace.down() || KeyUp.down())
+	if (KeySpace.down() || KeyUp.down()|| controller.buttonX.down()|| controller.buttonY.down())
 	{
 		Player.ChangeJump();
 	}
 
 	//攻撃
-	if (KeyZ.down())
+	if (KeyZ.down() || controller.buttonB.down())
 	{
 		Player.ChangeAttack();
+	}
+
+	//魔法
+	if (KeyX.down() || controller.buttonA.down())
+	{
+
+	}
+
+	//ガード
+	if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
+	{
+		
 	}
 
 	if (KeyEnter.down())
@@ -83,6 +156,9 @@ void Stage1::update()
 		//一時停止
 		Player.MotionStop();
 	}
+
+	a = { Player.position, Player.animation[0][0].texture.size() };
+
 }
 
 void Stage1::draw() const
@@ -115,34 +191,31 @@ void Stage1::draw() const
 	Player.Draw();
 	Player.StatusDraw();
 	Player.TimeDebuggDraw();
-	//Player.status.DaseStatusDrow();
+	Player.status.DaseStatusDrow();
 	Player.hitBox.drawFrame(2, Palette::Green);
 
 	
 	//デバック用
 	font(Player.position).draw(450, 0);
 	font(Player.velocity).draw(450, 30);
-	Player.playerCollsioninputoutdegDraw();
 	/*font(Cursor::Pos()).draw(650, 0);
 	Player.hitBox.drawFrame(2, Palette::Green);
 	*/
 
-
-}
-
-void Stage1::MapCollision()
+	/*
+for (int y = 0; y < Scene::Height()/32; y++)
 {
-	if (mapData[Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x] == 1 ||
-	mapData[Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).x] == 1
-	)
+	for (int x = 0; x < Scene::Width()/32; x++)
 	{
-		Player.velocity.y = 0;
-		Player.position = Player.prePosition;
-		Player.isLanding = true;
+		maphitRect.x = x * 32;
+		maphitRect.y = y * 32;
+		maphitRect.drawFrame(3,Palette::Black);
 	}
-	else
-	{
-		Player.isLanding = false;
-	}
+
 }
+*/
+
+}
+
+
 
