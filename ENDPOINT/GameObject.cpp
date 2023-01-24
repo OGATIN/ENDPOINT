@@ -2,6 +2,10 @@
 #include "GameObject.h"
 
 
+GameObject::GameObject()
+{
+}
+
 void GameObject::Reload(Texture _animation[4][20], CSV AnimationData, CSV statusData)
 {
 
@@ -11,7 +15,6 @@ void GameObject::Reload(Texture _animation[4][20], CSV AnimationData, CSV status
 		{
 			//とりあえず共通のデータはここでロード
 			animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
-
 		}
 	}
 
@@ -33,16 +36,6 @@ void GameObject::Update()
 	velocity.y += gravity;
 
 	//重量定義
-	if (status.weight < charaSpeedMax)
-	{
-		charaSpeed = status.weight;
-	}
-	else
-	{
-		charaSpeed = charaSpeedMax;
-	}
-
-	//重量定義
 	if (status.weight < jumpPowerMax)
 	{
 		jumpPower = status.weight;
@@ -51,31 +44,22 @@ void GameObject::Update()
 	{
 		jumpPower = charaSpeedMax;
 	}
+
 	
 	//Xベクトル減少
 	if (state != StateType::FALLING && state != StateType::JUMP)
 	{
-		if (velocity.x > 0)
+		if (charaSpeed > 0)
 		{
-			velocity.x -= 1;
-		}
-
-		if (velocity.x < 0)
-		{
-			velocity.x += 1;
+			charaSpeed -= 1;
 		}
 	}
 
 	if (state == StateType::JUMP)
 	{
-		if (velocity.x > 0)
+		if (charaSpeed > 0)
 		{
-			velocity.x -= 0.1;
-		}
-
-		if (velocity.x < 0)
-		{
-			velocity.x += 0.1;
+			charaSpeed -= 0.1;
 		}
 	}
 	
@@ -142,6 +126,16 @@ void GameObject::WaitProcess()
 
 void GameObject::WalkProcess()
 {
+	//重量定義
+	if (status.weight < charaSpeedMax)
+	{
+		charaSpeed = status.weight;
+	}
+	else
+	{
+		charaSpeed = charaSpeedMax;
+	}
+
 	//反転してる向きに応じて処理
 	if (isMirror)
 	{
@@ -155,14 +149,24 @@ void GameObject::WalkProcess()
 
 void GameObject::RunProcess()
 {
-	//反転してる向きに応じて処理
-	if (isMirror)
+	//重量定義
+	if (status.weight < charaSpeedMax)
 	{
-		velocity.x = - charaSpeed * 1.5;
+		charaSpeed = status.weight * 1.5;
 	}
 	else
 	{
-		velocity.x = charaSpeed * 1.5;
+		charaSpeed = charaSpeedMax * 1.5;
+	}
+
+	//反転してる向きに応じて処理
+	if (isMirror)
+	{
+		velocity.x = - charaSpeed;
+	}
+	else
+	{
+		velocity.x = charaSpeed;
 	}
 }
 

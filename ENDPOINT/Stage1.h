@@ -56,11 +56,24 @@ private:
 	Texture guardMotionPNG		{ U"Material/1.img/1.拳/11.防御モーション.png" };
 	Texture notstaminaMotionPNG	{ U"Material/1.img/1.拳/14.スタミナ切れ(待機).png" };
 
+	Texture enemeyWaitingMotionPNG		{ U"Material/1.img/1.拳/1.待機モーション-enemey.png" };
+	Texture enemeyWalkMotionPNG			{ U"Material/1.img/1.拳/2.歩きモーション-enemey.png" };
+	Texture enemeyRunMotionPNG			{ U"Material/1.img/1.拳/3.ダッシュモーション-enemey.png" };
+	Texture enemeyJumpMotionPNG			{ U"Material/1.img/1.拳/4.ジャンプモーション-enemey.png" };
+	Texture enemeyFallingMotionPNG		{ U"Material/1.img/1.拳/5.空中モーション-enemey.png" };
+	Texture enemeyLandingMotionPNG		{ U"Material/1.img/1.拳/6.着地モーション-enemey.png" };
+	Texture enemeyReceiveMotionPNG		{ U"Material/1.img/1.拳/10.受けモーション-enemey.png" };
+	Texture enemeyAttackMotionPNG		{ U"Material/1.img/1.拳/7.拳モーション-enemey.png" };
+	Texture enemeyMagicMotionPNG		{ U"Material/1.img/1.拳/8.攻撃魔法モーション-enemey.png" };
+	Texture enemeyGuardMotionPNG		{ U"Material/1.img/1.拳/11.防御モーション-enemey.png" };
+	Texture enemeyNotstaminaMotionPNG	{ U"Material/1.img/1.拳/14.スタミナ切れ(待機)-enemey.png" };
+
+	
 
 	CSV BasicStatData{ U"ConfigData/基礎ステータスデータ.csv" };
 	CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
 
-	Texture animationPNG[4][20] =
+	Texture playerPNG[4][20] =
 	{
 		/*0が拳*/{{waitingMotionPNG} ,{walkMotionPNG} ,{runMotionPNG},{jumpMotionPNG},{fallingMotionPNG},{landingMotionPNG},{receiveMotionPNG},{attackMotionPNG}},
 		/*1が剣*/{},
@@ -69,7 +82,19 @@ private:
 		//各20種
 	};
 
-	GameObject Player = { animationPNG ,AnimationData ,BasicStatData };
+	Texture enemeyPNG[4][20] =
+	{
+		/*0が拳*/{{enemeyWaitingMotionPNG} ,{enemeyWalkMotionPNG} ,{enemeyRunMotionPNG},{enemeyJumpMotionPNG},{enemeyFallingMotionPNG},{enemeyLandingMotionPNG},{enemeyReceiveMotionPNG},{enemeyAttackMotionPNG}},
+		/*1が剣*/{},
+		/*2が鈍器*/{},
+		/*3が杖*/{},
+		//各20種
+	};
+
+
+	GameObject Player = { playerPNG ,AnimationData ,BasicStatData };
+
+	EnemyClass Enemey = { enemeyPNG ,AnimationData ,BasicStatData };
 
 	Vec2 cameraPos = {0,0};
 

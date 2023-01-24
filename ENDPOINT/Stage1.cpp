@@ -60,25 +60,18 @@ void Stage1::update()
 	//	rightTrigger.stretched((controller.rightTrigger - 1.0) * rightTrigger.h, 0, 0, 0).draw();
 	//}
 
-
-
-	////Bボタン
-	//{
-	//	controller.buttonB.pressed() ? 1.0 : 0.3 ;
-	//}
-
 	//// View (Back), Menu (Start) ボタン 
 	//{
 	//	controller.buttonView.pressed() ? 1.0 : 0.7;
 	//	controller.buttonMenu.pressed() ? 1.0 : 0.7;
 	//}
 
+	Enemey.TestAI(Cursor::Pos());
 	
 	Player.Update();
 
 	Player.StateManagement();
-	//Player.PatternLoop();
-	//Player.ChangeState();
+
 	MapCollision();
 
 
@@ -146,6 +139,7 @@ void Stage1::update()
 		Player.MotionStop();
 	}
 
+<<<<<<< HEAD
 
 	//デバック用
 	Player.playerCollsioninputoutdeg();
@@ -160,6 +154,19 @@ void Stage1::update()
 		Player.MotionEndMagnificationDecrease();
 
 	}
+=======
+	if (Player.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))
+	{
+		double _1pVelo = Player.charaSpeed;
+		double _2pVelo = Enemey.gameObject.charaSpeed;
+
+		if (_1pVelo > _2pVelo)
+		{
+
+		}
+	}
+
+>>>>>>> ogatin
 }
 
 void Stage1::draw() const
@@ -190,6 +197,8 @@ void Stage1::draw() const
 	
 	//画像描画
 	Player.Draw();
+	Player.GetHitRect().drawFrame(2, Palette::Green);
+	Enemey.Draw();
 	Player.StatusDraw();
 	Player.TimeDebuggDraw();
 	//Player.status.DaseStatusDrow();
@@ -219,6 +228,19 @@ void Stage1::MapCollision()
 	else
 	{
 		Player.isLanding = false;
+	}
+
+	if (mapData[Enemey.gameObject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Enemey.gameObject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x] == 1 ||
+	mapData[Enemey.gameObject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Enemey.gameObject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x] == 1
+	)
+	{
+		Enemey.gameObject.velocity.y = 0;
+		Enemey.gameObject.position = Enemey.gameObject.prePosition;
+		Enemey.gameObject.isLanding = true;
+	}
+	else
+	{
+		Enemey.gameObject.isLanding = false;
 	}
 }
 
