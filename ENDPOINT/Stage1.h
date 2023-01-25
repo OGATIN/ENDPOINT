@@ -44,29 +44,29 @@ private:
     Texture BackScreen      { U"Material/3.MAP/6.町 背景.png" };
     Texture UnderGround     { U"Material/3.MAP/4.マップチップ.png" };
 
-	Texture waitingMotionPNG	{ U"Material/1.img/1.拳/1.待機モーション.png" };
-	Texture walkMotionPNG		{ U"Material/1.img/1.拳/2.歩きモーション.png" };
-	Texture runMotionPNG		{ U"Material/1.img/1.拳/3.ダッシュモーション.png" };
-	Texture jumpMotionPNG		{ U"Material/1.img/1.拳/4.ジャンプモーション.png" };
-	Texture fallingMotionPNG	{ U"Material/1.img/1.拳/5.空中モーション.png" };
-	Texture landingMotionPNG	{ U"Material/1.img/1.拳/6.着地モーション.png" };
-	Texture receiveMotionPNG	{ U"Material/1.img/1.拳/10.受けモーション.png" };
-	Texture attackMotionPNG		{ U"Material/1.img/1.拳/7.拳モーション.png" };
-	Texture magicMotionPNG		{ U"Material/1.img/1.拳/8.攻撃魔法モーション.png" };
-	Texture guardMotionPNG		{ U"Material/1.img/1.拳/11.防御モーション.png" };
-	Texture notstaminaMotionPNG	{ U"Material/1.img/1.拳/14.スタミナ切れ(待機).png" };
+	Texture waitingMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/1.待機モーション.png" };
+	Texture walkMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/2.歩きモーション.png" };
+	Texture runMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/3.ダッシュモーション.png" };
+	Texture jumpMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/4.ジャンプモーション.png" };
+	Texture fallingMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/5.空中モーション.png" };
+	Texture landingMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/6.着地モーション.png" };
+	Texture receiveMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/10.受けモーション.png" };
+	Texture attackMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/7.拳モーション.png" };
+	Texture magicMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/8.攻撃魔法モーション.png" };
+	Texture guardMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/11.防御モーション.png" };
+	Texture notstaminaMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/14.スタミナ切れ(待機).png" };
 
-	Texture enemeyWaitingMotionPNG		{ U"Material/1.img/1.拳/1.待機モーション-enemey.png" };
-	Texture enemeyWalkMotionPNG			{ U"Material/1.img/1.拳/2.歩きモーション-enemey.png" };
-	Texture enemeyRunMotionPNG			{ U"Material/1.img/1.拳/3.ダッシュモーション-enemey.png" };
-	Texture enemeyJumpMotionPNG			{ U"Material/1.img/1.拳/4.ジャンプモーション-enemey.png" };
-	Texture enemeyFallingMotionPNG		{ U"Material/1.img/1.拳/5.空中モーション-enemey.png" };
-	Texture enemeyLandingMotionPNG		{ U"Material/1.img/1.拳/6.着地モーション-enemey.png" };
-	Texture enemeyReceiveMotionPNG		{ U"Material/1.img/1.拳/10.受けモーション-enemey.png" };
-	Texture enemeyAttackMotionPNG		{ U"Material/1.img/1.拳/7.拳モーション-enemey.png" };
-	Texture enemeyMagicMotionPNG		{ U"Material/1.img/1.拳/8.攻撃魔法モーション-enemey.png" };
-	Texture enemeyGuardMotionPNG		{ U"Material/1.img/1.拳/11.防御モーション-enemey.png" };
-	Texture enemeyNotstaminaMotionPNG	{ U"Material/1.img/1.拳/14.スタミナ切れ(待機)-enemey.png" };
+	Texture enemeyWaitingMotionPNG		{ U"Material/1.img/敵/1.拳/1.待機モーション-enemey.png" };
+	Texture enemeyWalkMotionPNG			{ U"Material/1.img/敵/1.拳/2.歩きモーション-enemey.png" };
+	Texture enemeyRunMotionPNG			{ U"Material/1.img/敵/1.拳/3.ダッシュモーション-enemey.png" };
+	Texture enemeyJumpMotionPNG			{ U"Material/1.img/敵/1.拳/4.ジャンプモーション-enemey.png" };
+	Texture enemeyFallingMotionPNG		{ U"Material/1.img/敵/1.拳/5.空中モーション-enemey.png" };
+	Texture enemeyLandingMotionPNG		{ U"Material/1.img/敵/1.拳/6.着地モーション-enemey.png" };
+	Texture enemeyReceiveMotionPNG		{ U"Material/1.img/敵/1.拳/10.受けモーション-enemey.png" };
+	Texture enemeyAttackMotionPNG		{ U"Material/1.img/敵/1.拳/7.拳モーション-enemey.png" };
+	Texture enemeyMagicMotionPNG		{ U"Material/1.img/敵/1.拳/8.攻撃魔法モーション-enemey.png" };
+	Texture enemeyGuardMotionPNG		{ U"Material/1.img/敵/1.拳/11.防御モーション-enemey.png" };
+	Texture enemeyNotstaminaMotionPNG	{ U"Material/1.img/敵/1.拳/14.スタミナ切れ(待機)-enemey.png" };
 
 	
 
