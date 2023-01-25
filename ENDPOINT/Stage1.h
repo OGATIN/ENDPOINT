@@ -128,4 +128,6 @@ public:
     void Initialize();//初期化
 
 	void MapCollision(); //マップ用
+
+	double HitBody(double velox1, double velox2);
 };
