@@ -187,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
+    <None Include="App\ConfigData\map.csv" />
     <None Include="App\ConfigData\アニメーションデータ.csv" />
     <None Include="App\ConfigData\スキルポイントステータスデータ.csv" />
     <None Include="App\ConfigData\ノックバック倍率.csv" />

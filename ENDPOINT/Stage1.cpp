@@ -73,6 +73,15 @@ void Stage1::update()
 	MapCollision();
 
 
+	//if (Player.position.y >= (32 * 19) - Player.shiftInternalHitRect[0][0].y)
+	//{
+	//	Player.velocity.y = 0;
+
+	//	Player.position.y = (32 * 19) - Player.shiftInternalHitRect[0][0].y;
+
+	//}
+
+
 	//キー入力で処理
 	Player.ChangeWait();
 
@@ -152,6 +161,8 @@ void Stage1::update()
 
 	Player.Update();
 
+	
+
 	//デバック用
 	Player.playerCollsioninputoutdeg();
 
@@ -176,24 +187,14 @@ void Stage1::draw() const
 
 	BackScreen.resized(Scene::Width()).draw();
 
-	for (int y = 0; y < 25; y++)
+	for (int y = 0; y < 100; y++)
 	{
-		for (int x = 0; x < 48; x++)
+		for (int x = 0; x < 100; x++)
 		{
-			switch (mapData[y][x])
+			if (Parse<int>(mapData[y][x]) > 0)
 			{
-			case 0:
-				continue;
-			case 1:
-				UnderGround(MapSize * 4, MapSize * 0, MapSize, MapSize).scaled(2).draw(x * MapSize * 2, y * MapSize * 2);//地面
-				break;
-			case 2:
-				UnderGround(MapSize * 15, MapSize * 1, MapSize, MapSize).scaled(2).draw(x * MapSize * 2, y * MapSize * 2);//土
-				break;
-			default:
-				break;
+				UnderGround(MapSize * (Parse<int>(mapData[y][x]) % 100), MapSize * (Parse<int>(mapData[y][x]) / 100), MapSize, MapSize).scaled(2).draw((x * MapSize * 2) - cameraPos.x, (y * MapSize * 2) - cameraPos.y);
 			}
-
 		}
 	}
 	
@@ -203,7 +204,7 @@ void Stage1::draw() const
 	Enemey.Draw();
 	Player.StatusDraw();
 	Player.TimeDebuggDraw();
-	//Player.status.DaseStatusDrow();
+	Player.status.DaseStatusDrow();
 	Player.hitBox.drawFrame(2, Palette::Green);
 	Player.playerCollsioninputoutdegDraw();
 
@@ -212,7 +213,7 @@ void Stage1::draw() const
 	font(Player.position).draw(450, 0);
 	font(Player.velocity).draw(450, 30);
 	font(Player.charaSpeed).draw(450, 150);
-	font(Enemey.gameObject.charaSpeed).draw(450, 120);
+	//font(Enemey.gameObject.charaSpeed).draw(450, 120);
 	/*font(Cursor::Pos()).draw(650, 0);
 	Player.hitBox.drawFrame(2, Palette::Green);
 	*/
@@ -225,8 +226,8 @@ void Stage1::draw() const
 
 void Stage1::MapCollision()
 {
-	if (mapData[Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x] == 1 ||
-	mapData[Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).x] == 1
+	if (Parse<int>(mapData[Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) == 1 ||
+		Parse<int>(mapData[Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) == 1
 	)
 	{
 		Player.velocity.y = 0;
@@ -238,18 +239,6 @@ void Stage1::MapCollision()
 		Player.isLanding = false;
 	}
 
-	if (mapData[Enemey.gameObject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Enemey.gameObject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x] == 1 ||
-	mapData[Enemey.gameObject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Enemey.gameObject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x] == 1
-	)
-	{
-		Enemey.gameObject.velocity.y = 0;
-		Enemey.gameObject.position = Enemey.gameObject.prePosition;
-		Enemey.gameObject.isLanding = true;
-	}
-	else
-	{
-		Enemey.gameObject.isLanding = false;
-	}
 }
 
 double Stage1::HitBody(double velox1, double velox2)
