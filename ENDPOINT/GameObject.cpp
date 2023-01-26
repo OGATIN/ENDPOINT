@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 
-void GameObject::Reload(Texture _animation[4][20], CSV AnimationData, CSV statusData)
+void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData)
 {
 
 	for (int j = 0; j < 4; j++)
@@ -14,8 +14,12 @@ void GameObject::Reload(Texture _animation[4][20], CSV AnimationData, CSV status
 		}
 	}
 
-	status.Reload(statusData);
+	for (int i = 0; i < 19; i++)
+	{
+		audio[i] = _audio[i];
+	}
 
+	status.Reload(statusData);
 }
 
 void GameObject::Update()
@@ -141,6 +145,8 @@ void GameObject::WalkProcess()
 	{
 		velocity.x =  charaSpeed;
 	}
+	audio[1].setVolume(GameData::MainVolume * GameData::SEVolume);
+	audio[1].play();
 }
 
 void GameObject::RunProcess()

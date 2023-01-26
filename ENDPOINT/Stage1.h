@@ -68,7 +68,25 @@ private:
 	Texture enemeyGuardMotionPNG		{ U"Material/1.img/敵/1.拳/11.防御モーション-enemey.png" };
 	Texture enemeyNotstaminaMotionPNG	{ U"Material/1.img/敵/1.拳/14.スタミナ切れ(待機)-enemey.png" };
 
-	
+	Audio WalkAudio			{ U"Material/4.SE/1.歩き.mp3" , Loop::Yes };
+	Audio RunAudio			{ U"Material/4.SE/2.走り.mp3" , Loop::Yes };
+	Audio JumpAudio			{ U"Material/4.SE/3.ジャンプ.mp3" };
+	Audio FistAudio			{ U"Material/4.SE/4.拳.mp3" };
+	Audio SwordAudio		{ U"Material/4.SE/5.剣.mp3" };
+	Audio HammerAudio		{ U"Material/4.SE/6.鈍器.mp3" };
+	Audio FireBallAudio		{ U"Material/4.SE/7.火球.mp3" };
+	Audio ThunderAudio		{ U"Material/4.SE/8.サンダー.mp3" };
+	Audio HealAudio			{ U"Material/4.SE/9.回復.mp3" };
+	Audio StatusUpAudio		{ U"Material/4.SE/10.ステータスアップ.mp3" };
+	Audio TimeAudio			{ U"Material/4.SE/11.タイム.mp3" };
+	Audio DamageAudio		{ U"Material/4.SE/12.ダメージ.mp3" };
+	Audio GuardAudio		{ U"Material/4.SE/13.防御した時.mp3" };
+	Audio GuardDamageAudio	{ U"Material/4.SE/14.防御中攻撃を受けた時.mp3" };
+	Audio GuardBreakAudio	{ U"Material/4.SE/15.防御割れ.mp3" };
+	Audio Pause1Audio		{ U"Material/4.SE/16.ゲームを一時停止した時1.mp3" };
+	Audio Pause2Audio		{ U"Material/4.SE/17.ゲームを一時停止した時.mp3" };
+	Audio DropAudio			{ U"Material/4.SE/18.ドロップアイテムを落とした時.mp3" };
+	Audio PickUpAudio		{ U"Material/4.SE/19.ドロップアイテムを拾った時.mp3" };
 
 	CSV BasicStatData{ U"ConfigData/基礎ステータスデータ.csv" };
 	CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
@@ -91,10 +109,33 @@ private:
 		//各20種
 	};
 
+	Audio SEAudio[19] =
+	{
+		WalkAudio,
+		RunAudio,
+		JumpAudio,
+		FistAudio,
+		SwordAudio,
+		HammerAudio,
+		FireBallAudio,
+		ThunderAudio,
+		HealAudio,
+		StatusUpAudio,
+		TimeAudio,
+		DamageAudio,
+		GuardAudio,
+		GuardDamageAudio,
+		GuardBreakAudio,
+		Pause1Audio,
+		Pause2Audio,
+		DropAudio,
+		PickUpAudio
+	};
 
-	GameObject Player = { playerPNG ,AnimationData ,BasicStatData };
 
-	EnemyClass Enemey = { enemeyPNG ,AnimationData ,BasicStatData };
+	GameObject Player = { playerPNG ,SEAudio,AnimationData ,BasicStatData };
+
+	EnemyClass Enemey = { enemeyPNG ,SEAudio,AnimationData ,BasicStatData };
 
 	Vec2 cameraPos = {0,0};
 
@@ -129,104 +170,16 @@ public:
 
 	void MapCollision(); //マップ用
 
-	double HitBodyVelocity(double velox1, double velox2)
-	{
-		//返す値は結果のベクトル
+	/// @brief 体同士が衝突した際の当たり判定で使う移動量を計算
+	/// @param velox1 一キャラ目の移動値X
+	/// @param velox2 二キャラ目の移動値X
+	/// @return 結果の移動値
+	double HitBodyVelocity(double velox1, double velox2);
 
-		//現在の向きを確認
-		bool _1PRight = velox1 > 0;
-		bool _1PLeft = velox1 < 0;
-		bool _1PStop = velox1 == 0;
-
-		bool _2PRight = velox2 > 0;
-		bool _2PLeft = velox2 < 0;
-		bool _2PStop = velox2 == 0;
-
-		//ベクトルの大きさを定義
-		double _1PVeloSize = velox1;
-		double _2PVeloSize = velox2;
-		//大きさが-なら+に変換して扱いやすくする
-		if (velox1 < 0)_1PVeloSize *= -1;
-		if (velox2 < 0)_2PVeloSize *= -1;
-
-		//どっちが押してるかを判断
-		bool is1PPush = false;
-		bool is2PPush = false;
-		bool isSame = false;
-
-		//フラグを立てる
-		if (_1PVeloSize > _2PVeloSize)
-		{
-			is1PPush = true;
-		}
-		else if (_2PVeloSize > _1PVeloSize)
-		{
-			is2PPush = true;
-		}
-		else if (_1PVeloSize == _2PVeloSize)
-		{
-			isSame = true;
-		}
-
-		//両方同じ方向に進んでる時の速度差による衝突(両方右向にき進んでる+/+ || 両方左向きに進んでる-/-)
-		if (_1PRight == true && _2PRight == true || _1PLeft == true && _2PLeft == true)
-		{
-			if (is1PPush)return velox1;
-
-			if (is2PPush)return velox2;
-		}
-
-		//お互いに違う向きでの衝突(1Pは右向きの衝突+/- || 1Pは左向きの衝突-/+)
-		if (_1PRight == true && _2PLeft == true || _1PLeft == true && _2PRight == true)
-		{
-			//符号がお互い違うので足す
-			if (is1PPush)return velox1 + velox2;
-
-			if (is2PPush)return velox2 + velox1;
-		}
-
-		//1Pが動いてて2Pが停止+or-/0
-		if ((_1PLeft || _1PRight) && _2PStop)
-		{
-			return velox1;
-		}
-
-		//2Pが動いてて1Pが停止0/+or-
-		if ((_2PLeft || _2PRight) && _1PStop)
-		{
-			return velox2;
-		}
-
-		//両方同じベクトル量だった時(衝突もしくは停止)
-		if (isSame)
-		{
-			return 0;
-		}
-	}
-
-	bool Is1PPush(double velox1, double velox2)
-	{
-		//ベクトルの大きさを定義
-		double _1PVeloSize = velox1;
-		double _2PVeloSize = velox2;
-		//大きさが-なら+に変換して扱いやすくする
-		if (velox1 < 0)_1PVeloSize *= -1;
-		if (velox2 < 0)_2PVeloSize *= -1;
-
-		//どっちが押してるかを判断
-		bool is1PPush = false;
-
-		//フラグを立てる
-		if (_1PVeloSize > _2PVeloSize)is1PPush = true;
-		else if (_2PVeloSize > _1PVeloSize)is1PPush = false;
-		else is1PPush = false;
-
-		return is1PPush;
-	}
-
-	void HitBodyProcess(double velo1, double velo2, double pos1, double pos2)
-	{
-
-	}
-
+	/// @brief 二つの移動地のうち、どちらが押しているかを判定
+	/// @param velox1 1P
+	/// @param velox2 2P
+	/// @return 1Pが押しているならtrue,それ以外ならfalse,同値でもfalse
+	bool Is1PPush(double velox1, double velox2);
+	
 };

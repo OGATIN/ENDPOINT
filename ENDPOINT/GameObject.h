@@ -4,6 +4,8 @@ class GameObject
 public:
 	AnimationClass animation[4][9];//武器の種類×4 各モーションの種類×9
 
+	Audio audio[19];
+
 	Stopwatch currentTime;//時間
 
 	StatusClass status;//ステータス
@@ -53,7 +55,7 @@ public:
 
 	GameObject() {};
 
-	GameObject(Texture _animation[4][20], CSV AnimationData, CSV statusData)
+	GameObject(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData)
 	{
 
 		for (int j = 0; j < 4; j++)
@@ -67,7 +69,11 @@ public:
 
 			//animation[j][7].Reload(_animation[j][7], AnimationData, 8);//
 			//animation[j][7].Reload(_animation[j][7], AnimationData, 9);
+		}
 
+		for (int i = 0; i < 19; i++)
+		{
+			audio[i] = _audio[i];
 		}
 
 		status.Reload(statusData);
@@ -75,7 +81,7 @@ public:
 
 	//機能
 
-	void Reload(Texture _animation[4][20], CSV AnimationData, CSV statusData);
+	void Reload(Texture _animation[4][20],Audio _audio[19], CSV AnimationData, CSV statusData);
 
 	/// @brief 毎フレーム更新する情報
 	void Update();

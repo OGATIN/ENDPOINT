@@ -14,6 +14,7 @@ void Stage1::Initialize()
 		throw Error{ U"基礎ステータスデータ.csv が存在しません。" };
 	}
 
+	//初期化
 	Player.Initialize();
 
 	//ストップウォッチスタート
@@ -23,10 +24,19 @@ void Stage1::Initialize()
 
 void Stage1::update()
 {
+	//プレイヤーの処理
+	Player.Update();
 
+	//敵の処理
+	Enemey.TestAI(Cursor::Pos());
+
+	Player.StateManagement();
+
+	MapCollision();
+
+	//コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
-
 	// デッドゾーン
 	if (enableDeadZone)
 	{
@@ -44,35 +54,11 @@ void Stage1::update()
 		controller.setLeftThumbDeadZone(DeadZone{});
 		controller.setRightThumbDeadZone(DeadZone{});
 	}
-
 	// 振動
 	controller.setVibration(vibration);
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	// 左トリガー
-	/*{
-		leftTrigger.draw(AlphaF(0.25));
-		leftTrigger.stretched((controller.leftTrigger - 1.0) * leftTrigger.h, 0, 0, 0).draw();
-	}*/
-
-	//// 右トリガー
-	//{
-	//	rightTrigger.draw(AlphaF(0.25));
-	//	rightTrigger.stretched((controller.rightTrigger - 1.0) * rightTrigger.h, 0, 0, 0).draw();
-	//}
-
-	//// View (Back), Menu (Start) ボタン 
-	//{
-	//	controller.buttonView.pressed() ? 1.0 : 0.7;
-	//	controller.buttonMenu.pressed() ? 1.0 : 0.7;
-	//}
-
-
-
-	Player.StateManagement();
-
-	MapCollision();
-
-
+	//キー入力等状態遷移--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//キー入力で処理
 	Player.ChangeWait();
 
@@ -137,23 +123,23 @@ void Stage1::update()
 		Player.MotionStop();
 	}
 
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	//デバック用
-	Player.playerCollsioninputoutdeg();
 
+	//当たり判定---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	//プレイヤーと敵の体が当たった際の処理
 	if (Player.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))
 	{
-		/*Player.velocity.x = HitBody(Player.velocity.x, Enemey.gameObject.velocity.x);
-		Enemey.gameObject.velocity.x = HitBody(Player.velocity.x, Enemey.gameObject.velocity.x);*/
-		HitBodyProcess(Player.velocity.x, Enemey.gameObject.velocity.x, Player.position.x, Enemey.gameObject.position.x);
+		double PlayerVelocity = Player.velocity.x;
+		double EnemeyVelocity = Enemey.gameObject.velocity.x;
 
 		//入力するベクトル値を代入
-		double preVelo = HitBodyVelocity(Player.velocity.x, Enemey.gameObject.velocity.x);
+		double preVelo = HitBodyVelocity(PlayerVelocity, EnemeyVelocity);
 
 		//押される方の座標にベクトル値を追加で加算
-		if (Is1PPush(Player.velocity.x, Enemey.gameObject.velocity.x))
+		if (Is1PPush(PlayerVelocity, EnemeyVelocity))
 		{
-			if (Player.velocity.x > 0)
+			if (PlayerVelocity > 0)
 			{
 				Enemey.gameObject.position.x += preVelo;
 			}
@@ -164,7 +150,7 @@ void Stage1::update()
 		}
 		else
 		{
-			if (Enemey.gameObject.velocity.x > 0)
+			if (EnemeyVelocity > 0)
 			{
 				Player.position.x -= preVelo;
 			}
@@ -173,20 +159,19 @@ void Stage1::update()
 				Player.position.x += preVelo;
 			}
 		}
+
 		//現在のベクトル値に加算
 		Player.velocity.x = preVelo;
 		Enemey.gameObject.velocity.x = preVelo;
 	}
-	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-	Enemey.TestAI(Cursor::Pos());
-
-	Player.Update();
-
+	//デバック用?---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//デバック用
 	Player.playerCollsioninputoutdeg();
-
+	//デバック用
+	Player.playerCollsioninputoutdeg();
 	if (Key1.down())
 	{
 		//Player.MotionEndMagnificationIncrease();
@@ -197,10 +182,8 @@ void Stage1::update()
 	{
 		//Player.MotionEndMagnificationDecrease();
 		Player.MotionFrameBack();
-
 	}
-
-
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
 
 void Stage1::draw() const
@@ -282,6 +265,101 @@ void Stage1::MapCollision()
 	{
 		Enemey.gameObject.isLanding = false;
 	}
+}
+
+double Stage1::HitBodyVelocity(double velox1, double velox2)
+{
+	//返す値は結果のベクトル
+
+		//現在の向きを確認
+	bool _1PRight = velox1 > 0;
+	bool _1PLeft = velox1 < 0;
+	bool _1PStop = velox1 == 0;
+
+	bool _2PRight = velox2 > 0;
+	bool _2PLeft = velox2 < 0;
+	bool _2PStop = velox2 == 0;
+
+	//ベクトルの大きさを定義
+	double _1PVeloSize = velox1;
+	double _2PVeloSize = velox2;
+	//大きさが-なら+に変換して扱いやすくする
+	if (velox1 < 0)_1PVeloSize *= -1;
+	if (velox2 < 0)_2PVeloSize *= -1;
+
+	//どっちが押してるかを判断
+	bool is1PPush = false;
+	bool is2PPush = false;
+	bool isSame = false;
+
+	//フラグを立てる
+	if (_1PVeloSize > _2PVeloSize)
+	{
+		is1PPush = true;
+	}
+	else if (_2PVeloSize > _1PVeloSize)
+	{
+		is2PPush = true;
+	}
+	else if (_1PVeloSize == _2PVeloSize)
+	{
+		isSame = true;
+	}
+
+	//両方同じ方向に進んでる時の速度差による衝突(両方右向にき進んでる+/+ || 両方左向きに進んでる-/-)
+	if (_1PRight == true && _2PRight == true || _1PLeft == true && _2PLeft == true)
+	{
+		if (is1PPush)return velox1;
+
+		if (is2PPush)return velox2;
+	}
+
+	//お互いに違う向きでの衝突(1Pは右向きの衝突+/- || 1Pは左向きの衝突-/+)
+	if (_1PRight == true && _2PLeft == true || _1PLeft == true && _2PRight == true)
+	{
+		//符号がお互い違うので足す
+		if (is1PPush)return velox1 + velox2;
+
+		if (is2PPush)return velox2 + velox1;
+	}
+
+	//1Pが動いてて2Pが停止+or-/0
+	if ((_1PLeft || _1PRight) && _2PStop)
+	{
+		return velox1;
+	}
+
+	//2Pが動いてて1Pが停止0/+or-
+	if ((_2PLeft || _2PRight) && _1PStop)
+	{
+		return velox2;
+	}
+
+	//両方同じベクトル量だった時(衝突もしくは停止)
+	if (isSame)
+	{
+		return 0;
+	}
+}
+
+bool Stage1::Is1PPush(double velox1, double velox2)
+{
+	//ベクトルの大きさを定義
+	double _1PVeloSize = velox1;
+	double _2PVeloSize = velox2;
+	//大きさが-なら+に変換して扱いやすくする
+	if (velox1 < 0)_1PVeloSize *= -1;
+	if (velox2 < 0)_2PVeloSize *= -1;
+
+	//どっちが押してるかを判断
+	bool is1PPush = false;
+
+	//フラグを立てる
+	if (_1PVeloSize > _2PVeloSize)is1PPush = true;
+	else if (_2PVeloSize > _1PVeloSize)is1PPush = false;
+	else is1PPush = false;
+
+	return is1PPush;
 }
 
 
