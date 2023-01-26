@@ -143,9 +143,41 @@ void Stage1::update()
 
 	if (Player.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))
 	{
-		Player.velocity.x = HitBody(Player.velocity.x, Enemey.gameObject.velocity.x);
-		Enemey.gameObject.velocity.x = HitBody(Player.velocity.x, Enemey.gameObject.velocity.x);
+		/*Player.velocity.x = HitBody(Player.velocity.x, Enemey.gameObject.velocity.x);
+		Enemey.gameObject.velocity.x = HitBody(Player.velocity.x, Enemey.gameObject.velocity.x);*/
+		HitBodyProcess(Player.velocity.x, Enemey.gameObject.velocity.x, Player.position.x, Enemey.gameObject.position.x);
+
+		//入力するベクトル値を代入
+		double preVelo = HitBodyVelocity(Player.velocity.x, Enemey.gameObject.velocity.x);
+
+		//押される方の座標にベクトル値を追加で加算
+		if (Is1PPush(Player.velocity.x, Enemey.gameObject.velocity.x))
+		{
+			if (Player.velocity.x > 0)
+			{
+				Enemey.gameObject.position.x += preVelo;
+			}
+			else
+			{
+				Enemey.gameObject.position.x -= preVelo;
+			}
+		}
+		else
+		{
+			if (Enemey.gameObject.velocity.x > 0)
+			{
+				Player.position.x -= preVelo;
+			}
+			else
+			{
+				Player.position.x += preVelo;
+			}
+		}
+		//現在のベクトル値に加算
+		Player.velocity.x = preVelo;
+		Enemey.gameObject.velocity.x = preVelo;
 	}
+	
 
 
 	Enemey.TestAI(Cursor::Pos());
@@ -252,69 +284,5 @@ void Stage1::MapCollision()
 	}
 }
 
-double Stage1::HitBody(double velox1, double velox2)
-{
-	//返す値は結果のベクトル
-
-	//現在の向きを確認
-	bool _1PRight = velox1 > 0;
-	bool _1PLeft = velox1 < 0;
-	bool _1PStop = velox1 == 0;
-
-	bool _2PRight = velox2 > 0;
-	bool _2PLeft = velox2 < 0;
-	bool _2PStop = velox2 == 0;
-
-	//ベクトルの大きさを定義
-	double _1PVeloSize = velox1;
-	double _2PVeloSize = velox2;
-	//大きさが-なら+に変換して扱いやすくする
-	if (velox1 < 0)_1PVeloSize *= -1;
-	if (velox2 < 0)_2PVeloSize *= -1;
-
-	//どっちが押してるかを判断
-	bool is1PPush = false;
-	bool is2PPush = false;
-	bool isSame = false;
-	//フラグを立てる
-	if (_1PVeloSize > _2PVeloSize)is1PPush = true;
-	else if (_2PVeloSize > _1PVeloSize)is2PPush = true;
-	else isSame = true;
-
-	//両方同じ方向に進んでる時の速度差による衝突(両方右向にき進んでる+/+ || 両方左向きに進んでる-/-)
-	if (_1PRight == true && _2PRight == true || _1PLeft == true && _2PLeft == true)
-	{
-		if (is1PPush)return velox1;
-
-		if (is2PPush)return velox2;
-	}
-
-	//お互いに違う向きでの衝突(1Pは右向きの衝突+/- || 1Pは左向きの衝突-/+)
-	if (_1PRight == true && _2PLeft == true || _1PLeft == true && _2PRight == true)
-	{
-		//符号がお互い違うので足す
-		if (is1PPush)return velox1 + velox2;
-
-		if (is2PPush)return velox2 + velox1;
-	}
-
-	//1Pが動いてて2Pが停止+or-/0
-	if ((_1PLeft || _1PRight) && _2PStop)
-	{
-		return velox1;
-	}
-
-	//2Pが動いてて1Pが停止0/+or-
-	if ((_2PLeft || _2PRight) && _1PStop)
-	{
-		return velox2;
-	}
-
-	//両方同じベクトル量だった時(衝突もしくは停止)
-	if (isSame)
-	{
-		return 0;
-	}
-}
 
 

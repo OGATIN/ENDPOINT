@@ -129,5 +129,104 @@ public:
 
 	void MapCollision(); //マップ用
 
-	double HitBody(double velox1, double velox2);
+	double HitBodyVelocity(double velox1, double velox2)
+	{
+		//返す値は結果のベクトル
+
+		//現在の向きを確認
+		bool _1PRight = velox1 > 0;
+		bool _1PLeft = velox1 < 0;
+		bool _1PStop = velox1 == 0;
+
+		bool _2PRight = velox2 > 0;
+		bool _2PLeft = velox2 < 0;
+		bool _2PStop = velox2 == 0;
+
+		//ベクトルの大きさを定義
+		double _1PVeloSize = velox1;
+		double _2PVeloSize = velox2;
+		//大きさが-なら+に変換して扱いやすくする
+		if (velox1 < 0)_1PVeloSize *= -1;
+		if (velox2 < 0)_2PVeloSize *= -1;
+
+		//どっちが押してるかを判断
+		bool is1PPush = false;
+		bool is2PPush = false;
+		bool isSame = false;
+
+		//フラグを立てる
+		if (_1PVeloSize > _2PVeloSize)
+		{
+			is1PPush = true;
+		}
+		else if (_2PVeloSize > _1PVeloSize)
+		{
+			is2PPush = true;
+		}
+		else if (_1PVeloSize == _2PVeloSize)
+		{
+			isSame = true;
+		}
+
+		//両方同じ方向に進んでる時の速度差による衝突(両方右向にき進んでる+/+ || 両方左向きに進んでる-/-)
+		if (_1PRight == true && _2PRight == true || _1PLeft == true && _2PLeft == true)
+		{
+			if (is1PPush)return velox1;
+
+			if (is2PPush)return velox2;
+		}
+
+		//お互いに違う向きでの衝突(1Pは右向きの衝突+/- || 1Pは左向きの衝突-/+)
+		if (_1PRight == true && _2PLeft == true || _1PLeft == true && _2PRight == true)
+		{
+			//符号がお互い違うので足す
+			if (is1PPush)return velox1 + velox2;
+
+			if (is2PPush)return velox2 + velox1;
+		}
+
+		//1Pが動いてて2Pが停止+or-/0
+		if ((_1PLeft || _1PRight) && _2PStop)
+		{
+			return velox1;
+		}
+
+		//2Pが動いてて1Pが停止0/+or-
+		if ((_2PLeft || _2PRight) && _1PStop)
+		{
+			return velox2;
+		}
+
+		//両方同じベクトル量だった時(衝突もしくは停止)
+		if (isSame)
+		{
+			return 0;
+		}
+	}
+
+	bool Is1PPush(double velox1, double velox2)
+	{
+		//ベクトルの大きさを定義
+		double _1PVeloSize = velox1;
+		double _2PVeloSize = velox2;
+		//大きさが-なら+に変換して扱いやすくする
+		if (velox1 < 0)_1PVeloSize *= -1;
+		if (velox2 < 0)_2PVeloSize *= -1;
+
+		//どっちが押してるかを判断
+		bool is1PPush = false;
+
+		//フラグを立てる
+		if (_1PVeloSize > _2PVeloSize)is1PPush = true;
+		else if (_2PVeloSize > _1PVeloSize)is1PPush = false;
+		else is1PPush = false;
+
+		return is1PPush;
+	}
+
+	void HitBodyProcess(double velo1, double velo2, double pos1, double pos2)
+	{
+
+	}
+
 };
