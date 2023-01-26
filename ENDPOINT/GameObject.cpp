@@ -170,6 +170,9 @@ void GameObject::RunProcess()
 	{
 		velocity.x = charaSpeed;
 	}
+
+	audio[2].setVolume(GameData::MainVolume * GameData::SEVolume);
+	audio[2].play();
 }
 
 //要検討
@@ -180,6 +183,7 @@ void GameObject::JumpProcess()
 		velocity.y = -jumpPower;
 		state = StateType::FALLING;
 	}
+	audio[3].playOneShot(GameData::MainVolume * GameData::SEVolume);
 }
 
 void GameObject::FallingProcess()
@@ -205,11 +209,12 @@ void GameObject::AttackProcess()
 	{
 		state = StateType::WAIT;
 	}
+	audio[4].playOneShot(GameData::MainVolume * GameData::SEVolume);
 }
 
 void GameObject::ChangeWait()
 {
-	if (state == StateType::WALK || state == StateType::RUN/* || state == StateType::JUMP || state == StateType::MAGIC || state == StateType::GUARD || state == StateType::RECEIVE*/)
+	if (state == StateType::WALK || state == StateType::RUN)
 	{
 		state = StateType::WAIT;
 	}
@@ -377,6 +382,31 @@ void GameObject::StateManagement()
 void GameObject::Draw() const
 {
 	animation[weaponTypeNumber][stateTypeNumber].Draw(position,isMirror);
+}
+
+void GameObject::AudioStop()
+{
+	//ステイトが待機の時だけ音楽を止める->歩くから走るなどに遷移したとき音が止まらないと思われる
+	//すべてのプロセスで自分の音以外を止める->コードクローンが増えすぎる
+	//持続系のプロセスでそのプロセスでないなら停止するを毎フレーム読む
+	//ステイトが切り替わったら前ステイトの音楽を停止する->プログラム的に不可能?前のステイトを記録しておく変数があれば可能かも？
+	/*if (state == StateType::WAIT)
+	{
+		for (int i = 0; i < 19; i++)
+		{
+			audio[i].stop();
+		}
+	}*/
+
+	if (state != StateType::WALK)
+	{
+		audio[1].stop();
+	}
+	if (state != StateType::RUN)
+	{
+		audio[2].stop();
+	}
+	
 }
 
 

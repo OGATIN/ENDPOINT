@@ -156,7 +156,8 @@ public:
 	/// @brief animationのテクスチャを描画する
 	void Draw()const;
 
-
+	/// @brief 再生を停止する
+	void AudioStop();
 
 	//デバック用
 	void Initialize();
