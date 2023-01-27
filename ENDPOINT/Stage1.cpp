@@ -208,7 +208,7 @@ void Stage1::draw() const
 	Enemey.Draw();
 	Player.StatusDraw();
 	Player.TimeDebuggDraw();
-	Player.status.
+	//Player.status.
 	Player.hitBox.drawFrame(2, Palette::Green);
 	Player.playerCollsioninputoutdegDraw();
 
