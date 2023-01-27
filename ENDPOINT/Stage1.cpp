@@ -37,23 +37,25 @@ void Stage1::update()
 	//コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
-	// デッドゾーン
-	if (enableDeadZone)
-	{
-		// それぞれデフォルト値を設定
-		controller.setLeftTriggerDeadZone();
-		controller.setRightTriggerDeadZone();
-		controller.setLeftThumbDeadZone();
-		controller.setRightThumbDeadZone();
-	}
-	else
-	{
-		// デッドゾーンを無効化
-		controller.setLeftTriggerDeadZone(DeadZone{});
-		controller.setRightTriggerDeadZone(DeadZone{});
-		controller.setLeftThumbDeadZone(DeadZone{});
-		controller.setRightThumbDeadZone(DeadZone{});
-	}
+
+	//// デッドゾーン 下の条件の書き方ならこれいらん
+	//if (enableDeadZone)
+	//{
+	//	// それぞれデフォルト値を設定
+	//	controller.setLeftTriggerDeadZone();
+	//	controller.setRightTriggerDeadZone();
+	//	controller.setLeftThumbDeadZone();
+	//	controller.setRightThumbDeadZone();
+	//}
+	//else
+	//{
+	//	// デッドゾーンを無効化
+	//	controller.setLeftTriggerDeadZone(DeadZone{});
+	//	controller.setRightTriggerDeadZone(DeadZone{});
+	//	controller.setLeftThumbDeadZone(DeadZone{});
+	//	controller.setRightThumbDeadZone(DeadZone{});
+	//}
+	// 
 	// 振動
 	controller.setVibration(vibration);
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -167,10 +169,7 @@ void Stage1::update()
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-	//デバック用?---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	//デバック用
-	Player.playerCollsioninputoutdeg();
-	//デバック用
+	//デバック用---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Player.playerCollsioninputoutdeg();
 	if (Key1.down())
 	{
@@ -195,18 +194,9 @@ void Stage1::draw() const
 	{
 		for (int x = 0; x < 48; x++)
 		{
-			switch (mapData[y][x])
+			if (Parse<int>(mapData[y][x]) > 0)
 			{
-			case 0:
-				continue;
-			case 1:
-				UnderGround(MapSize * 4, MapSize * 0, MapSize, MapSize).scaled(2).draw(x * MapSize * 2, y * MapSize * 2);//地面
-				break;
-			case 2:
-				UnderGround(MapSize * 15, MapSize * 1, MapSize, MapSize).scaled(2).draw(x * MapSize * 2, y * MapSize * 2);//土
-				break;
-			default:
-				break;
+				UnderGround(MapSize * (Parse<int>(mapData[y][x]) % 100), MapSize * (Parse<int>(mapData[y][x]) / 100), MapSize, MapSize).scaled(2).draw((x * MapSize * 2) - cameraPos.x, (y * MapSize * 2) - cameraPos.y);
 			}
 
 		}
@@ -218,7 +208,7 @@ void Stage1::draw() const
 	Enemey.Draw();
 	Player.StatusDraw();
 	Player.TimeDebuggDraw();
-	//Player.status.DaseStatusDrow();
+	Player.status.
 	Player.hitBox.drawFrame(2, Palette::Green);
 	Player.playerCollsioninputoutdegDraw();
 
@@ -240,9 +230,8 @@ void Stage1::draw() const
 
 void Stage1::MapCollision()
 {
-	if (mapData[Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x] == 1 ||
-	mapData[Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).x] == 1
-	)
+	if (Parse<int>(mapData[Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) == 1 ||
+		Parse<int>(mapData[Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) == 1)
 	{
 		Player.velocity.y = 0;
 		Player.position = Player.prePosition;
@@ -253,18 +242,6 @@ void Stage1::MapCollision()
 		Player.isLanding = false;
 	}
 
-	if (mapData[Enemey.gameObject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Enemey.gameObject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x] == 1 ||
-	mapData[Enemey.gameObject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Enemey.gameObject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x] == 1
-	)
-	{
-		Enemey.gameObject.velocity.y = 0;
-		Enemey.gameObject.position = Enemey.gameObject.prePosition;
-		Enemey.gameObject.isLanding = true;
-	}
-	else
-	{
-		Enemey.gameObject.isLanding = false;
-	}
 }
 
 double Stage1::HitBodyVelocity(double velox1, double velox2)
