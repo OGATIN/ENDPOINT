@@ -1,48 +1,31 @@
-﻿
+﻿#include"GameObject.h"
 #pragma once
 
 class PlayerClass
 {
 public:
-	StatusClass playerStatus;//ステータス
-
-	AnimationClass playerAnimation;//アニメーション
-
-	StateType state = StateType::WAIT;
-
-	Vec2 position = {0,0};
-	Vec2 velocity = {0,0};
-	Rect hitBox = {0,0,0,0};
-
-	double gravity = 0.5;
-	bool isJump = false;
-
-	int jumpPower = 10;
-	int playerSpeed = 5;
+	GameObject gameobject;
 
 	PlayerClass() {};
-	PlayerClass(Texture _wait,CSV statusData)
+	PlayerClass(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData)
 	{
-		playerStatus.Reload(statusData);
-		//playerAnimation.Reload(_wait);
+		for (int j = 0; j < 4; j++)
+		{
+			for (int i = 0; i < 7; i++)
+			{
+				//とりあえず共通のデータはここでロード
+				gameobject.animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
+			}
+		}
+
+		for (int i = 0; i < 19; i++)
+		{
+			gameobject.audio[i] = _audio[i];
+		}
+
+		gameobject.status.Reload(statusData);
 	};
 
-	/*Rect GetHitRect();
-	int GetTop();
-	int GetBottom();
-	int GetLeft();
-	int GetRight();
-
-	void StateManagement();
-	void StateManagementDraw()const;*/
-	void MotionStart();
-	void MotionStop();
-	void Jump();
-	void Move();
-
-	void Initialize();
-	void PlayerUpdate();
-	void PlayerDraw()const;
 
 };
 
