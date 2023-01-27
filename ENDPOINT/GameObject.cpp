@@ -182,8 +182,7 @@ void GameObject::JumpProcess()
 	{
 		velocity.y = -jumpPower;
 		state = StateType::FALLING;
-	}
-	audio[3].playOneShot(GameData::MainVolume * GameData::SEVolume);
+	}	
 }
 
 void GameObject::FallingProcess()
@@ -209,7 +208,6 @@ void GameObject::AttackProcess()
 	{
 		state = StateType::WAIT;
 	}
-	audio[4].playOneShot(GameData::MainVolume * GameData::SEVolume);
 }
 
 void GameObject::ChangeWait()
@@ -268,6 +266,7 @@ void GameObject::ChangeJump()
 	if (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN)
 	{
 		state = StateType::JUMP;
+		audio[3].playOneShot(GameData::MainVolume * GameData::SEVolume);
 	}
 }
 
@@ -290,6 +289,7 @@ void GameObject::ChangeAttack()
 	{
 		state = StateType::ATTACK;
 	}
+	audio[4].playOneShot(GameData::MainVolume * GameData::SEVolume);
 }
 
 

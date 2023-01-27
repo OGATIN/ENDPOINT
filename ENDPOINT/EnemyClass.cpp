@@ -30,5 +30,9 @@ void EnemyClass::AIManegement()
 void EnemyClass::Draw()const
 {
 	gameObject.Draw();
-	gameObject.GetHitRect().drawFrame(2,Palette::Red);
+}
+
+void EnemyClass::DebugDraw() const
+{
+	gameObject.GetHitRect().drawFrame(2, Palette::Red);
 }

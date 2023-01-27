@@ -67,6 +67,12 @@ public:
 		MaxPoint = _MaxPoint;
 		nowPoint = _nowPoint;
 	};
+	Bar(int _MaxPoint,Color _pointColor)
+	{
+		MaxPoint = _MaxPoint;
+		nowPoint = _MaxPoint;
+		pointColor = _pointColor;
+	};
 
 
 	/// @brief バーの背景色
@@ -75,8 +81,8 @@ public:
 	/// @brief 遅延 HP の色
 	ColorF delayColor{ 0.9, 0.8, 0.3 };
 
-	/// @brief HP の色
-	ColorF hpColor{ 0.8, 0.2, 0.2 };
+	/// @brief バー の色
+	ColorF pointColor{ 0.8, 0.2, 0.2 };
 
 	/// @brief 枠の色
 	ColorF frameColor{ 0.1 };
@@ -117,7 +123,7 @@ public:
 
 		_rect.draw(backgroundColor);
 		rectDelay.draw(delayColor);
-		rectHP.draw(hpColor);
+		rectHP.draw(pointColor);
 		_rect.drawFrame(frameThickness, frameColor);
 	};
 
@@ -132,7 +138,7 @@ public:
 
 		_rect.draw(backgroundColor);
 		rectDelay.draw(delayColor);
-		rectHP.draw(hpColor);
+		rectHP.draw(pointColor);
 		_rect.drawFrame(frameThickness, frameColor);
 	};
 
@@ -155,13 +161,22 @@ public:
 
 		for (const auto& shape : Geometry2D::And(hex, rectHP))
 		{
-			shape.draw(hpColor);
+			shape.draw(pointColor);
 		}
 
 		hex.drawFrame(frameThickness, frameColor);
 	};
 
+	void DrawPortrait(RectF _rect)const
+	{
+		const RectF rectDelay{ _rect.pos.x,_rect.pos.y + _rect.h, _rect.w,-(_rect.h * getDelayHPRatio()) };
+		const RectF rectHP{ _rect.pos.x,_rect.pos.y + _rect.h,  _rect.w, -(_rect.h * getHPRatio()) };
 
+		_rect.draw(backgroundColor);
+		rectDelay.draw(delayColor);
+		rectHP.draw(pointColor);
+		_rect.drawFrame(frameThickness, frameColor);
+	};
 
 private:
 

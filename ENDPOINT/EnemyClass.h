@@ -15,6 +15,7 @@ public:
 	void AIManegement();
 
 	void Draw()const;
+	void DebugDraw()const;
 
 };
 
