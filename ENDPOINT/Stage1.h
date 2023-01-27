@@ -133,7 +133,7 @@ private:
 	};
 
 
-	GameObject Player = { playerPNG ,SEAudio,AnimationData ,BasicStatData };
+	PlayerClass Player = { playerPNG ,SEAudio,AnimationData ,BasicStatData };
 
 	EnemyClass Enemey = { enemeyPNG ,SEAudio,AnimationData ,BasicStatData };
 
