@@ -27,6 +27,8 @@ void Stage1::update()
 	//プレイヤーの処理
 	Player.gameobject.Update();
 
+	Player.gameobject.AudioStop();
+
 	//敵の処理
 	Enemey.TestAI(Cursor::Pos());
 
@@ -203,29 +205,18 @@ void Stage1::draw() const
 	}
 	
 	//画像描画
-	Player.gameobject.Draw();
-	Player.gameobject.GetHitRect().drawFrame(2, Palette::Green);
+	Player.Draw();
+	Player.DebugDraw();
 	Enemey.Draw();
-	Player.gameobject.StatusDraw();
-	Player.gameobject.TimeDebuggDraw();
-	//Player.status.
-	Player.gameobject.hitBox.drawFrame(2, Palette::Green);
-	Player.gameobject.playerCollsioninputoutdegDraw();
+	Enemey.DebugDraw();
 
-	
 	//デバック用
 	font(Player.gameobject.position).draw(450, 0);
 	font(Player.gameobject.velocity).draw(450, 30);
 	font(Player.gameobject.charaSpeed).draw(450, 150);
 	font(Enemey.gameObject.charaSpeed).draw(450, 120);
-	/*font(Cursor::Pos()).draw(650, 0);
-	Player.hitBox.drawFrame(2, Palette::Green);
-	*/
 
 	if (Player.gameobject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
-		
-
-
 }
 
 void Stage1::MapCollision()
