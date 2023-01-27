@@ -43,7 +43,13 @@ void StatusClass::StatusUpdate()
 	}
 }
 
-void StatusClass::DaseStatusDrow()const
+void StatusClass::UIDraw()
+{
+
+
+}
+
+void StatusClass::BaseStatusDrow()const
 {
 	font30(U"レベル ", level).draw(0, font30.height() * 0);
 	font30(U"HP ", hitPoints).draw(0, font30.height()* 1);
@@ -55,5 +61,4 @@ void StatusClass::DaseStatusDrow()const
 	font30(U"魔法 ", magicTypeMame).draw(0, font30.height() * 7);
 	font30(U"MP ", magicPoint).draw(0, font30.height() * 8);
 	font30(U"魔力 ", magicPower).draw(0, font30.height() * 9);
-
 }

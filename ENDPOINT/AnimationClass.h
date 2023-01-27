@@ -52,14 +52,11 @@ public:
 		cutPos.w = texture.width() / endPattern;
 		cutPos.h = texture.height();//
 
-
 		//使ってないの
 		//activeTime			= Parse<double>(animationData[statenumber][1]);//持続時間(ミリ秒に直して使ってね)
 		//recoveryTime		= Parse<double>(animationData[statenumber][2]);//後隙の時間(ミリ秒に直して使ってね)
 		//attackTechnique		= Parse<double>(animationData[statenumber][3]);//全体時間(いる？)
 		//endPattern = animationPattern;
-
-
 	};
 
 	//機能
