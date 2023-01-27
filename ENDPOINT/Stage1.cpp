@@ -36,28 +36,10 @@ void Stage1::update()
 
 	MapCollision();
 
-	//コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
 
-	//// デッドゾーン 下の条件の書き方ならこれいらん
-	//if (enableDeadZone)
-	//{
-	//	// それぞれデフォルト値を設定
-	//	controller.setLeftTriggerDeadZone();
-	//	controller.setRightTriggerDeadZone();
-	//	controller.setLeftThumbDeadZone();
-	//	controller.setRightThumbDeadZone();
-	//}
-	//else
-	//{
-	//	// デッドゾーンを無効化
-	//	controller.setLeftTriggerDeadZone(DeadZone{});
-	//	controller.setRightTriggerDeadZone(DeadZone{});
-	//	controller.setLeftThumbDeadZone(DeadZone{});
-	//	controller.setRightThumbDeadZone(DeadZone{});
-	//}
-	// 
 	// 振動
 	controller.setVibration(vibration);
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
