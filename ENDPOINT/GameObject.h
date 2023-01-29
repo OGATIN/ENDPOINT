@@ -22,7 +22,6 @@ public:
 	Rect shiftInternalHitRect[1][1] = { { {107,139,38,118/*121*/} } };  //補正
 
 	Vec2 position = { 0,0 };
-	Vec2 prePosition = { 0,0 };
 	Vec2 velocity = { 0,0 };
 	Rect hitBox = { 0,0,0,0 };
 

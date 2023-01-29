@@ -32,9 +32,9 @@ void Stage1::update()
 	//敵の処理
 	Enemey.TestAI(Cursor::Pos());
 
-	Player.gameobject.StateManagement();
+	MapHitGround();
 
-	MapCollision();
+	Player.gameobject.StateManagement();
 
 	// コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
@@ -47,68 +47,68 @@ void Stage1::update()
 	//キー入力等状態遷移--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//キー入力で処理
 	Player.gameobject.ChangeWait();
-
-	//右歩き
-	if (KeyRight.pressed() || KeyD.pressed() ||  controller.leftThumbX >= 0.8 || controller.buttonRight.pressed())
 	{
-		Player.gameobject.ChangeWalkR();
+		//右歩き
+		if (KeyRight.pressed() || KeyD.pressed() || controller.leftThumbX >= 0.8 || controller.buttonRight.pressed())
+		{
+			Player.gameobject.ChangeWalkR();
+		}
+
+		//左歩き
+		if (KeyLeft.pressed() || KeyA.pressed() || controller.leftThumbX <= -0.8 || controller.buttonLeft.pressed())
+		{
+			Player.gameobject.ChangeWalkL();
+		}
+
+		//右ダッシュ
+		if ((KeyControl.pressed() && (KeyRight.pressed() || KeyD.pressed())) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX >= 0.8 || controller.buttonRight.pressed()))
+		{
+			Player.gameobject.ChangeRunR();
+		}
+
+		//左ダッシュ
+		if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed())) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX <= -0.8 || controller.buttonLeft.pressed()))
+		{
+			Player.gameobject.ChangeRunL();
+		}
+
+		//同時入力で停止
+		if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed()) && (KeyRight.pressed() || KeyD.pressed()))
+								  || ((KeyLeft.pressed() || KeyA.pressed()) && (KeyRight.pressed() || KeyD.pressed())))
+		{
+			Player.gameobject.ChangeWait();
+		}
+
+		//ジャンプ
+		if (KeySpace.down() || KeyUp.down() || controller.buttonX.down() || controller.buttonY.down())
+		{
+			Player.gameobject.ChangeJump();
+		}
+
+		//攻撃
+		if (KeyZ.down() || controller.buttonB.down())
+		{
+			Player.gameobject.ChangeAttack();
+		}
+
+		//魔法
+		if (KeyX.down() || controller.buttonA.down())
+		{
+
+		}
+
+		//ガード
+		if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
+		{
+
+		}
+
+		if (KeyEnter.down())
+		{
+			//一時停止
+			Player.gameobject.MotionStop();
+		}
 	}
-
-	//左歩き
-	if (KeyLeft.pressed() || KeyA.pressed() || controller.leftThumbX <= - 0.8  || controller.buttonLeft.pressed())
-	{
-		Player.gameobject.ChangeWalkL();
-	}
-
-	//右ダッシュ
-	if ((KeyControl.pressed() && ( KeyRight.pressed() || KeyD.pressed() )) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX >= 0.8 || controller.buttonRight.pressed()))
-	{
-		Player.gameobject.ChangeRunR();
-	}
-
-	//左ダッシュ
-	if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed())) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX <= -0.8 || controller.buttonLeft.pressed()))
-	{
-		Player.gameobject.ChangeRunL();
-	}
-
-	//同時入力で停止
-	if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed()) && (KeyRight.pressed() || KeyD.pressed()))
-							  || ((KeyLeft.pressed() || KeyA.pressed()) && (KeyRight.pressed() || KeyD.pressed())))
-	{
-		Player.gameobject.ChangeWait();
-	}
-
-	//ジャンプ
-	if (KeySpace.down() || KeyUp.down()|| controller.buttonX.down()|| controller.buttonY.down())
-	{
-		Player.gameobject.ChangeJump();
-	}
-
-	//攻撃
-	if (KeyZ.down() || controller.buttonB.down())
-	{
-		Player.gameobject.ChangeAttack();
-	}
-
-	//魔法
-	if (KeyX.down() || controller.buttonA.down())
-	{
-
-	}
-
-	//ガード
-	if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
-	{
-		
-	}
-
-	if (KeyEnter.down())
-	{
-		//一時停止
-		Player.gameobject.MotionStop();
-	}
-
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -155,6 +155,7 @@ void Stage1::update()
 
 	//デバック用---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Player.gameobject.playerCollsioninputoutdeg();
+	te = Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint());
 	if (Key1.down())
 	{
 		//Player.MotionEndMagnificationIncrease();
@@ -174,9 +175,9 @@ void Stage1::draw() const
 
 	BackScreen.resized(Scene::Width()).draw();
 
-	for (int y = 0; y < 25; y++)
+	for (int y = 0; y < mapData.rows(); y++)
 	{
-		for (int x = 0; x < 48; x++)
+		for (int x = 0; x < mapData.columns(y); x++)
 		{
 			if (Parse<int>(mapData[y][x]) > 0)
 			{
@@ -197,23 +198,38 @@ void Stage1::draw() const
 	font(Player.gameobject.velocity).draw(450, 30);
 	font(Player.gameobject.charaSpeed).draw(450, 150);
 	font(Enemey.gameObject.charaSpeed).draw(450, 120);
+	font(te).draw(Player.gameobject.position + Player.gameobject.shiftInternalHitRect[0][0].pos + Player.gameobject.shiftInternalHitRect[0][0].size);
 
 	if (Player.gameobject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
 }
 
-void Stage1::MapCollision()
+void Stage1::MapHitGround()
 {
-	if (Parse<int>(mapData[Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) == 1 ||
-		Parse<int>(mapData[Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) == 1)
+	//配列外エラーを阻止
+	if (Player.gameobject.GetLeft() <= 0)
 	{
+		Player.gameobject.position.x = -Player.gameobject.shiftInternalHitRect[0][0].x;
+	}
+
+	//当たり判定
+	if (((Parse<int>(mapData[Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) >= 1) && (Parse<int>(mapData[Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) < 100) )||
+		((Parse<int>(mapData[Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) >= 1) && (Parse<int>(mapData[Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) < 100)))
+	{
+		//ベクトルを0
 		Player.gameobject.velocity.y = 0;
-		Player.gameobject.position = Player.gameobject.prePosition;
+
+		//位置を補正
+		Player.gameobject.position.y = (Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y * MapChipSize.y) - Player.gameobject.shiftInternalHitRect[0][0].y - Player.gameobject.shiftInternalHitRect[0][0].h;
+
+		//着地した
 		Player.gameobject.isLanding = true;
 	}
 	else
 	{
+		//着地しない
 		Player.gameobject.isLanding = false;
 	}
+
 
 }
 
