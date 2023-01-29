@@ -36,6 +36,8 @@ void Stage1::update()
 
 	Player.gameobject.StateManagement();
 
+	charaConfig.ConfigOnlineProcess();
+
 	// コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
 	auto controller = XInput(playerIndex);
