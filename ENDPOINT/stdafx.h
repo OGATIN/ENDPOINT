@@ -7,3 +7,4 @@
 #include"AnimationClass.h"
 #include"GameObject.h"
 #include"EnemyClass.h"
+#include"Bar.h"

@@ -345,6 +345,7 @@
   <ItemGroup>
     <ClInclude Include="0_6_6_1280x720_60fps.h" />
     <ClInclude Include="AnimationClass.h" />
+    <ClInclude Include="Bar.h" />
     <ClInclude Include="Base.h" />
     <ClInclude Include="ConfigGauge.h" />
     <ClInclude Include="Credit.h" />
