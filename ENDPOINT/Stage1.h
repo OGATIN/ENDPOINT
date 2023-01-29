@@ -109,8 +109,6 @@ private:
 
 	Config charaConfig{Player.gameobject.status};
 
-	bool isConfigOnline = false;
-
 	CSV mapData{ U"ConfigData/map.csv" };
 
 	Vec2 cameraPos = {0,0};

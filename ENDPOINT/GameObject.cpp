@@ -38,7 +38,7 @@ void GameObject::Update()
 	//重量定義
 	if (status.weight < jumpPowerMax)
 	{
-		jumpPower = status.weight;
+		jumpPower = (int)status.weight;
 	}
 	else
 	{

@@ -9,6 +9,13 @@ public:
 		status = _status;
 	};
 
+	bool isOnline = false;
+
+	enum class Menu
+	{
+		FirstMenu,Item,Status,SkillPoint
+	};
+
 	Font font30{ 30 ,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };//フォント
 
 	const int MenuNumber = 4;//選択メニュー数
@@ -16,54 +23,107 @@ public:
 	const Rect MenuHitBox[4]{ {15,15,140,35},{15,65,155,35},{15,110,210,35},{15,160,90,35}};//メニューの当たり判定
 	bool isSelectMenu[4]{ false,false,false,false };
 	int menuID = 0;
+
 	StatusClass status;
 
-	void ConfigOnlineProcess(bool _online)
+	Menu selectMenu = Menu::FirstMenu;
+
+	void ConfigOnlineProcess()
 	{
-		if (_online)
+		if (isOnline)
 		{
-			if (KeyUp.down() || KeyW.down())
+			switch (selectMenu)
 			{
-				menuID -= 1;
-
-				if (menuID < 0)
+			case Config::Menu::FirstMenu:
+				if (KeyUp.down() || KeyW.down())
 				{
-					menuID = MenuNumber - 1;
+					menuID -= 1;
+
+					if (menuID < 0)
+					{
+						menuID = MenuNumber - 1;
+					}
 				}
+
+				if (KeyDown.down() || KeyS.down())
+				{
+					menuID += 1;
+
+					if (menuID > MenuNumber - 1)
+					{
+						menuID = 0;
+					}
+				}
+
+				for (int i = 0; i < MenuNumber; i++)
+				{
+					if (MenuHitBox[i].mouseOver())
+					{
+						menuID = i;
+					}
+
+					if (i == menuID)
+					{
+						isSelectMenu[i] = true;
+					}
+					else
+					{
+						isSelectMenu[i] = false;
+					}
+				}
+
+				switch (menuID)
+				{
+				case 0:
+					if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+					{
+						selectMenu = Menu::Item;
+						//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+					}
+					break;
+				case 1:
+					if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+					{
+						selectMenu = Menu::Status;
+						//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+					}
+					break;
+				case 2:
+					if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+					{
+						selectMenu = Menu::SkillPoint;
+						//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+					}
+					break;
+				case 3:
+					if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+					{
+						isOnline = false;
+						menuID = 0;
+						selectMenu = Menu::FirstMenu;
+						//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+					}
+					break;
+				}
+				break;
+			case Config::Menu::Item:
+				break;
+			case Config::Menu::Status:
+				break;
+			case Config::Menu::SkillPoint:
+				break;
+			default:
+				break;
 			}
-
-			if (KeyDown.down() || KeyS.down())
-			{
-				menuID += 1;
-
-				if (menuID > MenuNumber - 1)
-				{
-					menuID = 0;
-				}
-			}
-
-			for (int i = 0; i < MenuNumber; i++)
-			{
-				if (MenuHitBox[i].mouseOver())
-				{
-					menuID = i;
-				}
-
-				if (i == menuID)
-				{
-					isSelectMenu[i] = true;
-				}
-				else
-				{
-					isSelectMenu[i] = false;
-				}
-			}
+			
 		}
+
+
 	}
 
-	void ConfigOnlineDraw(bool _online)const
+	void ConfigOnlineDraw()const
 	{
-		if (_online)
+		if (isOnline)
 		{
 			Rect window1 = { 10,10,300,200 };
 			Rect window2 = { 10,230,200,40 };

@@ -34,7 +34,7 @@ void Stage1::update()
 
 	Player.gameobject.StateManagement();
 
-	charaConfig.ConfigOnlineProcess(isConfigOnline);
+	charaConfig.ConfigOnlineProcess();
 
 	MapCollision();
 
@@ -51,7 +51,7 @@ void Stage1::update()
 	Player.gameobject.ChangeWait();
 
 	//コンフィグが出ていたら入力できなくなる
-	if (isConfigOnline == false)
+	if (charaConfig.isOnline == false)
 	{
 		//右歩き
 		if (KeyRight.pressed() || KeyD.pressed() || controller.leftThumbX >= 0.8 || controller.buttonRight.pressed())
@@ -118,7 +118,7 @@ void Stage1::update()
 	//Eを押したら切り替え
 	if (KeyE.down())
 	{
-		isConfigOnline ? isConfigOnline = false : isConfigOnline = true;
+		charaConfig.isOnline ? charaConfig.isOnline = false : charaConfig.isOnline = true;
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -203,7 +203,7 @@ void Stage1::draw() const
 	Player.DebugDraw();
 	Enemey.Draw();
 	Enemey.DebugDraw();
-	charaConfig.ConfigOnlineDraw(isConfigOnline);
+	charaConfig.ConfigOnlineDraw();
 
 	//デバック用
 	font(Player.gameobject.position).draw(450, 0);
