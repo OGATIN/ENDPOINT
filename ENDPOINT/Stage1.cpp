@@ -32,11 +32,9 @@ void Stage1::update()
 	//敵の処理
 	Enemey.TestAI(Cursor::Pos());
 
+	MapHitGround();
+
 	Player.gameobject.StateManagement();
-
-	charaConfig.ConfigOnlineProcess();
-
-	MapCollision();
 
 	// コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
@@ -49,9 +47,6 @@ void Stage1::update()
 	//キー入力等状態遷移--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//キー入力で処理
 	Player.gameobject.ChangeWait();
-
-	//コンフィグが出ていたら入力できなくなる
-	if (charaConfig.isOnline == false)
 	{
 		//右歩き
 		if (KeyRight.pressed() || KeyD.pressed() || controller.leftThumbX >= 0.8 || controller.buttonRight.pressed())
@@ -114,13 +109,6 @@ void Stage1::update()
 			Player.gameobject.MotionStop();
 		}
 	}
-
-	//Eを押したら切り替え
-	if (KeyE.down())
-	{
-		charaConfig.isOnline ? charaConfig.isOnline = false : charaConfig.isOnline = true;
-	}
-
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -167,6 +155,7 @@ void Stage1::update()
 
 	//デバック用---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Player.gameobject.playerCollsioninputoutdeg();
+	te = Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint());
 	if (Key1.down())
 	{
 		//Player.MotionEndMagnificationIncrease();
@@ -186,9 +175,9 @@ void Stage1::draw() const
 
 	BackScreen.resized(Scene::Width()).draw();
 
-	for (int y = 0; y < 25; y++)
+	for (int y = 0; y < mapData.rows(); y++)
 	{
-		for (int x = 0; x < 48; x++)
+		for (int x = 0; x < mapData.columns(y); x++)
 		{
 			if (Parse<int>(mapData[y][x]) > 0)
 			{
@@ -203,30 +192,44 @@ void Stage1::draw() const
 	Player.DebugDraw();
 	Enemey.Draw();
 	Enemey.DebugDraw();
-	charaConfig.ConfigOnlineDraw();
 
 	//デバック用
 	font(Player.gameobject.position).draw(450, 0);
 	font(Player.gameobject.velocity).draw(450, 30);
 	font(Player.gameobject.charaSpeed).draw(450, 150);
 	font(Enemey.gameObject.charaSpeed).draw(450, 120);
+	font(te).draw(Player.gameobject.position + Player.gameobject.shiftInternalHitRect[0][0].pos + Player.gameobject.shiftInternalHitRect[0][0].size);
 
 	if (Player.gameobject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
 }
 
-void Stage1::MapCollision()
+void Stage1::MapHitGround()
 {
-	if (Parse<int>(mapData[Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) == 1 ||
-		Parse<int>(mapData[Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) == 1)
+	//配列外エラーを阻止
+	if (Player.gameobject.GetLeft() <= 0)
 	{
+		Player.gameobject.position.x = -Player.gameobject.shiftInternalHitRect[0][0].x;
+	}
+
+	//当たり判定
+	if (((Parse<int>(mapData[Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) >= 1) && (Parse<int>(mapData[Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) < 100) )||
+		((Parse<int>(mapData[Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) >= 1) && (Parse<int>(mapData[Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][Player.gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) < 100)))
+	{
+		//ベクトルを0
 		Player.gameobject.velocity.y = 0;
-		Player.gameobject.position = Player.gameobject.prePosition;
+
+		//位置を補正
+		Player.gameobject.position.y = (Player.gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y * MapChipSize.y) - Player.gameobject.shiftInternalHitRect[0][0].y - Player.gameobject.shiftInternalHitRect[0][0].h;
+
+		//着地した
 		Player.gameobject.isLanding = true;
 	}
 	else
 	{
+		//着地しない
 		Player.gameobject.isLanding = false;
 	}
+
 
 }
 

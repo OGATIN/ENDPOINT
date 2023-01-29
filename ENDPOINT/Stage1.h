@@ -124,6 +124,7 @@ private:
 	XInputVibration vibration;
 
 
+	Vec2 te;
 	Font font{ 30 };
 
 
@@ -142,7 +143,8 @@ public:
 
     void Initialize();//初期化
 
-	void MapCollision(); //マップ用
+	/// @brief 壁との当たり判定
+	void MapHitGround();
 
 	/// @brief 体同士が衝突した際の当たり判定で使う移動量を計算
 	/// @param velox1 一キャラ目の移動値X
