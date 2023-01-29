@@ -347,6 +347,7 @@
     <ClInclude Include="AnimationClass.h" />
     <ClInclude Include="Bar.h" />
     <ClInclude Include="Base.h" />
+    <ClInclude Include="Config.h" />
     <ClInclude Include="ConfigGauge.h" />
     <ClInclude Include="Credit.h" />
     <ClInclude Include="EnemyClass.h" />

@@ -8,3 +8,4 @@
 #include"GameObject.h"
 #include"EnemyClass.h"
 #include"Bar.h"
+#include"Config.h"

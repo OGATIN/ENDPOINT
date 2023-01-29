@@ -34,6 +34,8 @@ void Stage1::update()
 
 	Player.gameobject.StateManagement();
 
+	charaConfig.ConfigOnlineProcess(isConfigOnline);
+
 	MapCollision();
 
 	// コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -48,65 +50,75 @@ void Stage1::update()
 	//キー入力で処理
 	Player.gameobject.ChangeWait();
 
-	//右歩き
-	if (KeyRight.pressed() || KeyD.pressed() ||  controller.leftThumbX >= 0.8 || controller.buttonRight.pressed())
+	//コンフィグが出ていたら入力できなくなる
+	if (isConfigOnline == false)
 	{
-		Player.gameobject.ChangeWalkR();
+		//右歩き
+		if (KeyRight.pressed() || KeyD.pressed() || controller.leftThumbX >= 0.8 || controller.buttonRight.pressed())
+		{
+			Player.gameobject.ChangeWalkR();
+		}
+
+		//左歩き
+		if (KeyLeft.pressed() || KeyA.pressed() || controller.leftThumbX <= -0.8 || controller.buttonLeft.pressed())
+		{
+			Player.gameobject.ChangeWalkL();
+		}
+
+		//右ダッシュ
+		if ((KeyControl.pressed() && (KeyRight.pressed() || KeyD.pressed())) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX >= 0.8 || controller.buttonRight.pressed()))
+		{
+			Player.gameobject.ChangeRunR();
+		}
+
+		//左ダッシュ
+		if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed())) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX <= -0.8 || controller.buttonLeft.pressed()))
+		{
+			Player.gameobject.ChangeRunL();
+		}
+
+		//同時入力で停止
+		if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed()) && (KeyRight.pressed() || KeyD.pressed()))
+								  || ((KeyLeft.pressed() || KeyA.pressed()) && (KeyRight.pressed() || KeyD.pressed())))
+		{
+			Player.gameobject.ChangeWait();
+		}
+
+		//ジャンプ
+		if (KeySpace.down() || KeyUp.down() || controller.buttonX.down() || controller.buttonY.down())
+		{
+			Player.gameobject.ChangeJump();
+		}
+
+		//攻撃
+		if (KeyZ.down() || controller.buttonB.down())
+		{
+			Player.gameobject.ChangeAttack();
+		}
+
+		//魔法
+		if (KeyX.down() || controller.buttonA.down())
+		{
+
+		}
+
+		//ガード
+		if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
+		{
+
+		}
+
+		if (KeyEnter.down())
+		{
+			//一時停止
+			Player.gameobject.MotionStop();
+		}
 	}
 
-	//左歩き
-	if (KeyLeft.pressed() || KeyA.pressed() || controller.leftThumbX <= - 0.8  || controller.buttonLeft.pressed())
+	//Eを押したら切り替え
+	if (KeyE.down())
 	{
-		Player.gameobject.ChangeWalkL();
-	}
-
-	//右ダッシュ
-	if ((KeyControl.pressed() && ( KeyRight.pressed() || KeyD.pressed() )) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX >= 0.8 || controller.buttonRight.pressed()))
-	{
-		Player.gameobject.ChangeRunR();
-	}
-
-	//左ダッシュ
-	if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed())) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX <= -0.8 || controller.buttonLeft.pressed()))
-	{
-		Player.gameobject.ChangeRunL();
-	}
-
-	//同時入力で停止
-	if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed()) && (KeyRight.pressed() || KeyD.pressed()))
-							  || ((KeyLeft.pressed() || KeyA.pressed()) && (KeyRight.pressed() || KeyD.pressed())))
-	{
-		Player.gameobject.ChangeWait();
-	}
-
-	//ジャンプ
-	if (KeySpace.down() || KeyUp.down()|| controller.buttonX.down()|| controller.buttonY.down())
-	{
-		Player.gameobject.ChangeJump();
-	}
-
-	//攻撃
-	if (KeyZ.down() || controller.buttonB.down())
-	{
-		Player.gameobject.ChangeAttack();
-	}
-
-	//魔法
-	if (KeyX.down() || controller.buttonA.down())
-	{
-
-	}
-
-	//ガード
-	if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
-	{
-		
-	}
-
-	if (KeyEnter.down())
-	{
-		//一時停止
-		Player.gameobject.MotionStop();
+		isConfigOnline ? isConfigOnline = false : isConfigOnline = true;
 	}
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -191,6 +203,7 @@ void Stage1::draw() const
 	Player.DebugDraw();
 	Enemey.Draw();
 	Enemey.DebugDraw();
+	charaConfig.ConfigOnlineDraw(isConfigOnline);
 
 	//デバック用
 	font(Player.gameobject.position).draw(450, 0);
