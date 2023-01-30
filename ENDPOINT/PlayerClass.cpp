@@ -21,10 +21,6 @@ void PlayerClass::StatusDraw() const
 	magicpointBar.DrawSideways(magicpointBarRect);
 	mentalpointBar.DrawSideways(mentalpointBarRect);
 	staminapointBar.DrawPortrait(staminapointBarRect);
-
-	//hitpointBar.DrawHex(hitpointBarRect);
-	//magicpointBar.DrawHex(magicpointBarRect);
-	//mentalpointBar.DrawHex(mentalpointBarRect);
 }
 
 void PlayerClass::Draw()const
