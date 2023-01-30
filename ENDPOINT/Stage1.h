@@ -107,8 +107,6 @@ private:
 
 	EnemyClass Enemey = { enemeyPNG ,SEAudio,AnimationData ,BasicStatData };
 
-	Config charaConfig{Player.gameObject.status};
-
 	CSV mapData{ U"ConfigData/map.csv" };
 
 	Vec2 cameraPos = {0,0};

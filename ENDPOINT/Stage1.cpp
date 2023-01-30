@@ -50,7 +50,7 @@ void Stage1::update()
 	//キー入力で処理
 	Player.gameObject.ChangeWait();
 
-	if (charaConfig.isOnline == false)
+	if (Player.isOnline == false)
 	{
 		//右歩き
 		if (KeyRight.pressed() || KeyD.pressed() || controller.leftThumbX >= 0.8 || controller.buttonRight.pressed())
@@ -114,12 +114,12 @@ void Stage1::update()
 		}
 	}
 
-	charaConfig.ConfigOnlineProcess();
+	Player.ConfigOnlineProcess();
 
 
 	if (KeyE.down())
 	{
-		charaConfig.isOnline ? charaConfig.isOnline = false : charaConfig.isOnline = true;
+		Player.isOnline ? Player.isOnline = false : Player.isOnline = true;
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -207,7 +207,7 @@ void Stage1::draw() const
 	Player.DebugDraw();
 	Enemey.Draw();
 	Enemey.DebugDraw();
-	charaConfig.ConfigOnlineDraw();
+	Player.ConfigOnlineDraw();
 
 	//デバック用
 	font(Player.gameObject.position).draw(450, 0);

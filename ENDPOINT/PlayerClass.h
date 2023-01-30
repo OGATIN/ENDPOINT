@@ -38,27 +38,6 @@ public:
 		MaxStaminaPoint = gameObject.status.stamina;
 	};
 
-
-
-	void Update();
-
-	void StatusDraw()const;
-
-	void Draw()const;
-
-	void DebugDraw()const;
-};
-
-class Config
-{
-public:
-	Config() {};
-
-	Config(StatusClass _status)
-	{
-		status = _status;
-	};
-
 	bool isOnline = false;
 
 	enum class Menu
@@ -78,128 +57,19 @@ public:
 
 	Menu selectMenu = Menu::FirstMenu;
 
-	void ConfigOnlineProcess()
-	{
-		if (isOnline)
-		{
-			switch (selectMenu)
-			{
-			case Config::Menu::FirstMenu:
-				if (KeyUp.down() || KeyW.down())
-				{
-					menuID -= 1;
+	void ConfigOnlineProcess();
 
-					if (menuID < 0)
-					{
-						menuID = MenuNumber - 1;
-					}
-				}
+	void ConfigOnlineDraw()const;
 
-				if (KeyDown.down() || KeyS.down())
-				{
-					menuID += 1;
+	void Update();
 
-					if (menuID > MenuNumber - 1)
-					{
-						menuID = 0;
-					}
-				}
+	void StatusDraw()const;
 
-				for (int i = 0; i < MenuNumber; i++)
-				{
-					if (MenuHitBox[i].mouseOver())
-					{
-						menuID = i;
-					}
+	void Draw()const;
 
-					if (i == menuID)
-					{
-						isSelectMenu[i] = true;
-					}
-					else
-					{
-						isSelectMenu[i] = false;
-					}
-				}
-
-				switch (menuID)
-				{
-				case 0:
-					if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
-					{
-						selectMenu = Menu::Item;
-						//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
-					}
-					break;
-				case 1:
-					if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
-					{
-						selectMenu = Menu::Status;
-						//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
-					}
-					break;
-				case 2:
-					if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
-					{
-						selectMenu = Menu::SkillPoint;
-						//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
-					}
-					break;
-				case 3:
-					if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
-					{
-						isOnline = false;
-						menuID = 0;
-						selectMenu = Menu::FirstMenu;
-						//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
-					}
-					break;
-				}
-				break;
-			case Config::Menu::Item:
-				break;
-			case Config::Menu::Status:
-				break;
-			case Config::Menu::SkillPoint:
-				break;
-			default:
-				break;
-			}
-		}
-	}
-
-	void ConfigOnlineDraw()const
-	{
-		if (isOnline)
-		{
-			Rect window1 = { 10,10,300,200 };
-			Rect window2 = { 10,230,200,40 };
-
-			window1.drawFrame(10, Palette::White).draw(Palette::Black);
-			window2.drawFrame(10, Palette::White).draw(Palette::Black);
-
-			//メニュー描画
-			for (int i = 0; i < MenuNumber; i++)
-			{
-				if (isSelectMenu[i])
-				{
-					//選択されていれば黄色
-					font30(SetUpMenuName[i]).draw(20, 20 + i * 47, Palette::Yellow);
-				}
-				else
-				{
-					//選択されていなければ白色
-					font30(SetUpMenuName[i]).draw(20, 20 + i * 47, Palette::White);
-				}
-			}
-
-			font30(U"1000＄").draw(20, 235, Palette::White);
-
-		}
-	}
-
-private:
-
+	void DebugDraw()const;
 };
+
+
 
 

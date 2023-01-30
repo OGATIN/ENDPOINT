@@ -16,6 +16,5 @@ public:
 
 	void Draw()const;
 	void DebugDraw()const;
-
 };
 
