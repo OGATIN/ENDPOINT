@@ -4,10 +4,12 @@
 
 void PlayerClass::Update()
 {
-	hitpointBar.Update();
-	magicpointBar.Update();
-	mentalpointBar.Update();
-	staminapointBar.Update();
+	gameObject.Update();
+
+	hitpointBar.Update(gameObject.status.hitPoints);
+	magicpointBar.Update(gameObject.status.magicPoint);
+	mentalpointBar.Update(gameObject.status.mental);
+	staminapointBar.Update(gameObject.status.stamina);
 }
 
 void PlayerClass::StatusDraw() const
@@ -155,5 +157,14 @@ void PlayerClass::ConfigOnlineDraw() const
 		font30(U"1000＄").draw(20, 235, Palette::White);
 
 	}
+}
+
+void PlayerClass::Initialize()
+{
+	gameObject.Initialize();
+	hitpointBar.Initialize(gameObject.status.hitPoints);
+	magicpointBar.Initialize(gameObject.status.magicPoint);
+	mentalpointBar.Initialize(gameObject.status.mental);
+	staminapointBar.Initialize(gameObject.status.stamina);
 }
 

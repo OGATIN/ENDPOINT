@@ -5,23 +5,15 @@ class Bar
 public:
 	Bar() {};
 
-	Bar(int _MaxPoint)
+
+
+	Bar(Color _pointColor)
 	{
-		MaxPoint = _MaxPoint;
-		nowPoint = _MaxPoint;
-	};
-	Bar(int _MaxPoint, int _nowPoint)
-	{
-		MaxPoint = _MaxPoint;
-		nowPoint = _nowPoint;
-	};
-	Bar(int _MaxPoint, Color _pointColor)
-	{
-		MaxPoint = _MaxPoint;
-		nowPoint = _MaxPoint;
 		pointColor = _pointColor;
 	};
+	double MaxPoint = 1;
 
+	double nowPoint = 1;
 
 	/// @brief バーの背景色
 	ColorF backgroundColor{ 0.0, 0.6 };
@@ -38,15 +30,25 @@ public:
 	/// @brief 枠の太さ（ピクセル）
 	double frameThickness = 1.5;
 
-	/// @brief 更新
-	void Update(double smoothTimeSec = 0.4)
+	void Initialize(double _MaxPoint)
 	{
+		MaxPoint = _MaxPoint;
+		nowPoint = _MaxPoint;
+	}
+
+	/// @brief 更新
+	void Update(double _nowPoint,double smoothTimeSec = 0.4)
+	{
+		nowPoint = _nowPoint;
 		delayPoint = Math::SmoothDamp(delayPoint, nowPoint, delayVelocity, smoothTimeSec);
+
+		if (delayPoint < 0)delayPoint = 0;
+		if (nowPoint < 0)nowPoint = 0;
 	};
 
 	/// @brief ダメージを受けた処理
 	/// @param _damage ダメージ数(int)
-	void Damage(int _damage)
+	void Damage(double _damage)
 	{
 		nowPoint -= _damage;
 		if (nowPoint < 0)nowPoint = 0;
@@ -54,7 +56,7 @@ public:
 
 	/// @brief 回復する処理
 	/// @param _heal 回復量(int)
-	void Heal(int _heal)
+	void Heal(double _heal)
 	{
 		nowPoint += _heal;
 		if (nowPoint > MaxPoint)nowPoint = MaxPoint;
@@ -117,20 +119,16 @@ public:
 
 	void DrawPortrait(RectF _rect)const
 	{
-		const RectF rectDelay{ _rect.pos.x,_rect.pos.y + _rect.h, _rect.w,-(_rect.h * getDelayHPRatio()) };
+		//const RectF rectDelay{ _rect.pos.x,_rect.pos.y + _rect.h, _rect.w,-(_rect.h * getDelayHPRatio()) };
 		const RectF rectHP{ _rect.pos.x,_rect.pos.y + _rect.h,  _rect.w, -(_rect.h * getHPRatio()) };
 
 		_rect.draw(backgroundColor);
-		rectDelay.draw(delayColor);
+		//rectDelay.draw(delayColor);
 		rectHP.draw(pointColor);
 		_rect.drawFrame(frameThickness, frameColor);
 	};
 
 private:
-
-	int MaxPoint = 1;
-
-	int nowPoint = 1;
 
 	double delayPoint = 1.0;
 

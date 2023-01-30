@@ -9,10 +9,10 @@ public:
 	int MaxMagicPoint;
 	int MaxMentalPoint;
 	int MaxStaminaPoint;
-	Bar hitpointBar{ MaxHitPoint };
-	Bar magicpointBar{ MaxMagicPoint ,Palette::Blue};
-	Bar mentalpointBar{ MaxMentalPoint ,Palette::Purple};
-	Bar staminapointBar{ MaxMentalPoint ,Palette::Yellow};
+	Bar hitpointBar{};
+	Bar magicpointBar{ Palette::Blue};
+	Bar mentalpointBar{ Palette::Purple};
+	Bar staminapointBar{ Palette::Yellow};
 
 	PlayerClass() {};
 	PlayerClass(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData)
@@ -60,6 +60,8 @@ public:
 	void ConfigOnlineProcess();
 
 	void ConfigOnlineDraw()const;
+
+	void Initialize();
 
 	void Update();
 

@@ -15,7 +15,7 @@ void Stage1::Initialize()
 	}
 
 	//初期化
-	Player.gameObject.Initialize();
+	Player.Initialize();
 
 	//ストップウォッチスタート
 	Player.gameObject.MotionStart();
@@ -25,7 +25,7 @@ void Stage1::Initialize()
 void Stage1::update()
 {
 	//プレイヤーの処理
-	Player.gameObject.Update();
+	Player.Update();
 
 	Player.gameObject.AudioStop();
 
@@ -212,8 +212,8 @@ void Stage1::draw() const
 	//デバック用
 	font(Player.gameObject.position).draw(450, 0);
 	font(Player.gameObject.velocity).draw(450, 30);
-	font(Player.gameObject.charaSpeed).draw(450, 150);
 	font(Enemey.gameObject.charaSpeed).draw(450, 120);
+	font(Player.gameObject.charaSpeed).draw(450, 150);
 	font(te).draw(Player.gameObject.position + Player.gameObject.shiftInternalHitRect[0][0].pos + Player.gameObject.shiftInternalHitRect[0][0].size);
 
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
