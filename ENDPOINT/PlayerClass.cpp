@@ -15,7 +15,7 @@ void PlayerClass::StatusDraw() const
 	RectF hitpointBarRect = {10,10,500,50};
 	RectF magicpointBarRect = {10,65,500,20};
 	RectF mentalpointBarRect = {10,90,500,20};
-	RectF staminapointBarRect = {gameobject.GetHitRect().x + gameobject.GetHitRect().w + 10,gameobject.GetHitRect().y,20,100};
+	RectF staminapointBarRect = {gameObject.GetHitRect().x + gameObject.GetHitRect().w + 10,gameObject.GetHitRect().y,20,100};
 
 	hitpointBar.DrawSideways(hitpointBarRect);
 	magicpointBar.DrawSideways(magicpointBarRect);
@@ -29,14 +29,14 @@ void PlayerClass::StatusDraw() const
 
 void PlayerClass::Draw()const
 {
-	gameobject.Draw();
+	gameObject.Draw();
 	StatusDraw();
 }
 
 void PlayerClass::DebugDraw() const
 {
-	gameobject.GetHitRect().drawFrame(2, Palette::Green);
-	gameobject.StatusDraw();
-	gameobject.TimeDebuggDraw();
+	gameObject.GetHitRect().drawFrame(2, Palette::Green);
+	gameObject.StatusDraw();
+	gameObject.TimeDebuggDraw();
 	//gameobject.playerCollsioninputoutdegDraw();
 }

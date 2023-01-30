@@ -4,7 +4,7 @@
 class PlayerClass
 {
 public:
-	GameObject gameobject;
+	GameObject gameObject;
 	int MaxHitPoint;
 	int MaxMagicPoint;
 	int MaxMentalPoint;
@@ -22,20 +22,20 @@ public:
 			for (int i = 0; i < 7; i++)
 			{
 				//とりあえず共通のデータはここでロード
-				gameobject.animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
+				gameObject.animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
 			}
 		}
 
 		for (int i = 0; i < 19; i++)
 		{
-			gameobject.audio[i] = _audio[i];
+			gameObject.audio[i] = _audio[i];
 		}
 
-		gameobject.status.Reload(statusData);
-		MaxHitPoint = gameobject.status.hitPoints;
-		MaxMagicPoint = gameobject.status.magicPoint;
-		MaxMentalPoint = gameobject.status.mental;
-		MaxStaminaPoint = gameobject.status.stamina;
+		gameObject.status.Reload(statusData);
+		MaxHitPoint = gameObject.status.hitPoints;
+		MaxMagicPoint = gameObject.status.magicPoint;
+		MaxMentalPoint = gameObject.status.mental;
+		MaxStaminaPoint = gameObject.status.stamina;
 	};
 
 
