@@ -36,7 +36,6 @@ void Stage1::update()
 
 	Player.gameobject.StateManagement();
 
-	charaConfig.ConfigOnlineProcess();
 
 	// コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
@@ -49,6 +48,8 @@ void Stage1::update()
 	//キー入力等状態遷移--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//キー入力で処理
 	Player.gameobject.ChangeWait();
+
+	if (charaConfig.isOnline == false)
 	{
 		//右歩き
 		if (KeyRight.pressed() || KeyD.pressed() || controller.leftThumbX >= 0.8 || controller.buttonRight.pressed())
@@ -110,6 +111,14 @@ void Stage1::update()
 			//一時停止
 			Player.gameobject.MotionStop();
 		}
+	}
+
+	charaConfig.ConfigOnlineProcess();
+
+
+	if (KeyE.down())
+	{
+		charaConfig.isOnline ? charaConfig.isOnline = false : charaConfig.isOnline = true;
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -195,6 +204,7 @@ void Stage1::draw() const
 	Player.DebugDraw();
 	Enemey.Draw();
 	Enemey.DebugDraw();
+	charaConfig.ConfigOnlineDraw();
 
 	//デバック用
 	font(Player.gameobject.position).draw(450, 0);
