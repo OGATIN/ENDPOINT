@@ -138,8 +138,6 @@ void Stage1::update()
 	}
 
 
-	//デバック用
-	Player.playerCollsioninputoutdeg();
 
 	if (Player.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))
 	{
@@ -148,7 +146,7 @@ void Stage1::update()
 	}
 
 
-	Enemey.TestAI(Cursor::Pos());
+	//Enemey.TestAI(Cursor::Pos());
 
 	Player.Update();
 
@@ -204,7 +202,7 @@ void Stage1::draw() const
 	Player.StatusDraw();
 	Player.TimeDebuggDraw();
 	//Player.status.DaseStatusDrow();
-	Player.hitBox.drawFrame(2, Palette::Green);
+	//Player.hitBox.drawFrame(2, Palette::Green);
 	Player.playerCollsioninputoutdegDraw();
 
 	
@@ -213,6 +211,7 @@ void Stage1::draw() const
 	font(Player.velocity).draw(450, 30);
 	font(Player.charaSpeed).draw(450, 150);
 	font(Enemey.gameObject.charaSpeed).draw(450, 120);
+	font(Player.clickCount).draw(0, 0);
 	/*font(Cursor::Pos()).draw(650, 0);
 	Player.hitBox.drawFrame(2, Palette::Green);
 	*/
