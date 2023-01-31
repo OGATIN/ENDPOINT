@@ -24,7 +24,6 @@ void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV Animati
 
 void GameObject::Update()
 {
-	position += velocity;
 
 	//重力加算
 	velocity.y += gravity;

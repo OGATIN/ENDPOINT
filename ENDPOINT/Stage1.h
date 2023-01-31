@@ -147,7 +147,7 @@ public:
 	/// @brief 壁との当たり判定
 	void MapHitGround(GameObject &_gameobject);
 
-	void Camera();
+	void Camera(int screenDivisionNumber, int leftRange, int rightRange);
 
 	/// @brief 体同士が衝突した際の当たり判定で使う移動量を計算
 	/// @param velox1 一キャラ目の移動値X
