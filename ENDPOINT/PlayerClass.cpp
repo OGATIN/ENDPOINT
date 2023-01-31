@@ -10,6 +10,8 @@ void PlayerClass::Update()
 	magicpointBar.Update(gameObject.status.magicPoint);
 	mentalpointBar.Update(gameObject.status.mental);
 	staminapointBar.Update(gameObject.status.stamina);
+
+	if(gameObject.status.stamina <= 100)gameObject.status.stamina += 1.0/60.0;
 }
 
 void PlayerClass::StatusDraw() const

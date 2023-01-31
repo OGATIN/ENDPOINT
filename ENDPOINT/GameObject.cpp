@@ -164,7 +164,7 @@ void GameObject::RunProcess()
 		velocity.x = charaSpeed;
 	}
 
-	status.stamina -= (5.0 / 60.0);
+	status.stamina -= (3.0 / 60.0);
 
 	audio[2].setVolume(GameData::MainVolume * GameData::SEVolume);
 	audio[2].play();
@@ -262,6 +262,7 @@ void GameObject::ChangeJump()
 	{
 		state = StateType::JUMP;
 		audio[3].playOneShot(GameData::MainVolume * GameData::SEVolume);
+		status.stamina -= 5;
 	}
 }
 
