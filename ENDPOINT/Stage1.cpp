@@ -27,7 +27,7 @@ void Stage1::update()
 	//プレイヤーの処理
 	Player.Update();
 
-	Camera();
+	//Camera();
 
 	Player.gameObject.AudioStop();
 
@@ -258,7 +258,7 @@ void Stage1::MapHitGround(GameObject &_gameobject)
 	}
 }
 
-void Stage1::Camera()
+void Stage1::Camera(int screenDivisionNumber, int leftRange, int rightRange)
 {
 	//yベクトル更新
 	Player.gameObject.position.y += Player.gameObject.velocity.y;
