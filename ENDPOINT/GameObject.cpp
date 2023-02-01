@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 
-void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData)
+void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData, CSV skillPointStatData, CSV experienceBorder)
 {
 
 	for (int j = 0; j < 4; j++)
@@ -19,7 +19,7 @@ void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV Animati
 		audio[i] = _audio[i];
 	}
 
-	status.Reload(statusData);
+	status.Reload(statusData, skillPointStatData, experienceBorder);
 }
 
 void GameObject::Update()

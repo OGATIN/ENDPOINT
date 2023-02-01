@@ -72,8 +72,8 @@ void Title::update()
 void Title::draw() const
 {
 
-	ClearPrint();
-	Print << bgcolorChangeTimer;
+	//ClearPrint();
+	//Print << bgcolorChangeTimer;
 
 
 	Color FontColor;
