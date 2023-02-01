@@ -22,95 +22,6 @@ void PlayerClass::Update()
 	if(gameObject.status.currentStamina <= 100)gameObject.status.currentStamina += 1.0/60.0;
 }
 
-void PlayerClass::ConfigOnlineProcess()
-{
-	if (isOnline)
-	{
-		switch (selectMenu)
-		{
-		case PlayerClass::Menu::FirstMenu:
-			if (KeyUp.down() || KeyW.down())
-			{
-				menuID[0] -= 1;
-
-				if (menuID[0] < 0)
-				{
-					menuID[0] = MenuNumber - 1;
-				}
-			}
-
-			if (KeyDown.down() || KeyS.down())
-			{
-				menuID[0] += 1;
-
-				if (menuID[0] > MenuNumber - 1)
-				{
-					menuID[0] = 0;
-				}
-			}
-
-			for (int i = 0; i < MenuNumber; i++)
-			{
-				if (MenuHitBox[i].mouseOver())
-				{
-					menuID[0] = i;
-				}
-
-				if (i == menuID[0])
-				{
-					isSelectMenu[i] = true;
-				}
-				else
-				{
-					isSelectMenu[i] = false;
-				}
-			}
-
-			switch (menuID[0])
-			{
-			case 0:
-				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID[0]].mouseOver() && MouseL.down())
-				{
-					selectMenu = Menu::Item;
-					//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
-				}
-				break;
-			case 1:
-				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID[0]].mouseOver() && MouseL.down())
-				{
-					selectMenu = Menu::Status;
-					//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
-				}
-				break;
-			case 2:
-				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID[0]].mouseOver() && MouseL.down())
-				{
-					selectMenu = Menu::SkillPoint;
-					//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
-				}
-				break;
-			case 3:
-				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID[0]].mouseOver() && MouseL.down())
-				{
-					isOnline = false;
-					menuID[0] = 0;
-					selectMenu = Menu::FirstMenu;
-					//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
-				}
-				break;
-			}
-			break;
-		case PlayerClass::Menu::Item:
-			break;
-		case PlayerClass::Menu::Status:
-			break;
-		case PlayerClass::Menu::SkillPoint:
-			break;
-		default:
-			break;
-		}
-	}
-}
 
 void PlayerClass::Draw()const
 {
@@ -146,23 +57,68 @@ void PlayerClass::DebugDraw() const
 	//gameobject.playerCollsioninputoutdegDraw();
 }
 
-void PlayerClass::ConfigOnlineDraw() const
+void PlayerClass::ConfigOnlineProcess()
 {
 	if (isOnline)
 	{
 
 		switch (selectMenu)
 		{
-		case PlayerClass::Menu::Item:
+		case PlayerClass::MenuTransition::FirstScene:
+
+			firstMenu.Update();
+
+			switch (firstMenu.IsCurrent())
+			{
+			case 0:
+				if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
+				{
+					selectMenu = MenuTransition::Item;
+					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+				}
+				break;
+			case 1:
+				if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
+				{
+					selectMenu = MenuTransition::Status;
+					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+				}
+				break;
+			case 2:
+				if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
+				{
+					selectMenu = MenuTransition::SkillPoint;
+					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+				}
+				break;
+			case 3:
+				if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
+				{
+					isOnline = false;
+					firstMenu.Initialize();
+					selectMenu = MenuTransition::FirstScene;
+
+					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+				}
+				break;
+			}
 			break;
-		case PlayerClass::Menu::Status:
+		case PlayerClass::MenuTransition::Item:
 			break;
-		case PlayerClass::Menu::SkillPoint:
+		case PlayerClass::MenuTransition::Status:
+			break;
+		case PlayerClass::MenuTransition::SkillPoint:
 			break;
 		default:
 			break;
 		}
+	}
+}
 
+void PlayerClass::ConfigOnlineDraw() const
+{
+	if (isOnline)
+	{
 		Rect window1 = { 10,10,300,200 };
 		Rect window2 = { 10,230,200,40 };
 
@@ -170,22 +126,38 @@ void PlayerClass::ConfigOnlineDraw() const
 		window2.drawFrame(10, Palette::White).draw(Palette::Black);
 
 		//メニュー描画
-		for (int i = 0; i < MenuNumber; i++)
-		{
-			if (isSelectMenu[i])
-			{
-				//選択されていれば黄色
-				font30(SetUpMenuName[i]).draw(20, 20 + i * 47, Palette::Yellow);
-			}
-			else
-			{
-				//選択されていなければ白色
-				font30(SetUpMenuName[i]).draw(20, 20 + i * 47, Palette::White);
-			}
-		}
+		firstMenu.InRectDraw();
 
 		font30(U"1000＄").draw(20, 235, Palette::White);
 
+		switch (selectMenu)
+		{
+		case PlayerClass::MenuTransition::Item:
+			break;
+		case PlayerClass::MenuTransition::Status:
+			Rect window3 = { 330,10,400,690 };
+			window3.drawFrame(10, Palette::White).draw(Palette::Black);
+			//私はもう眠いのでこのアイデアを託して逝く
+			//普通にベタ打ちする場合右側に座標補正
+			//変数を配列にできるならそれを用いて数行で
+			//理想を言うならクラス化してスマートにできるといいね
+			//menuクラスにステータスを追加するとかはどうだろうか
+			//ココでしか使わないのでベタ打ちとそう変わらないかもですね
+			//だんだんタイピングするのが楽しくなってきました
+			//あと現在の選択値がどうとか未来が言ってたのでそこも注意が必要です
+			//menuでもやってるけどフォントのサイズ分間隔をあけて縦にFORでまわす
+			//forの終了条件はstatusMenuのなんか最大値算出するやつとか使えたら、privateだから関数使うかなんかしなければ
+			//デスクトップのキーボード青軸だからタイピングしてて楽しい垢軸だとこうはいかないね
+			//あとスキルポイントとアイテムに関してはとっかかりがなさ過ぎて辛いUIや小さいウィンドウだけ作ろうか
+			//あと変数の強調表示だけどmenuIDをクラスから取り出して条件にすれば良いね
+			//目がかすんで前が見えないよ
+			statusMenu.InRectDraw();
+			break;
+		case PlayerClass::MenuTransition::SkillPoint:
+			break;
+		default:
+			break;
+		}
 	}
 }
 
