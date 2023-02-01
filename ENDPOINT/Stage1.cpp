@@ -203,7 +203,6 @@ void Stage1::draw() const
 			{
 				UnderGround(MapSize * (Parse<int>(mapData[y][x]) % 100), MapSize * (Parse<int>(mapData[y][x]) / 100), MapSize, MapSize).scaled(2).draw((x * MapSize * 2) - cameraPos.x, (y * MapSize * 2) - cameraPos.y);
 			}
-
 		}
 	}
 	
