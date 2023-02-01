@@ -18,7 +18,7 @@ public:
 	Bar staminapointBar{ Palette::Yellow};
 
 	PlayerClass() {};
-	PlayerClass(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData)
+	PlayerClass(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData, CSV skillPointStatData, CSV experienceBorder)
 	{
 		for (int j = 0; j < 4; j++)
 		{
@@ -34,7 +34,7 @@ public:
 			gameObject.audio[i] = _audio[i];
 		}
 
-		gameObject.status.Reload(statusData);
+		gameObject.status.Reload(statusData, skillPointStatData, experienceBorder);
 	};
 
 	bool isOnline = false;

@@ -4,7 +4,7 @@
 void PlayerClass::Initialize()
 {
 	gameObject.Initialize();
-	hitpointBar.Initialize(gameObject.status.hitPoints);
+	hitpointBar.Initialize(gameObject.status.hitPoint);
 	magicpointBar.Initialize(gameObject.status.magicPoint);
 	mentalpointBar.Initialize(gameObject.status.mental);
 	staminapointBar.Initialize(gameObject.status.stamina);
@@ -14,7 +14,7 @@ void PlayerClass::Update()
 {
 	gameObject.Update();
 
-	hitpointBar.Update(gameObject.status.currentHitPoints);
+	hitpointBar.Update(gameObject.status.currentHitPoint);
 	magicpointBar.Update(gameObject.status.currentMagicPoint);
 	mentalpointBar.Update(gameObject.status.currentMental);
 	staminapointBar.Update(gameObject.status.currentStamina);

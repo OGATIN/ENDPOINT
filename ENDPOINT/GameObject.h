@@ -54,7 +54,7 @@ public:
 
 	GameObject() {};
 
-	GameObject(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData)
+	GameObject(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData, CSV skillPointStatData, CSV experienceBorder)
 	{
 
 		for (int j = 0; j < 4; j++)
@@ -75,12 +75,12 @@ public:
 			audio[i] = _audio[i];
 		}
 
-		status.Reload(statusData);
+		status.Reload(statusData, skillPointStatData,experienceBorder);
 	};
 
 	//機能
 
-	void Reload(Texture _animation[4][20],Audio _audio[19], CSV AnimationData, CSV statusData);
+	void Reload(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData, CSV skillPointStatData, CSV experienceBorder);
 
 	/// @brief 毎フレーム更新する情報
 	void Update();
