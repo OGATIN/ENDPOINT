@@ -27,7 +27,7 @@ void Stage1::update()
 	//プレイヤーの処理
 	Player.Update();
 
-	Camera(8,3,5);
+	Camera();
 
 	Player.gameObject.AudioStop();
 
@@ -35,7 +35,7 @@ void Stage1::update()
 	Enemey.TestAI({ 1 * MapChipSize.x,0 });
 
 	MapHitGround(Player.gameObject);
-	//MapHitGround(Enemey.gameObject);
+	MapHitGround(Enemey.gameObject);
 
 
 
@@ -218,10 +218,13 @@ void Stage1::draw() const
 	font(Player.gameObject.position).draw(450, 0);
 	font(Player.gameObject.velocity).draw(450, 30);
 	font(Enemey.gameObject.charaSpeed).draw(450, 120);
+//<<<<<<< HEAD
 	font(Player.gameObject.charaSpeed).draw(450, 150);
+//=======
 	font(aa).draw(0, 0);
 	font(Scene::Width() / 3).draw(0, font.fontSize() * 1);
 	font(Scene::Width() / 7).draw(0, font.fontSize() * 2);
+//>>>>>>> Noteみらい
 	font(te).draw(Player.gameObject.position + Player.gameObject.shiftInternalHitRect[0][0].pos + Player.gameObject.shiftInternalHitRect[0][0].size);
 
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
@@ -257,53 +260,51 @@ void Stage1::MapHitGround(GameObject &_gameobject)
 
 }
 
-void Stage1::Camera(int screenDivisionNumber, int leftRange, int rightRange)
+void Stage1::Camera()
 {
 	//yベクトル更新
 	Player.gameObject.position.y += Player.gameObject.velocity.y;
 
-	//右移動
-	if (0 < Player.gameObject.velocity.x)
+	if (cameraPos.x > 0)
 	{
-		if (Player.gameObject.GetRight() < ((Scene::Width() / screenDivisionNumber) * rightRange))
+		//ベクトルxが1以下なら
+		if (-1 > Player.gameObject.velocity.x)
 		{
-			Player.gameObject.position.x += Player.gameObject.velocity.x;
-		}
-		else
-		{
-			if (cameraPos.x < (mapData.columns(Player.gameObject.MapLeftTop(cameraPos, MapChipSize.asPoint()).y) * MapChipSize.x) - Scene::Width())
+			if (Player.gameObject.GetLeft() < ((Scene::Width() / 3) * 2))
 			{
-				cameraPos.x += Player.gameObject.velocity.x;
+				Player.gameObject.position.x -= Player.gameObject.velocity.x;
 			}
-			else
-			{
-				Player.gameObject.position.x += Player.gameObject.velocity.x;
 
-			}
-			
+			cameraPos.x += Player.gameObject.velocity.x;
+
+
+
 		}
 	}
-
-	//左移動
-	if (0 > Player.gameObject.velocity.x)
+	else
 	{
-		if (Player.gameObject.GetLeft() > ((Scene::Width() / screenDivisionNumber) * leftRange))
-		{
-			Player.gameObject.position.x += Player.gameObject.velocity.x;
-		}
-		else
-		{
-			if (cameraPos.x > 0)
-			{
-				cameraPos.x += Player.gameObject.velocity.x;
-			}
-			else
-			{
-				Player.gameObject.position.x += Player.gameObject.velocity.x;
+		Player.gameObject.position.x += Player.gameObject.velocity.x;
+	}
 
+	if (cameraPos.x < (100 * 32) - Scene::Width())
+	{
+
+
+		//ベクトルxが1以上なら
+		if (1 < Player.gameObject.velocity.x)
+		{
+
+			if (Player.gameObject.GetRight() > (Scene::Width() / 3))
+			{
+				Player.gameObject.position.x -= Player.gameObject.velocity.x;
 			}
 
+			cameraPos.x += Player.gameObject.velocity.x;
 		}
+	}
+	else
+	{
+		Player.gameObject.position.x += Player.gameObject.velocity.x;
 	}
 
 }

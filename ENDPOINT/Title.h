@@ -4,6 +4,8 @@
 class Title : public App::Scene
 {
 private:
+	int i = 0;
+
 
 public:
 
@@ -61,6 +63,8 @@ public:
 
 	int menuID = 0;
 
+	Array<Color> BackgroupColor = { Palette::Gray,Palette::Burlywood,Palette::Darkslategrey };
+	Stopwatch bgcolorChangeTimer{StartImmediately::Yes};
 
 
 

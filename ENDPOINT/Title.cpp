@@ -1,4 +1,5 @@
 ﻿#include "Title.h"
+#undef System
 
 Title::~Title()
 {
@@ -7,11 +8,29 @@ Title::~Title()
 
 void Title::Initialize()
 {
+	//Scene::SetBackground(ColorF(0.3, 0.3, 0.3));//シーンの色を灰色に設定
+
 }
 
 void Title::update()
 {
+	/*ClearPrint();
+	Print << bgcolorChangeTimer;*/
+
+
+	if (bgcolorChangeTimer > 5s)
+	{
+		i++;
+		if (i > 2) { i = 0; }
+		bgcolorChangeTimer.restart();
+	}
+
+	Scene::SetBackground(BackgroupColor[i]);//シーンの色を灰色に設定
+
+
+
 	if (titleNameFont_NewRect.leftClicked()) { changeScene(SceneName::Stage1); }
+	if (titleNameFont_EndRect.leftClicked()) { System::Exit(); }
 
 	if (KeyEnter.down() || KeyZ.down())
 	{
@@ -20,6 +39,9 @@ void Title::update()
 		case MENU::New:
 			changeScene(SceneName::Stage1);
 			[[fallthrough]];
+		case MENU::End:
+			System::Exit();
+			break;
 		default:
 			break;
 		}
@@ -49,6 +71,11 @@ void Title::update()
 
 void Title::draw() const
 {
+
+	ClearPrint();
+	Print << bgcolorChangeTimer;
+
+
 	Color FontColor;
 	bool ColorFlag = false;
 
