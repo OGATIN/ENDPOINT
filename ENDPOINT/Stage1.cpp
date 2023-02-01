@@ -218,13 +218,13 @@ void Stage1::draw() const
 	font(Player.gameObject.position).draw(450, 0);
 	font(Player.gameObject.velocity).draw(450, 30);
 	font(Enemey.gameObject.charaSpeed).draw(450, 120);
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	font(Player.gameObject.charaSpeed).draw(450, 150);
-=======
+//=======
 	font(aa).draw(0, 0);
 	font(Scene::Width() / 3).draw(0, font.fontSize() * 1);
 	font(Scene::Width() / 7).draw(0, font.fontSize() * 2);
->>>>>>> Noteみらい
+//>>>>>>> Noteみらい
 	font(te).draw(Player.gameObject.position + Player.gameObject.shiftInternalHitRect[0][0].pos + Player.gameObject.shiftInternalHitRect[0][0].size);
 
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
