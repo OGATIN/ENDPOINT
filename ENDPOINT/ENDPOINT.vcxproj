@@ -347,7 +347,6 @@
     <ClInclude Include="AnimationClass.h" />
     <ClInclude Include="Bar.h" />
     <ClInclude Include="Base.h" />
-    <ClInclude Include="Config.h" />
     <ClInclude Include="ConfigGauge.h" />
     <ClInclude Include="Credit.h" />
     <ClInclude Include="EnemyClass.h" />
@@ -355,6 +354,7 @@
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameOver.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="PlayerClass.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SetUp.h" />

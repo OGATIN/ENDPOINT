@@ -5,8 +5,6 @@ class Bar
 public:
 	Bar() {};
 
-
-
 	Bar(Color _pointColor)
 	{
 		pointColor = _pointColor;

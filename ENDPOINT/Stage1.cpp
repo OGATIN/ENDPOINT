@@ -253,8 +253,6 @@ void Stage1::MapHitGround(GameObject &_gameobject)
 		//着地しない
 		_gameobject.isLanding = false;
 	}
-
-
 }
 
 void Stage1::Camera(int screenDivisionNumber, int leftRange, int rightRange)

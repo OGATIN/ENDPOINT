@@ -65,84 +65,85 @@ void SetUp::update()
 	{
 	case SetUp::NowScene::MenuSelect:
 
-		if (KeyUp.down() || KeyW.down())
-		{
-			menuID -= 1;
+		//if (KeyUp.down() || KeyW.down())
+		//{
+		//	menuID -= 1;
 
-			if (menuID < 0)
-			{
-				menuID = MenuNumber - 1;
-			}
-		}
+		//	if (menuID < 0)
+		//	{
+		//		menuID = MenuNumber - 1;
+		//	}
+		//}
 
-		if (KeyDown.down() || KeyS.down())
-		{
-			menuID += 1;
+		//if (KeyDown.down() || KeyS.down())
+		//{
+		//	menuID += 1;
 
-			if (menuID > MenuNumber - 1)
-			{
-				menuID = 0;
-			}
-		}
+		//	if (menuID > MenuNumber - 1)
+		//	{
+		//		menuID = 0;
+		//	}
+		//}
 
-		for (int i = 0; i < MenuNumber; i++)
-		{
-			if (MenuHitBox[i].mouseOver())
-			{
-				menuID = i;
-			}
+		//for (int i = 0; i < MenuNumber; i++)
+		//{
+		//	if (MenuHitBox[i].mouseOver())
+		//	{
+		//		menuID = i;
+		//	}
 
-			if (i == menuID)
-			{
-				isSelectMenu[i] = true;
-			}
-			else
-			{
-				isSelectMenu[i] = false;
-			}
-		}
+		//	if (i == menuID)
+		//	{
+		//		isSelectMenu[i] = true;
+		//	}
+		//	else
+		//	{
+		//		isSelectMenu[i] = false;
+		//	}
+		//}
+
+		firstMenu.Update();
 
 
-
-		switch (menuID)
+		switch (firstMenu.IsCurrent())
 		{
 		case 0:
-			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+			if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
 			{
 				selectScene = NowScene::AudioConfig;
 				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			}
 			break;
 		case 1:
-			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+			if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
 			{
 				selectScene = NowScene::KeyConfig;
 				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			}
 			break;
 		case 2:
-			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+			if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
 			{
 				selectScene = NowScene::Save;
 				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			}
 			break;
 		case 3:
-			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+			if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
 			{
 				selectScene = NowScene::Load;
 				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			}
 			break;
 		case 4:
-			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+			if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
 			{
 				selectScene = NowScene::Explanation;
 				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 			}
 			break;
 		case 5:
-			if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+			if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
 			{
 				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 				System::Exit();
@@ -254,19 +255,20 @@ void SetUp::draw()
 	{
 	case SetUp::NowScene::MenuSelect:
 		//メニュー描画
-		for (int i = 0; i < MenuNumber; i++)
-		{
-			if (isSelectMenu[i])
-			{
-				//選択されていれば黄色
-				font30(SetUpMenuName[i]).draw(10, 10 + i * 45, Palette::Yellow);
-			}
-			else
-			{
-				//選択されていなければ白色
-				font30(SetUpMenuName[i]).draw(10, 10 + i * 45, Palette::White);
-			}
-		}
+		//for (int i = 0; i < MenuNumber; i++)
+		//{
+		//	if (isSelectMenu[i])
+		//	{
+		//		//選択されていれば黄色
+		//		font30(SetUpMenuName[i]).draw(10, 10 + i * 45, Palette::Yellow);
+		//	}
+		//	else
+		//	{
+		//		//選択されていなければ白色
+		//		font30(SetUpMenuName[i]).draw(10, 10 + i * 45, Palette::White);
+		//	}
+		//}
+		firstMenu.InRectDraw();
 		break;
 	case SetUp::NowScene::AudioConfig:
 
@@ -278,7 +280,7 @@ void SetUp::draw()
 
 		dmy = (SimpleGUI::ButtonAt(U"戻る", Vec2(Scene::Width() - 70, Scene::Height() - 30)));
 
-		font30(SetUpMenuName[0]).draw(10,10,Palette::White);
+		//font30(SetUpMenuName[0]).draw(10,10,Palette::White);
 		break;
 	case SetUp::NowScene::KeyConfig:
 		dmy = (SimpleGUI::ButtonAt(U"戻る", Vec2(Scene::Width() - 70, Scene::Height() - 30)));

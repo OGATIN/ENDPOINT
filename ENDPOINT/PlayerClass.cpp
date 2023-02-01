@@ -1,6 +1,14 @@
 ﻿#include"PlayerClass.h"
 #pragma once
 
+void PlayerClass::Initialize()
+{
+	gameObject.Initialize();
+	hitpointBar.Initialize(gameObject.status.MaxhitPoints);
+	magicpointBar.Initialize(gameObject.status.MaxmagicPoint);
+	mentalpointBar.Initialize(gameObject.status.Maxmental);
+	staminapointBar.Initialize(gameObject.status.Maxstamina);
+}
 
 void PlayerClass::Update()
 {
@@ -14,33 +22,6 @@ void PlayerClass::Update()
 	if(gameObject.status.stamina <= 100)gameObject.status.stamina += 1.0/60.0;
 }
 
-void PlayerClass::StatusDraw() const
-{
-	RectF hitpointBarRect = {10,10,500,50};
-	RectF magicpointBarRect = {10,65,500,20};
-	RectF mentalpointBarRect = {10,90,500,20};
-	RectF staminapointBarRect = {gameObject.GetHitRect().x + gameObject.GetHitRect().w + 10,gameObject.GetHitRect().y,20,100};
-
-	hitpointBar.DrawSideways(hitpointBarRect);
-	magicpointBar.DrawSideways(magicpointBarRect);
-	mentalpointBar.DrawSideways(mentalpointBarRect);
-	staminapointBar.DrawPortrait(staminapointBarRect);
-}
-
-void PlayerClass::Draw()const
-{
-	gameObject.Draw();
-	StatusDraw();
-}
-
-void PlayerClass::DebugDraw() const
-{
-	gameObject.GetHitRect().drawFrame(2, Palette::Green);
-	gameObject.StatusDraw();
-	gameObject.TimeDebuggDraw();
-	//gameobject.playerCollsioninputoutdegDraw();
-}
-
 void PlayerClass::ConfigOnlineProcess()
 {
 	if (isOnline)
@@ -50,21 +31,21 @@ void PlayerClass::ConfigOnlineProcess()
 		case PlayerClass::Menu::FirstMenu:
 			if (KeyUp.down() || KeyW.down())
 			{
-				menuID -= 1;
+				menuID[0] -= 1;
 
-				if (menuID < 0)
+				if (menuID[0] < 0)
 				{
-					menuID = MenuNumber - 1;
+					menuID[0] = MenuNumber - 1;
 				}
 			}
 
 			if (KeyDown.down() || KeyS.down())
 			{
-				menuID += 1;
+				menuID[0] += 1;
 
-				if (menuID > MenuNumber - 1)
+				if (menuID[0] > MenuNumber - 1)
 				{
-					menuID = 0;
+					menuID[0] = 0;
 				}
 			}
 
@@ -72,10 +53,10 @@ void PlayerClass::ConfigOnlineProcess()
 			{
 				if (MenuHitBox[i].mouseOver())
 				{
-					menuID = i;
+					menuID[0] = i;
 				}
 
-				if (i == menuID)
+				if (i == menuID[0])
 				{
 					isSelectMenu[i] = true;
 				}
@@ -85,34 +66,34 @@ void PlayerClass::ConfigOnlineProcess()
 				}
 			}
 
-			switch (menuID)
+			switch (menuID[0])
 			{
 			case 0:
-				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID[0]].mouseOver() && MouseL.down())
 				{
 					selectMenu = Menu::Item;
 					//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 				}
 				break;
 			case 1:
-				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID[0]].mouseOver() && MouseL.down())
 				{
 					selectMenu = Menu::Status;
 					//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 				}
 				break;
 			case 2:
-				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID[0]].mouseOver() && MouseL.down())
 				{
 					selectMenu = Menu::SkillPoint;
 					//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 				}
 				break;
 			case 3:
-				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID].mouseOver() && MouseL.down())
+				if (KeyZ.down() || KeyEnter.down() || MenuHitBox[menuID[0]].mouseOver() && MouseL.down())
 				{
 					isOnline = false;
-					menuID = 0;
+					menuID[0] = 0;
 					selectMenu = Menu::FirstMenu;
 					//selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 				}
@@ -131,10 +112,57 @@ void PlayerClass::ConfigOnlineProcess()
 	}
 }
 
+void PlayerClass::Draw()const
+{
+	gameObject.Draw();
+	StatusDraw();
+}
+
+void PlayerClass::StatusDraw() const
+{
+	//バーを描画する座標
+	RectF hitpointBarRect = {10,10,500,50};
+	RectF magicpointBarRect = {10,65,500,20};
+	RectF mentalpointBarRect = {10,90,500,20};
+	RectF staminapointBarRect = {gameObject.GetHitRect().x + gameObject.GetHitRect().w + 10,gameObject.GetHitRect().y,20,100};
+
+	//常に描画
+	hitpointBar.DrawSideways(hitpointBarRect);
+	magicpointBar.DrawSideways(magicpointBarRect);
+	mentalpointBar.DrawSideways(mentalpointBarRect);
+
+	//スタミナが最大でないなら描画
+	if (gameObject.status.stamina < gameObject.status.Maxstamina)
+	{
+		staminapointBar.DrawPortrait(staminapointBarRect);
+	}
+}
+
+void PlayerClass::DebugDraw() const
+{
+	gameObject.GetHitRect().drawFrame(2, Palette::Green);
+	gameObject.StatusDraw();
+	gameObject.TimeDebuggDraw();
+	//gameobject.playerCollsioninputoutdegDraw();
+}
+
 void PlayerClass::ConfigOnlineDraw() const
 {
 	if (isOnline)
 	{
+
+		switch (selectMenu)
+		{
+		case PlayerClass::Menu::Item:
+			break;
+		case PlayerClass::Menu::Status:
+			break;
+		case PlayerClass::Menu::SkillPoint:
+			break;
+		default:
+			break;
+		}
+
 		Rect window1 = { 10,10,300,200 };
 		Rect window2 = { 10,230,200,40 };
 
@@ -161,12 +189,5 @@ void PlayerClass::ConfigOnlineDraw() const
 	}
 }
 
-void PlayerClass::Initialize()
-{
-	gameObject.Initialize();
-	hitpointBar.Initialize(gameObject.status.hitPoints);
-	magicpointBar.Initialize(gameObject.status.magicPoint);
-	mentalpointBar.Initialize(gameObject.status.mental);
-	staminapointBar.Initialize(gameObject.status.stamina);
-}
+
 
