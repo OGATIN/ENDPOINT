@@ -5,18 +5,20 @@ void StatusClass::Reload(CSV statusData)
 {
 	for (int i = 1; i <= level; i++)
 	{
-		MaxhitPoints = MaxhitPoints + Parse<double>(statusData[1][i]);
-		Maxstamina = Maxstamina + Parse<double>(statusData[2][i]);
-		Maxmental = Maxmental + Parse<double>(statusData[3][i]);
+		hitPoints = hitPoints + Parse<double>(statusData[1][i]);
+		stamina = stamina + Parse<double>(statusData[2][i]);
+		mental = mental + Parse<double>(statusData[3][i]);
 		power = power + Parse<double>(statusData[4][i]);
 		protection = protection + Parse<double>(statusData[5][i]);
 		weight = weight + Parse<double>(statusData[6][i]);
-		MaxmagicPoint = MaxmagicPoint + Parse<double>(statusData[8][i]);
+		magicPoint = magicPoint + Parse<double>(statusData[8][i]);
 		magicPower = magicPower + Parse<double>(statusData[9][i]);
-		hitPoints			= hitPoints + Parse<double>(statusData[10][i]);
-		stamina				= stamina + Parse<double>(statusData[11][i]);
-		mental				= mental + Parse<double>(statusData[12][i]);
-		magicPoint			= magicPoint + Parse<double>(statusData[13][i]);
+
+		//現在値の更新(仮)
+		currentHitPoints = hitPoints;
+		currentStamina = stamina;
+		currentMental = mental;
+		currentMagicPoint = magicPoint;
 	}
 }
 

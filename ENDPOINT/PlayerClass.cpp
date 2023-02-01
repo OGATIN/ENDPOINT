@@ -4,22 +4,22 @@
 void PlayerClass::Initialize()
 {
 	gameObject.Initialize();
-	hitpointBar.Initialize(gameObject.status.MaxhitPoints);
-	magicpointBar.Initialize(gameObject.status.MaxmagicPoint);
-	mentalpointBar.Initialize(gameObject.status.Maxmental);
-	staminapointBar.Initialize(gameObject.status.Maxstamina);
+	hitpointBar.Initialize(gameObject.status.hitPoints);
+	magicpointBar.Initialize(gameObject.status.magicPoint);
+	mentalpointBar.Initialize(gameObject.status.mental);
+	staminapointBar.Initialize(gameObject.status.stamina);
 }
 
 void PlayerClass::Update()
 {
 	gameObject.Update();
 
-	hitpointBar.Update(gameObject.status.hitPoints);
-	magicpointBar.Update(gameObject.status.magicPoint);
-	mentalpointBar.Update(gameObject.status.mental);
-	staminapointBar.Update(gameObject.status.stamina);
+	hitpointBar.Update(gameObject.status.currentHitPoints);
+	magicpointBar.Update(gameObject.status.currentMagicPoint);
+	mentalpointBar.Update(gameObject.status.currentMental);
+	staminapointBar.Update(gameObject.status.currentStamina);
 
-	if(gameObject.status.stamina <= 100)gameObject.status.stamina += 1.0/60.0;
+	if(gameObject.status.currentStamina <= 100)gameObject.status.currentStamina += 1.0/60.0;
 }
 
 void PlayerClass::ConfigOnlineProcess()
@@ -132,7 +132,7 @@ void PlayerClass::StatusDraw() const
 	mentalpointBar.DrawSideways(mentalpointBarRect);
 
 	//スタミナが最大でないなら描画
-	if (gameObject.status.stamina < gameObject.status.Maxstamina)
+	if (gameObject.status.currentStamina < gameObject.status.stamina)
 	{
 		staminapointBar.DrawPortrait(staminapointBarRect);
 	}

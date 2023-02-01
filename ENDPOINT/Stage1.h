@@ -122,11 +122,8 @@ private:
 	XInputVibration vibration;
 
 
-	Vec2 te;
 	Font font{ 30 };
 
-	int a;
-	int aa;
 
 
 public:
