@@ -219,7 +219,7 @@ void SetUp::draw()
 	case SetUp::NowScene::MenuSelect:
 
 		//メニュー描画
-		firstMenu.InRectDraw();
+		firstMenu.InRectDraw(true);
 
 		break;
 	case SetUp::NowScene::AudioConfig:
