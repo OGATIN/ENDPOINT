@@ -44,10 +44,10 @@ public:
 	double magicPower = 0;		//魔力
 
 	//現在値
-	double currentHitPoint;  //HP
-	double currentStamina;	  //スタミナ
-	double currentMental;	  //精神力
-	double currentMagicPoint; //MP
+	double currentHitPoint = 0;  //HP
+	double currentStamina = 0;	  //スタミナ
+	double currentMental = 0;	  //精神力
+	double currentMagicPoint = 0; //MP
 
 	//比較用
 	const int Maxlevel = 30;//プレイヤーの最大レベル
