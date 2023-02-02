@@ -8,6 +8,9 @@ void PlayerClass::Initialize()
 	magicpointBar.Initialize(gameObject.status.magicPoint);
 	mentalpointBar.Initialize(gameObject.status.mental);
 	staminapointBar.Initialize(gameObject.status.stamina);
+
+	statusChar = { (double)gameObject.status.level, gameObject.status.hitPoint, gameObject.status.magicPoint, gameObject.status.stamina, gameObject.status.mental, gameObject.status.power, gameObject.status.magicPower, gameObject.status.protection, gameObject.status.weight};
+
 }
 
 void PlayerClass::Update()
@@ -126,7 +129,7 @@ void PlayerClass::ConfigOnlineDraw() const
 		window2.drawFrame(10, Palette::White).draw(Palette::Black);
 
 		//メニュー描画
-		firstMenu.InRectDraw();
+		firstMenu.InRectDraw(true);
 
 		font30(U"1000＄").draw(20, 235, Palette::White);
 
@@ -151,7 +154,32 @@ void PlayerClass::ConfigOnlineDraw() const
 			//あとスキルポイントとアイテムに関してはとっかかりがなさ過ぎて辛いUIや小さいウィンドウだけ作ろうか
 			//あと変数の強調表示だけどmenuIDをクラスから取り出して条件にすれば良いね
 			//目がかすんで前が見えないよ
-			statusMenu.InRectDraw();
+
+			//ステータスの項目を表示
+			statusMenu.InRectDraw(false);
+			magicMenu.InRectDraw(false);
+
+			//ステータスの数値を表示
+			for (int i = 0; i < statusChar.size(); i++)
+			{
+				//桁数計算
+				int number = statusChar[i];
+				int digit = 0;
+				while (number != 0)
+				{
+					number = number / 10;
+					digit++;
+				}
+				//数値が0だと桁数が0になるので加算
+				if (digit == 0)digit = 1;
+
+				//描画
+				font30(statusChar[i]).draw(715 - digit * (statusMenu.fontSize / 2), statusMenu.startPos.y + ((statusMenu.fontSize * 1.5) * i));
+			}
+
+			//魔法の種類を描画
+			font30(gameObject.status.magicTypeMame).draw(715 - gameObject.status.magicTypeMame.length() * (gameObject.status.magicType == MagicType::NONE ? 15 : 30), (statusChar.size() * 45) + 15);
+
 			break;
 		case PlayerClass::MenuTransition::SkillPoint:
 			break;

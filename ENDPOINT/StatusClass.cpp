@@ -142,7 +142,6 @@ void StatusClass::GetExperience(int getValue)
 		weight = weight + Parse<double>(copyStatusData[6][level]);
 		magicPoint = magicPoint + Parse<double>(copyStatusData[8][level]);
 		magicPower = magicPower + Parse<double>(copyStatusData[9][level]);
-
 	}
 }
 

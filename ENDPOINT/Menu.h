@@ -49,6 +49,10 @@ public:
 		currentColor = _currentColor;
 	};
 
+	Vec2 startPos = { 10,10 };
+
+	int fontSize = 30;		//フォントの大きさ
+
 	void Set(Array<String> _menuChara, Vec2 _startPos)
 	{
 		menuCharaSize = _menuChara.size();
@@ -99,14 +103,14 @@ public:
 
 	/// @brief 引数の四角内にメニューを等間隔に表示
 	/// @param rect 表示させる四角
-	void InRectDraw()const
+	void InRectDraw(bool isCurrentDraw)const
 	{
 		//描画
 		for (int i = 0; i < menuCharaSize; i++)
 		{
 			//選択中の文字なら強調表示
 			bool current = (menuID == i);
-			font(menuChara[i]).draw(startPos.x, startPos.y + ((fontSize * 1.5) * i), current ? currentColor : defaultColor);
+			font(menuChara[i]).draw(startPos.x, startPos.y + ((fontSize * 1.5) * i),isCurrentDraw ?  (current ? currentColor : defaultColor):defaultColor);
 		}
 	}
 
@@ -130,9 +134,6 @@ private:
 	int menuCharaSize = 1;//表示させる文字列の数
 	Array<String> menuChara;//文字列
 
-	int fontSize = 30;		//フォントの大きさ
 	Font font{ fontSize ,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };	//フォント
-
-	Vec2 startPos = { 10,10 };
 };
 
