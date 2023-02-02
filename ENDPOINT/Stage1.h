@@ -63,6 +63,8 @@ private:
 	CSV BasicStatusData{ U"ConfigData/基礎ステータスデータ.csv" };
 	CSV SkillPointStatusData{ U"ConfigData/スキルポイントステータスデータ.csv" };
 	CSV ExperienceBorder{ U"ConfigData/経験値ボーダー.csv" };
+	CSV MagicSkillPointData{ U"ConfigData/魔法スキルポイントステータスデータ.csv" };
+	CSV MagicOther{ U"ConfigData/魔法その他.csv" };
 
 	Texture playerPNG[4][20] =
 	{
@@ -106,9 +108,9 @@ private:
 	};
 
 
-	PlayerClass Player = { playerPNG ,SEAudio,AnimationData ,BasicStatusData ,SkillPointStatusData,ExperienceBorder };
+	PlayerClass Player = { playerPNG ,SEAudio,AnimationData ,BasicStatusData ,SkillPointStatusData,ExperienceBorder ,MagicSkillPointData ,MagicOther };
 
-	EnemyClass Enemey = { enemeyPNG ,SEAudio,AnimationData ,BasicStatusData, SkillPointStatusData ,ExperienceBorder };
+	EnemyClass Enemey = { enemeyPNG ,SEAudio,AnimationData ,BasicStatusData, SkillPointStatusData ,ExperienceBorder  ,MagicSkillPointData ,MagicOther };
 
 	CSV mapData{ U"ConfigData/map.csv" };
 

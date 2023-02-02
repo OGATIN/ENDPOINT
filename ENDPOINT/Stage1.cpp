@@ -9,10 +9,6 @@ Stage1::~Stage1()
 
 void Stage1::Initialize()
 {
-	if (not BasicStatusData) // もし読み込みに失敗したら
-	{
-		throw Error{ U"基礎ステータスデータ.csv が存在しません。" };
-	}
 
 	//初期化
 	Player.Initialize();
@@ -171,9 +167,7 @@ void Stage1::update()
 	//デバック用---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	//経験値関連使い方講座
-
-	Player.gameObject.status.LevelUp();
-
+	 
 	//経験値の増加
 	if (Key1.pressed())
 	{
@@ -267,6 +261,8 @@ void Stage1::update()
 		}
 	}
 
+	}
+
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 }
@@ -297,7 +293,7 @@ void Stage1::draw() const
 	Player.ConfigOnlineDraw();
 
 	//デバック用
-	font(U"選択してる状態", statusTypeName).draw(450, 0);
+	font(U"選択してる状態", S).draw(450, 0);
 	font(isMissing,Missing).draw(450, 30);
 	font(isMax).draw(450, 60);
 	//font(Player.gameObject.velocity).draw(450, 30);

@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "StatusClass.h"
 
-void StatusClass::Reload(CSV statusData, CSV skillPointStatData, CSV experienceBorder)
+void StatusClass::Reload(CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 {
 	for (int i = 1; i <= level; i++)
 	{
@@ -56,6 +56,56 @@ void StatusClass::Reload(CSV statusData, CSV skillPointStatData, CSV experienceB
 		magicPower = magicPower + Parse<double>(skillPointStatData[9][i]);
 	}
 
+	totalValue = magicSkillPoint;
+
+	for (int i = 0; i < 4; i++)
+	{
+		totalValue += magicSkillPointAllocation[i];
+	}
+
+	//魔法が解放されているなら
+	if (magicType != MagicType::NONE)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			
+			for (int j = 0; j <= magicSkillPointAllocation[i]; j++)
+			{
+				switch (i)
+				{
+				case 0:
+					magicProficiencyPower += Parse<double>(magicSkillPointData[(int)magicType * 5 + i + 1][j + 2]);
+					break;
+
+				case 1:
+					subSkill +=  Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
+					break;
+
+				case 2:
+					coolTime +=  Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
+					break;
+
+				case 3:
+
+					if (magicType == MagicType::FIREBALL || magicType == MagicType::THUNDER || magicType == MagicType::HEAL)
+					{
+						specialFunctioVernValue +=  Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
+					}
+					else if (magicType == MagicType::TIME || magicType == MagicType::STATUSUP)
+					{
+						if (j >= 5)
+						{
+							specialFunctionVerRelease = true;
+						}
+					}
+					break;
+				}
+
+			}
+		}
+	}
+
+
 	//現在値の更新(仮)
 	currentHitPoint = hitPoint;
 	currentStamina = stamina;
@@ -66,6 +116,8 @@ void StatusClass::Reload(CSV statusData, CSV skillPointStatData, CSV experienceB
 	copyStatusData = statusData;
 	copySkillPointStatData = skillPointStatData;
 	copyExperienceBorder = experienceBorder;
+	copyMagicSkillPointData = magicSkillPointData;
+	copyMagicOther = magicOther;
 };
 
 void StatusClass::GetExperience(int getValue)
@@ -74,12 +126,9 @@ void StatusClass::GetExperience(int getValue)
 	{
 		experience += getValue;
 	}
-}
 
-void StatusClass::LevelUp()
-{
 	//最大レベルより下で経験値がボーダーを越したとき
-	if ((level < Maxlevel)&& (experience >= Parse<int>(copyExperienceBorder[level + 3 ][1])))
+	if ((level < Maxlevel) && (experience >= Parse<int>(copyExperienceBorder[level + 3][1])))
 	{
 		experience = 0;
 		level++;
@@ -99,7 +148,10 @@ void StatusClass::LevelUp()
 
 void StatusClass::SkillPointAdd(StatusType statusType, MagicType magicType)
 {
-	skillPoint--;
+	if (statusType != StatusType::MAGICTYPE)
+	{
+		skillPoint--;
+	}
 
 	switch (statusType)
 	{
@@ -128,6 +180,7 @@ void StatusClass::SkillPointAdd(StatusType statusType, MagicType magicType)
 		weight = weight + Parse<double>(copySkillPointStatData[6][weightAllotted]);
 		break;
 	case StatusType::MAGICTYPE:
+		skillPoint -= SkillPointForMagic;
 		ChangeMagic(magicType);
 		break;
 	case StatusType::MP:
@@ -146,9 +199,6 @@ void StatusClass::SkillPointAdd(StatusType statusType, MagicType magicType)
 void StatusClass::ChangeMagic(MagicType _magicType)
 {
 	magicType = _magicType;
-
-	skillPoint -= SkillPointForMagic;
-
 	switch (magicType)
 	{
 	case MagicType::NONE:
@@ -163,7 +213,7 @@ void StatusClass::ChangeMagic(MagicType _magicType)
 	case MagicType::STATUSUP:
 		magicTypeMame = { U"ステータスアップ" };
 		break;
-	case MagicType::HEEL:
+	case MagicType::HEAL:
 		magicTypeMame = { U"ヒール" };
 		break;
 	case MagicType::TIME:
@@ -174,6 +224,92 @@ void StatusClass::ChangeMagic(MagicType _magicType)
 	}
 }
 
+void StatusClass::GetMagicProficiency(int getValue)
+{
+	 totalValue = magicSkillPoint;
+
+	for (int i = 0; i < 4; i++)
+	{
+		totalValue  += magicSkillPointAllocation[i];
+	}
+
+	//熟練度を取得(最大値なら取得しない)
+	if (totalValue < MaxGetMagicSkillPoint)
+	{
+		magicProficiency += getValue;
+
+		//ボーダーを超えたら魔法スキルポイントを取得
+		if (magicProficiency >= Parse<double>(copyMagicOther[12][totalValue + 1]))
+		{
+			magicSkillPoint++;
+			magicProficiency = 0;
+
+			totalValue = magicSkillPoint;
+
+			for (int i = 0; i < 4; i++)
+			{
+				totalValue += magicSkillPointAllocation[i];
+			}
+		}
+	}
+
+
+
+
+}
+
+void StatusClass::MagicSkillPointAdd(int changeNumber)
+{
+	if (changeNumber >= 3 && (magicType == MagicType::TIME || magicType == MagicType::STATUSUP))
+	{
+
+		magicSkillPoint -= SpecialFeaturesMagic;
+
+		magicSkillPointAllocation[changeNumber] += SpecialFeaturesMagic;
+
+	}
+	else
+	{
+		magicSkillPoint--;
+
+		magicSkillPointAllocation[changeNumber] ++;
+		
+	}
+
+	switch (changeNumber)
+	{
+	case 0:
+		magicProficiencyPower += Parse<double>(copyMagicSkillPointData[((int)magicType * 5) + changeNumber + 1][magicSkillPointAllocation[changeNumber] + 2]);
+		break;
+
+	case 1:
+		subSkill += Parse<double>(copyMagicSkillPointData[((int)magicType * 5) + changeNumber + 1][magicSkillPointAllocation[changeNumber] + 2]);
+		break;
+
+	case 2:
+		coolTime += Parse<double>(copyMagicSkillPointData[((int)magicType * 5) + changeNumber + 1][magicSkillPointAllocation[changeNumber] + 2]);
+		break;
+
+	case 3:
+
+		if (magicType == MagicType::FIREBALL || magicType == MagicType::THUNDER || magicType == MagicType::HEAL)
+		{
+			specialFunctioVernValue += Parse<double>(copyMagicSkillPointData[((int)magicType * 5) + changeNumber + 1][magicSkillPointAllocation[changeNumber] + 2]);
+		}
+		else if (magicType == MagicType::TIME || magicType == MagicType::STATUSUP)
+		{
+			if (magicSkillPointAllocation[changeNumber] >= 5)
+			{
+				specialFunctionVerRelease = true;
+			}
+		}
+		break;
+	}
+
+		
+
+
+}
 
 /*デバック用*/
 
@@ -191,7 +327,8 @@ void StatusClass::BaseStatusDrow(bool SkillPointRelated)const
 		{{U"重量 "},	{U" 振 "}},
 		{{U"魔法 "},	{}},
 		{{U"MP "},		{U" 振 "}},
-		{{U"魔力 "},	{U" 振 "}}
+		{{U"魔力 "},	{U" 振 "}},
+
 	};
 
 	double statusValue[11][2] =
@@ -226,4 +363,43 @@ void StatusClass::BaseStatusDrow(bool SkillPointRelated)const
 			font30(statusName[i][1], statusValue[i][1]).draw(font30(statusName[i][0], statusValue[i][0]).region().w, font30.height() * i);
 		}
 	}
+}
+
+void StatusClass::MagicProficiencyRelationDrow() const
+{
+	String magicRelatedName[7][2] =
+	{
+		{{U"総取得量　"},{}},
+		{{U"魔法熟練度　"},{}},
+		{{U"魔法スキルポイント "},{}},
+		{{U"威力 "},{U"降"}},
+		{{U"サブスキル　"},{U"降"}},
+		{{U"クールタイム "},{U"降"}} ,
+		{{U"特殊枠 "},{U"降"} },
+	};
+
+	double magicRelatedValue[7][2] =
+	{
+		{{totalValue},{}},
+		{{magicProficiency},{}},
+		{{magicSkillPoint},{}},
+		{{magicProficiencyPower},{magicSkillPointAllocation[0]}},
+		{{subSkill},{magicSkillPointAllocation[1]}},
+		{{coolTime} ,{magicSkillPointAllocation[2]}},
+		{{specialFunctioVernValue} ,{magicSkillPointAllocation[3]}},
+
+	};
+
+	for (int i = 0; i < 7; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			if (j == 0 || i > 2)
+			{
+				font30(magicRelatedName[i][j], magicRelatedValue[i][j]).draw(font30.spaceWidth() * 30 * j, font30.height() * i);
+			}
+		}
+	}
+	font30(a).draw(0, 600);
+
 }

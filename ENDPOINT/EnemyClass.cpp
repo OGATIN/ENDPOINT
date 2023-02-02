@@ -27,6 +27,7 @@ void EnemyClass::AIManegement()
 }
 
 
+
 void EnemyClass::Draw()const
 {
 	gameObject.Draw();

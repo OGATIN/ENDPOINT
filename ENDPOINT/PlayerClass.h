@@ -7,7 +7,7 @@ class PlayerClass
 {
 public:
 	PlayerClass() {};
-	PlayerClass(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData, CSV skillPointStatData, CSV experienceBorder)
+	PlayerClass(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 	{
 		for (int j = 0; j < 4; j++)
 		{
@@ -23,7 +23,7 @@ public:
 			gameObject.audio[i] = _audio[i];
 		}
 
-		gameObject.status.Reload(statusData, skillPointStatData, experienceBorder);
+		gameObject.status.Reload(statusData, skillPointStatData, experienceBorder,magicSkillPointData,magicOther);
 	};
 
 	enum class MenuTransition

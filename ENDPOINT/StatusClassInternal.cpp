@@ -129,3 +129,45 @@ bool StatusClass::IsAllocateSkillPoint(StatusType statusType)
 	}
 }
 
+int StatusClass::IsEnoughMagicSkillPoint(int changeNumber)
+{
+	if ((changeNumber >= 3) && (magicType == MagicType::TIME || magicType == MagicType::STATUSUP))
+	{
+
+		if (SpecialFeaturesMagic <= magicSkillPoint)
+		{
+			return 0;
+		}
+		else
+		{
+			return SpecialFeaturesMagic - magicSkillPoint;
+
+		}
+
+	}
+	else
+	{
+		if (magicSkillPoint > 0)
+		{
+			return 0;
+		}
+		else
+		{
+			return 1;
+
+		}
+
+	}
+}
+
+bool StatusClass::IsAllocateMagicSkillPoint(int changeNumber)
+{
+	if (MaxMagicSkillPoint > magicSkillPointAllocation[changeNumber])
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
