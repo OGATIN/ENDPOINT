@@ -38,7 +38,7 @@ void Title::update()
 		{
 		case MENU::New:
 			changeScene(SceneName::Stage1);
-			[[fallthrough]];
+			break;
 		case MENU::End:
 			System::Exit();
 			break;
