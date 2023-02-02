@@ -16,6 +16,7 @@ void SetUp::Initialize()
 
 	isEnable = true;
 	isFirst = false;
+
 }
 
 void SetUp::SetUpEnable()
@@ -65,45 +66,7 @@ void SetUp::update()
 	{
 	case SetUp::NowScene::MenuSelect:
 
-		//if (KeyUp.down() || KeyW.down())
-		//{
-		//	menuID -= 1;
-
-		//	if (menuID < 0)
-		//	{
-		//		menuID = MenuNumber - 1;
-		//	}
-		//}
-
-		//if (KeyDown.down() || KeyS.down())
-		//{
-		//	menuID += 1;
-
-		//	if (menuID > MenuNumber - 1)
-		//	{
-		//		menuID = 0;
-		//	}
-		//}
-
-		//for (int i = 0; i < MenuNumber; i++)
-		//{
-		//	if (MenuHitBox[i].mouseOver())
-		//	{
-		//		menuID = i;
-		//	}
-
-		//	if (i == menuID)
-		//	{
-		//		isSelectMenu[i] = true;
-		//	}
-		//	else
-		//	{
-		//		isSelectMenu[i] = false;
-		//	}
-		//}
-
 		firstMenu.Update();
-
 
 		switch (firstMenu.IsCurrent())
 		{
@@ -254,21 +217,10 @@ void SetUp::draw()
 	switch (selectScene)
 	{
 	case SetUp::NowScene::MenuSelect:
+
 		//メニュー描画
-		//for (int i = 0; i < MenuNumber; i++)
-		//{
-		//	if (isSelectMenu[i])
-		//	{
-		//		//選択されていれば黄色
-		//		font30(SetUpMenuName[i]).draw(10, 10 + i * 45, Palette::Yellow);
-		//	}
-		//	else
-		//	{
-		//		//選択されていなければ白色
-		//		font30(SetUpMenuName[i]).draw(10, 10 + i * 45, Palette::White);
-		//	}
-		//}
 		firstMenu.InRectDraw();
+
 		break;
 	case SetUp::NowScene::AudioConfig:
 

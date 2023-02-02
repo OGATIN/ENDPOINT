@@ -58,8 +58,11 @@ private:
 	Audio DropAudio			{ U"Material/4.SE/18.ドロップアイテムを落とした時.mp3" };
 	Audio PickUpAudio		{ U"Material/4.SE/19.ドロップアイテムを拾った時.mp3" };
 
-	CSV BasicStatData{ U"ConfigData/基礎ステータスデータ.csv" };
+	
 	CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
+	CSV BasicStatusData{ U"ConfigData/基礎ステータスデータ.csv" };
+	CSV SkillPointStatusData{ U"ConfigData/スキルポイントステータスデータ.csv" };
+	CSV ExperienceBorder{ U"ConfigData/経験値ボーダー.csv" };
 
 	Texture playerPNG[4][20] =
 	{
@@ -103,9 +106,9 @@ private:
 	};
 
 
-	PlayerClass Player = { playerPNG ,SEAudio,AnimationData ,BasicStatData };
+	PlayerClass Player = { playerPNG ,SEAudio,AnimationData ,BasicStatusData ,SkillPointStatusData,ExperienceBorder };
 
-	EnemyClass Enemey = { enemeyPNG ,SEAudio,AnimationData ,BasicStatData };
+	EnemyClass Enemey = { enemeyPNG ,SEAudio,AnimationData ,BasicStatusData, SkillPointStatusData ,ExperienceBorder };
 
 	CSV mapData{ U"ConfigData/map.csv" };
 
@@ -122,12 +125,17 @@ private:
 	XInputVibration vibration;
 
 
-	Vec2 te;
+	//デバック用
 	Font font{ 30 };
 
-	int a;
-	int aa;
-
+	//経験値関連使い方講座
+	int S = 0;
+	StatusType tentative = StatusType::HP;
+	String statusTypeName = U"HP";;	//状態
+	int Missing;
+	String isMissing = U"";		//足りてないか
+	String isMax = U"";			//
+	
 
 public:
 

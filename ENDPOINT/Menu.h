@@ -49,6 +49,18 @@ public:
 		currentColor = _currentColor;
 	};
 
+	void Set(Array<String> _menuChara, Vec2 _startPos)
+	{
+		menuCharaSize = _menuChara.size();
+
+		startPos = _startPos;
+
+		for (int i = 0; i < menuCharaSize; i++)
+		{
+			menuChara << _menuChara[i];
+		}
+	}
+
 	//初期化
 	void Initialize()
 	{
@@ -105,7 +117,7 @@ public:
 
 	bool IsMouseOver()
 	{
-		return RectF{ startPos.x, startPos.y + ((fontSize * 1.5) * menuID),menuChara[menuID].size() * fontSize,fontSize * 1.4 }.mouseOver();
+		return RectF{ startPos.x, startPos.y + ((fontSize * 1.5) * menuID),menuChara[menuID].size_bytes() * fontSize,fontSize * 1.4 }.mouseOver();
 	}
 
 private:

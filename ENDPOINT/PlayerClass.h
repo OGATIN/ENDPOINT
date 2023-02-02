@@ -1,24 +1,13 @@
 ﻿#include"GameObject.h"
+#include"Menu.h"
+
 #pragma once
 
 class PlayerClass
 {
 public:
-	enum class Menu
-	{
-		FirstMenu, Item, Status, SkillPoint
-	};
-
-	GameObject gameObject;
-
-	//バーの定義
-	Bar hitpointBar{};
-	Bar magicpointBar{ Palette::Blue};
-	Bar mentalpointBar{ Palette::Purple};
-	Bar staminapointBar{ Palette::Yellow};
-
 	PlayerClass() {};
-	PlayerClass(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData)
+	PlayerClass(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData, CSV skillPointStatData, CSV experienceBorder)
 	{
 		for (int j = 0; j < 4; j++)
 		{
@@ -34,22 +23,43 @@ public:
 			gameObject.audio[i] = _audio[i];
 		}
 
-		gameObject.status.Reload(statusData);
+		gameObject.status.Reload(statusData, skillPointStatData, experienceBorder);
 	};
+
+	enum class MenuTransition
+	{
+		FirstScene, Item, Status, SkillPoint
+	};
+
+	MenuTransition selectMenu = MenuTransition::FirstScene;
+
+	GameObject gameObject;
+
+	//バーの定義
+	Bar hitpointBar{};
+	Bar magicpointBar{ Palette::Blue};
+	Bar mentalpointBar{ Palette::Purple};
+	Bar staminapointBar{ Palette::Yellow};
+
+	Array<String> firstMenuChara = { U"アイテム",U"ステータス",U"スキルポイント",U"閉じる" };
+	Menu firstMenu{ firstMenuChara ,{20,20} };
+
+	Array<String> itemMenuChara = { U"アイテム",U"ステータス",U"スキルポイント",U"戻る" };
+	Menu itemMenu{ itemMenuChara ,{100,10} };
+
+	Array<String> statusMenuChara = { U"レベル",U"HP",U"MP",U"スタミナ",U"精神力",U"攻撃力",U"魔力",U"防御力",U"重量",U"魔法",U"威力",U"速度",U"クールタイム",U"大きさ",U"次のレベルまで" };
+	Menu statusMenu{ statusMenuChara, { 350,20 } };
+
+	Array<String> skillPointMenuChara = { U"アイテム",U"ステータス",U"スキルポイント",U"戻る" };
+	Menu skillPointMenu{ skillPointMenuChara ,{100,10} };
+	
+	Font font30{ 30 ,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };//フォント
 
 	bool isOnline = false;
 
-	Font font30{ 30 ,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };//フォント
-
-	const int MenuNumber = 4;//選択メニュー数
-	const char32_t SetUpMenuName[4][9]{ U"アイテム",U"ステータス",U"スキルポイント",U"閉じる" };//選択メニュー内文字
-	const Rect MenuHitBox[4]{ {15,15,140,35},{15,65,155,35},{15,110,210,35},{15,160,90,35} };//メニューの当たり判定
-	bool isSelectMenu[4]{ false,false,false,false };
-	int menuID[4] = {0,0,0,0};
-
 	StatusClass status;
 
-	Menu selectMenu = Menu::FirstMenu;
+	Audio selectAudio{ U"Material/4.SE/16.ゲームを一時停止した時1.mp3" };
 
 	void ConfigOnlineProcess();
 

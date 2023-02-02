@@ -9,7 +9,7 @@ Stage1::~Stage1()
 
 void Stage1::Initialize()
 {
-	if (not BasicStatData) // もし読み込みに失敗したら
+	if (not BasicStatusData) // もし読み込みに失敗したら
 	{
 		throw Error{ U"基礎ステータスデータ.csv が存在しません。" };
 	}
@@ -27,7 +27,7 @@ void Stage1::update()
 	//プレイヤーの処理
 	Player.Update();
 
-	Camera(8,3,5);
+	Camera(8, 3, 5);
 
 	Player.gameObject.AudioStop();
 
@@ -35,12 +35,11 @@ void Stage1::update()
 	Enemey.TestAI({ 1 * MapChipSize.x,0 });
 
 	MapHitGround(Player.gameObject);
-	//MapHitGround(Enemey.gameObject);
+	MapHitGround(Enemey.gameObject);
 
 
 
 	Player.gameObject.StateManagement();
-
 
 	// コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
@@ -170,22 +169,104 @@ void Stage1::update()
 
 
 	//デバック用---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	Player.gameObject.playerCollsioninputoutdeg();
 
-	te = Player.gameObject.MapLeftBottom(cameraPos, MapChipSize.asPoint());
-	aa = Player.gameObject.GetLeft();
+	//経験値関連使い方講座
 
-	if (Key1.down())
+	Player.gameObject.status.LevelUp();
+
+	//経験値の増加
+	if (Key1.pressed())
 	{
-		//Player.MotionEndMagnificationIncrease();
-		Player.gameObject.MotionFrameSkip();
+		Player.gameObject.status.GetExperience(100);
 	}
 
+	//変えたいステータス変更
 	if (Key2.down())
 	{
-		//Player.MotionEndMagnificationDecrease();
-		Player.gameObject.MotionFrameBack();
+		S++;
+
+		if (S > 9)
+		{
+			S = 0;
+		}
+
+		switch (S)
+		{
+		case 0:
+			tentative = StatusType::HP;
+			statusTypeName = U"HP";
+			break;
+		case 1:
+			tentative = StatusType::STAMINA;
+			statusTypeName = U"スタミナ";
+			break;
+		case 2:
+			tentative = StatusType::MENTAL;
+			statusTypeName = U"メンタル";
+			break;
+		case 3:
+			tentative = StatusType::POWER;
+			statusTypeName = U"パワー";
+			break;
+		case 4:
+			tentative = StatusType::PROTECTION;
+			statusTypeName = U"防御";
+			break;
+		case 5:
+			tentative = StatusType::WEIGHT;
+			statusTypeName = U"重さ";
+			break;
+		case 6:
+			tentative = StatusType::MAGICTYPE;
+			statusTypeName = U"魔法";
+			break;
+		case 7:
+			tentative = StatusType::MP;
+			statusTypeName = U"MP";
+			break;
+		case 8:
+			tentative = StatusType::MAGICPOWER;
+			statusTypeName = U"魔力";
+			break;
+
+		default:
+			break;
+		}
+
 	}
+
+	//判定表示用
+	if (Player.gameObject.status.IsEnoughSkillPoint(tentative) == 0)
+	{
+		Missing = Player.gameObject.status.IsEnoughSkillPoint(tentative);
+		isMissing = U"足りてます";
+	}
+	else
+	{
+		Missing = Player.gameObject.status.IsEnoughSkillPoint(tentative);
+		isMissing = U" 足りてないよ";
+	}
+
+	//判定表示用
+	if (Player.gameObject.status.IsAllocateSkillPoint(tentative))
+	{
+		isMax = U"最大値じゃないよ";
+	}
+	else
+	{
+		isMax = U"最大値です。振り分けれません";
+
+	}
+
+	//ポイント割り振り
+	if (Key3.down())
+	{
+		if (Player.gameObject.status.IsEnoughSkillPoint(tentative) == 0 && Player.gameObject.status.IsAllocateSkillPoint(tentative))
+		{
+			Player.gameObject.status.SkillPointAdd(tentative,MagicType::FIREBALL);
+		}
+	}
+
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 }
@@ -210,19 +291,19 @@ void Stage1::draw() const
 	//画像描画
 	Player.Draw();
 	Player.DebugDraw();
+	Player.gameObject.status.BaseStatusDrow(true);
 	Enemey.Draw();
 	Enemey.DebugDraw();
 	Player.ConfigOnlineDraw();
 
 	//デバック用
-	font(Player.gameObject.position).draw(450, 0);
-	font(Player.gameObject.velocity).draw(450, 30);
-	font(Enemey.gameObject.charaSpeed).draw(450, 120);
-	font(Player.gameObject.charaSpeed).draw(450, 150);
-	font(aa).draw(0, 0);
-	font(Scene::Width() / 3).draw(0, font.fontSize() * 1);
-	font(Scene::Width() / 7).draw(0, font.fontSize() * 2);
-	font(te).draw(Player.gameObject.position + Player.gameObject.shiftInternalHitRect[0][0].pos + Player.gameObject.shiftInternalHitRect[0][0].size);
+	font(U"選択してる状態", statusTypeName).draw(450, 0);
+	font(isMissing,Missing).draw(450, 30);
+	font(isMax).draw(450, 60);
+	//font(Player.gameObject.velocity).draw(450, 30);
+	//font(Enemey.gameObject.charaSpeed).draw(450, 90);
+
+	//font(Player.gameObject.charaSpeed).draw(450, 150);
 
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
 }
@@ -278,7 +359,7 @@ void Stage1::Camera(int screenDivisionNumber, int leftRange, int rightRange)
 				Player.gameObject.position.x += Player.gameObject.velocity.x;
 
 			}
-			
+
 		}
 	}
 

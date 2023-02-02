@@ -1,4 +1,4 @@
-#include "Finish.h"
+﻿#include "Finish.h"
 
 Finish::~Finish()
 {
@@ -12,7 +12,7 @@ void Finish::Initialize()
 
 void Finish::update()
 {
-
+	return;
 }
 
 
