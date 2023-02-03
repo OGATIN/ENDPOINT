@@ -124,6 +124,7 @@
     <ClCompile Include="GameObjectInternal.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MapClass.cpp" />
     <ClCompile Include="PlayerClass.cpp" />
     <ClCompile Include="SetUp.cpp" />
     <ClCompile Include="Stage1.cpp" />
@@ -355,6 +356,7 @@
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameOver.h" />
+    <ClInclude Include="MapClass.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="PlayerClass.h" />
     <ClInclude Include="Scene.h" />

@@ -30,7 +30,7 @@ int GameObject::GetRight()
 
 
 //左下
-Point GameObject::MapRightBottom(Vec2 camerapos, Point mapchip_px)
+Point GameObject::MapLeftBottom(Vec2 camerapos, Point mapchip_px)
 {
 
 	return (Point{
@@ -61,7 +61,7 @@ Point GameObject::MapRightTop(Vec2 camerapos, Point mapchip_px)
 
 
 //右下
-Point GameObject::MapLeftBottom(Vec2 camerapos, Point mapchip_px)
+Point GameObject::MapRightBottom(Vec2 camerapos, Point mapchip_px)
 {
 	return (Point{
 	(position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x + shiftInternalHitRect[0][0].w) / mapchip_px.x,

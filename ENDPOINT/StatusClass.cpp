@@ -142,9 +142,17 @@ void StatusClass::GetExperience(int getValue)
 	}
 }
 
-int StatusClass::NextLevel()
+int StatusClass::NextLevel()const
 {
-	return Parse<int>(copyExperienceBorder[level + 3][1]) - experience;
+	if (experience < Maxlevel)
+	{
+		return Parse<int>(copyExperienceBorder[level + 3][1]) - experience;
+
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 void StatusClass::SkillPointAdd(StatusType statusType, MagicType magicType)
