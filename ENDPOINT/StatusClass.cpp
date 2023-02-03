@@ -178,49 +178,6 @@ void StatusClass::SkillPointAdd(StatusType statusType, MagicType magicType)
 	case StatusType::MAGICTYPE:
 		skillPoint -= SkillPointForMagic;
 		ChangeMagic(magicType);
-		
-		//魔法が解放されているなら
-		if (magicType != MagicType::NONE)
-		{
-			for (int i = 0; i < 4; i++)
-			{
-
-				for (int j = 0; j <= magicSkillPointAllocation[i]; j++)
-				{
-					switch (i)
-					{
-					case 0:
-						magicProficiencyPower += Parse<double>(copyMagicSkillPointData[(int)magicType * 5 + i + 1][j + 2]);
-						break;
-
-					case 1:
-						subSkill += Parse<double>(copyMagicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
-						break;
-
-					case 2:
-						coolTime += Parse<double>(copyMagicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
-						break;
-
-					case 3:
-
-						if (magicType == MagicType::FIREBALL || magicType == MagicType::THUNDER || magicType == MagicType::HEAL)
-						{
-							specialFunctioVernValue += Parse<double>(copyMagicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
-						}
-						else if (magicType == MagicType::TIME || magicType == MagicType::STATUSUP)
-						{
-							if (j >= 5)
-							{
-								specialFunctionVerRelease = true;
-							}
-						}
-						break;
-					}
-
-				}
-			}
-		}
-
 		break;
 	case StatusType::MP:
 		magicPointAllotted++;
@@ -261,6 +218,46 @@ void StatusClass::ChangeMagic(MagicType _magicType)
 	default:
 		break;
 	}
+
+
+	for (int i = 0; i < 4; i++)
+	{
+
+		for (int j = 0; j <= magicSkillPointAllocation[i]; j++)
+		{
+			switch (i)
+			{
+			case 0:
+				magicProficiencyPower += Parse<double>(copyMagicSkillPointData[(int)magicType * 5 + i + 1][j + 2]);
+				break;
+
+			case 1:
+				subSkill += Parse<double>(copyMagicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
+				break;
+
+			case 2:
+				coolTime += Parse<double>(copyMagicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
+				break;
+
+			case 3:
+
+				if (magicType == MagicType::FIREBALL || magicType == MagicType::THUNDER || magicType == MagicType::HEAL)
+				{
+					specialFunctioVernValue += Parse<double>(copyMagicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
+				}
+				else if (magicType == MagicType::TIME || magicType == MagicType::STATUSUP)
+				{
+					if (j >= 5)
+					{
+						specialFunctionVerRelease = true;
+					}
+				}
+				break;
+			}
+
+		}
+	}
+	
 }
 
 void StatusClass::GetMagicProficiency(int getValue)

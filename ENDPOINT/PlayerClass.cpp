@@ -3,7 +3,6 @@
 
 void PlayerClass::Initialize()
 {
-	gameObject.Initialize();
 	hitpointBar.Initialize(gameObject.status.hitPoint);
 	magicpointBar.Initialize(gameObject.status.magicPoint);
 	mentalpointBar.Initialize(gameObject.status.mental);
