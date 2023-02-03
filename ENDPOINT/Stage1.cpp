@@ -22,15 +22,15 @@ void Stage1::update()
 	//プレイヤーの処理
 	Player.Update();
 
-	Camera(8, 3, 5);
+	Map.Camera(Player.gameObject, 8, 3, 5);
 
 	Player.gameObject.AudioStop();
 
 	//敵の処理
-	Enemey.TestAI({ 1 * MapChipSize.x,0 });
+	Enemey.TestAI({ 1 * Map.MapGameSize().x,0});
 
-	MapHitGround(Player.gameObject);
-	MapHitGround(Enemey.gameObject);
+	Map.MapHitGround(Player.gameObject);
+	Map.MapHitGround(Enemey.gameObject);
 
 
 
@@ -269,9 +269,11 @@ void Stage1::update()
 			Player.Initialize();
 		}
 
-
 	}
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+	a = Map.GetMapLeftScreen({ 20,0 }); /*- _gameobject.shiftInternalHitRect[0][0].x - _gameobject.shiftInternalHitRect[0][0].w;*/
 }
 
 void Stage1::draw() const
@@ -279,18 +281,8 @@ void Stage1::draw() const
 
 	BackScreen.resized(Scene::Width()).draw();
 
-	for (int y = 0; y < mapData.rows(); y++)
-	{
-		for (int x = 0; x < mapData.columns(y); x++)
-		{
-			if (Parse<int>(mapData[y][x]) > 0)
-			{
-				UnderGround(MapSize * (Parse<int>(mapData[y][x]) % 100), MapSize * (Parse<int>(mapData[y][x]) / 100), MapSize, MapSize).scaled(2).draw((x * MapSize * 2) - cameraPos.x, (y * MapSize * 2) - cameraPos.y);
-			}
+	Map.Draw();
 
-		}
-	}
-	
 	//画像描画
 	Player.Draw();
 	Player.DebugDraw();
@@ -301,8 +293,12 @@ void Stage1::draw() const
 
 	//デバック用
 	font(U"選択してる状態", statusTypeName).draw(450, 0);
-	font(isMissing,Missing).draw(450, 30);
-	font(isMax).draw(450, 60);
+	//font(isMissing, Missing).draw(450, 30);
+	//font(isMax).draw(450, 60);
+
+	font(Cursor::Pos()).draw(450, 30);
+	font(a).draw(450, 60);
+	font(Map.cameraPos).draw(450, 90);
 	//font(Player.gameObject.velocity).draw(450, 30);
 	//font(Enemey.gameObject.charaSpeed).draw(450, 90);
 
@@ -311,84 +307,7 @@ void Stage1::draw() const
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
 }
 
-void Stage1::MapHitGround(GameObject &_gameobject)
-{
-	//配列外エラーを阻止
-	if (_gameobject.GetLeft() <= 0)
-	{
-		_gameobject.position.x = -_gameobject.shiftInternalHitRect[0][0].x;
-	}
 
-	//当たり判定
-	if (((Parse<int>(mapData[_gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][_gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) >= 1) && (Parse<int>(mapData[_gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][_gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) < 100) )||
-		((Parse<int>(mapData[_gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][_gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) >= 1) && (Parse<int>(mapData[_gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][_gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) < 100)))
-	{
-		//ベクトルを0
-		_gameobject.velocity.y = 0;
-
-		//位置を補正
-		_gameobject.position.y = (_gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y * MapChipSize.y) - _gameobject.shiftInternalHitRect[0][0].y - _gameobject.shiftInternalHitRect[0][0].h;
-
-		//着地した
-		_gameobject.isLanding = true;
-	}
-	else
-	{
-		//着地しない
-		_gameobject.isLanding = false;
-	}
-}
-
-void Stage1::Camera(int screenDivisionNumber, int leftRange, int rightRange)
-{
-	//yベクトル更新
-	Player.gameObject.position.y += Player.gameObject.velocity.y;
-
-	//右移動
-	if (0 < Player.gameObject.velocity.x)
-	{
-		if (Player.gameObject.GetRight() < ((Scene::Width() / screenDivisionNumber) * rightRange))
-		{
-			Player.gameObject.position.x += Player.gameObject.velocity.x;
-		}
-		else
-		{
-			if (cameraPos.x < (mapData.columns(Player.gameObject.MapLeftTop(cameraPos, MapChipSize.asPoint()).y) * MapChipSize.x) - Scene::Width())
-			{
-				cameraPos.x += Player.gameObject.velocity.x;
-			}
-			else
-			{
-				Player.gameObject.position.x += Player.gameObject.velocity.x;
-
-			}
-
-		}
-	}
-
-	//左移動
-	if (0 > Player.gameObject.velocity.x)
-	{
-		if (Player.gameObject.GetLeft() > ((Scene::Width() / screenDivisionNumber) * leftRange))
-		{
-			Player.gameObject.position.x += Player.gameObject.velocity.x;
-		}
-		else
-		{
-			if (cameraPos.x > 0)
-			{
-				cameraPos.x += Player.gameObject.velocity.x;
-			}
-			else
-			{
-				Player.gameObject.position.x += Player.gameObject.velocity.x;
-
-			}
-
-		}
-	}
-
-}
 
 double Stage1::HitBodyVelocity(double velox1, double velox2)
 {

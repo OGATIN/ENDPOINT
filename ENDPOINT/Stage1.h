@@ -2,13 +2,11 @@
 #include"Base.h"
 #include"PlayerClass.h"
 #include"EnemyClass.h"
-
+#include "MapClass.h"
 
 class Stage1 : public App::Scene
 {
 private:
-	const int MapSize = 16;
-	const Vec2 MapChipSize = { 32,32 };
 
 	
     Texture BackScreen      { U"Material/3.MAP/6.町 背景.png" };
@@ -114,7 +112,7 @@ private:
 
 	CSV mapData{ U"ConfigData/map.csv" };
 
-	Vec2 cameraPos = {0,0};
+	MapClass Map{ UnderGround, mapData };
 
 	// プレイヤーインデックス (0 - 3)
 	size_t playerIndex = 0;
@@ -128,6 +126,8 @@ private:
 
 	//デバック用
 	Font font{ 30 };
+
+	double a;
 
 	//経験値関連使い方講座
 	int S = 0;
@@ -153,10 +153,6 @@ public:
 
     void Initialize();//初期化
 
-	/// @brief 壁との当たり判定
-	void MapHitGround(GameObject &_gameobject);
-
-	void Camera(int screenDivisionNumber, int leftRange, int rightRange);
 
 	/// @brief 体同士が衝突した際の当たり判定で使う移動量を計算
 	/// @param velox1 一キャラ目の移動値X

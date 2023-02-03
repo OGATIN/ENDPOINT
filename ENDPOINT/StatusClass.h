@@ -99,122 +99,9 @@ public:
 
 	StatusClass(CSV statusData, CSV skillPointStatData,CSV experienceBorder,CSV magicSkillPointData, CSV magicOther)
 	{
-		//レベルの更新
-		preLevel = level;
-
-		//ステータスの更新
-		for (int i = 1; i <= level; i++)
-		{
-			hitPoint			= hitPoint + Parse<double>(statusData[1][i]);
-			stamina				= stamina + Parse<double>(statusData[2][i]);
-			mental				= mental + Parse<double>(statusData[3][i]);
-			power				= power + Parse<double>(statusData[4][i]);
-			protection			= protection + Parse<double>(statusData[5][i]);
-			weight				= weight + Parse<double>(statusData[6][i]);
-			magicPoint			= magicPoint + Parse<double>(statusData[8][i]);
-			magicPower			= magicPower + Parse<double>(statusData[9][i]);
-
-		}
-
-		for (int i = 1; i <= hitPointAllotted; i++)
-		{
-			hitPoint = hitPoint + Parse<double>(skillPointStatData[1][i]);
-		}
-
-		for (int i = 1; i <= staminaAllotted; i++)
-		{
-			stamina = stamina + Parse<double>(skillPointStatData[2][i]);
-		}
-
-		for (int i = 1; i <= mentalAllotted; i++)
-		{
-			mental = mental + Parse<double>(skillPointStatData[3][i]);
-		}
-
-		for (int i = 1; i <= powerAllotted; i++)
-		{
-			power = power + Parse<double>(skillPointStatData[4][i]);
-		}
-
-		for (int i = 1; i <= protectionAllotted; i++)
-		{
-			protection = protection + Parse<double>(skillPointStatData[5][i]);
-		}
-
-		for (int i = 1; i <= weightAllotted; i++)
-		{
-			weight = weight + Parse<double>(skillPointStatData[6][i]);
-		}
-
-		for (int i = 1; i <= magicPointAllotted; i++)
-		{
-			magicPoint = magicPoint + Parse<double>(skillPointStatData[8][i]);
-		}
-
-		for (int i = 1; i <= magicPowerAllotted; i++)
-		{
-			magicPower = magicPower + Parse<double>(skillPointStatData[9][i]);
-		}
-
-		//魔法が解放されているなら
-		if (magicType != MagicType::NONE)
-		{
-			for (int i = 0; i < 4; i++)
-			{
-
-				for (int j = 0; j <= magicSkillPointAllocation[i]; j++)
-				{
-					switch (i)
-					{
-					case 0:
-						magicProficiencyPower += Parse<double>(magicSkillPointData[(int)magicType * 5 + i + 1][j + 2]);
-						break;
-
-					case 1:
-						subSkill += Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
-						break;
-
-					case 2:
-						coolTime += Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
-						break;
-
-					case 3:
-
-						if (magicType == MagicType::FIREBALL || magicType == MagicType::THUNDER || magicType == MagicType::HEAL)
-						{
-							specialFunctioVernValue += Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
-						}
-						else if (magicType == MagicType::TIME || magicType == MagicType::STATUSUP)
-						{
-							if (j >= 5)
-							{
-								specialFunctionVerRelease = true;
-							}
-						}
-						break;
-					}
-
-				}
-			}
-		}
-
-		//現在値の更新(仮)
-		currentHitPoint = hitPoint;
-		currentStamina = stamina;
-		currentMental = mental;
-		currentMagicPoint = magicPoint;
-
-		//CSVのコピー
-		copyStatusData = statusData;
-		copySkillPointStatData = skillPointStatData;
-		copyExperienceBorder = experienceBorder;
-		copyMagicSkillPointData = magicSkillPointData;
-		copyMagicOther = magicOther;
+		Reload(statusData,skillPointStatData,experienceBorder,magicSkillPointData,magicOther);
 	};
 
-	/// @brief 次にレベルアップするまでの値
-	/// @return 次にレベルアップするまでの値
-	int NextLevel()const;
 
 	/// @brief 再読み込み
 	/// @param statusData 基礎ステータスデータ.csv
@@ -227,6 +114,10 @@ public:
 	/// @brief 経験値を取得し、ボーダーを超えるならレベルアップします。(レベルが最大値なら取得しません)
 	/// @param getValue 取得量
 	void GetExperience(int getValue);
+
+	/// @brief 次にレベルアップするまでの値
+/// @return 次にレベルアップするまでの値
+	int NextLevel()const;
 
 	/// @brief スキルポイント割り振りを行えます。(下記のIsEnoughSkillPoints()とIsAllocateSkillPoints()で変更していいかを調べてから変更してください)
 	/// @param statusType 割り振りたいステータスの種類

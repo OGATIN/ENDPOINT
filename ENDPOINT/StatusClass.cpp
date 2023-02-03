@@ -144,9 +144,10 @@ void StatusClass::GetExperience(int getValue)
 
 int StatusClass::NextLevel()const
 {
-	if (level < Maxlevel)
+	if (experience < Maxlevel)
 	{
 		return Parse<int>(copyExperienceBorder[level + 3][1]) - experience;
+
 	}
 	else
 	{
