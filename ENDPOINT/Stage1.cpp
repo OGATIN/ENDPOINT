@@ -22,7 +22,7 @@ void Stage1::update()
 	//プレイヤーの処理
 	Player.Update();
 
-	Map.Camera(Player.gameObject, 8, 3, 5);
+	Map.Camera(Player.gameObject, 8, 3, 5, 8, 2, 7);
 
 	Player.gameObject.AudioStop();
 
@@ -30,7 +30,9 @@ void Stage1::update()
 	Enemey.TestAI({ 1 * Map.MapGameSize().x,0});
 
 	Map.MapHitGround(Player.gameObject);
-	Map.MapHitGround(Enemey.gameObject);
+	Map.MapHitStand(Player.gameObject);
+	Map.MapHitSlope(Player.gameObject);
+	//Map.MapHitGround(Enemey.gameObject);
 
 
 
@@ -86,6 +88,17 @@ void Stage1::update()
 		{
 			Player.gameObject.ChangeJump();
 		}
+
+		//台を降りる
+		if (KeyDown.pressed())
+		{
+			Player.gameObject.isDescendStand = true;
+		}
+		else
+		{
+			Player.gameObject.isDescendStand = false;
+		}
+
 
 		//攻撃
 		if (KeyZ.down() || controller.buttonB.down())

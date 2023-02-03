@@ -9,6 +9,7 @@ Rect GameObject::GetHitRect()const
 				,shiftInternalHitRect[0][0].w,shiftInternalHitRect[0][0].h};
 }
 
+
 int GameObject::GetTop()
 {
 	return (int)position.y + shiftInternalHitRect[0][0].y;

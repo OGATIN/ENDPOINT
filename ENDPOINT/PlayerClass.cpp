@@ -23,6 +23,8 @@ void PlayerClass::Update()
 
 	if(gameObject.status.currentStamina <= gameObject.status.stamina)gameObject.status.currentStamina += 1.0/60.0;
 	if(gameObject.status.currentMagicPoint <= gameObject.status.magicPoint)gameObject.status.currentMagicPoint += 1.0/60.0;
+
+
 }
 
 

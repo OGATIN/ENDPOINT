@@ -28,6 +28,8 @@ public:
 	double gravity = 0.5;
 	bool isLanding = false;
 	bool isMirror = false;
+	bool isDescendStand = false;
+
 
 	const int charaSpeedMax = 10;
 	const int jumpPowerMax = 20;
@@ -182,9 +184,21 @@ public:
 
 	/*内部データ用*/
 	Rect GetHitRect()const;
+
+	/// @brief 上
+	/// @return 
 	int GetTop();
+
+	/// @brief 下
+	/// @return 
 	int GetBottom();
+
+	/// @brief 左
+	/// @return 
 	int GetLeft();
+
+	/// @brief 右
+	/// @return 
 	int GetRight();
 
 

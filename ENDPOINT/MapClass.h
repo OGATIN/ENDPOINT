@@ -49,11 +49,15 @@ public:
 	/// @param screenDivisionNumber 画面の分割数
 	/// @param leftRange  プレイヤーが左側のどこまで行ったらカメラを動かすか(分割数から何番目か)
 	/// @param rightRange プレイヤーが右側のどこまで行ったらカメラを動かすか(分割数から何番目か)
-	void Camera(GameObject& _gameobject,int screenDivisionNumber, int leftRange, int rightRange);
+	void Camera(GameObject& _gameobject, int HorizontalScreenDivision, int leftRange, int rightRange, int verticalScreenSplit, int UpRange, int BottomRange);
 
 	/// @brief 基礎的なブロックの当たり判定と処理
 	/// @param _gameobject プレイヤーオブジェクト
 	void MapHitGround(GameObject& _gameobject);
+
+	void MapHitStand(GameObject& _gameobject);
+
+	void MapHitSlope(GameObject& _gameobject);
 
 	/// @brief MAPの描画
 	void Draw() const;
