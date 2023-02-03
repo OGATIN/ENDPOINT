@@ -142,6 +142,11 @@ void StatusClass::GetExperience(int getValue)
 	}
 }
 
+int StatusClass::NextLevel()
+{
+	return Parse<int>(copyExperienceBorder[level + 3][1]) - experience;
+}
+
 void StatusClass::SkillPointAdd(StatusType statusType, MagicType magicType)
 {
 	if (statusType != StatusType::MAGICTYPE)
@@ -346,6 +351,7 @@ void StatusClass::MagicSkillPointAdd(int changeNumber)
 
 
 }
+
 
 /*デバック用*/
 

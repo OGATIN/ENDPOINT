@@ -8,7 +8,7 @@ void PlayerClass::Initialize()
 	mentalpointBar.Initialize(gameObject.status.mental);
 	staminapointBar.Initialize(gameObject.status.stamina);
 
-	statusChar = { (double)gameObject.status.level, gameObject.status.hitPoint, gameObject.status.magicPoint, gameObject.status.stamina, gameObject.status.mental, gameObject.status.power, gameObject.status.magicPower, gameObject.status.protection, gameObject.status.weight};
+	statusChar = { (double)gameObject.status.level, gameObject.status.hitPoint, gameObject.status.magicPoint, gameObject.status.stamina, gameObject.status.mental, gameObject.status.power, gameObject.status.magicPower, gameObject.status.protection, gameObject.status.weight };
 	magicChar = { gameObject.status.magicProficiencyPower ,gameObject.status.subSkill,gameObject.status.coolTime,gameObject.status.specialFunctioVernValue };
 }
 

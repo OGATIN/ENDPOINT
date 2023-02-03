@@ -267,7 +267,11 @@ void Stage1::update()
 		if (Player.gameObject.status.IsEnoughSkillPoint(tentative) == 0 && Player.gameObject.status.IsAllocateSkillPoint(tentative))
 		{
 			Player.gameObject.status.SkillPointAdd(tentative,MagicType::FIREBALL);
+
+			Player.Initialize();
 		}
+
+
 	}
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
