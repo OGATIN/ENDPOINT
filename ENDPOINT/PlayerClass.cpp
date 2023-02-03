@@ -10,7 +10,7 @@ void PlayerClass::Initialize()
 	staminapointBar.Initialize(gameObject.status.stamina);
 
 	statusChar = { (double)gameObject.status.level, gameObject.status.hitPoint, gameObject.status.magicPoint, gameObject.status.stamina, gameObject.status.mental, gameObject.status.power, gameObject.status.magicPower, gameObject.status.protection, gameObject.status.weight};
-
+	magicChar = { gameObject.status.magicProficiencyPower ,gameObject.status.subSkill,gameObject.status.coolTime,gameObject.status.specialFunctioVernValue };
 }
 
 void PlayerClass::Update()
@@ -166,6 +166,23 @@ void PlayerClass::ConfigOnlineDraw() const
 			//魔法の種類を描画
 			font30(gameObject.status.magicTypeMame).draw(715 - gameObject.status.magicTypeMame.length() * (gameObject.status.magicType == MagicType::NONE ? 15 : 30), (statusChar.size() * 45) + 15);
 
+
+			//ステータスの数値を表示
+			for (int i = 0; i < magicMenuChara.size(); i++)
+			{
+				//桁数計算
+				int number = statusChar[i];
+				int digit = 0;
+				while (number != 0)
+				{
+					number = number / 10;
+					digit++;
+				}
+				//数値が0だと桁数が0になるので加算
+				if (digit == 0)digit = 1;
+				//描画
+				font30(magicChar[i]).draw(715 - digit * (magicMenu.fontSize / 2), magicMenu.startPos.y + ((magicMenu.fontSize * 1.5) * i));
+			}
 			break;
 		case PlayerClass::MenuTransition::SkillPoint:
 			break;

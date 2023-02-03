@@ -56,6 +56,7 @@ public:
 	Menu skillPointMenu{ skillPointMenuChara ,{100,10} };
 
 	Array<double> statusChar;
+	Array<double> magicChar;
 	
 	Font font30{ 30 ,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };//フォント
 
