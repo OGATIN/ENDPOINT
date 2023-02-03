@@ -19,7 +19,7 @@ public:
 
 	Stopwatch animationTime;
 
-	Rect shiftInternalHitRect[1][1] = { { {107,139,38,118/*121*/} } };  //補正
+	Rect shiftInternalHitRect[1][1][1];  //補正
 
 	Vec2 position = { 0,0 };
 	Vec2 velocity = { 0,0 };
