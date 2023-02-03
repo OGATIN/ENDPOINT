@@ -53,7 +53,7 @@ public:
 	double power = 0;			//攻撃力
 	double protection = 0;		//防御力
 	double weight = 0;			//重量
-	MagicType magicType = MagicType::TIME;//魔法の種類
+	MagicType magicType = MagicType::NONE;//魔法の種類
 	double magicPoint = 0;		//MP
 	double magicPower = 0;		//魔力
 

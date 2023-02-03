@@ -22,7 +22,7 @@ void PlayerClass::Update()
 	mentalpointBar.Update(gameObject.status.currentMental);
 	staminapointBar.Update(gameObject.status.currentStamina);
 
-	if(gameObject.status.currentStamina <= 100)gameObject.status.currentStamina += 1.0/60.0;
+	if(gameObject.status.currentStamina <= gameObject.status.stamina)gameObject.status.currentStamina += 1.0/60.0;
 }
 
 
@@ -140,20 +140,6 @@ void PlayerClass::ConfigOnlineDraw() const
 		case PlayerClass::MenuTransition::Status:
 			Rect window3 = { 330,10,400,690 };
 			window3.drawFrame(10, Palette::White).draw(Palette::Black);
-			//私はもう眠いのでこのアイデアを託して逝く
-			//普通にベタ打ちする場合右側に座標補正
-			//変数を配列にできるならそれを用いて数行で
-			//理想を言うならクラス化してスマートにできるといいね
-			//menuクラスにステータスを追加するとかはどうだろうか
-			//ココでしか使わないのでベタ打ちとそう変わらないかもですね
-			//だんだんタイピングするのが楽しくなってきました
-			//あと現在の選択値がどうとか未来が言ってたのでそこも注意が必要です
-			//menuでもやってるけどフォントのサイズ分間隔をあけて縦にFORでまわす
-			//forの終了条件はstatusMenuのなんか最大値算出するやつとか使えたら、privateだから関数使うかなんかしなければ
-			//デスクトップのキーボード青軸だからタイピングしてて楽しい垢軸だとこうはいかないね
-			//あとスキルポイントとアイテムに関してはとっかかりがなさ過ぎて辛いUIや小さいウィンドウだけ作ろうか
-			//あと変数の強調表示だけどmenuIDをクラスから取り出して条件にすれば良いね
-			//目がかすんで前が見えないよ
 
 			//ステータスの項目を表示
 			statusMenu.InRectDraw(false);

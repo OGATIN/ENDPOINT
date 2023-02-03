@@ -257,14 +257,10 @@ void Stage1::update()
 	{
 		if (Player.gameObject.status.IsEnoughSkillPoint(tentative) == 0 && Player.gameObject.status.IsAllocateSkillPoint(tentative))
 		{
-			Player.gameObject.status.SkillPointAdd(tentative,MagicType::FIREBALL);
+			Player.gameObject.status.SkillPointAdd(tentative,MagicType::TIME);
 		}
 	}
-
-	}
-
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 }
 
 void Stage1::draw() const
@@ -293,7 +289,7 @@ void Stage1::draw() const
 	Player.ConfigOnlineDraw();
 
 	//デバック用
-	font(U"選択してる状態", S).draw(450, 0);
+	font(U"選択してる状態", statusTypeName).draw(450, 0);
 	font(isMissing,Missing).draw(450, 30);
 	font(isMax).draw(450, 60);
 	//font(Player.gameObject.velocity).draw(450, 30);
