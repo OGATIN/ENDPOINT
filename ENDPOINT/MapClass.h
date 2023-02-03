@@ -68,7 +68,7 @@ public:
 	/// @brief 当たり判定のポイント表示
 	/// @param _gameobject ポイントがみたいオブジェクト
 	/// @param circleColor ポイントの色
-	void HitJudgmentPointDraw(GameObject _gameobject, ColorF circleColor = Palette::Red)const;
+	void HitJudgmentPointDraw(GameObject _gameobject, ColorF circleColor = Palette::Red)const noexcept;
 
 	/*内部判定用*/
 

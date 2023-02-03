@@ -316,13 +316,13 @@ void MapClass::Draw() const
 	}
 }
 
-void MapClass::HitJudgmentPointDraw(GameObject _gameobject,ColorF circleColor) const
+void MapClass::HitJudgmentPointDraw(GameObject _gameobject,ColorF circleColor) const noexcept
 {
 	for (int h = 0; h <= heightDivisionAmount; h++)
 	{
 		for (int w = 0; w <= widthDivisionAmount; w++)
 		{
-			(Vec2)HitJudgmentPoint.center = Vec2{ (_gameobject.position.asPoint().x + cameraPos.asPoint().x + _gameobject.shiftInternalHitRect[0][0].pos.x + ((_gameobject.shiftInternalHitRect[0][0].w / widthDivisionAmount) * w)), (_gameobject.position.asPoint().y + cameraPos.asPoint().y + _gameobject.shiftInternalHitRect[0][0].pos.y + ((_gameobject.shiftInternalHitRect[0][0].h / heightDivisionAmount) * h)) };
+			(Vec2)HitJudgmentPoint.center = Point{ (_gameobject.position.asPoint().x + cameraPos.asPoint().x + _gameobject.shiftInternalHitRect[0][0].pos.x + ((_gameobject.shiftInternalHitRect[0][0].w / widthDivisionAmount) * w)), (_gameobject.position.asPoint().y + cameraPos.asPoint().y + _gameobject.shiftInternalHitRect[0][0].pos.y + ((_gameobject.shiftInternalHitRect[0][0].h / heightDivisionAmount) * h)) };
 
 			HitJudgmentPoint.draw(circleColor);
 		}
