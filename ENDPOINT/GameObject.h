@@ -14,8 +14,8 @@ public:
 
 	WeaponType weapon = WeaponType::FIST;//現在の武器
 
-	int stateTypeNumber = 0;//現在の状態番号
-	int weaponTypeNumber = 0;//現在の武器番号
+	//int stateTypeNumber = 0;//現在の状態番号
+	//int weaponTypeNumber = 0;//現在の武器番号
 
 	Stopwatch animationTime;
 

@@ -2,12 +2,12 @@
 
 enum class StateType
 {
-	WAIT = 0, WALK = 1, RUN = 2, JUMP = 3,FALLING = 4, LANDING = 5, RECEIVE = 6, ATTACK = 7,MAGIC = 8, GUARD = 9, NOTSTAMINA = 10,
+	WAIT, WALK, RUN, JUMP,FALLING, LANDING, RECEIVE, ATTACK,MAGIC, GUARD, NOTSTAMINA,
 };
 
 enum class WeaponType
 {
-	FIST = 0, SWORD = 1, HAMMER = 2, CANE = 3
+	FIST, SWORD, HAMMER, CANE
 };
 
 class AnimationClass
