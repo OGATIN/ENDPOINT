@@ -172,6 +172,7 @@ void Stage1::update()
 	if (Key1.pressed())
 	{
 		Player.gameObject.status.GetExperience(100);
+		Player.Initialize();
 	}
 
 	//変えたいステータス変更
@@ -257,7 +258,7 @@ void Stage1::update()
 	{
 		if (Player.gameObject.status.IsEnoughSkillPoint(tentative) == 0 && Player.gameObject.status.IsAllocateSkillPoint(tentative))
 		{
-			Player.gameObject.status.SkillPointAdd(tentative,MagicType::TIME);
+			Player.gameObject.status.SkillPointAdd(tentative,MagicType::FIREBALL);
 		}
 	}
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

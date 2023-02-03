@@ -171,7 +171,7 @@ void PlayerClass::ConfigOnlineDraw() const
 			for (int i = 0; i < magicMenuChara.size(); i++)
 			{
 				//桁数計算
-				int number = statusChar[i];
+				int number = magicChar[i];
 				int digit = 0;
 				while (number != 0)
 				{
