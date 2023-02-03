@@ -19,7 +19,7 @@ public:
 
 	Stopwatch animationTime;
 
-	Rect shiftInternalHitRect[1][1][1];  //補正
+	Rect shiftInternalHitRect[1][1] = { { {146,104,28,111}}};  //補正
 
 	Vec2 position = { 0,0 };
 	Vec2 velocity = { 0,0 };
@@ -33,6 +33,8 @@ public:
 	const int jumpPowerMax = 20;
 	int jumpPower = 0;
 	int charaSpeed = 0;
+
+	
 
 
 	//デバック用フォント
