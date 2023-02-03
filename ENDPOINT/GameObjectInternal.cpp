@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "GameObject.h"
 
+
 Rect GameObject::GetHitRect()const
 {
 	return Rect{ (int)position.x + shiftInternalHitRect[0][0].x
@@ -29,45 +30,47 @@ int GameObject::GetRight()
 }
 
 
-//左下
-Point GameObject::MapLeftBottom(Vec2 camerapos, Point mapchip_px)
+
+//上
+Point GameObject::MapTopSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number)
+{
+	return Point(
+		{ (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x + ((shiftInternalHitRect[0][0].w / division) * number)) / mapchip_px.x },
+		{ (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y)/ mapchip_px.x });
+}
+
+
+//下
+Point GameObject::MapBottomSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number)
+{
+
+
+	return Point(
+			{ (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x + ((shiftInternalHitRect[0][0].w  / division) * number)) / mapchip_px.x },
+			{ (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y +  shiftInternalHitRect[0][0].h) / mapchip_px.x });
+}
+
+//左
+Point GameObject::MapLeftSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number)
 {
 
 	return (Point{
 	 (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x) / mapchip_px.x,
-	 (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y + shiftInternalHitRect[0][0].h) / mapchip_px.y
+	 (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y + ((shiftInternalHitRect[0][0].h / division) * number)) / mapchip_px.y
 	});
 
 }
 
-//左上
-Point GameObject::MapLeftTop(Vec2 camerapos, Point mapchip_px)
-{
-	return Point(
-		(position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x) / mapchip_px.x,
-		(position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y ) / mapchip_px.y
-	);
-}
-
-
-//右上
-Point GameObject::MapRightTop(Vec2 camerapos, Point mapchip_px)
-{
-	return Point(
-		(position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x + shiftInternalHitRect[0][0].w) / mapchip_px.x,
-		(position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y) / mapchip_px.y
-	);
-}
-
-
-//右下
-Point GameObject::MapRightBottom(Vec2 camerapos, Point mapchip_px)
+//右
+Point GameObject::MapRightSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number)
 {
 	return (Point{
-	(position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x + shiftInternalHitRect[0][0].w) / mapchip_px.x,
-	 (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y + shiftInternalHitRect[0][0].h) / mapchip_px.y
+	 (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[0][0].pos.x +   shiftInternalHitRect[0][0].w) / mapchip_px.x,
+	 (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[0][0].pos.y + ((shiftInternalHitRect[0][0].h  / division) * number)) / mapchip_px.y
 	});
 }
+
+
 
 
 

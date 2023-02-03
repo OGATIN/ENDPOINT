@@ -274,6 +274,8 @@ void Stage1::update()
 
 
 	a = Map.GetMapLeftScreen({ 20,0 }); /*- _gameobject.shiftInternalHitRect[0][0].x - _gameobject.shiftInternalHitRect[0][0].w;*/
+
+	Map.HitJudgmentPointDraw(Player.gameObject);
 }
 
 void Stage1::draw() const
@@ -290,6 +292,7 @@ void Stage1::draw() const
 	Enemey.Draw();
 	Enemey.DebugDraw();
 	Player.ConfigOnlineDraw();
+	Map.HitJudgmentPointDraw(Player.gameObject);
 
 	//デバック用
 	font(U"選択してる状態", statusTypeName).draw(450, 0);

@@ -19,7 +19,7 @@ public:
 
 	Stopwatch animationTime;
 
-	Rect shiftInternalHitRect[1][1] = { { {146,104,28,111}}};  //補正
+	Rect shiftInternalHitRect[1][1] = { { {146,104,40,111}}};  //補正
 
 	Vec2 position = { 0,0 };
 	Vec2 velocity = { 0,0 };
@@ -160,7 +160,7 @@ public:
 	/// @brief 再生を停止する
 	void AudioStop();
 
-	//デバック用
+	/*デバック用*/
 	void Initialize();
 
 	/// @brief 現在の 状態 武器 を表示します。
@@ -179,7 +179,7 @@ public:
 	void MotionFrameBack();
 
 
-	
+
 	/*内部データ用*/
 	Rect GetHitRect()const;
 	int GetTop();
@@ -187,11 +187,41 @@ public:
 	int GetLeft();
 	int GetRight();
 
+
 	/*マップの当たり判定*/
-	Point MapLeftBottom(Vec2 camerapos, Point mapchip_px);
-	Point MapRightBottom(Vec2 camerapos, Point mapchip_px);
-	Point MapLeftTop(Vec2 camerapos, Point mapchip_px);
-	Point MapRightTop(Vec2 camerapos, Point mapchip_px);
+
+	/// @brief 上面の当たり判定の点を作成できます。
+	/// @param camerapos カメラ座標
+	/// @param mapchip_px MAPのピクセル数
+	/// @param division 当たり判定の分割数
+	/// @param number 分割数から何番目か
+	/// @return MAPの配列番号
+	Point MapTopSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
+
+	/// @brief 下面の当たり判定の点を作成できます。
+	/// @param camerapos カメラ座標
+	/// @param mapchip_px MAPのピクセル数
+	/// @param division 当たり判定の分割数
+	/// @param number 分割数から何番目か
+	/// @return MAPの配列番号
+	Point MapBottomSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
+
+	/// @brief 左側の当たり判定の点を作成できます。
+	/// @param camerapos カメラ座標
+	/// @param mapchip_px MAPのピクセル数
+	/// @param division 当たり判定の分割数
+	/// @param number 分割数から何番目か
+	/// @return MAPの配列番号
+	Point MapLeftSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
+
+	/// @brief 右側の当たり判定の点を作成できます。
+	/// @param camerapos カメラ座標
+	/// @param mapchip_px MAPのピクセル数
+	/// @param division 当たり判定の分割数
+	/// @param number 分割数から何番目か
+	/// @return MAPの配列番号
+	Point MapRightSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
+
 
 
 
