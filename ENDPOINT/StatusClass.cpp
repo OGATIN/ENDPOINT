@@ -3,6 +3,10 @@
 
 void StatusClass::Reload(CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 {
+	//レベルの更新
+	preLevel = level;
+
+	//ステータスの更新
 	for (int i = 1; i <= level; i++)
 	{
 		hitPoint = hitPoint + Parse<double>(statusData[1][i]);
@@ -56,19 +60,12 @@ void StatusClass::Reload(CSV statusData, CSV skillPointStatData, CSV experienceB
 		magicPower = magicPower + Parse<double>(skillPointStatData[9][i]);
 	}
 
-	totalValue = magicSkillPoint;
-
-	for (int i = 0; i < 4; i++)
-	{
-		totalValue += magicSkillPointAllocation[i];
-	}
-
 	//魔法が解放されているなら
 	if (magicType != MagicType::NONE)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			
+
 			for (int j = 0; j <= magicSkillPointAllocation[i]; j++)
 			{
 				switch (i)
@@ -78,18 +75,18 @@ void StatusClass::Reload(CSV statusData, CSV skillPointStatData, CSV experienceB
 					break;
 
 				case 1:
-					subSkill +=  Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
+					subSkill += Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
 					break;
 
 				case 2:
-					coolTime +=  Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
+					coolTime += Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
 					break;
 
 				case 3:
 
 					if (magicType == MagicType::FIREBALL || magicType == MagicType::THUNDER || magicType == MagicType::HEAL)
 					{
-						specialFunctioVernValue +=  Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
+						specialFunctioVernValue += Parse<double>(magicSkillPointData[((int)magicType * 5) + i + 1][j + 2]);
 					}
 					else if (magicType == MagicType::TIME || magicType == MagicType::STATUSUP)
 					{
@@ -104,7 +101,6 @@ void StatusClass::Reload(CSV statusData, CSV skillPointStatData, CSV experienceB
 			}
 		}
 	}
-
 
 	//現在値の更新(仮)
 	currentHitPoint = hitPoint;
@@ -133,6 +129,7 @@ void StatusClass::GetExperience(int getValue)
 		experience = 0;
 		level++;
 		skillPoint++;
+
 
 		hitPoint = hitPoint + Parse<double>(copyStatusData[1][level]);
 		stamina = stamina + Parse<double>(copyStatusData[2][level]);

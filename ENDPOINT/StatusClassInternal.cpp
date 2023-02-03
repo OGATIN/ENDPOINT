@@ -171,3 +171,20 @@ bool StatusClass::IsAllocateMagicSkillPoint(int changeNumber)
 		return false;
 	}
 }
+
+bool StatusClass::IsLevelUp()
+{
+	if (preLevel < level)
+	{
+		//レベルの更新
+		preLevel = level;
+
+		return true;
+
+	}
+	else
+	{
+		return false;
+	}
+
+}

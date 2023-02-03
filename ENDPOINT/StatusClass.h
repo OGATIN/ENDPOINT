@@ -63,6 +63,8 @@ public:
 	double currentMental = 0;	  //精神力
 	double currentMagicPoint = 0; //MP
 
+	//レベルアップ時の処理用
+	int preLevel = 1;
 
 	//魔法熟練度
 
@@ -97,6 +99,10 @@ public:
 
 	StatusClass(CSV statusData, CSV skillPointStatData,CSV experienceBorder,CSV magicSkillPointData, CSV magicOther)
 	{
+		//レベルの更新
+		preLevel = level;
+
+		//ステータスの更新
 		for (int i = 1; i <= level; i++)
 		{
 			hitPoint			= hitPoint + Parse<double>(statusData[1][i]);
@@ -269,6 +275,9 @@ public:
 	/// @return MAXでないならtrue MAXならflase
 	bool IsAllocateMagicSkillPoint(int changeNumber);
 
+	/// @brief レベルが上がったかの判定
+	/// @return レベルが上がったときにtrue
+	bool IsLevelUp();
 
 
 
