@@ -214,7 +214,7 @@ public:
 
 	/// @brief 次にレベルアップするまでの値
 	/// @return 次にレベルアップするまでの値
-	int NextLevel();
+	int NextLevel()const;
 
 	/// @brief 再読み込み
 	/// @param statusData 基礎ステータスデータ.csv

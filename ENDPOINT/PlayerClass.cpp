@@ -22,6 +22,7 @@ void PlayerClass::Update()
 	staminapointBar.Update(gameObject.status.currentStamina);
 
 	if(gameObject.status.currentStamina <= gameObject.status.stamina)gameObject.status.currentStamina += 1.0/60.0;
+	if(gameObject.status.currentMagicPoint <= gameObject.status.magicPoint)gameObject.status.currentMagicPoint += 1.0/60.0;
 }
 
 
@@ -106,10 +107,22 @@ void PlayerClass::ConfigOnlineProcess()
 			}
 			break;
 		case PlayerClass::MenuTransition::Item:
+			if (KeyZ.down() || KeyEnter.down())
+			{
+				selectMenu = MenuTransition::FirstScene;
+			}
 			break;
 		case PlayerClass::MenuTransition::Status:
+			if (KeyZ.down() || KeyEnter.down())
+			{
+				selectMenu = MenuTransition::FirstScene;
+			}
 			break;
 		case PlayerClass::MenuTransition::SkillPoint:
+			if (KeyZ.down() || KeyEnter.down())
+			{
+				selectMenu = MenuTransition::FirstScene;
+			}
 			break;
 		default:
 			break;
@@ -181,6 +194,24 @@ void PlayerClass::ConfigOnlineDraw() const
 				if (digit == 0)digit = 1;
 				//描画
 				font30(magicChar[i]).draw(715 - digit * (magicMenu.fontSize / 2), magicMenu.startPos.y + ((magicMenu.fontSize * 1.5) * i));
+			}
+
+			font30(U"次のレベルまで").draw(statusMenu.startPos.x, magicMenu.startPos.y + ((magicMenu.fontSize * 1.5) * 4));
+
+			for (int i = 0; i < 1; i++)
+			{
+				//桁数計算
+				int number = gameObject.status.NextLevel();
+				int digit = 0;
+				while (number != 0)
+				{
+					number = number / 10;
+					digit++;
+				}
+				//数値が0だと桁数が0になるので加算
+				if (digit == 0)digit = 1;
+				font30(gameObject.status.NextLevel(), U"EXP").draw((715 - (15 * 3)) - digit * 15, magicMenu.startPos.y + ((magicMenu.fontSize * 1.5) * 4));
+
 			}
 			break;
 		case PlayerClass::MenuTransition::SkillPoint:

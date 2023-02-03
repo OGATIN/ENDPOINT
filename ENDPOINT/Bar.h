@@ -31,7 +31,6 @@ public:
 	void Initialize(double _MaxPoint)
 	{
 		MaxPoint = _MaxPoint;
-		nowPoint = _MaxPoint;
 	}
 
 	/// @brief 更新

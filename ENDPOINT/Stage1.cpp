@@ -9,14 +9,12 @@ Stage1::~Stage1()
 
 void Stage1::Initialize()
 {
-
 	//初期化
 	Player.Initialize();
 	Player.gameObject.Initialize();
 
 	//ストップウォッチスタート
 	Player.gameObject.MotionStart();
-
 }
 
 void Stage1::update()

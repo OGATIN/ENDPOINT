@@ -126,7 +126,6 @@ private:
 	// 振動 (0.0 - 1.0)
 	XInputVibration vibration;
 
-
 	//デバック用
 	Font font{ 30 };
 
