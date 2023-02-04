@@ -806,6 +806,7 @@
     <None Include="App\ConfigData\アニメーションデータ.csv" />
     <None Include="App\ConfigData\敵ステータス割り振り.csv" />
     <None Include="App\ConfigData\map.csv" />
+    <None Include="App\ConfigData\画像補正位置.csv" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="App\example\test.mp3">

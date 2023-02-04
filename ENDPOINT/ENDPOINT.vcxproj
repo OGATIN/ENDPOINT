@@ -196,6 +196,7 @@
     <None Include="App\ConfigData\基礎ステータスデータ.csv" />
     <None Include="App\ConfigData\敵ステータス割り振り.csv" />
     <None Include="App\ConfigData\武器ステータス.csv" />
+    <None Include="App\ConfigData\画像補正位置.csv" />
     <None Include="App\ConfigData\経験値ボーダー.csv" />
     <None Include="App\ConfigData\装備ステータス.csv" />
     <None Include="App\ConfigData\魔法その他.csv" />
