@@ -19,7 +19,7 @@ public:
 
 	Stopwatch animationTime;
 
-	Rect shiftInternalHitRect[1][1] = { { {146,104,40,111}}};  //補正
+	Rect shiftInternalHitRect[57][10];  //補正
 
 	Vec2 position = { 0,0 };
 	Vec2 velocity = { 0,0 };
@@ -58,7 +58,7 @@ public:
 
 	GameObject() {};
 
-	GameObject(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
+	GameObject(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 	{
 
 		for (int j = 0; j < 4; j++)

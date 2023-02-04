@@ -6,7 +6,7 @@ Rect GameObject::GetHitRect()const
 {
 	return Rect{ (int)position.x + shiftInternalHitRect[0][0].x
 				,(int)position.y + shiftInternalHitRect[0][0].y
-				,shiftInternalHitRect[0][0].w,shiftInternalHitRect[0][0].h};
+				,shiftInternalHitRect[(int)state + (int)weapon * 14][animation[(int)weapon][(int)state].cutPos.x].w,shiftInternalHitRect[(int)state + (int)weapon * 14][animation[(int)weapon][(int)state].cutPos.x].h };
 }
 
 

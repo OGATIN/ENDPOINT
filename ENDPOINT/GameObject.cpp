@@ -19,13 +19,15 @@ void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV Animati
 		audio[i] = _audio[i];
 	}
 
-	for (int j = 0; j < 10; j++)
+	for (int j = 0; j < 55; j++)
 	{
 		for (int i = 0; i < 10; i++)
 		{
-			shiftInternalHitRect[j][i];
+			//shiftInternalHitRect[0][0] = Parse<Rect>(TextureShiftData[j+1][i+1]);
 		}
 	}
+	shiftInternalHitRect[0][0] = Parse<Rect>(TextureShiftData[1][1]);
+	shiftInternalHitRect[0][1] = Parse<Rect>(TextureShiftData[1][1]);
 
 	status.Reload(statusData, skillPointStatData, experienceBorder,magicSkillPointData, magicOther);
 }
