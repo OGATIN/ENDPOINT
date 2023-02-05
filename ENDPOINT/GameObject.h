@@ -63,14 +63,13 @@ public:
 
 		for (int j = 0; j < 4; j++)
 		{
-			for (int i = 0; i < 6; i++)
+			for (int i = 0; i < 8; i++)
 			{
 				//とりあえず共通のデータはここでロード
 				animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
-
 			}
 
-			//animation[j][7].Reload(_animation[j][7], AnimationData, 8);//
+			animation[j][7].Reload(_animation[j][7], AnimationData, 8);
 			//animation[j][7].Reload(_animation[j][7], AnimationData, 9);
 		}
 
@@ -114,16 +113,16 @@ public:
 	/// @brief ジャンプの処理
 	void JumpProcess();
 
-	/// @brief ジャンプの処理
+	/// @brief 対空の処理
 	void FallingProcess();
 
-	/// @brief ジャンプの処理
+	/// @brief 着地の処理
 	void LandingProcess();
 
-	/// @brief ジャンプの処理
+	/// @brief 受けの処理
 	void ReceiveProcess();
 
-	/// @brief ジャンプの処理
+	/// @brief 攻撃の処理
 	void AttackProcess();
 
 	/// @brief 待機状態への遷移
@@ -235,9 +234,6 @@ public:
 	/// @param number 分割数から何番目か
 	/// @return MAPの配列番号
 	Point MapRightSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
-
-
-
 
 
 	//使ってないの

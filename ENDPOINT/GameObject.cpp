@@ -213,6 +213,24 @@ void GameObject::AttackProcess()
 	{
 		state = StateType::WAIT;
 	}
+
+	switch (weapon)
+	{
+	case WeaponType::FIST:
+
+		break;
+	case WeaponType::SWORD:
+
+		break;
+	case WeaponType::HAMMER:
+
+		break;
+	case WeaponType::CANE:
+
+		break;
+	default:
+		break;
+	}
 }
 
 void GameObject::ChangeWait()
@@ -339,6 +357,7 @@ void GameObject::StateManagement()
 		break;
 	case StateType::ATTACK:
 		OnePattern();
+		AttackProcess();
 		statename = { U"攻撃" };
 		break;
 	case StateType::MAGIC:
