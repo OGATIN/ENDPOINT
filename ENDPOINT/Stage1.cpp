@@ -31,8 +31,8 @@ void Stage1::update()
 
 	Map.MapHitGround(Player.gameObject);
 	Map.MapHitStand(Player.gameObject);
-	//Map.MapHitSlope(Player.gameObject);
-	//Map.MapHitGround(Enemey.gameObject);
+	Map.MapHitSlope(Player.gameObject);
+	Map.MapHitGround(Enemey.gameObject);
 
 
 
