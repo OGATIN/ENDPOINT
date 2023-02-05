@@ -12,14 +12,14 @@ void EnemyClass::TestAI(Vec2 pos)
 	int PosL = gameObject.GetLeft();
 	int PosR = gameObject.GetRight();
 
-	if (pos.x <= PosL)
-	{
-		gameObject.ChangeWalkL();
-	}
-	if (PosR <= pos.x)
-	{
-		gameObject.ChangeWalkR();
-	}
+	//if (pos.x <= PosL)
+	//{
+	//	gameObject.ChangeWalkL();
+	//}
+	//if (PosR <= pos.x)
+	//{
+	//	gameObject.ChangeWalkR();
+	//}
 }
 
 void EnemyClass::AIManegement()
