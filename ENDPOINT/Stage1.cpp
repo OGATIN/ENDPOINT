@@ -29,10 +29,8 @@ void Stage1::update()
 	//敵の処理
 	Enemey.TestAI({ 1 * Map.MapGameSize().x,0});
 
-	Map.MapHitGround(Player.gameObject);
-	Map.MapHitStand(Player.gameObject);
-	Map.MapHitSlope(Player.gameObject);
-	Map.MapHitGround(Enemey.gameObject);
+	Map.MapHitSet(Player.gameObject);
+	//Map.MapHitSet(Enemey.gameObject);
 
 
 

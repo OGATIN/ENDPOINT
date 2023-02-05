@@ -51,12 +51,20 @@ public:
 	/// @param rightRange プレイヤーが右側のどこまで行ったらカメラを動かすか(分割数から何番目か)
 	void Camera(GameObject& _gameobject, int HorizontalScreenDivision, int leftRange, int rightRange, int verticalScreenSplit, int UpRange, int BottomRange);
 
+	/// @brief MAP当たり判定と処理がまとまった関数です。
+	/// @param _gameobject プレイヤーオブジェクト
+	void MapHitSet(GameObject& _gameobject);
+
 	/// @brief 基礎的なブロックの当たり判定と処理
 	/// @param _gameobject プレイヤーオブジェクト
 	void MapHitGround(GameObject& _gameobject);
 
+	/// @brief 台の当たり判定と処理
+	/// @param _gameobject プレイヤーオブジェクト
 	void MapHitStand(GameObject& _gameobject);
 
+	/// @brief 坂道の当たり判定と処理
+	/// @param _gameobject プレイヤーオブジェクト
 	void MapHitSlope(GameObject& _gameobject);
 
 	/// @brief MAPの描画

@@ -105,6 +105,13 @@ void MapClass::Camera(GameObject& _gameobject, int HorizontalScreenDivision, int
 
 }
 
+void MapClass::MapHitSet(GameObject& _gameobject)
+{
+	MapHitGround(_gameobject);
+	MapHitStand(_gameobject);
+	MapHitSlope(_gameobject);
+}
+
 void MapClass::MapHitGround(GameObject& _gameobject)
 {
 	//配列外エラーを阻止
