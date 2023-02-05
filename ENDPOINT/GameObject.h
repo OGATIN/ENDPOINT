@@ -14,9 +14,6 @@ public:
 
 	WeaponType weapon = WeaponType::FIST;//現在の武器
 
-	//int stateTypeNumber = 0;//現在の状態番号
-	//int weaponTypeNumber = 0;//現在の武器番号
-
 	Stopwatch animationTime;
 
 	Rect shiftInternalHitRect[57][10];  //補正
@@ -37,8 +34,6 @@ public:
 	int charaSpeed = 0;
 
 	
-
-
 	//デバック用フォント
 	Font font30{ 30 };
 
@@ -69,7 +64,7 @@ public:
 				animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
 			}
 
-			animation[j][7].Reload(_animation[j][7], AnimationData, 8);
+			//animation[j][7].Reload(_animation[j][7], AnimationData, 8);
 			//animation[j][7].Reload(_animation[j][7], AnimationData, 9);
 		}
 
