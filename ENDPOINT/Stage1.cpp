@@ -9,6 +9,8 @@ Stage1::~Stage1()
 
 void Stage1::Initialize()
 {
+	Map.enemySpawnCircleAdd();
+
 	//初期化
 	Player.Initialize();
 	Player.gameObject.Initialize();
@@ -31,8 +33,6 @@ void Stage1::update()
 
 	Map.MapHitSet(Player.gameObject);
 	//Map.MapHitSet(Enemey.gameObject);
-
-
 
 	Player.gameObject.StateManagement();
 
@@ -175,7 +175,6 @@ void Stage1::update()
 	}
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
 	//デバック用---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	//経験値関連使い方講座
@@ -295,6 +294,8 @@ void Stage1::draw() const
 	BackScreen.resized(Scene::Width()).draw();
 
 	Map.Draw();
+	Map.EnemySpawnCircleDrow();
+
 
 	//画像描画
 	Player.Draw();
@@ -319,6 +320,7 @@ void Stage1::draw() const
 	//font(Player.gameObject.charaSpeed).draw(450, 150);
 
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
+
 }
 
 

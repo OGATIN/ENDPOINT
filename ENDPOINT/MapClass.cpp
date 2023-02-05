@@ -5,8 +5,6 @@ void MapClass::Initialize(Texture _mapTileIMG, CSV _mapData)
 {
 	mapTileIMG = _mapTileIMG;
 	mapData = _mapData;
-
-
 }
 
 void MapClass::Camera(GameObject& _gameobject, int HorizontalScreenDivision, int leftRange, int rightRange, int verticalScreenSplit, int UpRange, int BottomRange)
@@ -430,6 +428,20 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 
 }
 
+void MapClass::enemySpawnCircleAdd()
+{
+	for (int y = 0; y < mapData.rows(); y++)
+	{
+		for (int x = 0; x < mapData.columns(y); x++)
+		{
+			if(Parse<int>(mapData[y][x]) == 9999)
+			{
+				enemySpawnCircles << Circle{ (x * MapGameSize().x) + (MapGameSize().x / 2) , (y * MapGameSize().y) + (MapGameSize().y / 2) ,enemySpawnCircleSize };
+			}
+		}
+	}
+}
+
 
 
 void MapClass::Draw() const
@@ -438,7 +450,7 @@ void MapClass::Draw() const
 	{
 		for (int x = 0; x < mapData.columns(y); x++)
 		{
-			if (Parse<int>(mapData[y][x]) < 998 && Parse<int>(mapData[y][x]) >= 0)
+			if (Parse<int>(mapData[y][x]) < 9998 && Parse<int>(mapData[y][x]) >= 0)
 			{
 				mapTileIMG(MapImgChipSize.x * (Parse<int>(mapData[y][x]) % 100), MapImgChipSize.x * (Parse<int>(mapData[y][x]) / 100), MapImgChipSize.x, MapImgChipSize.x).scaled(magnification).draw((x * MapGameSize().x) - cameraPos.x, (y * MapGameSize().y) - cameraPos.y);
 			}
@@ -446,19 +458,55 @@ void MapClass::Draw() const
 	}
 }
 
-void MapClass::HitJudgmentPointDraw(GameObject _gameobject,ColorF circleColor) const noexcept
+/*デバック用*/
+void MapClass::HitJudgmentPointDraw(GameObject _gameobject,ColorF circleColor) const
 {
 	for (int h = 0; h <= heightDivisionAmount; h++)
 	{
 		for (int w = 0; w <= widthDivisionAmount; w++)
 		{
-			(Vec2)HitJudgmentPoint.center = Point{ (_gameobject.position.asPoint().x + cameraPos.asPoint().x + _gameobject.shiftInternalHitRect[0][0].pos.x + ((_gameobject.shiftInternalHitRect[0][0].w / widthDivisionAmount) * w)), (_gameobject.position.asPoint().y + cameraPos.asPoint().y + _gameobject.shiftInternalHitRect[0][0].pos.y + ((_gameobject.shiftInternalHitRect[0][0].h / heightDivisionAmount) * h)) };
+			if (w == 0 || w == widthDivisionAmount || h == 0 || h == heightDivisionAmount)
+			{
+				Vec2{ (_gameobject.position.asPoint().x  + _gameobject.shiftInternalHitRect[0][0].pos.x + ((_gameobject.shiftInternalHitRect[0][0].w / widthDivisionAmount) * w)), (_gameobject.position.asPoint().y  + _gameobject.shiftInternalHitRect[0][0].pos.y + ((_gameobject.shiftInternalHitRect[0][0].h / heightDivisionAmount) * h)) }.asCircle(pointSize).draw(circleColor);
 
-			HitJudgmentPoint.draw(circleColor);
+			}
+		}
+	}
+
+}
+
+void MapClass::EnemySpawnPositionDraw() const
+{
+	for (int i = 0 ; i < enemySpawnCircles.size();i++)
+	{
+		font30(enemySpawnCircles[i]).draw(0, font30.height() * i);
+	}
+}
+
+
+
+void MapClass::EnemySpawnCircleDrow(ColorF circleColor)const
+{
+	for (auto& enemySpawnCircle : enemySpawnCircles)
+	{
+		Vec2{  (Vec2)enemySpawnCircle.center - cameraPos }.asCircle(enemySpawnCircle.r).drawFrame(1,ColorF(circleColor.toColor(),1)).draw(circleColor);
+	}
+
+	for (int y = 0; y < mapData.rows(); y++)
+	{
+		for (int x = 0; x < mapData.columns(y); x++)
+		{
+			if (Parse<int>(mapData[y][x]) == 9999)
+			{
+				mapTileIMG(MapImgChipSize.x * (Parse<int>(mapData[y][x]) % 100), MapImgChipSize.x * (Parse<int>(mapData[y][x]) / 100), MapImgChipSize.x, MapImgChipSize.x).scaled(magnification).draw((x * MapGameSize().x) - cameraPos.x, (y * MapGameSize().y) - cameraPos.y);
+			}
 		}
 	}
 }
 
+
+
+/*内部判定用*/
 Vec2 MapClass::MapGameSize()const
 {
 	return MapImgChipSize * magnification;

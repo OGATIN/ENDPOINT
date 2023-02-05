@@ -24,8 +24,15 @@ public:
 	int widthDivisionAmount = 2;//幅
 	int heightDivisionAmount = 4;//高さ
 
-	//当たり判定の点の場所
-	Circle HitJudgmentPoint = {0,0,1};
+	//敵がスポーンする場所の配列
+	Array<Circle> enemySpawnCircles;
+
+	//敵がスポーンする半径
+	double enemySpawnCircleSize = 200;
+
+	//デバック用
+	Font font30{ 30 };
+	int pointSize = 3;
 
 	MapClass() {};
 
@@ -36,8 +43,6 @@ public:
 	{
 		Initialize(_mapTileIMG, _mapData);
 	};
-
-
 
 	/// @brief 再読み込み
 	/// @param _mapTileIMGタイルの画像
@@ -67,6 +72,8 @@ public:
 	/// @param _gameobject プレイヤーオブジェクト
 	void MapHitSlope(GameObject& _gameobject);
 
+	void enemySpawnCircleAdd();
+
 	/// @brief MAPの描画
 	void Draw() const;
 
@@ -76,7 +83,11 @@ public:
 	/// @brief 当たり判定のポイント表示
 	/// @param _gameobject ポイントがみたいオブジェクト
 	/// @param circleColor ポイントの色
-	void HitJudgmentPointDraw(GameObject _gameobject, ColorF circleColor = Palette::Red)const noexcept;
+	void HitJudgmentPointDraw(GameObject _gameobject, ColorF circleColor = Palette::Red)const;
+
+	void EnemySpawnPositionDraw()const;
+
+	void EnemySpawnCircleDrow(ColorF circleColor = ColorF(Palette::Purple, 0.3))const;
 
 	/*内部判定用*/
 
