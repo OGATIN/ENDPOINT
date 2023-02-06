@@ -230,7 +230,6 @@ public:
 	/// @return MAPの配列番号
 	Point MapRightSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
 
-
 	//使ってないの
     //CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
     //Texture waitingMotionPNG{ U"Material/1.img/1.待機モーション.png" };

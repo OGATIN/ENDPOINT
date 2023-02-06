@@ -9,14 +9,17 @@ Stage1::~Stage1()
 
 void Stage1::Initialize()
 {
-	Map.enemySpawnCircleAdd();
+	if (not BasicStatusData) // もし読み込みに失敗したら
+	{
+		throw Error{ U"基礎ステータスデータ.csv が存在しません。" };
+	}
 
 	//初期化
 	Player.Initialize();
-	Player.gameObject.Initialize();
 
 	//ストップウォッチスタート
 	Player.gameObject.MotionStart();
+
 }
 
 void Stage1::update()
@@ -24,15 +27,18 @@ void Stage1::update()
 	//プレイヤーの処理
 	Player.Update();
 
-	Map.Camera(Player.gameObject, 8, 3, 5, 8, 2, 7);
+	Camera(8, 3, 5);
 
 	Player.gameObject.AudioStop();
 
 	//敵の処理
-	Enemey.TestAI({ 1 * Map.MapGameSize().x,0});
+	//Enemey.TestAI({ 1 * MapChipSize.x,0 });
+	Enemey.Fist(Player.gameObject);
 
-	Map.MapHitSet(Player.gameObject);
-	//Map.MapHitSet(Enemey.gameObject);
+	MapHitGround(Player.gameObject);
+	MapHitGround(Enemey.gameObject);
+
+
 
 	Player.gameObject.StateManagement();
 
@@ -87,17 +93,6 @@ void Stage1::update()
 			Player.gameObject.ChangeJump();
 		}
 
-		//台を降りる
-		if (KeyDown.pressed())
-		{
-			Player.gameObject.isDescendStand = true;
-		}
-		else
-		{
-			Player.gameObject.isDescendStand = false;
-		}
-
-
 		//攻撃
 		if (KeyZ.down() || controller.buttonB.down())
 		{
@@ -131,8 +126,6 @@ void Stage1::update()
 		Player.isOnline ? Player.isOnline = false : Player.isOnline = true;
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 
 	//当たり判定---------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -175,15 +168,12 @@ void Stage1::update()
 	}
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
 	//デバック用---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	//経験値関連使い方講座
 
-	if (Player.gameObject.status.IsLevelUp())
-	{
-		Player.Initialize();
-	}
-
+	Player.gameObject.status.LevelUp();
 
 	//経験値の増加
 	if (Key1.pressed())
@@ -275,17 +265,11 @@ void Stage1::update()
 		if (Player.gameObject.status.IsEnoughSkillPoint(tentative) == 0 && Player.gameObject.status.IsAllocateSkillPoint(tentative))
 		{
 			Player.gameObject.status.SkillPointAdd(tentative,MagicType::FIREBALL);
-
-			Player.Initialize();
 		}
-
 	}
+
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-	a = Map.GetMapLeftScreen({ 20,0 }); /*- _gameobject.shiftInternalHitRect[0][0].x - _gameobject.shiftInternalHitRect[0][0].w;*/
-
-	Map.HitJudgmentPointDraw(Player.gameObject);
 }
 
 void Stage1::draw() const
@@ -293,10 +277,18 @@ void Stage1::draw() const
 
 	BackScreen.resized(Scene::Width()).draw();
 
-	Map.Draw();
-	Map.EnemySpawnCircleDrow();
+	for (int y = 0; y < mapData.rows(); y++)
+	{
+		for (int x = 0; x < mapData.columns(y); x++)
+		{
+			if (Parse<int>(mapData[y][x]) > 0)
+			{
+				UnderGround(MapSize * (Parse<int>(mapData[y][x]) % 100), MapSize * (Parse<int>(mapData[y][x]) / 100), MapSize, MapSize).scaled(2).draw((x * MapSize * 2) - cameraPos.x, (y * MapSize * 2) - cameraPos.y);
+			}
 
-
+		}
+	}
+	
 	//画像描画
 	Player.Draw();
 	Player.DebugDraw();
@@ -304,26 +296,97 @@ void Stage1::draw() const
 	Enemey.Draw();
 	Enemey.DebugDraw();
 	Player.ConfigOnlineDraw();
-	Map.HitJudgmentPointDraw(Player.gameObject);
 
 	//デバック用
 	font(U"選択してる状態", statusTypeName).draw(450, 0);
-	//font(isMissing, Missing).draw(450, 30);
-	//font(isMax).draw(450, 60);
-
-	font(Cursor::Pos()).draw(450, 30);
-	font(a).draw(450, 60);
-	font(Map.cameraPos).draw(450, 90);
+	font(isMissing,Missing).draw(450, 30);
+	font(isMax).draw(450, 60);
 	//font(Player.gameObject.velocity).draw(450, 30);
 	//font(Enemey.gameObject.charaSpeed).draw(450, 90);
 
 	//font(Player.gameObject.charaSpeed).draw(450, 150);
 
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
-
 }
 
+void Stage1::MapHitGround(GameObject &_gameobject)
+{
+	//配列外エラーを阻止
+	if (_gameobject.GetLeft() <= 0)
+	{
+		_gameobject.position.x = -_gameobject.shiftInternalHitRect[0][0].x;
+	}
 
+	//当たり判定
+	if (((Parse<int>(mapData[_gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][_gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) >= 1) && (Parse<int>(mapData[_gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y][_gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).x]) < 100) )||
+		((Parse<int>(mapData[_gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][_gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) >= 1) && (Parse<int>(mapData[_gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).y][_gameobject.MapLeftBottom(cameraPos, MapChipSize.asPoint()).x]) < 100)))
+	{
+		//ベクトルを0
+		_gameobject.velocity.y = 0;
+
+		//位置を補正
+		_gameobject.position.y = (_gameobject.MapRightBottom(cameraPos, MapChipSize.asPoint()).y * MapChipSize.y) - _gameobject.shiftInternalHitRect[0][0].y - _gameobject.shiftInternalHitRect[0][0].h;
+
+		//着地した
+		_gameobject.isLanding = true;
+	}
+	else
+	{
+		//着地しない
+		_gameobject.isLanding = false;
+	}
+}
+
+void Stage1::Camera(int screenDivisionNumber, int leftRange, int rightRange)
+{
+	//yベクトル更新
+	Player.gameObject.position.y += Player.gameObject.velocity.y;
+
+	//右移動
+	if (0 < Player.gameObject.velocity.x)
+	{
+		if (Player.gameObject.GetRight() < ((Scene::Width() / screenDivisionNumber) * rightRange))
+		{
+			Player.gameObject.position.x += Player.gameObject.velocity.x;
+		}
+		else
+		{
+			if (cameraPos.x < (mapData.columns(Player.gameObject.MapLeftTop(cameraPos, MapChipSize.asPoint()).y) * MapChipSize.x) - Scene::Width())
+			{
+				cameraPos.x += Player.gameObject.velocity.x;
+			}
+			else
+			{
+				Player.gameObject.position.x += Player.gameObject.velocity.x;
+
+			}
+
+		}
+	}
+
+	//左移動
+	if (0 > Player.gameObject.velocity.x)
+	{
+		if (Player.gameObject.GetLeft() > ((Scene::Width() / screenDivisionNumber) * leftRange))
+		{
+			Player.gameObject.position.x += Player.gameObject.velocity.x;
+		}
+		else
+		{
+			if (cameraPos.x > 0)
+			{
+				cameraPos.x += Player.gameObject.velocity.x;
+			}
+			else
+			{
+				Player.gameObject.position.x += Player.gameObject.velocity.x;
+
+			}
+
+		}
+	}
+
+}
 
 double Stage1::HitBodyVelocity(double velox1, double velox2)
 {
