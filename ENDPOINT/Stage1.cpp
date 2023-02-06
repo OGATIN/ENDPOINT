@@ -29,10 +29,11 @@ void Stage1::update()
 	Player.gameObject.AudioStop();
 
 	//敵の処理
-	Enemey.TestAI({ 1 * Map.MapGameSize().x,0});
+	Enemey.TestAI( Map.cameraPos,Vec2{ 1 * Map.MapGameSize().x,0});
+	//Enemey.Fist(Player.gameObject,Map.cameraPos);
 
 	Map.MapHitSet(Player.gameObject);
-	//Map.MapHitSet(Enemey.gameObject);
+	Map.MapHitSet(Enemey.gameObject);
 
 	Player.gameObject.StateManagement();
 
@@ -300,9 +301,10 @@ void Stage1::draw() const
 	//画像描画
 	Player.Draw();
 	Player.DebugDraw();
-	Player.gameObject.status.BaseStatusDrow(true);
+	//Player.gameObject.status.BaseStatusDrow(true);
 	Enemey.Draw();
 	Enemey.DebugDraw();
+	Enemey.gameObject.CoordinateRelated();
 	Player.ConfigOnlineDraw();
 	Map.HitJudgmentPointDraw(Player.gameObject);
 
@@ -314,10 +316,6 @@ void Stage1::draw() const
 	font(Cursor::Pos()).draw(450, 30);
 	font(a).draw(450, 60);
 	font(Map.cameraPos).draw(450, 90);
-	//font(Player.gameObject.velocity).draw(450, 30);
-	//font(Enemey.gameObject.charaSpeed).draw(450, 90);
-
-	//font(Player.gameObject.charaSpeed).draw(450, 150);
 
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
 

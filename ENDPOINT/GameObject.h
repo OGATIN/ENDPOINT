@@ -156,6 +156,8 @@ public:
 	/// @brief 再生を停止する
 	void AudioStop();
 
+
+
 	/*デバック用*/
 	void Initialize();
 
@@ -164,6 +166,9 @@ public:
 
 	/// @brief 時間関連のデバック
 	void TimeDebuggDraw()const;
+
+	/// @brief 座標のデバック表示
+	void CoordinateRelated()const;
 
 	void playerCollsioninputoutdeg();
 	void playerCollsioninputoutdegDraw()const;
@@ -229,6 +234,7 @@ public:
 	/// @param number 分割数から何番目か
 	/// @return MAPの配列番号
 	Point MapRightSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
+
 
 	//使ってないの
     //CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };

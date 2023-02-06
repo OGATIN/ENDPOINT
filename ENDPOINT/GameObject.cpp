@@ -452,6 +452,7 @@ void GameObject::StatusDraw() const
 	font30(U"武器 ", weaponname).draw(Scene::Width() - font30(U"状態 ", weaponname).region().w, font30.height() * 1);
 }
 
+
 void GameObject::TimeDebuggDraw() const
 {
 	font30(U"全体時間 ", animation[(int)weapon][(int)state].motionTime * motionEndMagnification).draw(Scene::Width() - font30(U"全体時間 ", animation[(int)weapon][(int)state].motionTime * motionEndMagnification).region().w, font30.height() * 2);
@@ -470,6 +471,13 @@ void GameObject::TimeDebuggDraw() const
 		font30(U"終了番号 ", animation[(int)weapon][(int)state].endPattern).draw(Scene::Width() - font30(U"終了番号 ", animation[(int)weapon][(int)state].endPattern).region().w, font30.height() * 6);
 		font30(U"現在の番号 ", animation[(int)weapon][(int)state].cutPos.x).draw(Scene::Width() - font30(U"現在の番号 ", animation[(int)weapon][(int)state].cutPos.x).region().w, font30.height() * 7);
 	}
+}
+
+void GameObject::CoordinateRelated() const
+{
+	font30(U"画面座標", position).draw(0, font30.height() * 0);
+	font30(U"ベクトル", velocity).draw(0, font30.height() * 1);
+	font30(U"スピード", charaSpeed).draw(0, font30.height() * 2);
 }
 
 void GameObject::playerCollsioninputoutdeg()
