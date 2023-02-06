@@ -122,7 +122,7 @@ private:
 	// デッドゾーンを有効にするか
 	bool enableDeadZone = true;
 
-	// 振動 (0.0 ～ 1.0)
+	// 振動 (0.0 - 1.0)
 	XInputVibration vibration;
 
 	//デバック用
