@@ -32,7 +32,8 @@ void Stage1::update()
 	Player.gameObject.AudioStop();
 
 	//敵の処理
-	Enemey.TestAI({ 1 * MapChipSize.x,0 });
+	//Enemey.TestAI({ 1 * MapChipSize.x,0 });
+	Enemey.Fist(Player.gameObject);
 
 	MapHitGround(Player.gameObject);
 	MapHitGround(Enemey.gameObject);

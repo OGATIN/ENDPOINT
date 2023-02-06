@@ -193,7 +193,6 @@ public:
 
 
 
-
 	//使ってないの
     //CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
     //Texture waitingMotionPNG{ U"Material/1.img/1.待機モーション.png" };
