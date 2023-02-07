@@ -9,24 +9,6 @@ public:
 	PlayerClass() {};
 	PlayerClass(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 	{
-		//for (int j = 0; j < 4; j++)
-		//{
-		//	for (int i = 0; i < 7; i++)
-		//	{
-		//		//とりあえず共通のデータはここでロード
-		//		gameObject.animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
-		//	}
-		//}
-
-		/*for (int i = 0; i < 19; i++)
-		{
-			gameObject.audio[i] = _audio[i];
-		}*/
-
-	
-
-		//gameObject.status.Reload(statusData, skillPointStatData, experienceBorder,magicSkillPointData,magicOther);
-
 		gameObject.Reload(_animation, _audio, AnimationData,TextureShiftData,statusData,skillPointStatData,experienceBorder,magicSkillPointData,magicOther);
 	};
 

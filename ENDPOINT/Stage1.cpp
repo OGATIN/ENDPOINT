@@ -284,9 +284,7 @@ void Stage1::update()
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-	a = Map.GetMapLeftScreen({ 20,0 }); /*- _gameobject.shiftInternalHitRect[0][0].x - _gameobject.shiftInternalHitRect[0][0].w;*/
 
-	Map.HitJudgmentPointDraw(Player.gameObject);
 }
 
 void Stage1::draw() const
@@ -304,7 +302,7 @@ void Stage1::draw() const
 	//Player.gameObject.status.BaseStatusDrow(true);
 	Enemey.Draw();
 	Enemey.DebugDraw();
-	Enemey.gameObject.CoordinateRelated();
+	Player.gameObject.CoordinateRelated();
 	Player.ConfigOnlineDraw();
 	Map.HitJudgmentPointDraw(Player.gameObject);
 
@@ -312,10 +310,6 @@ void Stage1::draw() const
 	font(U"選択してる状態", statusTypeName).draw(450, 0);
 	//font(isMissing, Missing).draw(450, 30);
 	//font(isMax).draw(450, 60);
-
-	font(Cursor::Pos()).draw(450, 30);
-	font(a).draw(450, 60);
-	font(Map.cameraPos).draw(450, 90);
 
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
 

@@ -128,8 +128,6 @@ private:
 	//デバック用
 	Font font{ 30 };
 
-	double a;
-
 	//経験値関連使い方講座
 	int S = 0;
 	StatusType tentative = StatusType::HP;

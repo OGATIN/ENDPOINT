@@ -49,22 +49,22 @@ void GameObject::Update()
 	}
 
 	
-	//Xベクトル減少
-	if (state != StateType::FALLING && state != StateType::JUMP)
-	{
-		if (charaSpeed > 0)
-		{
-			charaSpeed -= 1;
-		}
-	}
+	////Xベクトル減少
+	//if (state != StateType::FALLING && state != StateType::JUMP)
+	//{
+	//	if (charaSpeed > 0)
+	//	{
+	//		charaSpeed -= 1;
+	//	}
+	//}
 
-	if (state == StateType::JUMP)
-	{
-		if (charaSpeed > 0)
-		{
-			charaSpeed -= 0.1;
-		}
-	}
+	//if (state == StateType::JUMP)
+	//{
+	//	if (charaSpeed > 0)
+	//	{
+	//		charaSpeed -= 0.1;
+	//	}
+	//}
 	
 }
 
@@ -289,8 +289,6 @@ void GameObject::ChangeJump()
 	if (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN)
 	{
 		state = StateType::JUMP;
-		audio[3].playOneShot(GameData::MainVolume * GameData::SEVolume);
-		status.currentStamina -= 5;
 	}
 }
 
@@ -313,7 +311,6 @@ void GameObject::ChangeAttack()
 	{
 		state = StateType::ATTACK;
 	}
-	audio[4].playOneShot(GameData::MainVolume * GameData::SEVolume);
 }
 
 
@@ -441,9 +438,6 @@ void GameObject::Initialize()
 
 	//初期移動量
 	velocity = { 0,0 };
-
-	//時間管理用
-	/*animationTime.start();ここなのかな？*/
 }
 
 void GameObject::StatusDraw() const
@@ -460,17 +454,17 @@ void GameObject::TimeDebuggDraw() const
 	font30(U"1枚あたりの時間 ", currentTime.ms()).draw(Scene::Width() - font30(U"1枚あたりの時間 ", currentTime.ms()).region().w, font30.height() * 4);
 	font30(U"切り取り位置 ", animation[(int)weapon][(int)state].cutPos).draw(Scene::Width() - font30(U"切り取り位置 ", animation[(int)weapon][(int)state].cutPos).region().w, font30.height() * 5);
 
-	if (speedChange == true)
-	{
-		font30(U"モーション終了倍率 ", motionEndMagnification).draw(Scene::Width() - font30(U"モーション終了倍率 ", motionEndMagnification).region().w, font30.height() * 6);
+	//if (speedChange == true)
+	//{
+	//	font30(U"モーション終了倍率 ", motionEndMagnification).draw(Scene::Width() - font30(U"モーション終了倍率 ", motionEndMagnification).region().w, font30.height() * 6);
 
-	}
+	//}
 
-	if (frameNumber == true)
-	{
-		font30(U"終了番号 ", animation[(int)weapon][(int)state].endPattern).draw(Scene::Width() - font30(U"終了番号 ", animation[(int)weapon][(int)state].endPattern).region().w, font30.height() * 6);
-		font30(U"現在の番号 ", animation[(int)weapon][(int)state].cutPos.x).draw(Scene::Width() - font30(U"現在の番号 ", animation[(int)weapon][(int)state].cutPos.x).region().w, font30.height() * 7);
-	}
+	//if (frameNumber == true)
+	//{
+	//	font30(U"終了番号 ", animation[(int)weapon][(int)state].endPattern).draw(Scene::Width() - font30(U"終了番号 ", animation[(int)weapon][(int)state].endPattern).region().w, font30.height() * 6);
+	//	font30(U"現在の番号 ", animation[(int)weapon][(int)state].cutPos.x).draw(Scene::Width() - font30(U"現在の番号 ", animation[(int)weapon][(int)state].cutPos.x).region().w, font30.height() * 7);
+	//}
 }
 
 void GameObject::CoordinateRelated() const
@@ -480,94 +474,6 @@ void GameObject::CoordinateRelated() const
 	font30(U"スピード", charaSpeed).draw(0, font30.height() * 2);
 }
 
-void GameObject::playerCollsioninputoutdeg()
-{
-	textureSize = { position,animation[(int)weapon][(int)state].texture.size() };
-
-	if (MouseL.down())
-	{
-
-		if (clickCount < 2)
-		{
-			clickCount++;
-
-			if (clickCount == 1)
-			{
-				firstPoint.center = Cursor::Pos();
-
-			}
-			else
-			{
-				secondRect = { firstPoint.center ,Cursor::Pos() - firstPoint.center };
-			}
-		}
-
-
-	}
-
-	if (MouseR.down())
-	{
-		if (clickCount > 0)
-		{
-			clickCount--;
-		}
-	}
-
-}
-
-void GameObject::playerCollsioninputoutdegDraw() const
-{
-	textureSize.drawFrame(3, Palette::Green);
-
-	if (clickCount == 1)
-	{
-		firstPoint.draw(Palette::Red);
-	}
-
-	if (clickCount == 2)
-	{
-		secondRect.drawFrame(1, Palette::Blue);
-
-	}
-
-	font30(firstPoint.center - textureSize.pos, secondRect.size).draw(450, font30.height() * 2);
-
-}
-
-void GameObject::MotionEndMagnificationIncrease()
-{
-	speedChange = true;
-
-	motionEndMagnification = motionEndMagnification * 2;
-}
-
-void GameObject::MotionEndMagnificationDecrease()
-{
-	speedChange = true;
-
-	motionEndMagnification = motionEndMagnification / 2;
-}
-
-void GameObject::MotionFrameSkip()
-{
-	frameNumber = true;
-
-	animation[(int)weapon][(int)state].cutPos.x++;
-
-}
-
-void GameObject::MotionFrameBack()
-{
-	frameNumber = true;
-
-	animation[(int)weapon][(int)state].cutPos.x--;
-
-	if (animation[(int)weapon][(int)state].cutPos.x < animation[(int)weapon][(int)state].startPattern)
-	{
-		animation[(int)weapon][(int)state].cutPos.x = animation[(int)weapon][(int)state].endPattern - 1;
-	}
-
-}
 
 
 

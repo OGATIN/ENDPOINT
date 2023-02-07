@@ -442,8 +442,6 @@ void MapClass::enemySpawnCircleAdd()
 	}
 }
 
-
-
 void MapClass::Draw() const
 {
 	for (int y = 0; y < mapData.rows(); y++)
@@ -468,7 +466,6 @@ void MapClass::HitJudgmentPointDraw(GameObject _gameobject,ColorF circleColor) c
 			if (w == 0 || w == widthDivisionAmount || h == 0 || h == heightDivisionAmount)
 			{
 				Vec2{ (_gameobject.position.asPoint().x  + _gameobject.shiftInternalHitRect[0][0].pos.x + ((_gameobject.shiftInternalHitRect[0][0].w / widthDivisionAmount) * w)), (_gameobject.position.asPoint().y  + _gameobject.shiftInternalHitRect[0][0].pos.y + ((_gameobject.shiftInternalHitRect[0][0].h / heightDivisionAmount) * h)) }.asCircle(pointSize).draw(circleColor);
-
 			}
 		}
 	}
@@ -482,8 +479,6 @@ void MapClass::EnemySpawnPositionDraw() const
 		font30(enemySpawnCircles[i]).draw(0, font30.height() * i);
 	}
 }
-
-
 
 void MapClass::EnemySpawnCircleDrow(ColorF circleColor)const
 {
@@ -503,7 +498,6 @@ void MapClass::EnemySpawnCircleDrow(ColorF circleColor)const
 		}
 	}
 }
-
 
 
 /*内部判定用*/
