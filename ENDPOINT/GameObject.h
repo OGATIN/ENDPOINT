@@ -14,77 +14,52 @@ public:
 
 	WeaponType weapon = WeaponType::FIST;//現在の武器
 
-	Stopwatch animationTime;
-
 	Rect shiftInternalHitRect[57][10];  //補正
 
-	Vec2 position = { 0,0 };
-	Vec2 velocity = { 0,0 };
-	Rect hitBox = { 0,0,0,0 };
+	Vec2 position = { 0,0 };//座標
+	Vec2 velocity = { 0,0 };//ベクトル
+	Rect hitBox = { 0,0,0,0 };//当たり判定
 
-	double gravity = 0.5;
-	bool isLanding = false;
-	bool isMirror = false;
-	bool isDescendStand = false;
-
+	double gravity = 0.5;//重力量
+	bool isLanding = false;//着地しているか
+	bool isMirror = false;//反転
+	bool isDescendStand = false;//下入力されているか(台用)
 
 	const int charaSpeedMax = 10;
 	const int jumpPowerMax = 20;
 	int jumpPower = 0;
 	int charaSpeed = 0;
 
-	
 	//デバック用フォント
 	Font font30{ 30 };
 
 	String statename;
 	String weaponname;
 
-	RectF textureSize = {0,0,0,0};
-	int clickCount = 0;
-	Circle firstPoint = {0,0,1};
-	RectF secondRect = {0,0,0,0};
-
 	//時間(タイム作る時にデバックから昇格するかも)
-	bool speedChange = false;
 	double motionEndMagnification = 1;//ここが増えるとモーションの終了に時間がかかる
 
-	bool frameNumber = false;
 
 	GameObject() {};
 
 	GameObject(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 	{
 
-		for (int j = 0; j < 4; j++)
-		{
-			for (int i = 0; i < 8; i++)
-			{
-				//とりあえず共通のデータはここでロード
-				animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
-			}
-
-			//animation[j][7].Reload(_animation[j][7], AnimationData, 8);
-			//animation[j][7].Reload(_animation[j][7], AnimationData, 9);
-		}
-
-		for (int i = 0; i < 19; i++)
-		{
-			audio[i] = _audio[i];
-		}
-
-		status.Reload(statusData, skillPointStatData,experienceBorder, magicSkillPointData, magicOther);
+		Reload(_animation, _audio, AnimationData, TextureShiftData, statusData, skillPointStatData, experienceBorder, magicSkillPointData, magicOther);
 	};
 
 	//機能
 
+	/// @brief 再読み込み
 	void Reload(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther);
 
 	/// @brief 毎フレーム更新する情報
 	void Update();
 
+	/// @brief モーションを始める
 	void MotionStart();
 
+	/// @brief モーションを一時停止する、一時停止中なら再開する
 	void MotionStop();
 
 	//モーションを動かす
@@ -170,15 +145,6 @@ public:
 	/// @brief 座標のデバック表示
 	void CoordinateRelated()const;
 
-	void playerCollsioninputoutdeg();
-	void playerCollsioninputoutdegDraw()const;
-
-	void MotionEndMagnificationIncrease();
-	void MotionEndMagnificationDecrease();
-
-	void MotionFrameSkip();
-	void MotionFrameBack();
-
 
 
 	/*内部データ用*/
@@ -234,16 +200,6 @@ public:
 	/// @param number 分割数から何番目か
 	/// @return MAPの配列番号
 	Point MapRightSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
-
-
-	//使ってないの
-    //CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
-    //Texture waitingMotionPNG{ U"Material/1.img/1.待機モーション.png" };
-    //Texture WALKMotionPNG{ U"Material/1.img/1.待機モーション.png" };
-    //void AnimationProcess(AnimationClass animation);
-    //void AnimationDraw(AnimationClass animation,Vec2 position)const;
-    //void AnimationHitBox(AnimationClass animation,CSV hitBoxData);
-	//void PlayerDraw()const;これいる？
 
 };
 
