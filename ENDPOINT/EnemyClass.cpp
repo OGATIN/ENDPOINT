@@ -35,26 +35,26 @@ void EnemyClass::AIManegement(Vec2 camerapos,GameObject Player)
 
 void EnemyClass::TestAI(Vec2 camerapos,Vec2 pos)
 {
-	Update(camerapos);
+	//Update(camerapos);
 
-	gameObject.StateManagement();
-	gameObject.MotionStart();
+	//gameObject.StateManagement();
+	//gameObject.MotionStart();
 
-	gameObject.ChangeWait();
+	//gameObject.ChangeWait();
 
-	int PosL = gameObject.GetLeft();
-	int PosR = gameObject.GetRight();
-	int PosT = gameObject.GetTop();
-	int PosB = gameObject.GetBottom();
+	//int PosL = gameObject.GetLeft();
+	//int PosR = gameObject.GetRight();
+	//int PosT = gameObject.GetTop();
+	//int PosB = gameObject.GetBottom();
 
-	if (pos.x <= PosL)
-	{
-		gameObject.ChangeWalkL();
-	}
-	if (PosR <= pos.x)
-	{
-		gameObject.ChangeWalkR();
-	}
+	//if (pos.x <= PosL)
+	//{
+	//	gameObject.ChangeWalkL();
+	//}
+	//if (PosR <= pos.x)
+	//{
+	//	gameObject.ChangeWalkR();
+	//}
 
 
 }
