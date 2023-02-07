@@ -1,4 +1,10 @@
 ﻿#pragma once
+
+enum class SEstate
+{
+	WalkSE, RunSE,
+};
+
 class GameObject
 {
 public:
@@ -10,11 +16,11 @@ public:
 
 	StatusClass status;//ステータス
 
-	StateType state = StateType::FALLING;//現在の状態
+	StateType state = StateType::WAIT;//現在の状態
 
 	WeaponType weapon = WeaponType::FIST;//現在の武器
 
-	Rect shiftInternalHitRect[57][10];  //補正
+	Rect shiftInternalHitRect[4][13][11];  //補正
 
 	Vec2 position = { 0,0 };//座標
 	Vec2 velocity = { 0,0 };//ベクトル
@@ -25,10 +31,14 @@ public:
 	bool isMirror = false;//反転
 	bool isDescendStand = false;//下入力されているか(台用)
 
-	const int charaSpeedMax = 10;
-	const int jumpPowerMax = 20;
-	int jumpPower = 0;
-	int charaSpeed = 0;
+	const double charaSpeedMax = 10;
+	const double jumpPowerMax = 20;
+	double jumpPower = 0;
+	double charaSpeed = 0;
+	double frictionForce = 1;//摩擦力
+	double additionalAmount = 1;//加算量
+	double isAdd = 0;
+	
 
 	//デバック用フォント
 	Font font30{ 30 };
@@ -37,7 +47,8 @@ public:
 	String weaponname;
 
 	//時間(タイム作る時にデバックから昇格するかも)
-	double motionEndMagnification = 1;//ここが増えるとモーションの終了に時間がかかる
+
+	double motionEndMagnification = 1;//モーション終了時間倍率
 
 
 	GameObject() {};
@@ -68,8 +79,11 @@ public:
 	//一つのモーションを動かす
 	void OnePattern();
 
-	//一つのモーションを動かす
+	//一つのモーションが終わったかどうか
 	bool isOneLoop();
+
+	/// @brief 状態に応じた処理を行う
+	void StateManagement();
 
 	/// @brief 待機の処理
 	void WaitProcess();
@@ -80,20 +94,20 @@ public:
 	/// @brief 走りの処理
 	void RunProcess();
 
-	/// @brief ジャンプの処理
-	void JumpProcess();
+	///// @brief ジャンプの処理
+	//void JumpProcess();
 
-	/// @brief 対空の処理
-	void FallingProcess();
+	///// @brief 対空の処理
+	//void FallingProcess();
 
-	/// @brief 着地の処理
-	void LandingProcess();
+	///// @brief 着地の処理
+	//void LandingProcess();
 
-	/// @brief 受けの処理
-	void ReceiveProcess();
+	///// @brief 受けの処理
+	//void ReceiveProcess();
 
-	/// @brief 攻撃の処理
-	void AttackProcess();
+	///// @brief 攻撃の処理
+	//void AttackProcess();
 
 	/// @brief 待機状態への遷移
 	void ChangeWait();
@@ -110,20 +124,17 @@ public:
 	/// @brief 走り状態への遷移(左)
 	void ChangeRunL();
 
-	/// @brief ジャンプ状態への遷移
-	void ChangeJump();
+	///// @brief ジャンプ状態への遷移
+	//void ChangeJump();
 
-	/// @brief ジャンプ状態への遷移
-	void ChangeFalling();
+	///// @brief ジャンプ状態への遷移
+	//void ChangeFalling();
 
-	/// @brief ジャンプ状態への遷移
-	void ChangeReceive();
+	///// @brief ジャンプ状態への遷移
+	//void ChangeReceive();
 
-	/// @brief ジャンプ状態への遷移
-	void ChangeAttack();
-
-	/// @brief 状態に応じた処理を行う
-	void StateManagement();
+	///// @brief ジャンプ状態への遷移
+	//void ChangeAttack();
 
 	/// @brief animationのテクスチャを描画する
 	void Draw()const;
