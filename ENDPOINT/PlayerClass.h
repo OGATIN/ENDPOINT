@@ -30,7 +30,7 @@ public:
 	Array<String> firstMenuChara = { U"アイテム",U"ステータス",U"スキルポイント",U"閉じる" };
 	Menu firstMenu{ firstMenuChara ,{20,20} };
 
-	Array<String> itemMenuChara = { U"アイテム",U"ステータス",U"スキルポイント",U"戻る" };
+	Array<String> itemMenuChara = {  };
 	Menu itemMenu{ itemMenuChara ,{100,10} };
 
 	Array<String> statusMenuChara = { U"レベル",U"HP",U"MP",U"スタミナ",U"精神力",U"攻撃力",U"魔力",U"防御力",U"重量", U"魔法"};
@@ -38,8 +38,8 @@ public:
 	Menu statusMenu{ statusMenuChara, { 350,20 } };
 	Menu magicMenu{ magicMenuChara, { 380,((statusMenuChara.size()) * 45) + 15}};
 
-	Array<String> skillPointMenuChara = { U"アイテム",U"ステータス",U"スキルポイント",U"戻る" };
-	Menu skillPointMenu{ skillPointMenuChara ,{100,10} };
+	Array<String> skillPointMenuChara = { U"通常",U"魔法",U"戻る" };
+	Menu skillPointMenu{ skillPointMenuChara ,{340,20} };
 
 	Array<double> statusChar;
 	Array<double> magicChar;

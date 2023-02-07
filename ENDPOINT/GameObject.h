@@ -60,7 +60,6 @@ public:
 	};
 
 	//機能
-
 	/// @brief 再読み込み
 	void Reload(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther);
 

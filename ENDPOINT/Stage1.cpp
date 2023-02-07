@@ -126,13 +126,13 @@ void Stage1::update()
 	//	}
 	//}
 
-	//Player.ConfigOnlineProcess();
+	Player.ConfigOnlineProcess();
 
 
-	//if (KeyE.down())
-	//{
-	//	Player.isOnline ? Player.isOnline = false : Player.isOnline = true;
-	//}
+	if (KeyE.down())
+	{
+		Player.isOnline ? Player.isOnline = false : Player.isOnline = true;
+	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
