@@ -149,25 +149,27 @@ void Stage1::update()
 		//押される方の座標にベクトル値を追加で加算
 		if (Is1PPush(PlayerVelocity, EnemeyVelocity))
 		{
-			if (PlayerVelocity > 0)
+			/*if (PlayerVelocity > 0)
 			{
 				Enemey.gameObject.position.x += preVelo;
 			}
 			else
 			{
 				Enemey.gameObject.position.x -= preVelo;
-			}
+			}*/
+			Enemey.gameObject.position.x += preVelo;
 		}
 		else
 		{
-			if (EnemeyVelocity > 0)
+			/*if (EnemeyVelocity > 0)
 			{
 				Player.gameObject.position.x -= preVelo;
 			}
 			else
 			{
 				Player.gameObject.position.x += preVelo;
-			}
+			}*/
+			Player.gameObject.position.x += preVelo;
 		}
 
 		//現在のベクトル値に加算
