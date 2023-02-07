@@ -195,14 +195,27 @@ void GameObject::WalkProcess()
 		charaSpeed = charaSpeedMax;
 	}
 
+	if (speedAdd == 0 || (charaSpeed < velocity.x) || (-charaSpeed < velocity.x))
+	{
+		if (velocity.x >= 0)
+		{
+			velocity.x -= frictionForce;
+		}
+		else if (velocity.x <= 0)
+		{
+			velocity.x += frictionForce;
+		}
+
+	}
+
 	if ((charaSpeed > velocity.x) && (-charaSpeed < velocity.x))
 	{
-		velocity.x += isAdd;
+		velocity.x += speedAdd;
 
 	}
 	else
 	{
-		velocity.x += isAdd;
+		velocity.x += speedAdd;
 
 	}
 
@@ -214,20 +227,6 @@ void GameObject::WalkProcess()
 	{
 		isMirror = true;
 
-	}
-
-
-	if (isAdd == 0 || (charaSpeed < velocity.x) || (-charaSpeed > velocity.x))
-	{
-		if (velocity.x > 0)
-		{
-			velocity.x -= frictionForce;
-		}
-		else if (velocity.x < 0)
-		{
-			velocity.x += frictionForce;
-		}
-		
 	}
 
 	if (velocity.x == 0)
@@ -256,7 +255,7 @@ void GameObject::RunProcess()
 	//ベクトル加算
 	if ((charaSpeed > velocity.x) && (-charaSpeed < velocity.x))
 	{
-		velocity.x += isAdd;
+		velocity.x += speedAdd;
 	}
 
 	if (velocity.x > 0)
@@ -270,7 +269,7 @@ void GameObject::RunProcess()
 	}
 
 
-	if (isAdd == 0)
+	if (speedAdd == 0)
 	{
 		if (velocity.x > 0)
 		{
@@ -296,68 +295,68 @@ void GameObject::RunProcess()
 	audio[(int)SEstate::RunSE].play();
 }
 
-////要検討
-//void GameObject::JumpProcess()
-//{
-//	if (isOneLoop())
-//	{
-//			//重量定義
-//if (status.weight < jumpPowerMax)
-//{
-//	jumpPower = (int)status.weight;
-//}
-//else
-//{
-//	jumpPower = charaSpeedMax;
-//}
+//要検討
+void GameObject::JumpProcess()
+{
+	if (isOneLoop())
+	{
+			//重量定義
+if (status.weight < jumpPowerMax)
+{
+	jumpPower = (int)status.weight;
+}
+else
+{
+	jumpPower = charaSpeedMax;
+}
 
-//		velocity.y = -jumpPower;
-//		state = StateType::FALLING;
-//	}	
-//}
-//
-//void GameObject::FallingProcess()
-//{
-//	if (isLanding)
-//	{
-//		state = StateType::WAIT;
-//	}
-//}
-//
-//void GameObject::LandingProcess()
-//{
-//
-//}
-//
-//void GameObject::ReceiveProcess()
-//{
-//}
-//
-//void GameObject::AttackProcess()
-//{
-//	if (isOneLoop())
-//	{
-//		state = StateType::WAIT;
-//	}
-//
-//	switch (weapon)
-//	{
-//	case WeaponType::FIST:
-//
-//		break;
-//	case WeaponType::SWORD:
-//
-//		break;
-//	case WeaponType::HAMMER:
-//
-//		break;
-//	case WeaponType::CANE:
-//
-//		break;
-//	default:
-//		break;
-//	}
-//}
+		velocity.y = -jumpPower;
+		state = StateType::FALLING;
+	}	
+}
+
+void GameObject::FallingProcess()
+{
+	if (isLanding)
+	{
+		state = StateType::WAIT;
+	}
+}
+
+void GameObject::LandingProcess()
+{
+
+}
+
+void GameObject::ReceiveProcess()
+{
+}
+
+void GameObject::AttackProcess()
+{
+	if (isOneLoop())
+	{
+		state = StateType::WAIT;
+	}
+
+	switch (weapon)
+	{
+	case WeaponType::FIST:
+
+		break;
+	case WeaponType::SWORD:
+
+		break;
+	case WeaponType::HAMMER:
+
+		break;
+	case WeaponType::CANE:
+
+		break;
+	default:
+		break;
+	}
+}
 
 void GameObject::ChangeWait()
 {
@@ -375,7 +374,7 @@ void GameObject::ChangeWalkR()
 		isMirror = false;
 	}
 
-	isAdd = additionalAmount;
+	speedAdd = additionalAmount;
 
 }
 
@@ -387,7 +386,7 @@ void GameObject::ChangeWalkL()
 		isMirror = true;
 	}
 
-	isAdd = -additionalAmount;
+	speedAdd = -additionalAmount;
 
 }
 
@@ -399,7 +398,7 @@ void GameObject::ChangeRunR()
 		isMirror = false;
 	}
 
-	isAdd = additionalAmount;
+	speedAdd = additionalAmount;
 }
 
 void GameObject::ChangeRunL()
@@ -410,37 +409,37 @@ void GameObject::ChangeRunL()
 		isMirror = true;
 	}
 
-	isAdd = -additionalAmount;
+	speedAdd = -additionalAmount;
 }
 
-//void GameObject::ChangeJump()
-//{
-//	if (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN)
-//	{
-//		state = StateType::JUMP;
-//	}
-//}
-//
-//void GameObject::ChangeFalling()
-//{
-//	if (not isLanding || state == StateType::JUMP)
-//	{
-//		state = StateType::FALLING;
-//	}
-//}
-//
-//void GameObject::ChangeReceive()
-//{
-//	state = StateType::RECEIVE;
-//}
-//
-//void GameObject::ChangeAttack()
-//{
-//	if (state == StateType::WAIT)
-//	{
-//		state = StateType::ATTACK;
-//	}
-//}
+void GameObject::ChangeJump()
+{
+	if (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN)
+	{
+		state = StateType::JUMP;
+	}
+}
+
+void GameObject::ChangeFalling()
+{
+	if (not isLanding || state == StateType::JUMP)
+	{
+		state = StateType::FALLING;
+	}
+}
+
+void GameObject::ChangeReceive()
+{
+	state = StateType::RECEIVE;
+}
+
+void GameObject::ChangeAttack()
+{
+	if (state == StateType::WAIT)
+	{
+		state = StateType::ATTACK;
+	}
+}
 
 
 

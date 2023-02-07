@@ -74,7 +74,7 @@ void Stage1::update()
 
 		else
 		{
-			Player.gameObject.isAdd = 0;
+			Player.gameObject.speedAdd = 0;
 		}
 
 		//同時入力で停止
