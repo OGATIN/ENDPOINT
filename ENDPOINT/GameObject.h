@@ -20,7 +20,7 @@ public:
 
 	WeaponType weapon = WeaponType::FIST;//現在の武器
 
-	Rect shiftInternalHitRect[4][13][11];  //補正
+	Rect shiftInternalHitRect[4][13][11] = {};  //補正
 
 	Vec2 position = { 0,0 };//座標
 	Vec2 velocity = { 0,0 };//ベクトル

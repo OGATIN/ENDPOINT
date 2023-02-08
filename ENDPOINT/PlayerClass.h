@@ -17,7 +17,14 @@ public:
 		FirstScene, Item, Status, SkillPoint
 	};
 
+	enum class SkillPointMenuTransition
+	{
+		SkillPointFirstMenu,SkillPointNomalAllocation, SkillPointMagicAllocation, SkillPointMagicSelect
+	};
+
 	MenuTransition selectMenu = MenuTransition::FirstScene;
+
+	SkillPointMenuTransition selectSkillPointMenu = SkillPointMenuTransition::SkillPointFirstMenu;
 
 	GameObject gameObject;
 
@@ -40,6 +47,9 @@ public:
 
 	Array<String> skillPointMenuChara = { U"通常",U"魔法",U"戻る" };
 	Menu skillPointMenu{ skillPointMenuChara ,{340,20} };
+
+	Array<String> SkillPointNomalAllocationChara = { U"HP",U"スタミナ",U"精神力",U"攻撃力",U"防御力",U"重量",U"魔法",U"MP",U"基礎魔力",U"戻る" };
+	Menu SkillPointNomalAllocationMenu{ SkillPointNomalAllocationChara ,{620,20} };
 
 	Array<double> statusChar;
 	Array<double> magicChar;

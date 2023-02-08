@@ -114,7 +114,7 @@ public:
 		}
 	}
 
-	int IsCurrent()
+	int IsCurrent()const
 	{
 		return menuID;
 	}
