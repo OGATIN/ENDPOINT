@@ -106,6 +106,8 @@ void PlayerClass::ConfigOnlineProcess()
 					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 				}
 				break;
+			default:
+				break;
 			}
 			break;
 		case PlayerClass::MenuTransition::Item:
@@ -121,9 +123,33 @@ void PlayerClass::ConfigOnlineProcess()
 			}
 			break;
 		case PlayerClass::MenuTransition::SkillPoint:
-			if (KeyZ.down() || KeyEnter.down())
+			skillPointMenu.Update();
+
+			switch (skillPointMenu.IsCurrent())
 			{
-				selectMenu = MenuTransition::FirstScene;
+			case 0:
+				if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
+				{
+					
+					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+				}
+				break;
+			case 1:
+				if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
+				{
+					
+					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+				}
+				break;
+			case 2:
+				if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
+				{
+					selectMenu = MenuTransition::FirstScene;
+					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+				}
+				break;
+			default:
+				break;
 			}
 			break;
 		default:
@@ -136,7 +162,7 @@ void PlayerClass::ConfigOnlineDraw() const
 {
 	if (isOnline)
 	{
-		Rect window1 = { 10,10,300,200 };
+		Rect window1 = { 10,10,300,190 };
 		Rect window2 = { 10,230,200,40 };
 
 		window1.drawFrame(10, Palette::White).draw(Palette::Black);
@@ -213,10 +239,13 @@ void PlayerClass::ConfigOnlineDraw() const
 				//数値が0だと桁数が0になるので加算
 				if (digit == 0)digit = 1;
 				font30(gameObject.status.NextLevel(), U"EXP").draw((715 - (15 * 3)) - digit * 15, magicMenu.startPos.y + ((magicMenu.fontSize * 1.5) * 4));
-
 			}
 			break;
 		case PlayerClass::MenuTransition::SkillPoint:
+			Rect window4 = { 330,10,150,140 };
+			window4.drawFrame(10, Palette::White).draw(Palette::Black);
+
+			skillPointMenu.InRectDraw(true);
 			break;
 		default:
 			break;

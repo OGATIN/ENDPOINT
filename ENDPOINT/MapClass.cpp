@@ -115,7 +115,7 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 	//配列外エラーを阻止
 	if (_gameobject.GetLeft() <= 0)
 	{
-		_gameobject.position.x = -_gameobject.shiftInternalHitRect[0][0].x;
+		_gameobject.position.x = -_gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].x;
 	}
 
 	//左
@@ -135,8 +135,7 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 
 
 			//位置を補正
-			_gameobject.position.x = GetMapRightScreen(_gameobject.MapLeftSidePoint(cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[0][0].x + 1;
-
+			_gameobject.position.x = GetMapRightScreen(_gameobject.MapLeftSidePoint(cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].x + 1;
 		}
 	}
 
@@ -157,7 +156,7 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 
 
 			//位置を補正
-			_gameobject.position.x = GetMapLeftScreen(_gameobject.MapRightSidePoint(cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[0][0].x - _gameobject.shiftInternalHitRect[0][0].w - 1 ;
+			_gameobject.position.x = GetMapLeftScreen(_gameobject.MapRightSidePoint(cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].x - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].w - 1 ;
 
 		}
 	}
@@ -176,7 +175,7 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 			_gameobject.velocity.y = 0;
 
 			//位置を補正
-			_gameobject.position.y = GetMapTopScreen(_gameobject.MapBottomSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[0][0].y - _gameobject.shiftInternalHitRect[0][0].h;
+			_gameobject.position.y = GetMapTopScreen(_gameobject.MapBottomSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].h;
 
 			//着地した
 			_gameobject.isLanding = true;
@@ -202,7 +201,7 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 			_gameobject.velocity.y = 0;
 
 			//位置を補正
-			_gameobject.position.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[0][0].y;
+			_gameobject.position.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].y;
 
 
 		}
@@ -228,7 +227,7 @@ void MapClass::MapHitStand(GameObject& _gameobject)
 				_gameobject.velocity.y = 0;
 
 				//位置を補正
-				_gameobject.position.y = GetMapTopScreen(_gameobject.MapBottomSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[0][0].y - _gameobject.shiftInternalHitRect[0][0].h;
+				_gameobject.position.y = GetMapTopScreen(_gameobject.MapBottomSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].h;
 
 				//着地した
 				_gameobject.isLanding = true;
@@ -265,7 +264,7 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 
 
 				//位置を補正
-				_gameobject.position.x = GetMapRightScreen(_gameobject.MapLeftSidePoint(cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[0][0].x + 1;
+				_gameobject.position.x = GetMapRightScreen(_gameobject.MapLeftSidePoint(cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].x + 1;
 
 			}
 		}
@@ -300,7 +299,7 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 				_gameobject.velocity.y = 0;
 
 				//位置を補正
-				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapBottomSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2)) - _gameobject.shiftInternalHitRect[0][0].y - _gameobject.shiftInternalHitRect[0][0].h - ((_gameobject.position.asPoint().x + cameraPos.asPoint().x + _gameobject.shiftInternalHitRect[0][0].pos.x + _gameobject.shiftInternalHitRect[0][0].w) % MapGameSize().asPoint().x);
+				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapBottomSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2)) - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].h - ((_gameobject.position.asPoint().x + cameraPos.asPoint().x + _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].x + _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].w) % MapGameSize().asPoint().x);
 
 				//着地した
 				_gameobject.isLanding = true;
@@ -326,7 +325,7 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 				_gameobject.velocity.y = 0;
 
 				//位置を補正
-				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[0][0].y;
+				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].y;
 
 
 			}
@@ -374,7 +373,7 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 
 
 				//位置を補正
-				_gameobject.position.x = GetMapLeftScreen(_gameobject.MapRightSidePoint(cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[0][0].x - _gameobject.shiftInternalHitRect[0][0].w - 1;
+				_gameobject.position.x = GetMapLeftScreen(_gameobject.MapRightSidePoint(cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].x - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].w - 1;
 
 			}
 		}
@@ -393,7 +392,7 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 				_gameobject.velocity.y = 0;
 
 				//位置を補正
-				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapBottomSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2)) - _gameobject.shiftInternalHitRect[0][0].y - _gameobject.shiftInternalHitRect[0][0].h - (((_gameobject.MapLeftSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x + 1)* MapGameSize().asPoint().x) - (_gameobject.GetLeft() + cameraPos.x));
+				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapBottomSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2)) - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].h - (((_gameobject.MapLeftSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x + 1)* MapGameSize().asPoint().x) - (_gameobject.GetLeft() + cameraPos.x));
 
 				//着地した
 				_gameobject.isLanding = true;
@@ -419,7 +418,7 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 				_gameobject.velocity.y = 0;
 
 				//位置を補正
-				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[0][0].y;
+				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].y;
 
 
 			}
@@ -465,7 +464,7 @@ void MapClass::HitJudgmentPointDraw(GameObject _gameobject,ColorF circleColor) c
 		{
 			if (w == 0 || w == widthDivisionAmount || h == 0 || h == heightDivisionAmount)
 			{
-				Vec2{ (_gameobject.position.asPoint().x  + _gameobject.shiftInternalHitRect[0][0].pos.x + ((_gameobject.shiftInternalHitRect[0][0].w / widthDivisionAmount) * w)), (_gameobject.position.asPoint().y  + _gameobject.shiftInternalHitRect[0][0].pos.y + ((_gameobject.shiftInternalHitRect[0][0].h / heightDivisionAmount) * h)) }.asCircle(pointSize).draw(circleColor);
+				Vec2{ (_gameobject.position.asPoint().x  + _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].pos.x + ((_gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].w / widthDivisionAmount) * w)), (_gameobject.position.asPoint().y  + _gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].pos.y + ((_gameobject.shiftInternalHitRect[(int)_gameobject.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.weapon][(int)_gameobject.state].cutPos.x].h / heightDivisionAmount) * h)) }.asCircle(pointSize).draw(circleColor);
 			}
 		}
 	}

@@ -26,7 +26,7 @@ void Stage1::update()
 
 	Map.Camera(Player.gameObject, 8, 3, 5, 8, 2, 7);
 
-	Player.gameObject.AudioStop();
+	//Player.gameObject.AudioStop();
 
 	//敵の処理
 	Enemey.TestAI( Map.cameraPos,Vec2{ 1 * Map.MapGameSize().x,0});
@@ -47,32 +47,34 @@ void Stage1::update()
 
 	//キー入力等状態遷移--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//キー入力で処理
-	Player.gameObject.ChangeWait();
+	//Player.gameObject.ChangeWait();
 
 	if (Player.isOnline == false)
 	{
-		//右歩き
-		if (KeyRight.pressed() || KeyD.pressed() || controller.leftThumbX >= 0.8 || controller.buttonRight.pressed())
-		{
-			Player.gameObject.ChangeWalkR();
-		}
-
-		//左歩き
-		if (KeyLeft.pressed() || KeyA.pressed() || controller.leftThumbX <= -0.8 || controller.buttonLeft.pressed())
-		{
-			Player.gameObject.ChangeWalkL();
-		}
-
 		//右ダッシュ
 		if ((KeyControl.pressed() && (KeyRight.pressed() || KeyD.pressed())) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX >= 0.8 || controller.buttonRight.pressed()))
 		{
 			Player.gameObject.ChangeRunR();
 		}
-
 		//左ダッシュ
-		if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed())) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX <= -0.8 || controller.buttonLeft.pressed()))
+		else if ((KeyControl.pressed() && (KeyLeft.pressed() || KeyA.pressed())) || (controller.buttonLB.pressed() || controller.buttonRB.pressed()) && (controller.leftThumbX <= -0.8 || controller.buttonLeft.pressed()))
 		{
 			Player.gameObject.ChangeRunL();
+		}
+
+		//右歩き
+		else if (KeyRight.pressed() || KeyD.pressed() || controller.leftThumbX >= 0.8 || controller.buttonRight.pressed())
+		{
+			Player.gameObject.ChangeWalkR();
+		}
+		else if (KeyLeft.pressed() || KeyA.pressed() || controller.leftThumbX <= -0.8 || controller.buttonLeft.pressed())
+		{
+			Player.gameObject.ChangeWalkL();
+		}
+
+		else
+		{
+			Player.gameObject.isAdd = 0;
 		}
 
 		//同時入力で停止
@@ -81,48 +83,48 @@ void Stage1::update()
 		{
 			Player.gameObject.ChangeWait();
 		}
-
-		//ジャンプ
-		if (KeySpace.down() || KeyUp.down() || controller.buttonX.down() || controller.buttonY.down())
-		{
-			Player.gameObject.ChangeJump();
-		}
-
-		//台を降りる
-		if (KeyDown.pressed())
-		{
-			Player.gameObject.isDescendStand = true;
-		}
-		else
-		{
-			Player.gameObject.isDescendStand = false;
-		}
-
-
-		//攻撃
-		if (KeyZ.down() || controller.buttonB.down())
-		{
-			Player.gameObject.ChangeAttack();
-		}
-
-		//魔法
-		if (KeyX.down() || controller.buttonA.down())
-		{
-
-		}
-
-		//ガード
-		if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
-		{
-
-		}
-
-		if (KeyEnter.down())
-		{
-			//一時停止
-			Player.gameObject.MotionStop();
-		}
 	}
+	//	//ジャンプ
+	//	if (KeySpace.down() || KeyUp.down() || controller.buttonX.down() || controller.buttonY.down())
+	//	{
+	//		Player.gameObject.ChangeJump();
+	//	}
+
+	//	//台を降りる
+	//	if (KeyDown.pressed())
+	//	{
+	//		Player.gameObject.isDescendStand = true;
+	//	}
+	//	else
+	//	{
+	//		Player.gameObject.isDescendStand = false;
+	//	}
+
+
+	//	//攻撃
+	//	if (KeyZ.down() || controller.buttonB.down())
+	//	{
+	//		Player.gameObject.ChangeAttack();
+	//	}
+
+	//	//魔法
+	//	if (KeyX.down() || controller.buttonA.down())
+	//	{
+
+	//	}
+
+	//	//ガード
+	//	if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
+	//	{
+
+	//	}
+
+	//	if (KeyEnter.down())
+	//	{
+	//		//一時停止
+	//		Player.gameObject.MotionStop();
+	//	}
+	//}
 
 	Player.ConfigOnlineProcess();
 
@@ -149,27 +151,25 @@ void Stage1::update()
 		//押される方の座標にベクトル値を追加で加算
 		if (Is1PPush(PlayerVelocity, EnemeyVelocity))
 		{
-			/*if (PlayerVelocity > 0)
+			if (PlayerVelocity > 0)
 			{
 				Enemey.gameObject.position.x += preVelo;
 			}
 			else
 			{
 				Enemey.gameObject.position.x -= preVelo;
-			}*/
-			Enemey.gameObject.position.x += preVelo;
+			}
 		}
 		else
 		{
-			/*if (EnemeyVelocity > 0)
+			if (EnemeyVelocity > 0)
 			{
 				Player.gameObject.position.x -= preVelo;
 			}
 			else
 			{
 				Player.gameObject.position.x += preVelo;
-			}*/
-			Player.gameObject.position.x += preVelo;
+			}
 		}
 
 		//現在のベクトル値に加算
