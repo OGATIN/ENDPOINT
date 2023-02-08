@@ -17,6 +17,9 @@ void SetUp::Initialize()
 	isEnable = true;
 	isFirst = false;
 
+	firstMenuChar = { U"音量",U"キー設定",U"セーブ",U"ロード",U"説明",U"終わる" };
+	firstMenu.StringSet(firstMenuChar, { 10,10 });
+
 }
 
 void SetUp::SetUpEnable()

@@ -14,8 +14,9 @@ public:
 	};
 	NowScene selectScene = NowScene::MenuSelect;
 
-	Array<String> firstMenuChar = {U"音量",U"キー設定",U"セーブ",U"ロード",U"説明",U"終わる"};//選択メニュー内文字
-	Menu firstMenu{ firstMenuChar, { 10,10 } };
+	Array<String> firstMenuChar;//選択メニュー内文字
+	Menu firstMenu;
+
 	Font font30{ 30 ,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };//フォント
 
 	bool isEnable = false;

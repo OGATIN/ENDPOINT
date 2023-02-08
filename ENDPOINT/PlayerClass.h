@@ -34,25 +34,28 @@ public:
 	Bar mentalpointBar{ Palette::Purple};
 	Bar staminapointBar{ Palette::Yellow};
 
-	Array<String> firstMenuChara = { U"アイテム",U"ステータス",U"スキルポイント",U"閉じる" };
-	Menu firstMenu{ firstMenuChara ,{20,20} };
+	Array<String> firstMenuChara;
+	Menu firstMenu;
 
-	Array<String> itemMenuChara = {  };
-	Menu itemMenu{ itemMenuChara ,{100,10} };
+	Array<String> itemMenuChara;
+	Menu itemMenu;
 
-	Array<String> statusMenuChara = { U"レベル",U"HP",U"MP",U"スタミナ",U"精神力",U"攻撃力",U"魔力",U"防御力",U"重量", U"魔法"};
-	Array<String> magicMenuChara = {U"威力",U"速度",U"クールタイム",U"大きさ" };
-	Menu statusMenu{ statusMenuChara, { 350,20 } };
-	Menu magicMenu{ magicMenuChara, { 380,((statusMenuChara.size()) * 45) + 15}};
+	Array<String> statusMenuChara;
+	Array<String> magicMenuChara;
+	Menu statusMenu;
+	Menu magicMenu;
 
-	Array<String> skillPointMenuChara = { U"通常",U"魔法",U"戻る" };
-	Menu skillPointMenu{ skillPointMenuChara ,{340,20} };
+	Array<String> skillPointMenuChara;
+	Menu skillPointMenu;
 
-	Array<String> SkillPointNomalAllocationChara = { U"HP",U"スタミナ",U"精神力",U"攻撃力",U"防御力",U"重量",U"魔法",U"MP",U"基礎魔力",U"戻る" };
-	Menu SkillPointNomalAllocationMenu{ SkillPointNomalAllocationChara ,{620,20} };
+	Array<String> skillPointNomalAllocationChara;
+	Menu skillPointNomalAllocationMenu{  };
 
 	Array<double> statusChar;
 	Array<double> magicChar;
+	Array<int> skillPointChar;
+
+	Menu skillPointStateMenu;
 	
 	Font font30{ 30 ,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };//フォント
 
@@ -67,6 +70,8 @@ public:
 	void ConfigOnlineDraw()const;
 
 	void Initialize();
+
+	void CharSet();
 
 	void Update();
 

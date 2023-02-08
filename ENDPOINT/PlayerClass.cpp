@@ -9,10 +9,62 @@ void PlayerClass::Initialize()
 	magicpointBar.Initialize(gameObject.status.magicPoint);
 	mentalpointBar.Initialize(gameObject.status.mental);
 	staminapointBar.Initialize(gameObject.status.stamina);
+}
+
+void PlayerClass::CharSet()
+{
+	firstMenuChara = { U"アイテム",U"ステータス",U"スキルポイント",U"閉じる" };
+	itemMenuChara = {  };
+	statusMenuChara = { U"レベル",U"HP",U"MP",U"スタミナ",U"精神力",U"攻撃力",U"魔力",U"防御力",U"重量", U"魔法" };
+	magicMenuChara = { U"威力",U"速度",U"クールタイム",U"大きさ" };
+	skillPointMenuChara = { U"通常",U"魔法",U"戻る" };
+	skillPointNomalAllocationChara = { U"HP",U"スタミナ",U"精神力",U"攻撃力",U"防御力",U"重量",U"魔法",U"MP",U"基礎魔力",U"戻る" };
 
 	//UIの情報を代入
-	statusChar = { (double)gameObject.status.level, gameObject.status.hitPoint, gameObject.status.magicPoint, gameObject.status.stamina, gameObject.status.mental, gameObject.status.power, gameObject.status.magicPower, gameObject.status.protection, gameObject.status.weight };
-	magicChar = { gameObject.status.magicProficiencyPower ,gameObject.status.subSkill,gameObject.status.coolTime,gameObject.status.specialFunctioVernValue };
+	statusChar =
+	{
+						(double)gameObject.status.level	,
+						gameObject.status.hitPoint		,
+						gameObject.status.magicPoint	,
+						gameObject.status.stamina		,
+						gameObject.status.mental		,
+						gameObject.status.power			,
+						gameObject.status.magicPower	,
+						gameObject.status.protection	,
+						gameObject.status.weight
+	};
+
+	magicChar =
+	{
+					   gameObject.status.magicProficiencyPower	,
+					   gameObject.status.subSkill				,
+					   gameObject.status.coolTime				,
+					   gameObject.status.specialFunctioVernValue
+	};
+
+	skillPointChar =
+	{
+					   gameObject.status.hitPointAllotted	,
+					   gameObject.status.staminaAllotted	,
+					   gameObject.status.mentalAllotted		,
+					   gameObject.status.powerAllotted		,
+					   gameObject.status.protectionAllotted	,
+					   gameObject.status.weightAllotted		,
+					   0									,
+					   gameObject.status.magicPointAllotted	,
+					   gameObject.status.magicPowerAllotted
+	};
+
+	//String
+	firstMenu.StringSet(firstMenuChara, { 20,20 });
+	itemMenu.StringSet(itemMenuChara, { 100,10 });
+	statusMenu.StringSet(statusMenuChara, { 350,20 });
+	magicMenu.StringSet(magicMenuChara, { 380,((statusMenuChara.size()) * 45) + 15 });
+	skillPointMenu.StringSet(skillPointMenuChara, { 340,20 });
+	skillPointNomalAllocationMenu.StringSet(skillPointNomalAllocationChara, { 620,20 });
+
+	//int
+	skillPointStateMenu.intSet(skillPointChar, { 820,20 });
 }
 
 void PlayerClass::Update()
@@ -30,6 +82,8 @@ void PlayerClass::Update()
 	if(gameObject.status.currentStamina <= gameObject.status.stamina)gameObject.status.currentStamina += 1.0/60.0;
 	if(gameObject.status.currentMagicPoint <= gameObject.status.magicPoint)gameObject.status.currentMagicPoint += 1.0/60.0;
 
+	//毎フレーム更新
+	CharSet();
 }
 
 
@@ -209,9 +263,11 @@ void PlayerClass::ConfigOnlineProcess()
 			case PlayerClass::SkillPointMenuTransition::SkillPointNomalAllocation:
 
 				//通常スキルポイント分配画面を選択できる処理
-				SkillPointNomalAllocationMenu.Update();
+				skillPointNomalAllocationMenu.Update();
 
-				switch (SkillPointNomalAllocationMenu.IsCurrent())
+				skillPointStateMenu.InterlockingUpdate(skillPointNomalAllocationMenu);
+
+				switch (skillPointNomalAllocationMenu.IsCurrent())
 				{
 				case 0:
 					break;
@@ -232,7 +288,7 @@ void PlayerClass::ConfigOnlineProcess()
 				case 8:
 					break;
 				case 9:
-					if (KeyZ.down() || KeyEnter.down() || SkillPointNomalAllocationMenu.IsMouseOver() && MouseL.down())
+					if (KeyZ.down() || KeyEnter.down() || skillPointNomalAllocationMenu.IsMouseOver() && MouseL.down())
 					{
 						selectSkillPointMenu = SkillPointMenuTransition::SkillPointFirstMenu;
 					}
@@ -374,7 +430,9 @@ void PlayerClass::ConfigOnlineDraw() const
 				font30(U"魔力").draw(520,290);
 
 				//メニュー描画
-				SkillPointNomalAllocationMenu.InRectDraw(true);
+				skillPointNomalAllocationMenu.InRectDraw(true);
+
+				skillPointStateMenu.NumberDraw_int(true);
 
 				break;
 			case PlayerClass::SkillPointMenuTransition::SkillPointMagicAllocation:
