@@ -285,6 +285,21 @@ void Stage1::update()
 		}
 
 	}
+
+	if (MouseL.pressed())
+	{
+		fistEffect.CreationPosChange(Cursor::Pos());
+		effects << fistEffect;
+	}
+	
+
+	for (auto& _effects : effects)
+	{
+		_effects.Animation();
+	}
+
+	effects.remove_if([](EffectClass effect) { return effect.effectBase.totalPatterns <= effect.effectBase.cutPos.x; });
+
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -306,9 +321,22 @@ void Stage1::draw() const
 	//Player.gameObject.status.BaseStatusDrow(true);
 	Enemey.Draw();
 	Enemey.DebugDraw();
-	Player.gameObject.CoordinateRelated();
+	//Player.gameObject.CoordinateRelated();
 	Player.ConfigOnlineDraw();
 	Map.HitJudgmentPointDraw(Player.gameObject);
+
+	for (const auto& _effects : effects)
+	{
+		_effects.effectBase.Draw(_effects.creationPos);
+		//font(_effects.effectBase.cutPos.x).draw(_effects.creationPos);
+	}
+
+	for (int i = 0; i < effects.size(); i++)
+	{
+		font(effects[i].effectBase.cutPos.x).draw(0, font.height() * i);
+	}
+
+
 
 	//デバック用
 	font(U"選択してる状態", statusTypeName).draw(450, 0);

@@ -207,6 +207,9 @@
     <ClCompile Include="MapClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EffectClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -807,6 +810,7 @@
     <None Include="App\ConfigData\敵ステータス割り振り.csv" />
     <None Include="App\ConfigData\map.csv" />
     <None Include="App\ConfigData\画像補正位置.csv" />
+    <None Include="App\ConfigData\エフェクトデータ.csv" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="App\example\test.mp3">
@@ -918,6 +922,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MapClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

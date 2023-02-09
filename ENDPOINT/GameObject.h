@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include"EffectClass.h"
 
 enum class SEstate
 {
