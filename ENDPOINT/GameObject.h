@@ -132,8 +132,8 @@ public:
 	///// @brief 
 	//void ChangeReceive();
 
-	///// @brief 
-	//void ChangeAttack();
+	/// @brief 
+	void ChangeAttack();
 
 	/// @brief animationのテクスチャを描画する
 	void Draw()const;

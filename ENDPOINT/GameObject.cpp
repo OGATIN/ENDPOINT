@@ -7,10 +7,46 @@ void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV Animati
 
 	for (int j = 0; j < 4; j++)
 	{
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 7; i++)
 		{
-			//とりあえず共通のデータはここでロード
-			animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
+			if (i < 5)
+			{
+				//とりあえず共通のデータはここでロード
+				animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
+			}
+			else
+			{
+				switch (j)
+				{
+				case 0:
+
+					if (i == (int)StateType::RECEIVE)
+					{
+						//とりあえず共通のデータはここでロード
+						animation[j][i].Reload(_animation[j][i], AnimationData, 19);
+
+					}
+
+					if (i == (int)StateType::ATTACK)
+					{
+						//とりあえず共通のデータはここでロード
+						animation[j][i].Reload(_animation[j][i], AnimationData, 7);
+					}
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+
+				default:
+					break;
+				}
+
+			}
+
+
 		}
 	}
 
@@ -25,7 +61,7 @@ void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV Animati
 		{
 			for (int p = 0; p < 11; p++)
 			{
-				shiftInternalHitRect[j][i][p] = Parse<Rect>(TextureShiftData[1][1])/*Parse<Rect>(TextureShiftData[(j * 10) + i + 1][p + 1])*/;
+				shiftInternalHitRect[j][i][p] = /*Parse<Rect>(TextureShiftData[1][1])*/Parse<Rect>(TextureShiftData[(j * 10) + i + 1][p + 1]);
 			}
 			
 		}
@@ -204,10 +240,10 @@ void GameObject::WalkProcess()
 	{
 		isMirror = false;
 	}
-	else
+
+	if (velocity.x < 0)
 	{
 		isMirror = true;
-
 	}
 
 
@@ -253,14 +289,14 @@ void GameObject::RunProcess()
 		velocity.x += speedAdd;
 	}
 
-	if (velocity.x > 0 )
+	if (velocity.x > 0)
 	{
 		isMirror = false;
 	}
-	else
+
+	if (velocity.x < 0)
 	{
 		isMirror = true;
-
 	}
 
 
@@ -320,7 +356,7 @@ void GameObject::JumpProcess()
 		velocity.x += speedAdd;
 		animation[(int)weapon][(int)state].ResetImage();
 		isLanding = false;
-		state = StateType::FALLING;
+		ChangeFalling();
 	}	
 }
 
@@ -328,7 +364,7 @@ void GameObject::FallingProcess()
 {
 	if (isLanding)
 	{
-		state = StateType::WAIT;
+		ChangeWait();
 	}
 }
 
@@ -337,6 +373,7 @@ void GameObject::FallingProcess()
 //{
 //}
 //
+
 void GameObject::AttackProcess()
 {
 	if (isOneLoop())
@@ -365,7 +402,7 @@ void GameObject::AttackProcess()
 
 void GameObject::ChangeWait()
 {
-	if (state == StateType::WALK || state == StateType::RUN)
+	if (state == StateType::WALK || state == StateType::RUN || state == StateType::FALLING)
 	{
 		state = StateType::WAIT;
 	}
@@ -373,7 +410,7 @@ void GameObject::ChangeWait()
 
 void GameObject::ChangeWalkR()
 {
-	if ((state == StateType::WAIT || state == StateType::RUN))
+	if ((state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN))
 	{
 		state = StateType::WALK;
 		isMirror = false;
@@ -385,7 +422,7 @@ void GameObject::ChangeWalkR()
 
 void GameObject::ChangeWalkL()
 {
-	if ((state == StateType::WAIT || state == StateType::RUN))
+	if ((state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN))
 	{
 		state = StateType::WALK;
 		isMirror = true;
@@ -432,19 +469,20 @@ void GameObject::ChangeFalling()
 		state = StateType::FALLING;
 	}
 }
+
 //
 //void GameObject::ChangeReceive()
 //{
 //	state = StateType::RECEIVE;
 //}
 //
-//void GameObject::ChangeAttack()
-//{
-//	if (state == StateType::WAIT)
-//	{
-//		state = StateType::ATTACK;
-//	}
-//}
+void GameObject::ChangeAttack()
+{
+	if (state == StateType::WAIT)
+	{
+		state = StateType::ATTACK;
+	}
+}
 
 
 

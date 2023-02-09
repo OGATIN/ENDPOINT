@@ -100,12 +100,14 @@ void Stage1::update()
 			Player.gameObject.isDescendStand = false;
 		}
 
+
+		//攻撃
+		if (KeyZ.down() || controller.buttonB.down())
+		{
+			Player.gameObject.ChangeAttack();
+		}
 	}
-	//	//攻撃
-	//	if (KeyZ.down() || controller.buttonB.down())
-	//	{
-	//		Player.gameObject.ChangeAttack();
-	//	}
+
 
 	//	//魔法
 	//	if (KeyX.down() || controller.buttonA.down())
