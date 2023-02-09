@@ -117,6 +117,7 @@
     <ClCompile Include="AnimationClassInternal.cpp" />
     <ClCompile Include="ConfigGauge.cpp" />
     <ClCompile Include="Credit.cpp" />
+    <ClCompile Include="EffectClass.cpp" />
     <ClCompile Include="EnemyClass.cpp" />
     <ClCompile Include="Finish.cpp" />
     <ClCompile Include="GameClear.cpp" />
@@ -191,6 +192,7 @@
     <None Include=".editorconfig" />
     <None Include="App\ConfigData\map.csv" />
     <None Include="App\ConfigData\アニメーションデータ.csv" />
+    <None Include="App\ConfigData\エフェクトデータ.csv" />
     <None Include="App\ConfigData\スキルポイントステータスデータ.csv" />
     <None Include="App\ConfigData\ノックバック倍率.csv" />
     <None Include="App\ConfigData\基礎ステータスデータ.csv" />
@@ -352,6 +354,7 @@
     <ClInclude Include="Base.h" />
     <ClInclude Include="ConfigGauge.h" />
     <ClInclude Include="Credit.h" />
+    <ClInclude Include="EffectClass.h" />
     <ClInclude Include="EnemyClass.h" />
     <ClInclude Include="Finish.h" />
     <ClInclude Include="GameClear.h" />

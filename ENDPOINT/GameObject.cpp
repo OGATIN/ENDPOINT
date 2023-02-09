@@ -12,7 +12,7 @@ void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV Animati
 			if (i < 5)
 			{
 				//とりあえず共通のデータはここでロード
-				animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
+				animation[j][i].Load(_animation[j][i], AnimationData, i + 1);
 			}
 			else
 			{
@@ -23,14 +23,14 @@ void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV Animati
 					if (i == (int)StateType::RECEIVE)
 					{
 						//とりあえず共通のデータはここでロード
-						animation[j][i].Reload(_animation[j][i], AnimationData, 19);
+						animation[j][i].Load(_animation[j][i], AnimationData, 19);
 
 					}
 
 					if (i == (int)StateType::ATTACK)
 					{
 						//とりあえず共通のデータはここでロード
-						animation[j][i].Reload(_animation[j][i], AnimationData, 7);
+						animation[j][i].Load(_animation[j][i], AnimationData, 7);
 					}
 					break;
 				case 1:
@@ -61,7 +61,7 @@ void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV Animati
 		{
 			for (int p = 0; p < 11; p++)
 			{
-				shiftInternalHitRect[j][i][p] = /*Parse<Rect>(TextureShiftData[1][1])*/Parse<Rect>(TextureShiftData[(j * 10) + i + 1][p + 1]);
+				shiftInternalHitRect[j][i][p] = Parse<Rect>(TextureShiftData[1][1])/*Parse<Rect>(TextureShiftData[(j * 10) + i + 1][p + 1])*/;
 			}
 			
 		}

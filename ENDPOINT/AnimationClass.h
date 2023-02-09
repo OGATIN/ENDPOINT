@@ -25,25 +25,34 @@ public:
 
 	Rect cutPos = { 0,0,0,0 };  //画像の切り取り位置
 
-	int size = 400; //画像のピクセル数
-
 	//デバック用
 	double elapsedTime = 0;
 
 	AnimationClass(){};
 
+	/// @brief キャラクター用
+	/// @param _texture 
+	/// @param animationData 
+	/// @param statenumber 
 	AnimationClass(Texture _texture,CSV animationData, int statenumber)
 	{
-		Reload(_texture, animationData, statenumber);
+		Load(_texture, animationData, statenumber);
 	};
+
 
 	//機能
 
-	/// @brief 再読み込み
+	/// @brief 読み込み
 	/// @param _texture 画像データ
 	/// @param animationData アニメーションデータ
 	/// @param statenumber 状態番号
-	void Reload(Texture _texture, CSV animationData, int statenumber);
+	void Load(Texture _texture, CSV animationData, int statenumber);
+
+	/// @brief 
+	/// @param _texture 
+	/// @param effectData 
+	/// @param lineNumber 
+	void EffectLoud(Texture _texture, CSV effectData, int lineNumber);
 
 	/// @brief 画像パターンを初期化
 	void ResetImage();
@@ -51,7 +60,7 @@ public:
 	/// @brief 描画
 	/// @param position 描画位置
 	/// @param _mirror 反転してるか
-	void Draw(Vec2 position, bool _mirror) const;
+	void Draw(Vec2 position, bool _mirror = false) const;
 
 	/*デバック用*/
 
