@@ -47,7 +47,6 @@ void Stage1::update()
 
 	//キー入力等状態遷移--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//キー入力で処理
-	//Player.gameObject.ChangeWait();
 
 	if (Player.isOnline == false)
 	{
@@ -74,7 +73,7 @@ void Stage1::update()
 
 		else
 		{
-			Player.gameObject.isAdd = 0;
+			Player.gameObject.speedAdd = 0;
 		}
 
 		//同時入力で停止
@@ -83,24 +82,25 @@ void Stage1::update()
 		{
 			Player.gameObject.ChangeWait();
 		}
+
+		//ジャンプ
+		if (KeySpace.down() || KeyUp.down() || controller.buttonX.down() || controller.buttonY.down())
+		{
+			Player.gameObject.ChangeJump();
+		}
+
+
+		//台を降りる
+		if (KeyDown.pressed())
+		{
+			Player.gameObject.isDescendStand = true;
+		}
+		else
+		{
+			Player.gameObject.isDescendStand = false;
+		}
+
 	}
-	//	//ジャンプ
-	//	if (KeySpace.down() || KeyUp.down() || controller.buttonX.down() || controller.buttonY.down())
-	//	{
-	//		Player.gameObject.ChangeJump();
-	//	}
-
-	//	//台を降りる
-	//	if (KeyDown.pressed())
-	//	{
-	//		Player.gameObject.isDescendStand = true;
-	//	}
-	//	else
-	//	{
-	//		Player.gameObject.isDescendStand = false;
-	//	}
-
-
 	//	//攻撃
 	//	if (KeyZ.down() || controller.buttonB.down())
 	//	{

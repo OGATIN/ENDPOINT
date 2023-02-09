@@ -67,7 +67,7 @@ private:
 
 	Texture playerPNG[4][20] =
 	{
-		/*0が拳*/{{waitingMotionPNG} ,{walkMotionPNG} ,{runMotionPNG},{jumpMotionPNG},{fallingMotionPNG},{landingMotionPNG},{receiveMotionPNG},{attackMotionPNG}},
+		/*0が拳*/{{waitingMotionPNG} ,{walkMotionPNG} ,{runMotionPNG},{jumpMotionPNG},{fallingMotionPNG},{receiveMotionPNG},{attackMotionPNG}},
 		/*1が剣*/{},
 		/*2が鈍器*/{},
 		/*3が杖*/{},

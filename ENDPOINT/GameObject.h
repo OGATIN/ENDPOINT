@@ -2,7 +2,7 @@
 
 enum class SEstate
 {
-	WalkSE, RunSE,
+	WAIKSE, RUNSE, JUMPSE,
 };
 
 class GameObject
@@ -20,7 +20,7 @@ public:
 
 	WeaponType weapon = WeaponType::FIST;//現在の武器
 
-	Rect shiftInternalHitRect[4][13][11] = {};  //補正
+	Rect shiftInternalHitRect[4][13][11];  //補正
 
 	Vec2 position = { 0,0 };//座標
 	Vec2 velocity = { 0,0 };//ベクトル
@@ -32,12 +32,14 @@ public:
 	bool isDescendStand = false;//下入力されているか(台用)
 
 	const double charaSpeedMax = 10;
+	double charaSpeed = 0;
+	double speedAdd = 0;
+	double frictionForce = 1;//摩擦力
+	double additionalAmount = 2;//加算量
+
 	const double jumpPowerMax = 20;
 	double jumpPower = 0;
-	double charaSpeed = 0;
-	double frictionForce = 1;//摩擦力
-	double additionalAmount = 1;//加算量
-	double isAdd = 0;
+	int jumpTiming = 6;
 	
 
 	//デバック用フォント
@@ -60,6 +62,7 @@ public:
 	};
 
 	//機能
+
 	/// @brief 再読み込み
 	void Reload(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther);
 
@@ -93,20 +96,17 @@ public:
 	/// @brief 走りの処理
 	void RunProcess();
 
-	///// @brief ジャンプの処理
-	//void JumpProcess();
+	/// @brief ジャンプの処理
+	void JumpProcess();
 
-	///// @brief 対空の処理
-	//void FallingProcess();
-
-	///// @brief 着地の処理
-	//void LandingProcess();
+	/// @brief 対空の処理
+	void FallingProcess();
 
 	///// @brief 受けの処理
 	//void ReceiveProcess();
 
-	///// @brief 攻撃の処理
-	//void AttackProcess();
+	/// @brief 攻撃の処理
+	void AttackProcess();
 
 	/// @brief 待機状態への遷移
 	void ChangeWait();
@@ -123,16 +123,16 @@ public:
 	/// @brief 走り状態への遷移(左)
 	void ChangeRunL();
 
-	///// @brief ジャンプ状態への遷移
-	//void ChangeJump();
+	/// @brief ジャンプ状態への遷移
+	void ChangeJump();
 
-	///// @brief ジャンプ状態への遷移
-	//void ChangeFalling();
+	/// @brief 空中状態への遷移
+	void ChangeFalling();
 
-	///// @brief ジャンプ状態への遷移
+	///// @brief 
 	//void ChangeReceive();
 
-	///// @brief ジャンプ状態への遷移
+	///// @brief 
 	//void ChangeAttack();
 
 	/// @brief animationのテクスチャを描画する
