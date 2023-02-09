@@ -131,7 +131,7 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 			)
 		{
 			//ベクトルを0
-			_gameobject.velocity.x = 0;
+			//_gameobject.velocity.x = 0;
 
 
 			//位置を補正
@@ -152,7 +152,7 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 			)
 		{
 			//ベクトルを0
-			_gameobject.velocity.x = 0;
+			//_gameobject.velocity.x = 0;
 
 
 			//位置を補正

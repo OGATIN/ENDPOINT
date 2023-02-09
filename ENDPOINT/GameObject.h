@@ -2,7 +2,7 @@
 
 enum class SEstate
 {
-	WalkSE, RunSE,
+	WAIKSE, RUNSE, JUMPSE,
 };
 
 class GameObject
@@ -32,12 +32,14 @@ public:
 	bool isDescendStand = false;//下入力されているか(台用)
 
 	const double charaSpeedMax = 10;
+	double charaSpeed = 0;
+	double speedAdd = 0;
+	double frictionForce = 1;//摩擦力
+	double additionalAmount = 2;//加算量
+
 	const double jumpPowerMax = 20;
 	double jumpPower = 0;
-	double charaSpeed = 0;
-	double frictionForce = 1;//摩擦力
-	double additionalAmount = 1;//加算量
-	double speedAdd = 0;
+	int jumpTiming = 6;
 	
 
 	//デバック用フォント
@@ -100,11 +102,8 @@ public:
 	/// @brief 対空の処理
 	void FallingProcess();
 
-	/// @brief 着地の処理
-	void LandingProcess();
-
-	/// @brief 受けの処理
-	void ReceiveProcess();
+	///// @brief 受けの処理
+	//void ReceiveProcess();
 
 	/// @brief 攻撃の処理
 	void AttackProcess();
@@ -127,14 +126,14 @@ public:
 	/// @brief ジャンプ状態への遷移
 	void ChangeJump();
 
-	/// @brief ジャンプ状態への遷移
+	/// @brief 空中状態への遷移
 	void ChangeFalling();
 
-	/// @brief ジャンプ状態への遷移
-	void ChangeReceive();
+	///// @brief 
+	//void ChangeReceive();
 
-	/// @brief ジャンプ状態への遷移
-	void ChangeAttack();
+	///// @brief 
+	//void ChangeAttack();
 
 	/// @brief animationのテクスチャを描画する
 	void Draw()const;

@@ -2,7 +2,7 @@
 
 enum class StateType
 {
-	WAIT, WALK, RUN, JUMP,FALLING, LANDING, RECEIVE, ATTACK,MAGIC, GUARD, NOTSTAMINA,
+	WAIT, WALK, RUN, JUMP,FALLING, RECEIVE, ATTACK,MAGIC, GUARD, NOTSTAMINA,
 };
 
 enum class WeaponType
@@ -21,6 +21,8 @@ public:
 
 	int endPattern = 0;			//切り取り位置(終)
 
+	int totalPatterns = 0;		//アニメーションの層パターン数
+
 	Rect cutPos = { 0,0,0,0 };  //画像の切り取り位置
 
 	int size = 400; //画像のピクセル数
@@ -32,14 +34,7 @@ public:
 
 	AnimationClass(Texture _texture,CSV animationData, int statenumber)
 	{
-		texture				= _texture;//画像
-		motionTime			= Parse<double>(animationData[statenumber][5])* 1000;
-		endPattern	        = Parse<int>   (animationData[statenumber][6]);
-
-		startPattern = 0;//
-		cutPos.x = startPattern;
-		cutPos.w = texture.width() / endPattern;
-		cutPos.h = texture.height();//
+		Reload(_texture, animationData, statenumber);
 	};
 
 	//機能
@@ -49,6 +44,9 @@ public:
 	/// @param animationData アニメーションデータ
 	/// @param statenumber 状態番号
 	void Reload(Texture _texture, CSV animationData, int statenumber);
+
+	/// @brief 画像パターンを初期化
+	void ResetImage();
 
 	/// @brief 描画
 	/// @param position 描画位置

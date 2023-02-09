@@ -6,16 +6,21 @@
 void AnimationClass::Reload(Texture _texture, CSV animationData, int statenumber)
 {
 	texture = _texture;//画像
-	motionTime = Parse<double>(animationData[statenumber][5]) * 1000;
-	endPattern = Parse<int>(animationData[statenumber][6]);
+	motionTime = Parse<double>(animationData[statenumber][5]) * 1000;//アニメーションの総時間(ミリ秒)
+	totalPatterns = Parse<int>(animationData[statenumber][6]);//総パターン数
+	endPattern = Parse<int>(animationData[statenumber][8]);//切り取り位置(終)
 
-	startPattern = 0;//
-	cutPos.x = startPattern;
-	cutPos.w = texture.width() / endPattern;
-	cutPos.h = texture.height();//
-
-	//AnimationClass(_texture, animationData, statenumber);
+	startPattern = 0;//切り取り位置(始)
+	cutPos.x = startPattern;//画像パターンを初期化
+	cutPos.w = texture.width() / totalPatterns;//画像一枚当たりの幅を算出
+	cutPos.h = texture.height();//画像一枚当たりの高さを算出
 }
+
+void AnimationClass::ResetImage()
+{
+	cutPos.x = startPattern;//画像パターンを初期化
+}
+
 
 
 void AnimationClass::Draw(Vec2 position,bool _mirror) const

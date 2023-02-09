@@ -7,7 +7,7 @@ void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV Animati
 
 	for (int j = 0; j < 4; j++)
 	{
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			//とりあえず共通のデータはここでロード
 			animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
@@ -69,18 +69,21 @@ void GameObject::PatternLoop()
 	//ループ
 	if (animation[(int)weapon][(int)state].cutPos.x >= animation[(int)weapon][(int)state].endPattern)
 	{
-		animation[(int)weapon][(int)state].cutPos.x = animation[(int)weapon][(int)state].startPattern;
+		animation[(int)weapon][(int)state].ResetImage();
 	}
 
 }
 
 void GameObject::OnePattern()
 {
-	//タイル遷移
-	if (currentTime.ms() > (animation[(int)weapon][(int)state].OnePatternMotionTime() * motionEndMagnification))
+	if (animation[(int)weapon][(int)state].endPattern > animation[(int)weapon][(int)state].cutPos.x)
 	{
-		animation[(int)weapon][(int)state].cutPos.x++;
-		currentTime.restart();
+		//タイル遷移
+		if (currentTime.ms() > (animation[(int)weapon][(int)state].OnePatternMotionTime() * motionEndMagnification))
+		{
+			animation[(int)weapon][(int)state].cutPos.x++;
+			currentTime.restart();
+		}
 	}
 
 	//デバック用
@@ -90,7 +93,7 @@ void GameObject::OnePattern()
 
 bool GameObject::isOneLoop()
 {
-	return animation[(int)weapon][(int)state].cutPos.x >= animation[(int)weapon][(int)state].endPattern;
+	return animation[(int)weapon][(int)state].cutPos.x >= animation[(int)weapon][(int)state].totalPatterns;
 }
 
 void GameObject::StateManagement()
@@ -114,36 +117,32 @@ void GameObject::StateManagement()
 		break;
 	case StateType::JUMP:
 		OnePattern();
-		//JumpProcess();
+		JumpProcess();
 		statename = { U"ジャンプ" };
 		break;
 	case StateType::FALLING:
 		PatternLoop();
-		//FallingProcess();
+		FallingProcess();
 		statename = { U"滞空" };
-		break;
-	case StateType::LANDING:
-		OnePattern();
-		statename = { U"着地" };
 		break;
 	case StateType::RECEIVE:
 		OnePattern();
-		statename = { U"受け" };
+		statename = { U"受け" };//未
 		break;
 	case StateType::ATTACK:
 		OnePattern();
 		//AttackProcess();
-		statename = { U"攻撃" };
+		statename = { U"攻撃" };//未
 		break;
 	case StateType::MAGIC:
 		OnePattern();
-		statename = { U"魔法" };
+		statename = { U"魔法" };//未
 		break;
 	case StateType::GUARD:
-		statename = { U"ガード" };
+		statename = { U"ガード" };//未
 		break;
 	case StateType::NOTSTAMINA:
-		statename = { U"スタミナ切れ" };
+		statename = { U"スタミナ切れ" };//未
 		break;
 	default:
 		break;
@@ -195,28 +194,10 @@ void GameObject::WalkProcess()
 		charaSpeed = charaSpeedMax;
 	}
 
-	if (speedAdd == 0 || (charaSpeed < velocity.x) || (-charaSpeed < velocity.x))
-	{
-		if (velocity.x >= 0)
-		{
-			velocity.x -= frictionForce;
-		}
-		else if (velocity.x <= 0)
-		{
-			velocity.x += frictionForce;
-		}
-
-	}
-
+	//ベクトル加算
 	if ((charaSpeed > velocity.x) && (-charaSpeed < velocity.x))
 	{
 		velocity.x += speedAdd;
-
-	}
-	else
-	{
-		velocity.x += speedAdd;
-
 	}
 
 	if (velocity.x > 0)
@@ -229,14 +210,28 @@ void GameObject::WalkProcess()
 
 	}
 
+
+	if ((speedAdd == 0) || (charaSpeed < velocity.x) || (-charaSpeed > velocity.x))
+	{
+		if (velocity.x > 0 )
+		{
+			velocity.x -= frictionForce;
+		}
+		else if (velocity.x < 0)
+		{
+			velocity.x += frictionForce;
+		}
+
+	}
+
 	if (velocity.x == 0)
 	{
-		audio[(int)SEstate::WalkSE].stop();
+		audio[(int)SEstate::WAIKSE].stop();
 		ChangeWait();
 	}
 
-	audio[(int)SEstate::WalkSE].setVolume(GameData::MainVolume * GameData::SEVolume);
-	audio[(int)SEstate::WalkSE].play();
+	audio[(int)SEstate::WAIKSE].setVolume(GameData::MainVolume * GameData::SEVolume);
+	audio[(int)SEstate::WAIKSE].play();
 }
 
 void GameObject::RunProcess()
@@ -258,7 +253,7 @@ void GameObject::RunProcess()
 		velocity.x += speedAdd;
 	}
 
-	if (velocity.x > 0)
+	if (velocity.x > 0 )
 	{
 		isMirror = false;
 	}
@@ -269,7 +264,7 @@ void GameObject::RunProcess()
 	}
 
 
-	if (speedAdd == 0)
+	if (speedAdd == 0 || (charaSpeed < velocity.x) || (-charaSpeed > velocity.x))
 	{
 		if (velocity.x > 0)
 		{
@@ -284,33 +279,47 @@ void GameObject::RunProcess()
 
 	if (velocity.x == 0)
 	{
-		audio[(int)SEstate::RunSE].stop();
+		audio[(int)SEstate::RUNSE].stop();
 		ChangeWait();
 	}
 
 
 	status.currentStamina -= (3.0 / 60.0);
 
-	audio[(int)SEstate::RunSE].setVolume(GameData::MainVolume * GameData::SEVolume);
-	audio[(int)SEstate::RunSE].play();
+	audio[(int)SEstate::RUNSE].setVolume(GameData::MainVolume * GameData::SEVolume);
+	audio[(int)SEstate::RUNSE].play();
 }
 
 //要検討
 void GameObject::JumpProcess()
 {
-	if (isOneLoop())
+	if (status.weight < jumpPowerMax)
 	{
-			//重量定義
-if (status.weight < jumpPowerMax)
-{
-	jumpPower = (int)status.weight;
-}
-else
-{
-	jumpPower = charaSpeedMax;
-}
+		jumpPower = -1 * (int)status.weight;
+	}
+	else
+	{
+		jumpPower = -1 * charaSpeedMax;
+	}
 
-		velocity.y = -jumpPower;
+	if (animation[(int)weapon][(int)state].cutPos.x == jumpTiming)
+	{
+		audio[(int)SEstate::JUMPSE].setVolume(GameData::MainVolume * GameData::SEVolume);
+		audio[(int)SEstate::JUMPSE].stop();
+		audio[(int)SEstate::JUMPSE].play();
+	}
+
+	if ((animation[(int)weapon][(int)state].cutPos.x >= jumpTiming) && (velocity.y > jumpPower))
+	{
+		velocity.y -= additionalAmount;
+	}
+
+
+	if (velocity.y <= jumpPower)
+	{
+		velocity.x += speedAdd;
+		animation[(int)weapon][(int)state].ResetImage();
+		isLanding = false;
 		state = StateType::FALLING;
 	}	
 }
@@ -323,15 +332,11 @@ void GameObject::FallingProcess()
 	}
 }
 
-void GameObject::LandingProcess()
-{
 
-}
-
-void GameObject::ReceiveProcess()
-{
-}
-
+//void GameObject::ReceiveProcess()
+//{
+//}
+//
 void GameObject::AttackProcess()
 {
 	if (isOneLoop())
@@ -427,19 +432,19 @@ void GameObject::ChangeFalling()
 		state = StateType::FALLING;
 	}
 }
-
-void GameObject::ChangeReceive()
-{
-	state = StateType::RECEIVE;
-}
-
-void GameObject::ChangeAttack()
-{
-	if (state == StateType::WAIT)
-	{
-		state = StateType::ATTACK;
-	}
-}
+//
+//void GameObject::ChangeReceive()
+//{
+//	state = StateType::RECEIVE;
+//}
+//
+//void GameObject::ChangeAttack()
+//{
+//	if (state == StateType::WAIT)
+//	{
+//		state = StateType::ATTACK;
+//	}
+//}
 
 
 
@@ -462,8 +467,8 @@ void GameObject::AudioStop()
 		}
 	}*/
 
-	audio[(int)SEstate::WalkSE].stop();
-	audio[(int)SEstate::RunSE].stop();
+	audio[(int)SEstate::WAIKSE].stop();
+	audio[(int)SEstate::RUNSE].stop();
 	
 }
 
@@ -501,17 +506,6 @@ void GameObject::TimeDebuggDraw() const
 	font30(U"1枚あたりの時間 ", currentTime.ms()).draw(Scene::Width() - font30(U"1枚あたりの時間 ", currentTime.ms()).region().w, font30.height() * 4);
 	font30(U"切り取り位置 ", animation[(int)weapon][(int)state].cutPos).draw(Scene::Width() - font30(U"切り取り位置 ", animation[(int)weapon][(int)state].cutPos).region().w, font30.height() * 5);
 
-	//if (speedChange == true)
-	//{
-	//	font30(U"モーション終了倍率 ", motionEndMagnification).draw(Scene::Width() - font30(U"モーション終了倍率 ", motionEndMagnification).region().w, font30.height() * 6);
-
-	//}
-
-	//if (frameNumber == true)
-	//{
-	//	font30(U"終了番号 ", animation[(int)weapon][(int)state].endPattern).draw(Scene::Width() - font30(U"終了番号 ", animation[(int)weapon][(int)state].endPattern).region().w, font30.height() * 6);
-	//	font30(U"現在の番号 ", animation[(int)weapon][(int)state].cutPos.x).draw(Scene::Width() - font30(U"現在の番号 ", animation[(int)weapon][(int)state].cutPos.x).region().w, font30.height() * 7);
-	//}
 }
 
 void GameObject::CoordinateRelated() const
@@ -519,6 +513,8 @@ void GameObject::CoordinateRelated() const
 	font30(U"画面座標", position).draw(0, font30.height() * 0);
 	font30(U"ベクトル", velocity).draw(0, font30.height() * 1);
 	font30(U"スピード", charaSpeed).draw(0, font30.height() * 2);
+	font30(U"ジャンプパワー ", jumpPower).draw(0, font30.height() * 3);
+	font30(U"着地してるか ", isLanding).draw(0, font30.height() * 4);
 }
 
 

@@ -47,7 +47,6 @@ void Stage1::update()
 
 	//キー入力等状態遷移--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//キー入力で処理
-	//Player.gameObject.ChangeWait();
 
 	if (Player.isOnline == false)
 	{
@@ -83,24 +82,25 @@ void Stage1::update()
 		{
 			Player.gameObject.ChangeWait();
 		}
+
+		//ジャンプ
+		if (KeySpace.down() || KeyUp.down() || controller.buttonX.down() || controller.buttonY.down())
+		{
+			Player.gameObject.ChangeJump();
+		}
+
+
+		//台を降りる
+		if (KeyDown.pressed())
+		{
+			Player.gameObject.isDescendStand = true;
+		}
+		else
+		{
+			Player.gameObject.isDescendStand = false;
+		}
+
 	}
-	//	//ジャンプ
-	//	if (KeySpace.down() || KeyUp.down() || controller.buttonX.down() || controller.buttonY.down())
-	//	{
-	//		Player.gameObject.ChangeJump();
-	//	}
-
-	//	//台を降りる
-	//	if (KeyDown.pressed())
-	//	{
-	//		Player.gameObject.isDescendStand = true;
-	//	}
-	//	else
-	//	{
-	//		Player.gameObject.isDescendStand = false;
-	//	}
-
-
 	//	//攻撃
 	//	if (KeyZ.down() || controller.buttonB.down())
 	//	{
@@ -126,13 +126,13 @@ void Stage1::update()
 	//	}
 	//}
 
-	//Player.ConfigOnlineProcess();
+	Player.ConfigOnlineProcess();
 
 
-	//if (KeyE.down())
-	//{
-	//	Player.isOnline ? Player.isOnline = false : Player.isOnline = true;
-	//}
+	if (KeyE.down())
+	{
+		Player.isOnline ? Player.isOnline = false : Player.isOnline = true;
+	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
