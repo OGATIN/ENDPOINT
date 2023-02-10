@@ -71,6 +71,7 @@ void GameObject::Update()
 	//重力加算
 	velocity.y += gravity;
 
+	EffectUpdate();
 }
 
 void GameObject::MotionStart()
@@ -123,10 +124,7 @@ void GameObject::OnePattern()
 
 }
 
-bool GameObject::isOneLoop()
-{
-	return animation[(int)weapon][(int)state].cutPos.x >= animation[(int)weapon][(int)state].totalPatterns;
-}
+
 
 void GameObject::EffectAdd(Vec2 addpos)
 {
@@ -176,11 +174,12 @@ void GameObject::StateManagement()
 		break;
 	case StateType::RECEIVE:
 		OnePattern();
-		statename = { U"受け" };//未
+		ReceiveProcess();
+		statename = { U"受け" };
 		break;
 	case StateType::ATTACK:
-		//AttackProcess();
-		statename = { U"攻撃" };//未
+		AttackProcess();
+		statename = { U"攻撃" };
 		break;
 	case StateType::MAGIC:
 		OnePattern();
@@ -381,10 +380,24 @@ void GameObject::FallingProcess()
 }
 
 
-//void GameObject::ReceiveProcess()
-//{
-//}
-//
+void GameObject::ReceiveProcess()
+{
+	if (velocity.x > 0)
+	{
+		velocity.x -= frictionForce;
+	}
+	else if (velocity.x < 0)
+	{
+		velocity.x += frictionForce;
+	}
+
+	if (isOneLoop())
+	{
+		animation[(int)weapon][(int)state].cutPos.x = 0;
+		ChangeWait();
+	}
+}
+
 
 void GameObject::AttackProcess()
 {
@@ -412,16 +425,66 @@ void GameObject::AttackProcess()
 
 void GameObject::FistHandling()
 {
+	
+
+	if (currentTime.ms() >= 0 && currentTime.ms() < 60)
+	{
+		animation[(int)weapon][(int)state].cutPos.x = 0;
+	}
+	else if (currentTime.ms() > 60 && currentTime.ms() < 120)
+	{
+		animation[(int)weapon][(int)state].cutPos.x = 1;
+	}
+	else if (currentTime.ms() > 120 && currentTime.ms() < 180)
+	{
+		animation[(int)weapon][(int)state].cutPos.x = 2;
+	}
+	else if (currentTime.ms() > 180 && currentTime.ms() < 300)
+	{
+		if (isRearGap == false)
+		{
+			if (isMirror == false)
+			{
+				EffectAdd(position + fistFiringPoint);
+			}
+			else
+			{
+				EffectAdd(position + fistFiringMirrorPoint);
+			}
+
+			isRearGap = true;
+		}
+
+		animation[(int)weapon][(int)state].cutPos.x = 3;
+	}
+	else if (currentTime.ms() > 300 && currentTime.ms() < 384)
+	{
+		animation[(int)weapon][(int)state].cutPos.x = 4;
+	}
+	else if (currentTime.ms() > 384 && currentTime.ms() < 468)
+	{
+		animation[(int)weapon][(int)state].cutPos.x = 5;
+	}
+	else if (currentTime.ms() > 468 && currentTime.ms() < animation[(int)weapon][(int)state].motionTime)
+	{
+		animation[(int)weapon][(int)state].cutPos.x = 6;
+	}
+	else
+	{
+		isRearGap = false;
+		animation[(int)weapon][(int)state].cutPos.x = 0;
+		ChangeWait();
+	}
 
 }
 
-
-
 void GameObject::ChangeWait()
 {
-	if (state == StateType::WALK || state == StateType::RUN || state == StateType::FALLING || state == StateType::ATTACK)
+	if (state == StateType::WALK || state == StateType::RUN || state == StateType::FALLING || state == StateType::RECEIVE|| state == StateType::ATTACK)
 	{
 		state = StateType::WAIT;
+		currentTime.restart();
+
 	}
 }
 
@@ -476,6 +539,7 @@ void GameObject::ChangeJump()
 	if (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN)
 	{
 		state = StateType::JUMP;
+		currentTime.restart();
 	}
 }
 
@@ -487,17 +551,21 @@ void GameObject::ChangeFalling()
 	}
 }
 
-//
-//void GameObject::ChangeReceive()
-//{
-//	state = StateType::RECEIVE;
-//}
-//
+
+void GameObject::ChangeReceive(Vec2 knockBack)
+{
+	velocity += knockBack;
+	state = StateType::RECEIVE;
+	currentTime.restart();
+}
+
 void GameObject::ChangeAttack()
 {
-	if (state == StateType::WAIT)
+	if (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN || state == StateType::FALLING )
 	{
 		state = StateType::ATTACK;
+		currentTime.restart();
+
 	}
 }
 
@@ -521,8 +589,6 @@ void GameObject::EffectDraw(bool hitBoxDraw) const
 	}
 
 }
-
-
 
 void GameObject::AudioStop()
 {
@@ -586,6 +652,8 @@ void GameObject::CoordinateRelated() const
 	font30(U"スピード", charaSpeed).draw(0, font30.height() * 2);
 	font30(U"ジャンプパワー ", jumpPower).draw(0, font30.height() * 3);
 	font30(U"着地してるか ", isLanding).draw(0, font30.height() * 4);
+	font30(U"プレイヤーからのマウス地点 ", Cursor::Pos() - position).draw(0, font30.height() * 5);
+
 }
 
 
