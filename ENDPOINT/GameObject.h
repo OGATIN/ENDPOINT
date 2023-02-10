@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include"EffectClass.h"
 
 enum class SEstate
 {
@@ -40,7 +41,9 @@ public:
 	const double jumpPowerMax = 20;
 	double jumpPower = 0;
 	int jumpTiming = 6;
-	
+
+	EffectClass fistEffect;
+	Array<EffectClass>effects;
 
 	//デバック用フォント
 	Font font30{ 30 };
@@ -55,16 +58,15 @@ public:
 
 	GameObject() {};
 
-	GameObject(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
+	GameObject(Texture _animation[4][20], EffectClass effect, Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 	{
-
-		Reload(_animation, _audio, AnimationData, TextureShiftData, statusData, skillPointStatData, experienceBorder, magicSkillPointData, magicOther);
+		Reload(_animation, effect,_audio, AnimationData, TextureShiftData, statusData, skillPointStatData, experienceBorder, magicSkillPointData, magicOther);
 	};
 
 	//機能
 
 	/// @brief 再読み込み
-	void Reload(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther);
+	void Reload(Texture _animation[4][20], EffectClass effect, Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther);
 
 	/// @brief 毎フレーム更新する情報
 	void Update();
@@ -83,6 +85,10 @@ public:
 
 	//一つのモーションが終わったかどうか
 	bool isOneLoop();
+
+	void EffectAdd(Vec2 addpos);
+
+	void EffectUpdate();
 
 	/// @brief 状態に応じた処理を行う
 	void StateManagement();
@@ -107,6 +113,8 @@ public:
 
 	/// @brief 攻撃の処理
 	void AttackProcess();
+
+	void FistHandling();
 
 	/// @brief 待機状態への遷移
 	void ChangeWait();
@@ -137,6 +145,8 @@ public:
 
 	/// @brief animationのテクスチャを描画する
 	void Draw()const;
+
+	void EffectDraw(bool hitBoxDraw = false)const;
 
 	/// @brief 再生を停止する
 	void AudioStop();

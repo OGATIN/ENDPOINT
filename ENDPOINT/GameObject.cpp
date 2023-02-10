@@ -2,17 +2,17 @@
 #include "GameObject.h"
 
 
-void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
+void GameObject::Reload(Texture _animation[4][20], EffectClass effect, Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 {
 
 	for (int j = 0; j < 4; j++)
 	{
 		for (int i = 0; i < 7; i++)
 		{
-			if (i < 5)
+			if (i < 6)
 			{
 				//とりあえず共通のデータはここでロード
-				animation[j][i].Reload(_animation[j][i], AnimationData, i + 1);
+				animation[j][i].Load(_animation[j][i], AnimationData, i + 1);
 			}
 			else
 			{
@@ -20,18 +20,12 @@ void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV Animati
 				{
 				case 0:
 
-					if (i == (int)StateType::RECEIVE)
-					{
-						//とりあえず共通のデータはここでロード
-						animation[j][i].Reload(_animation[j][i], AnimationData, 19);
-
-					}
-
 					if (i == (int)StateType::ATTACK)
 					{
 						//とりあえず共通のデータはここでロード
-						animation[j][i].Reload(_animation[j][i], AnimationData, 7);
+						animation[j][i].Load(_animation[j][i], AnimationData, 7,true);
 					}
+
 					break;
 				case 1:
 					break;
@@ -50,18 +44,20 @@ void GameObject::Reload(Texture _animation[4][20], Audio _audio[19], CSV Animati
 		}
 	}
 
+	fistEffect = effect;
+
 	for (int i = 0; i < 19; i++)
 	{
 		audio[i] = _audio[i];
 	}
 
-	for (int j = 0; j < 4; j++)
+	for (int j = 0; j < 1; j++)
 	{
-		for (int i = 0; i < 13; i++)
+		for (int i = 0; i < 7; i++)
 		{
-			for (int p = 0; p < 11; p++)
+			for (int p = 0; p < Parse<int>(AnimationData[i + 1][6]); p++)
 			{
-				shiftInternalHitRect[j][i][p] = /*Parse<Rect>(TextureShiftData[1][1])*/Parse<Rect>(TextureShiftData[(j * 10) + i + 1][p + 1]);
+				shiftInternalHitRect[j][i][p] = /*Parse<Rect>(TextureShiftData[1][1])*/Parse<Rect>(TextureShiftData[(j * 14) + i + 1][p + 1]);
 			}
 			
 		}
@@ -103,7 +99,7 @@ void GameObject::PatternLoop()
 	OnePattern();
 
 	//ループ
-	if (animation[(int)weapon][(int)state].cutPos.x >= animation[(int)weapon][(int)state].endPattern)
+	if (animation[(int)weapon][(int)state].cutPos.x >= animation[(int)weapon][(int)state].totalPatterns)
 	{
 		animation[(int)weapon][(int)state].ResetImage();
 	}
@@ -112,7 +108,7 @@ void GameObject::PatternLoop()
 
 void GameObject::OnePattern()
 {
-	if (animation[(int)weapon][(int)state].endPattern > animation[(int)weapon][(int)state].cutPos.x)
+	if (animation[(int)weapon][(int)state].totalPatterns > animation[(int)weapon][(int)state].cutPos.x)
 	{
 		//タイル遷移
 		if (currentTime.ms() > (animation[(int)weapon][(int)state].OnePatternMotionTime() * motionEndMagnification))
@@ -130,6 +126,23 @@ void GameObject::OnePattern()
 bool GameObject::isOneLoop()
 {
 	return animation[(int)weapon][(int)state].cutPos.x >= animation[(int)weapon][(int)state].totalPatterns;
+}
+
+void GameObject::EffectAdd(Vec2 addpos)
+{
+	fistEffect.CreationPosChange(addpos);
+	effects << fistEffect;
+}
+
+void GameObject::EffectUpdate()
+{
+	for (auto& _effects : effects)
+	{
+		_effects.Update();
+	}
+
+	effects.remove_if([](EffectClass effect) { return effect.effectBase.totalPatterns <= effect.effectBase.cutPos.x; });
+
 }
 
 void GameObject::StateManagement()
@@ -166,7 +179,6 @@ void GameObject::StateManagement()
 		statename = { U"受け" };//未
 		break;
 	case StateType::ATTACK:
-		OnePattern();
 		//AttackProcess();
 		statename = { U"攻撃" };//未
 		break;
@@ -247,9 +259,9 @@ void GameObject::WalkProcess()
 	}
 
 
-	if ((speedAdd == 0) || (charaSpeed < velocity.x) || (-charaSpeed > velocity.x))
+	if (speedAdd == 0 || (charaSpeed < velocity.x) || (-charaSpeed > velocity.x))
 	{
-		if (velocity.x > 0 )
+		if (velocity.x > 0)
 		{
 			velocity.x -= frictionForce;
 		}
@@ -376,15 +388,12 @@ void GameObject::FallingProcess()
 
 void GameObject::AttackProcess()
 {
-	if (isOneLoop())
-	{
-		state = StateType::WAIT;
-	}
+	EffectUpdate();
 
 	switch (weapon)
 	{
 	case WeaponType::FIST:
-
+		FistHandling();
 		break;
 	case WeaponType::SWORD:
 
@@ -398,11 +407,19 @@ void GameObject::AttackProcess()
 	default:
 		break;
 	}
+
 }
+
+void GameObject::FistHandling()
+{
+
+}
+
+
 
 void GameObject::ChangeWait()
 {
-	if (state == StateType::WALK || state == StateType::RUN || state == StateType::FALLING)
+	if (state == StateType::WALK || state == StateType::RUN || state == StateType::FALLING || state == StateType::ATTACK)
 	{
 		state = StateType::WAIT;
 	}
@@ -490,6 +507,22 @@ void GameObject::Draw() const
 {
 	animation[(int)weapon][(int)state].Draw(position,isMirror);
 }
+
+void GameObject::EffectDraw(bool hitBoxDraw) const
+{
+	for (const auto& _effects : effects)
+	{
+		_effects.effectBase.Draw(_effects.creationPos);
+
+		if (hitBoxDraw == true)
+		{
+			_effects.hitBox.drawFrame();
+		}
+	}
+
+}
+
+
 
 void GameObject::AudioStop()
 {

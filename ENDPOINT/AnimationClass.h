@@ -17,6 +17,10 @@ public:
 
 	double motionTime = 0;		//モーション時間(秒),当たり判定のある時間などを考慮せず1モーションが終わるまでの時間
 
+	double PersistenceTime = 0;	//持続
+
+	double RearGapTime = 0;		//後隙
+
 	int startPattern = 0;		//切り取り位置(始)
 
 	int endPattern = 0;			//切り取り位置(終)
@@ -25,25 +29,36 @@ public:
 
 	Rect cutPos = { 0,0,0,0 };  //画像の切り取り位置
 
-	int size = 400; //画像のピクセル数
+	double size = 1;
 
 	//デバック用
 	double elapsedTime = 0;
 
 	AnimationClass(){};
 
-	AnimationClass(Texture _texture,CSV animationData, int statenumber)
+	/// @brief キャラクター用
+	/// @param _texture 
+	/// @param animationData 
+	/// @param statenumber 
+	AnimationClass(Texture _texture,CSV animationData, int statenumber, bool functionAdd = false)
 	{
-		Reload(_texture, animationData, statenumber);
+		Load(_texture, animationData, statenumber, functionAdd);
 	};
+
 
 	//機能
 
-	/// @brief 再読み込み
+	/// @brief 読み込み
 	/// @param _texture 画像データ
 	/// @param animationData アニメーションデータ
 	/// @param statenumber 状態番号
-	void Reload(Texture _texture, CSV animationData, int statenumber);
+	void Load(Texture _texture, CSV animationData, int statenumber, bool functionAdd = false);
+
+	/// @brief 
+	/// @param _texture 
+	/// @param effectData 
+	/// @param lineNumber 
+	void EffectLoud(Texture _texture, CSV effectData, int lineNumber);
 
 	/// @brief 画像パターンを初期化
 	void ResetImage();
@@ -51,7 +66,7 @@ public:
 	/// @brief 描画
 	/// @param position 描画位置
 	/// @param _mirror 反転してるか
-	void Draw(Vec2 position, bool _mirror) const;
+	void Draw(Vec2 position, bool _mirror = false) const;
 
 	/*デバック用*/
 

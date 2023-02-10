@@ -36,6 +36,8 @@ private:
 	Texture enemeyGuardMotionPNG		{ U"Material/1.img/敵/1.拳/11.防御モーション-enemey.png" };
 	Texture enemeyNotstaminaMotionPNG	{ U"Material/1.img/敵/1.拳/14.スタミナ切れ(待機)-enemey.png" };
 
+	Texture BlowPNG{ U"Material/2.EF/1.拳と杖.png" };
+
 	Audio WalkAudio			{ U"Material/4.SE/1.歩き.mp3" , Loop::Yes };
 	Audio RunAudio			{ U"Material/4.SE/2.走り.mp3" , Loop::Yes };
 	Audio JumpAudio			{ U"Material/4.SE/3.ジャンプ.mp3" };
@@ -58,12 +60,16 @@ private:
 
 	
 	CSV AnimationData{ U"ConfigData/アニメーションデータ.csv" };
+	CSV EffectData{ U"ConfigData/エフェクトデータ.csv" };
 	CSV TextureShiftData{ U"ConfigData/画像補正位置.csv" };
 	CSV BasicStatusData{ U"ConfigData/基礎ステータスデータ.csv" };
 	CSV SkillPointStatusData{ U"ConfigData/スキルポイントステータスデータ.csv" };
 	CSV ExperienceBorder{ U"ConfigData/経験値ボーダー.csv" };
 	CSV MagicSkillPointData{ U"ConfigData/魔法スキルポイントステータスデータ.csv" };
 	CSV MagicOther{ U"ConfigData/魔法その他.csv" };
+
+	EffectClass fistEffect{ BlowPNG ,EffectData ,1 };
+
 
 	Texture playerPNG[4][20] =
 	{
@@ -107,13 +113,14 @@ private:
 	};
 
 
-	PlayerClass Player = { playerPNG ,SEAudio,AnimationData ,TextureShiftData,BasicStatusData ,SkillPointStatusData,ExperienceBorder ,MagicSkillPointData ,MagicOther };
+	PlayerClass Player = { playerPNG ,fistEffect,SEAudio,AnimationData ,TextureShiftData,BasicStatusData ,SkillPointStatusData,ExperienceBorder ,MagicSkillPointData ,MagicOther };
 
-	EnemyClass Enemey = { enemeyPNG ,SEAudio,AnimationData ,TextureShiftData,BasicStatusData, SkillPointStatusData ,ExperienceBorder  ,MagicSkillPointData ,MagicOther };
+	EnemyClass Enemey = { enemeyPNG,fistEffect ,SEAudio,AnimationData ,TextureShiftData,BasicStatusData, SkillPointStatusData ,ExperienceBorder  ,MagicSkillPointData ,MagicOther };
 
 	CSV mapData{ U"ConfigData/map.csv" };
 
 	MapClass Map{ UnderGround, mapData };
+	
 
 	// プレイヤーインデックス (0 - 3)
 	size_t playerIndex = 0;

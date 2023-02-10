@@ -12,9 +12,9 @@ public:
 	Circle sR{ gameObject.GetHitRect().pos,300 };
 	Circle aR{ gameObject.GetHitRect().pos,100 };
 
-	EnemyClass(Texture _animation[4][20], Audio _audio[19], CSV AnimationData,CSV TextureShiftData,CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
+	EnemyClass(Texture _animation[4][20], EffectClass effect, Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 	{
-		gameObject.Reload(_animation, _audio, AnimationData, TextureShiftData, statusData, skillPointStatData, experienceBorder, magicSkillPointData, magicOther);
+		gameObject.Reload(_animation, effect, _audio, AnimationData, TextureShiftData, statusData, skillPointStatData, experienceBorder, magicSkillPointData, magicOther);
 	};
 
 	/// @brief 座標関連を更新します。

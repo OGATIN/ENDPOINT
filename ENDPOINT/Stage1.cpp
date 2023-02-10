@@ -26,8 +26,6 @@ void Stage1::update()
 
 	Map.Camera(Player.gameObject, 8, 3, 5, 8, 2, 7);
 
-	//Player.gameObject.AudioStop();
-
 	//敵の処理
 	Enemey.TestAI( Map.cameraPos,Vec2{ 1 * Map.MapGameSize().x,0});
 	//Enemey.Fist(Player.gameObject,Map.cameraPos);
@@ -285,6 +283,14 @@ void Stage1::update()
 		}
 
 	}
+
+	if (MouseL.pressed())
+	{
+
+	}
+	
+
+
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -309,6 +315,14 @@ void Stage1::draw() const
 	Player.gameObject.CoordinateRelated();
 	Player.ConfigOnlineDraw();
 	Map.HitJudgmentPointDraw(Player.gameObject);
+
+
+	//for (int i = 0; i < effects.size(); i++)
+	//{
+	//	font(effects[i].effectBase.cutPos.x).draw(0, font.height() * i);
+	//}
+
+
 
 	//デバック用
 	font(U"選択してる状態", statusTypeName).draw(450, 0);
