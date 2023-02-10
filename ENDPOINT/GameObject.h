@@ -26,11 +26,14 @@ public:
 	Vec2 position = { 0,0 };//座標
 	Vec2 velocity = { 0,0 };//ベクトル
 	Rect hitBox = { 0,0,0,0 };//当たり判定
+	Vec2 fistFiringPoint = { 205,130 };
+	Vec2 fistFiringMirrorPoint = { 115,130 };
 
 	double gravity = 0.5;//重力量
 	bool isLanding = false;//着地しているか
 	bool isMirror = false;//反転
 	bool isDescendStand = false;//下入力されているか(台用)
+	bool isRearGap = false;
 
 	const double charaSpeedMax = 10;
 	double charaSpeed = 0;
@@ -83,8 +86,6 @@ public:
 	//一つのモーションを動かす
 	void OnePattern();
 
-	//一つのモーションが終わったかどうか
-	bool isOneLoop();
 
 	void EffectAdd(Vec2 addpos);
 
@@ -108,8 +109,8 @@ public:
 	/// @brief 対空の処理
 	void FallingProcess();
 
-	///// @brief 受けの処理
-	//void ReceiveProcess();
+	/// @brief 受けの処理
+	void ReceiveProcess();
 
 	/// @brief 攻撃の処理
 	void AttackProcess();
@@ -137,8 +138,8 @@ public:
 	/// @brief 空中状態への遷移
 	void ChangeFalling();
 
-	///// @brief 
-	//void ChangeReceive();
+	/// @brief 
+	void ChangeReceive(Vec2 knockBack);
 
 	/// @brief 
 	void ChangeAttack();
@@ -166,6 +167,8 @@ public:
 	void CoordinateRelated()const;
 
 
+	//一つのモーションが終わったかどうか
+	bool isOneLoop();
 
 	/*内部データ用*/
 	Rect GetHitRect()const;
