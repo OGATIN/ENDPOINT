@@ -28,6 +28,8 @@ public:
 
 	GameObject gameObject;
 
+	StatusType currentStatus = StatusType::HP;
+
 	//バーの定義
 	Bar hitpointBar{};
 	Bar magicpointBar{ Palette::Blue};
@@ -57,6 +59,9 @@ public:
 	Array<int> remainingPointChara;
 	Menu remainingPointMenu;
 
+	Array<String> SkillAllocationIncreaseAmountChara;
+	Menu SkillAllocationIncreaseAmountMenu{Palette::White,Palette::Lightgrey};
+
 	Array<double> statusChar;
 	Array<double> magicChar;
 
@@ -69,6 +74,10 @@ public:
 	StatusClass status;
 
 	Audio selectAudio{ U"Material/4.SE/16.ゲームを一時停止した時1.mp3" };
+
+	void skillPointAdd();
+
+	void ChangeMagic();
 
 	void ConfigOnlineProcess();
 

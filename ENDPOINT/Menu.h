@@ -16,6 +16,12 @@ public:
 		currentColor = _currentColor;
 	};
 
+	Menu(Color _defaultColor, Color _currentColor)
+	{
+		defaultColor = _defaultColor;
+		currentColor = _currentColor;
+	};
+
 	Menu(Vec2 _startPos)
 	{
 		startPos = _startPos;
@@ -163,6 +169,17 @@ public:
 			//選択中の文字なら強調表示
 			bool current = (menuID == i);
 			font(menuChara[i]).draw(startPos.x, startPos.y + ((fontSize * 1.5) * i),isCurrentDraw ?  (current ? currentColor : defaultColor):defaultColor);
+		}
+	}
+
+	/// @brief menuIDより小さいmenuはdefaultColor、それ以外はcurrentColor
+	void TwoWayDraw()const
+	{
+		//描画
+		for (int i = 0; i < menuCharaSize; i++)
+		{
+			//選択中の文字なら強調表示
+			font(menuChara[i]).draw(startPos.x, startPos.y + ((fontSize * 1.2) * i), i >= menuID ? currentColor : defaultColor);
 		}
 	}
 

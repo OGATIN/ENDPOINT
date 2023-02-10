@@ -60,6 +60,20 @@ void PlayerClass::CharSet()
 		gameObject.status.skillPoint
 	};
 
+	SkillAllocationIncreaseAmountChara =
+	{
+		U"1            10up",
+		U"2            10up",
+		U"3            10up",
+		U"4            10up",
+		U"5            10up",
+		U"6            10up",
+		U"7            10up",
+		U"8            10up",
+		U"9            10up",
+		U"10           10up"
+	};
+
 	//String
 	firstMenu.StringSet(firstMenuChara, { 20,20 });
 	itemMenu.StringSet(itemMenuChara, { 100,10 });
@@ -67,10 +81,33 @@ void PlayerClass::CharSet()
 	magicMenu.StringSet(magicMenuChara, { 380,((statusMenuChara.size()) * 45) + 15 });
 	skillPointMenu.StringSet(skillPointMenuChara, { 340,20 });
 	skillPointNomalAllocationMenu.StringSet(skillPointNomalAllocationChara, { 520,20 });
+	SkillAllocationIncreaseAmountMenu.StringSet(SkillAllocationIncreaseAmountChara, { 820,20 });
 
 	//int
 	skillPointStateMenu.intSet(skillPointChar, { 750,20 });
 	remainingPointMenu.intSet(remainingPointChara, { 760,495 });
+}
+
+void PlayerClass::skillPointAdd()
+{
+	//スキルポイント加算
+	if ((KeyZ.down() || KeyEnter.down()) && gameObject.status.IsEnoughSkillPoint(currentStatus) == 0 && gameObject.status.IsAllocateSkillPoint(currentStatus))
+	{
+		gameObject.status.SkillPointAdd(currentStatus, MagicType::FIREBALL);
+
+		Initialize();
+	}
+}
+
+void PlayerClass::ChangeMagic()
+{
+	//スキルポイント加算
+	if ((KeyZ.down() || KeyEnter.down()) && gameObject.status.IsEnoughSkillPoint(currentStatus) == 0 && gameObject.status.IsAllocateSkillPoint(currentStatus))
+	{
+		gameObject.status.SkillPointAdd(currentStatus, gameObject.status.magicType);
+
+		Initialize();
+	}
 }
 
 void PlayerClass::Update()
@@ -276,22 +313,39 @@ void PlayerClass::ConfigOnlineProcess()
 				switch (skillPointNomalAllocationMenu.IsCurrent())
 				{
 				case 0:
+					currentStatus = StatusType::HP;
+					skillPointAdd();
 					break;
 				case 1:
+					currentStatus = StatusType::STAMINA;
+					skillPointAdd();
 					break;
 				case 2:
+					currentStatus = StatusType::MENTAL;
+					skillPointAdd();
 					break;
 				case 3:
+					currentStatus = StatusType::POWER;
+					skillPointAdd();
 					break;
 				case 4:
+					currentStatus = StatusType::PROTECTION;
+					skillPointAdd();
 					break;
 				case 5:
+					currentStatus = StatusType::WEIGHT;
+					skillPointAdd();
 					break;
 				case 6:
+					currentStatus = StatusType::MAGICTYPE;
 					break;
 				case 7:
+					currentStatus = StatusType::MP;
+					skillPointAdd();
 					break;
 				case 8:
+					currentStatus = StatusType::MAGICPOWER;
+					skillPointAdd();
 					break;
 				case 9:
 					if (KeyZ.down() || KeyEnter.down() || skillPointNomalAllocationMenu.IsMouseOver() && MouseL.down())
@@ -302,7 +356,6 @@ void PlayerClass::ConfigOnlineProcess()
 				default:
 					break;
 				}
-				
 				break;
 			case PlayerClass::SkillPointMenuTransition::SkillPointMagicAllocation:
 				break;
@@ -427,9 +480,11 @@ void PlayerClass::ConfigOnlineDraw() const
 				//後ろの四角い枠
 				Rect window5 = { 500,10,280,460 };
 				Rect window6 = { 610,490,170,40 };
+				Rect window7 = { 800,10,290,380 };
 
 				window5.drawFrame(10, Palette::White).draw(Palette::Black);
 				window6.drawFrame(10, Palette::White).draw(Palette::Black);
+				window7.drawFrame(10, Palette::White).draw(Palette::Black);
 
 				/*font30(U"体力").draw(520,15);
 				font30(U"筋力").draw(520,155);
@@ -441,6 +496,8 @@ void PlayerClass::ConfigOnlineDraw() const
 				skillPointStateMenu.NumberDraw_int(true);
 
 				remainingPointMenu.NumberDraw_int(false);
+
+				SkillAllocationIncreaseAmountMenu.TwoWayDraw();
 
 				font30(U"ポイント").draw(620,495);
 
