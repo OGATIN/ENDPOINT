@@ -55,6 +55,11 @@ void PlayerClass::CharSet()
 					   gameObject.status.magicPowerAllotted
 	};
 
+	remainingPointChara =
+	{
+		gameObject.status.skillPoint
+	};
+
 	//String
 	firstMenu.StringSet(firstMenuChara, { 20,20 });
 	itemMenu.StringSet(itemMenuChara, { 100,10 });
@@ -65,6 +70,7 @@ void PlayerClass::CharSet()
 
 	//int
 	skillPointStateMenu.intSet(skillPointChar, { 750,20 });
+	remainingPointMenu.intSet(remainingPointChara, { 760,495 });
 }
 
 void PlayerClass::Update()
@@ -267,7 +273,6 @@ void PlayerClass::ConfigOnlineProcess()
 			
 				skillPointStateMenu.InterlockingUpdate(skillPointNomalAllocationMenu);
 
-
 				switch (skillPointNomalAllocationMenu.IsCurrent())
 				{
 				case 0:
@@ -421,10 +426,10 @@ void PlayerClass::ConfigOnlineDraw() const
 			case PlayerClass::SkillPointMenuTransition::SkillPointNomalAllocation:
 				//後ろの四角い枠
 				Rect window5 = { 500,10,280,460 };
-				//Rect window6 = { 480,10,350,440 };
+				Rect window6 = { 610,490,170,40 };
 
 				window5.drawFrame(10, Palette::White).draw(Palette::Black);
-				//window6.drawFrame(10, Palette::White).draw(Palette::Black);
+				window6.drawFrame(10, Palette::White).draw(Palette::Black);
 
 				/*font30(U"体力").draw(520,15);
 				font30(U"筋力").draw(520,155);
@@ -434,6 +439,10 @@ void PlayerClass::ConfigOnlineDraw() const
 				skillPointNomalAllocationMenu.InRectDraw(true);
 
 				skillPointStateMenu.NumberDraw_int(true);
+
+				remainingPointMenu.NumberDraw_int(false);
+
+				font30(U"ポイント").draw(620,495);
 
 				break;
 			case PlayerClass::SkillPointMenuTransition::SkillPointMagicAllocation:

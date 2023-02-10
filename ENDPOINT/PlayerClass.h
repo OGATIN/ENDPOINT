@@ -49,13 +49,18 @@ public:
 	Menu skillPointMenu;
 
 	Array<String> skillPointNomalAllocationChara;
-	Menu skillPointNomalAllocationMenu{  };
+	Menu skillPointNomalAllocationMenu;
+
+	Array<int> skillPointChar;
+	Menu skillPointStateMenu;
+
+	Array<int> remainingPointChara;
+	Menu remainingPointMenu;
 
 	Array<double> statusChar;
 	Array<double> magicChar;
-	Array<int> skillPointChar;
 
-	Menu skillPointStateMenu;
+
 	
 	Font font30{ 30 ,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };//フォント
 
