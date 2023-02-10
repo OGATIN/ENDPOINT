@@ -61,10 +61,10 @@ void PlayerClass::CharSet()
 	statusMenu.StringSet(statusMenuChara, { 350,20 });
 	magicMenu.StringSet(magicMenuChara, { 380,((statusMenuChara.size()) * 45) + 15 });
 	skillPointMenu.StringSet(skillPointMenuChara, { 340,20 });
-	skillPointNomalAllocationMenu.StringSet(skillPointNomalAllocationChara, { 620,20 });
+	skillPointNomalAllocationMenu.StringSet(skillPointNomalAllocationChara, { 520,20 });
 
 	//int
-	skillPointStateMenu.intSet(skillPointChar, { 820,20 });
+	skillPointStateMenu.intSet(skillPointChar, { 750,20 });
 }
 
 void PlayerClass::Update()
@@ -264,8 +264,9 @@ void PlayerClass::ConfigOnlineProcess()
 
 				//通常スキルポイント分配画面を選択できる処理
 				skillPointNomalAllocationMenu.Update();
-
+			
 				skillPointStateMenu.InterlockingUpdate(skillPointNomalAllocationMenu);
+
 
 				switch (skillPointNomalAllocationMenu.IsCurrent())
 				{
@@ -419,15 +420,15 @@ void PlayerClass::ConfigOnlineDraw() const
 			{
 			case PlayerClass::SkillPointMenuTransition::SkillPointNomalAllocation:
 				//後ろの四角い枠
-				Rect window5 = { 500,10,350,460 };
+				Rect window5 = { 500,10,280,460 };
 				//Rect window6 = { 480,10,350,440 };
 
 				window5.drawFrame(10, Palette::White).draw(Palette::Black);
 				//window6.drawFrame(10, Palette::White).draw(Palette::Black);
 
-				font30(U"体力").draw(520,15);
+				/*font30(U"体力").draw(520,15);
 				font30(U"筋力").draw(520,155);
-				font30(U"魔力").draw(520,290);
+				font30(U"魔力").draw(520,290);*/
 
 				//メニュー描画
 				skillPointNomalAllocationMenu.InRectDraw(true);
