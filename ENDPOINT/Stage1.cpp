@@ -104,6 +104,17 @@ void Stage1::update()
 		{
 			Player.gameObject.ChangeAttack();
 		}
+
+		if (KeyEnter.down())
+		{
+			//一時停止
+			Player.gameObject.MotionStop();
+		}
+
+		if (MouseL.down())
+		{
+			Player.gameObject.ChangeReceive({ -5, -3 });
+		}
 	}
 
 
@@ -119,11 +130,6 @@ void Stage1::update()
 
 	//	}
 
-	//	if (KeyEnter.down())
-	//	{
-	//		//一時停止
-	//		Player.gameObject.MotionStop();
-	//	}
 	//}
 
 	Player.ConfigOnlineProcess();
@@ -284,10 +290,6 @@ void Stage1::update()
 
 	}
 
-	if (MouseL.pressed())
-	{
-
-	}
 	
 
 
@@ -308,6 +310,7 @@ void Stage1::draw() const
 
 	//画像描画
 	Player.Draw();
+	Player.gameObject.EffectDraw(true);
 	Player.DebugDraw();
 	//Player.gameObject.status.BaseStatusDrow(true);
 	Enemey.Draw();

@@ -1,6 +1,10 @@
 ﻿#include "stdafx.h"
 #include "GameObject.h"
 
+bool GameObject::isOneLoop()
+{
+	return animation[(int)weapon][(int)state].cutPos.x >= animation[(int)weapon][(int)state].totalPatterns;
+}
 
 Rect GameObject::GetHitRect()const
 {
