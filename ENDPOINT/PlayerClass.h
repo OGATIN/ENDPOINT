@@ -60,7 +60,7 @@ public:
 	Menu remainingPointMenu;
 
 	Array<String> SkillAllocationIncreaseAmountChara;
-	Menu SkillAllocationIncreaseAmountMenu{Palette::White,Palette::Lightgrey};
+	Menu SkillAllocationIncreaseAmountMenu{Palette::Lightgrey,Palette::White};
 
 	Array<double> statusChar;
 	Array<double> magicChar;

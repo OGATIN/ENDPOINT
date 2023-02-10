@@ -315,26 +315,32 @@ void PlayerClass::ConfigOnlineProcess()
 				case 0:
 					currentStatus = StatusType::HP;
 					skillPointAdd();
+					SkillAllocationIncreaseAmountMenu.menuID = gameObject.status.hitPointAllotted;
 					break;
 				case 1:
 					currentStatus = StatusType::STAMINA;
 					skillPointAdd();
+					SkillAllocationIncreaseAmountMenu.menuID = gameObject.status.staminaAllotted;
 					break;
 				case 2:
 					currentStatus = StatusType::MENTAL;
 					skillPointAdd();
+					SkillAllocationIncreaseAmountMenu.menuID = gameObject.status.mentalAllotted;
 					break;
 				case 3:
 					currentStatus = StatusType::POWER;
 					skillPointAdd();
+					SkillAllocationIncreaseAmountMenu.menuID = gameObject.status.powerAllotted;
 					break;
 				case 4:
 					currentStatus = StatusType::PROTECTION;
 					skillPointAdd();
+					SkillAllocationIncreaseAmountMenu.menuID = gameObject.status.protectionAllotted;
 					break;
 				case 5:
 					currentStatus = StatusType::WEIGHT;
 					skillPointAdd();
+					SkillAllocationIncreaseAmountMenu.menuID = gameObject.status.weightAllotted;
 					break;
 				case 6:
 					currentStatus = StatusType::MAGICTYPE;
@@ -342,10 +348,12 @@ void PlayerClass::ConfigOnlineProcess()
 				case 7:
 					currentStatus = StatusType::MP;
 					skillPointAdd();
+					SkillAllocationIncreaseAmountMenu.menuID = gameObject.status.magicPointAllotted;
 					break;
 				case 8:
 					currentStatus = StatusType::MAGICPOWER;
 					skillPointAdd();
+					SkillAllocationIncreaseAmountMenu.menuID = gameObject.status.magicPowerAllotted;
 					break;
 				case 9:
 					if (KeyZ.down() || KeyEnter.down() || skillPointNomalAllocationMenu.IsMouseOver() && MouseL.down())
@@ -484,7 +492,6 @@ void PlayerClass::ConfigOnlineDraw() const
 
 				window5.drawFrame(10, Palette::White).draw(Palette::Black);
 				window6.drawFrame(10, Palette::White).draw(Palette::Black);
-				window7.drawFrame(10, Palette::White).draw(Palette::Black);
 
 				/*font30(U"体力").draw(520,15);
 				font30(U"筋力").draw(520,155);
@@ -497,7 +504,17 @@ void PlayerClass::ConfigOnlineDraw() const
 
 				remainingPointMenu.NumberDraw_int(false);
 
-				SkillAllocationIncreaseAmountMenu.TwoWayDraw();
+				if (skillPointNomalAllocationMenu.IsCurrent() != 6)
+				{
+					window7.drawFrame(10, Palette::White).draw(Palette::Black);
+
+					SkillAllocationIncreaseAmountMenu.TwoWayDraw();
+				}
+				else
+				{
+
+				}
+				
 
 				font30(U"ポイント").draw(620,495);
 

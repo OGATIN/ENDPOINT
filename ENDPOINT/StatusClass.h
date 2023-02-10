@@ -17,7 +17,7 @@ public:
 	
 	int level = 1;//プレイヤーのレベル
 
-	int skillPoint = 1;//残ってるスキルポイントの値(デフォルト1)
+	int skillPoint = 12;//残ってるスキルポイントの値(デフォルト1)
 
 	int hitPointAllotted = 0;//割り振られた値(HP)
 	int staminaAllotted = 0;//割り振られた値(スタミナ)
