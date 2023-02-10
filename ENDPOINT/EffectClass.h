@@ -7,8 +7,11 @@ public:
 	AnimationClass effectBase;
 
 	Vec2 creationPos;
+	RectF hitBox;
 
 	Stopwatch currentTime;
+
+	
 
 	EffectClass() {};
 
@@ -21,10 +24,13 @@ public:
 		effectBase.EffectLoud(_texture, effectData, lineNumber);
 	};
 
+	void Update();
+
 	void Animation(double _motionEndMagnification = 1);
 
 	void CreationPosChange(Vec2 changePos);
 
-	bool IsDelete();
+	void HitBoxUpdate();
+
 };
 

@@ -68,6 +68,9 @@ private:
 	CSV MagicSkillPointData{ U"ConfigData/魔法スキルポイントステータスデータ.csv" };
 	CSV MagicOther{ U"ConfigData/魔法その他.csv" };
 
+	EffectClass fistEffect{ BlowPNG ,EffectData ,1 };
+
+
 	Texture playerPNG[4][20] =
 	{
 		/*0が拳*/{{waitingMotionPNG} ,{walkMotionPNG} ,{runMotionPNG},{jumpMotionPNG},{fallingMotionPNG},{receiveMotionPNG},{attackMotionPNG}},
@@ -110,16 +113,14 @@ private:
 	};
 
 
-	PlayerClass Player = { playerPNG ,SEAudio,AnimationData ,TextureShiftData,BasicStatusData ,SkillPointStatusData,ExperienceBorder ,MagicSkillPointData ,MagicOther };
+	PlayerClass Player = { playerPNG ,fistEffect,SEAudio,AnimationData ,TextureShiftData,BasicStatusData ,SkillPointStatusData,ExperienceBorder ,MagicSkillPointData ,MagicOther };
 
-	EnemyClass Enemey = { enemeyPNG ,SEAudio,AnimationData ,TextureShiftData,BasicStatusData, SkillPointStatusData ,ExperienceBorder  ,MagicSkillPointData ,MagicOther };
+	EnemyClass Enemey = { enemeyPNG,fistEffect ,SEAudio,AnimationData ,TextureShiftData,BasicStatusData, SkillPointStatusData ,ExperienceBorder  ,MagicSkillPointData ,MagicOther };
 
 	CSV mapData{ U"ConfigData/map.csv" };
 
 	MapClass Map{ UnderGround, mapData };
-
-	EffectClass fistEffect{ BlowPNG ,EffectData ,1};
-	Array<EffectClass>effects;
+	
 
 	// プレイヤーインデックス (0 - 3)
 	size_t playerIndex = 0;

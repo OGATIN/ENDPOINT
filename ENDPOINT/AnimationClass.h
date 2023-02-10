@@ -17,6 +17,10 @@ public:
 
 	double motionTime = 0;		//モーション時間(秒),当たり判定のある時間などを考慮せず1モーションが終わるまでの時間
 
+	double PersistenceTime = 0;	//持続
+
+	double RearGapTime = 0;		//後隙
+
 	int startPattern = 0;		//切り取り位置(始)
 
 	int endPattern = 0;			//切り取り位置(終)
@@ -24,6 +28,8 @@ public:
 	int totalPatterns = 0;		//アニメーションの層パターン数
 
 	Rect cutPos = { 0,0,0,0 };  //画像の切り取り位置
+
+	double size = 1;
 
 	//デバック用
 	double elapsedTime = 0;
@@ -34,9 +40,9 @@ public:
 	/// @param _texture 
 	/// @param animationData 
 	/// @param statenumber 
-	AnimationClass(Texture _texture,CSV animationData, int statenumber)
+	AnimationClass(Texture _texture,CSV animationData, int statenumber, bool functionAdd = false)
 	{
-		Load(_texture, animationData, statenumber);
+		Load(_texture, animationData, statenumber, functionAdd);
 	};
 
 
@@ -46,7 +52,7 @@ public:
 	/// @param _texture 画像データ
 	/// @param animationData アニメーションデータ
 	/// @param statenumber 状態番号
-	void Load(Texture _texture, CSV animationData, int statenumber);
+	void Load(Texture _texture, CSV animationData, int statenumber, bool functionAdd = false);
 
 	/// @brief 
 	/// @param _texture 

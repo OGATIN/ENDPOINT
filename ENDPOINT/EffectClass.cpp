@@ -1,6 +1,12 @@
 ﻿#include "stdafx.h"
 #include "EffectClass.h"
 
+void EffectClass::Update()
+{
+	Animation();
+	HitBoxUpdate();
+}
+
 void EffectClass::Animation(double _motionEndMagnification)
 {
 	if (currentTime.isRunning() == false)
@@ -22,14 +28,13 @@ void EffectClass::Animation(double _motionEndMagnification)
 
 void EffectClass::CreationPosChange(Vec2 changePos)
 {
-	creationPos = changePos - (effectBase.cutPos.size / 2);
+	creationPos = changePos - (effectBase.cutPos.size / 2 * effectBase.size);
 }
 
-
-bool EffectClass::IsDelete()
+void EffectClass::HitBoxUpdate()
 {
-	if (effectBase.totalPatterns < effectBase.cutPos.x)
-	{
-		return true;
-	}
+	hitBox = RectF(creationPos, (effectBase.texture.width() / effectBase.totalPatterns * effectBase.size), effectBase.texture.height() * effectBase.size);
 }
+
+
+
