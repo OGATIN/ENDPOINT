@@ -59,8 +59,11 @@ public:
 	Array<int> remainingPointChara;
 	Menu remainingPointMenu;
 
-	Array<String> SkillAllocationIncreaseAmountChara;
-	Menu SkillAllocationIncreaseAmountMenu{Palette::Lightgrey,Palette::White};
+	Array<String> skillAllocationIncreaseAmountChara;
+	Menu skillAllocationIncreaseAmountMenu{Palette::Lightgrey,Palette::White};
+
+	Array<String>magicSelectChara;
+	Menu magicSelectMenu;
 
 	Array<double> statusChar;
 	Array<double> magicChar;
