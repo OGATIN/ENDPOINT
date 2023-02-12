@@ -18,8 +18,8 @@ void AnimationClass::Load(Texture _texture, CSV animationData, int statenumber,b
 
 	if (functionAdd == true)
 	{
-		PersistenceTime = Parse<double>(animationData[statenumber][1]) * 1000;
-		RearGapTime = Parse<double>(animationData[statenumber][2]) * 1000;
+		//PersistenceTime = Parse<double>(animationData[statenumber][1]) * 1000;
+		//RearGapTime = Parse<double>(animationData[statenumber][2]) * 1000;
 	}
 }
 

@@ -10,6 +10,11 @@ enum class WeaponType
 	FIST, SWORD, HAMMER, CANE
 };
 
+enum class EffectType
+{
+	FISTEFFECT, FIREBALLEFFECT,/*  SWORDEFFECT,*/
+};
+
 class AnimationClass
 {
 public:
@@ -17,9 +22,9 @@ public:
 
 	double motionTime = 0;		//モーション時間(秒),当たり判定のある時間などを考慮せず1モーションが終わるまでの時間
 
-	double PersistenceTime = 0;	//持続
+	//double PersistenceTime = 0;	//持続
 
-	double RearGapTime = 0;		//後隙
+	//double RearGapTime = 0;		//後隙
 
 	int startPattern = 0;		//切り取り位置(始)
 
@@ -76,6 +81,10 @@ public:
 	/// @brief １パターンあたりの時間を求める
 	/// @return １パターンあたりの時間
 	double OnePatternMotionTime();
+
+	/// @brief 現在の時間
+	/// @return 現在の時間
+	double ElapsedTime();
 
 
 private:

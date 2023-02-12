@@ -11,7 +11,11 @@ public:
 
 	Stopwatch currentTime;
 
-	
+	EffectType effectType;
+
+	double switchingTime = 200;//アニメーションを繰り返したいときの切り替え時間
+
+	int conut = 1;
 
 	EffectClass() {};
 
@@ -28,9 +32,17 @@ public:
 
 	void Animation(double _motionEndMagnification = 1);
 
+	void LongDistanceAnimation();
+
+	void EffectTypeChange(EffectType changeType);
+
 	void CreationPosChange(Vec2 changePos);
 
 	void HitBoxUpdate();
+
+	/// @brief アニメーションの全体時間(現在)
+	/// @return アニメーションの全体時間(現在)
+	double ElapsedTime();
 
 };
 

@@ -21,8 +21,8 @@ private:
 	Texture receiveMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/10.受けモーション.png" };
 	Texture attackMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/7.拳モーション.png" };
 	Texture magicMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/8.攻撃魔法モーション.png" };
-	Texture guardMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/11.防御モーション.png" };
-	Texture notstaminaMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/14.スタミナ切れ(待機).png" };
+	//Texture guardMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/11.防御モーション.png" };
+	//Texture notstaminaMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/14.スタミナ切れ(待機).png" };
 
 	Texture enemeyWaitingMotionPNG		{ U"Material/1.img/敵/1.拳/1.待機モーション-enemey.png" };
 	Texture enemeyWalkMotionPNG			{ U"Material/1.img/敵/1.拳/2.歩きモーション-enemey.png" };
@@ -33,10 +33,11 @@ private:
 	Texture enemeyReceiveMotionPNG		{ U"Material/1.img/敵/1.拳/10.受けモーション-enemey.png" };
 	Texture enemeyAttackMotionPNG		{ U"Material/1.img/敵/1.拳/7.拳モーション-enemey.png" };
 	Texture enemeyMagicMotionPNG		{ U"Material/1.img/敵/1.拳/8.攻撃魔法モーション-enemey.png" };
-	Texture enemeyGuardMotionPNG		{ U"Material/1.img/敵/1.拳/11.防御モーション-enemey.png" };
-	Texture enemeyNotstaminaMotionPNG	{ U"Material/1.img/敵/1.拳/14.スタミナ切れ(待機)-enemey.png" };
+	//Texture enemeyGuardMotionPNG		{ U"Material/1.img/敵/1.拳/11.防御モーション-enemey.png" };
+	//Texture enemeyNotstaminaMotionPNG	{ U"Material/1.img/敵/1.拳/14.スタミナ切れ(待機)-enemey.png" };
 
 	Texture BlowPNG{ U"Material/2.EF/1.拳と杖.png" };
+	Texture FireBallPNG{ U"Material/2.EF/３.火球.png" };
 
 	Audio WalkAudio			{ U"Material/4.SE/1.歩き.mp3" , Loop::Yes };
 	Audio RunAudio			{ U"Material/4.SE/2.走り.mp3" , Loop::Yes };
@@ -68,7 +69,7 @@ private:
 	CSV MagicSkillPointData{ U"ConfigData/魔法スキルポイントステータスデータ.csv" };
 	CSV MagicOther{ U"ConfigData/魔法その他.csv" };
 
-	EffectClass fistEffect{ BlowPNG ,EffectData ,1 };
+	EffectClass Effect[2]{ { BlowPNG ,EffectData ,1 } ,{FireBallPNG ,EffectData ,5 } ,};
 
 
 	Texture playerPNG[4][20] =
@@ -94,15 +95,15 @@ private:
 		WalkAudio,
 		RunAudio,
 		JumpAudio,
+		DamageAudio,
 		FistAudio,
 		SwordAudio,
+		FireBallAudio,//ここまで使ってます。
 		HammerAudio,
-		FireBallAudio,
 		ThunderAudio,
 		HealAudio,
 		StatusUpAudio,
 		TimeAudio,
-		DamageAudio,
 		GuardAudio,
 		GuardDamageAudio,
 		GuardBreakAudio,
@@ -113,9 +114,9 @@ private:
 	};
 
 
-	PlayerClass Player = { playerPNG ,fistEffect,SEAudio,AnimationData ,TextureShiftData,BasicStatusData ,SkillPointStatusData,ExperienceBorder ,MagicSkillPointData ,MagicOther };
+	PlayerClass Player = { playerPNG ,Effect,SEAudio,AnimationData ,TextureShiftData,BasicStatusData ,SkillPointStatusData,ExperienceBorder ,MagicSkillPointData ,MagicOther };
 
-	EnemyClass Enemey = { enemeyPNG,fistEffect ,SEAudio,AnimationData ,TextureShiftData,BasicStatusData, SkillPointStatusData ,ExperienceBorder  ,MagicSkillPointData ,MagicOther };
+	EnemyClass Enemey = { enemeyPNG,Effect ,SEAudio,AnimationData ,TextureShiftData,BasicStatusData, SkillPointStatusData ,ExperienceBorder  ,MagicSkillPointData ,MagicOther };
 
 	CSV mapData{ U"ConfigData/map.csv" };
 

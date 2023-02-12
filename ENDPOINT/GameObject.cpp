@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 
-void GameObject::Reload(Texture _animation[4][20], EffectClass effect, Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
+void GameObject::Reload(Texture _animation[4][20], EffectClass effect[2], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 {
 
 	for (int j = 0; j < 4; j++)
@@ -44,7 +44,10 @@ void GameObject::Reload(Texture _animation[4][20], EffectClass effect, Audio _au
 		}
 	}
 
-	fistEffect = effect;
+	for (int i = 0; i < 2; i++)
+	{
+		Effects[i] = effect[i];
+	}
 
 	for (int i = 0; i < 19; i++)
 	{
@@ -126,10 +129,11 @@ void GameObject::OnePattern()
 
 
 
-void GameObject::EffectAdd(Vec2 addpos)
+void GameObject::EffectAdd(EffectType effectType,Vec2 addpos)
 {
-	fistEffect.CreationPosChange(addpos);
-	effects << fistEffect;
+	Effects[(int)effectType].EffectTypeChange(effectType);
+	Effects[(int)effectType].CreationPosChange(addpos);
+	effects << Effects[(int)effectType];
 }
 
 void GameObject::EffectUpdate()
@@ -139,7 +143,7 @@ void GameObject::EffectUpdate()
 		_effects.Update();
 	}
 
-	effects.remove_if([](EffectClass effect) { return effect.effectBase.totalPatterns <= effect.effectBase.cutPos.x; });
+	effects.remove_if([](EffectClass effect) { return effect.effectBase.motionTime <= effect.currentTime.ms(); });
 
 }
 
@@ -382,6 +386,7 @@ void GameObject::FallingProcess()
 
 void GameObject::ReceiveProcess()
 {
+
 	if (velocity.x > 0)
 	{
 		velocity.x -= frictionForce;
@@ -425,11 +430,19 @@ void GameObject::AttackProcess()
 
 void GameObject::FistHandling()
 {
-	
+	if (velocity.x > 0)
+	{
+		velocity.x -= frictionForce;
+	}
+	else if (velocity.x < 0)
+	{
+		velocity.x += frictionForce;
+	}
 
 	if (currentTime.ms() >= 0 && currentTime.ms() < 60)
 	{
 		animation[(int)weapon][(int)state].cutPos.x = 0;
+		
 	}
 	else if (currentTime.ms() > 60 && currentTime.ms() < 120)
 	{
@@ -445,13 +458,16 @@ void GameObject::FistHandling()
 		{
 			if (isMirror == false)
 			{
-				EffectAdd(position + fistFiringPoint);
+				EffectAdd(EffectType::FISTEFFECT,position + fistFiringPoint);
 			}
 			else
 			{
-				EffectAdd(position + fistFiringMirrorPoint);
+				EffectAdd(EffectType::FISTEFFECT,position + fistFiringMirrorPoint);
 			}
 
+			audio[(int)SEstate::FISTSE].setVolume(GameData::MainVolume * GameData::SEVolume);
+			audio[(int)SEstate::FISTSE].stop();
+			audio[(int)SEstate::FISTSE].play();
 			isRearGap = true;
 		}
 
@@ -551,11 +567,14 @@ void GameObject::ChangeFalling()
 	}
 }
 
-
 void GameObject::ChangeReceive(Vec2 knockBack)
 {
 	velocity += knockBack;
 	state = StateType::RECEIVE;
+
+	audio[(int)SEstate::DAMAGESE].setVolume(GameData::MainVolume * GameData::SEVolume);
+	audio[(int)SEstate::DAMAGESE].stop();
+	audio[(int)SEstate::DAMAGESE].play();
 	currentTime.restart();
 }
 
@@ -654,6 +673,14 @@ void GameObject::CoordinateRelated() const
 	font30(U"着地してるか ", isLanding).draw(0, font30.height() * 4);
 	font30(U"プレイヤーからのマウス地点 ", Cursor::Pos() - position).draw(0, font30.height() * 5);
 
+}
+
+void GameObject::EffectsDraw() const
+{
+	for (int i = 0; i < effects.size(); i++)
+	{
+		font30(effects[i].currentTime.ms()).draw(0, font30.height() * i);
+	}
 }
 
 

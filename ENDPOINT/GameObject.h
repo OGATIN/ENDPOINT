@@ -1,10 +1,12 @@
 ﻿#pragma once
 #include"EffectClass.h"
 
+
 enum class SEstate
 {
-	WAIKSE, RUNSE, JUMPSE,
+	WAIKSE, RUNSE, JUMPSE, DAMAGESE,FISTSE,  SWORDSE, FIREBALLSE
 };
+
 
 class GameObject
 {
@@ -45,7 +47,7 @@ public:
 	double jumpPower = 0;
 	int jumpTiming = 6;
 
-	EffectClass fistEffect;
+	EffectClass Effects[2];
 	Array<EffectClass>effects;
 
 	//デバック用フォント
@@ -61,7 +63,7 @@ public:
 
 	GameObject() {};
 
-	GameObject(Texture _animation[4][20], EffectClass effect, Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
+	GameObject(Texture _animation[4][20], EffectClass effect[2], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 	{
 		Reload(_animation, effect,_audio, AnimationData, TextureShiftData, statusData, skillPointStatData, experienceBorder, magicSkillPointData, magicOther);
 	};
@@ -69,7 +71,7 @@ public:
 	//機能
 
 	/// @brief 再読み込み
-	void Reload(Texture _animation[4][20], EffectClass effect, Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther);
+	void Reload(Texture _animation[4][20], EffectClass effect[2], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther);
 
 	/// @brief 毎フレーム更新する情報
 	void Update();
@@ -87,7 +89,7 @@ public:
 	void OnePattern();
 
 
-	void EffectAdd(Vec2 addpos);
+	void EffectAdd(EffectType effectType, Vec2 addpos);
 
 	void EffectUpdate();
 
@@ -165,6 +167,8 @@ public:
 
 	/// @brief 座標のデバック表示
 	void CoordinateRelated()const;
+
+	void EffectsDraw()const;
 
 
 	//一つのモーションが終わったかどうか

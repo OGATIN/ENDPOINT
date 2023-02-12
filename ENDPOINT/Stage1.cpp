@@ -105,24 +105,25 @@ void Stage1::update()
 			Player.gameObject.ChangeAttack();
 		}
 
+		//魔法
+		if (KeyX.down() || controller.buttonA.down())
+		{
+			Player.gameObject.EffectAdd(EffectType::FIREBALLEFFECT,Player.gameObject.position);
+		}
+
 		if (KeyEnter.down())
 		{
 			//一時停止
 			Player.gameObject.MotionStop();
 		}
 
-		if (MouseL.down())
-		{
-			Player.gameObject.ChangeReceive({ -5, -3 });
-		}
+		//if (MouseL.down())
+		//{
+		//	Player.gameObject.ChangeReceive({ -5, -3 });
+		//}
 	}
 
 
-	//	//魔法
-	//	if (KeyX.down() || controller.buttonA.down())
-	//	{
-
-	//	}
 
 	//	//ガード
 	//	if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
@@ -312,10 +313,11 @@ void Stage1::draw() const
 	Player.Draw();
 	Player.gameObject.EffectDraw(true);
 	Player.DebugDraw();
+	Player.gameObject.EffectsDraw();
 	//Player.gameObject.status.BaseStatusDrow(true);
 	Enemey.Draw();
 	Enemey.DebugDraw();
-	Player.gameObject.CoordinateRelated();
+	//Player.gameObject.CoordinateRelated();
 	Player.ConfigOnlineDraw();
 	Map.HitJudgmentPointDraw(Player.gameObject);
 
