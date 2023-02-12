@@ -12,6 +12,13 @@ public:
 		gameObject.Reload(_animation, effect, _audio, AnimationData,TextureShiftData,statusData,skillPointStatData,experienceBorder,magicSkillPointData,magicOther);
 	};
 
+	enum class MenuUpdateProcess
+	{
+		FirstScene, Item, Status, SkillPoint, SkillPointNomalAllocation, SkillPointMagicAllocation, MagicSelect, FinalConfirmation
+	};
+
+	MenuUpdateProcess selectScene = MenuUpdateProcess::FirstScene;;
+
 	enum class MenuTransition
 	{
 		FirstScene, Item, Status, SkillPoint
@@ -77,6 +84,8 @@ public:
 	StatusClass status;
 
 	Audio selectAudio{ U"Material/4.SE/16.ゲームを一時停止した時1.mp3" };
+
+	void PlayAudio();
 
 	void skillPointAdd();
 

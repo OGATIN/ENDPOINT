@@ -121,6 +121,12 @@ void PlayerClass::ChangeMagic()
 	}
 }
 
+void PlayerClass::PlayAudio()
+{
+	//選択音流す
+	selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+}
+
 void PlayerClass::Update()
 {
 	//GameObjectのUpdateを実行
@@ -188,41 +194,42 @@ void PlayerClass::ConfigOnlineProcess()
 	//キャラコンフィグがオンラインになったら処理を実行(Eキーが押されたら)
 	if (isOnline)
 	{
-		//現在操作できるシーン
-		//選択するメニュー数に応じた数が必要
-		switch (selectMenu)
+
+		switch (selectScene)
 		{
-			//------------------------------------------------------------------------------
-		case PlayerClass::MenuTransition::FirstScene://最初の選択画面{ U"アイテム",U"ステータス",U"スキルポイント",U"閉じる" }
+		case PlayerClass::MenuUpdateProcess::FirstScene://最初の選択画面{ U"アイテム",U"ステータス",U"スキルポイント",U"閉じる" }
 
 			//最初の選択画面を選択できる処理
 			firstMenu.Update();
 
-			//最初の選択画面で選んでいるメニューを選択したときの処理
+			//遷移処理
 			switch (firstMenu.IsCurrent())
 			{
 			case 0://アイテム
 				if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
 				{
 					//アイテムに遷移
-					selectMenu = MenuTransition::Item;
-					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+					selectScene = MenuUpdateProcess::Item;
+					//選択音再生
+					PlayAudio();
 				}
 				break;
 			case 1://ステータス
 				if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
 				{
 					//ステータスに遷移
-					selectMenu = MenuTransition::Status;
-					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+					selectScene = MenuUpdateProcess::Status;
+					//選択音再生
+					PlayAudio();
 				}
 				break;
 			case 2://スキルポイント
 				if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
 				{
 					//スキルポイントに遷移
-					selectMenu = MenuTransition::SkillPoint;
-					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+					selectScene = MenuUpdateProcess::SkillPoint;
+					//選択音再生
+					PlayAudio();
 				}
 				break;
 			case 3://閉じる
@@ -230,172 +237,399 @@ void PlayerClass::ConfigOnlineProcess()
 				{
 					//キャラコンフィグ画面を閉じる
 					isOnline = false;
-					selectMenu = MenuTransition::FirstScene;
+
+					//選択音再生
+					PlayAudio();
 
 					//初期化
 					firstMenu.Initialize();
-
-					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
 				}
 				break;
 			default:
 				break;
 			}
 			break;
-			//------------------------------------------------------------------------------
 
+		case PlayerClass::MenuUpdateProcess::Item:
 
-			//------------------------------------------------------------------------------
-
-		case PlayerClass::MenuTransition::Item:
-			if (KeyZ.down() || KeyEnter.down())
+			//戻る用
+			if (KeyZ.down() || KeyEnter.down()||MouseL.down())
 			{
-				selectMenu = MenuTransition::FirstScene;
+				selectScene = MenuUpdateProcess::FirstScene;
 			}
 			break;
 
-			//------------------------------------------------------------------------------
+		case PlayerClass::MenuUpdateProcess::Status:
 
-
-
-			//------------------------------------------------------------------------------
-
-		case PlayerClass::MenuTransition::Status://ステータス確認画面,ここでは上下選択はない{ U"レベル",U"HP",U"MP",U"スタミナ",U"精神力",U"攻撃力",U"魔力",U"防御力",U"重量", U"魔法"}
-			if (KeyZ.down() || KeyEnter.down())
+			//戻る用
+			if (KeyZ.down() || KeyEnter.down() || MouseL.down())
 			{
-				selectMenu = MenuTransition::FirstScene;
+				selectScene = MenuUpdateProcess::FirstScene;
 			}
 			break;
 
-			//------------------------------------------------------------------------------
+		case PlayerClass::MenuUpdateProcess::SkillPoint:
 
+			//スキルポイントの最初の選択画面を選択できる処理
+			skillPointMenu.Update();
 
-
-			//------------------------------------------------------------------------------
-
-		case PlayerClass::MenuTransition::SkillPoint://スキルポイントの最初の画面{ U"通常",U"魔法",U"戻る" }
-
-			switch (selectSkillPointMenu)
+			//遷移処理
+			switch (skillPointMenu.IsCurrent())
 			{
-			case PlayerClass::SkillPointMenuTransition::SkillPointFirstMenu:
-				//スキルポイントの最初の選択画面を選択できる処理
-				skillPointMenu.Update();
-				//スキルポイントの最初の選択画面で選んでいるメニューを選択したときの処理
-				switch (skillPointMenu.IsCurrent())
+			case 0://通常
+				if (KeyZ.down() || KeyEnter.down() || skillPointMenu.IsMouseOver() && MouseL.down())
 				{
-				case 0://通常
-					if (KeyZ.down() || KeyEnter.down() || skillPointMenu.IsMouseOver() && MouseL.down())
-					{
-						//通常スキルポイント分配画面に遷移
-						selectSkillPointMenu = SkillPointMenuTransition::SkillPointNomalAllocation;
-						selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
-					}
-					break;
-				case 1://魔法
-					if (KeyZ.down() || KeyEnter.down() || skillPointMenu.IsMouseOver() && MouseL.down())
-					{
-						//魔法スキルポイント分配画面に遷移
-						selectSkillPointMenu = SkillPointMenuTransition::SkillPointMagicAllocation;
-						selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
-					}
-					break;
-				case 2://戻る
-					if (KeyZ.down() || KeyEnter.down() || skillPointMenu.IsMouseOver() && MouseL.down())
-					{
-						//初期化
-						skillPointMenu.Initialize();
-
-						//一つ前の画面に戻る
-						selectMenu = MenuTransition::FirstScene;
-						selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
-					}
-					break;
-				default:
-					break;
+					//通常スキルポイント分配画面に遷移
+					selectScene = MenuUpdateProcess::SkillPointNomalAllocation;
+					//選択音再生
+					PlayAudio();
 				}
 				break;
-			case PlayerClass::SkillPointMenuTransition::SkillPointNomalAllocation:
+			case 1://魔法
+				if (KeyZ.down() || KeyEnter.down() || skillPointMenu.IsMouseOver() && MouseL.down())
+				{
+					//魔法スキルポイント分配画面に遷移
+					selectScene = MenuUpdateProcess::SkillPointMagicAllocation;
+					//選択音再生
+					PlayAudio();
+				}
+				break;
+			case 2://戻る
+				if (KeyZ.down() || KeyEnter.down() || skillPointMenu.IsMouseOver() && MouseL.down())
+				{
+					//一つ前の画面に戻る
+					selectScene = MenuUpdateProcess::FirstScene;
 
-				//通常スキルポイント分配画面を選択できる処理
-				skillPointNomalAllocationMenu.Update();
+					//選択音再生
+					PlayAudio();
+
+					//初期化
+					skillPointMenu.Initialize();
+				}
+				break;
+			default:
+				break;
+			}
+			break;
 			
-				skillPointStateMenu.InterlockingUpdate(skillPointNomalAllocationMenu);
+		case PlayerClass::MenuUpdateProcess::SkillPointNomalAllocation:
 
-				switch (skillPointNomalAllocationMenu.IsCurrent())
+			//通常スキルポイント分配画面を選択できる処理
+			skillPointNomalAllocationMenu.Update();
+
+			//右の変数が連動
+			skillPointStateMenu.InterlockingUpdate(skillPointNomalAllocationMenu);
+
+			//遷移処理
+			switch (skillPointNomalAllocationMenu.IsCurrent())
+			{
+			case 0:
+				//ステータスの状態遷移
+				currentStatus = StatusType::HP;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.hitPointAllotted;
+				break;
+			case 1:
+				//ステータスの状態遷移
+				currentStatus = StatusType::STAMINA;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.staminaAllotted;
+				break;
+			case 2:
+				//ステータスの状態遷移
+				currentStatus = StatusType::MENTAL;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.mentalAllotted;
+				break;
+			case 3:
+				//ステータスの状態遷移
+				currentStatus = StatusType::POWER;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.powerAllotted;
+				break;
+			case 4:
+				//ステータスの状態遷移
+				currentStatus = StatusType::PROTECTION;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.protectionAllotted;
+				break;
+			case 5:
+				//ステータスの状態遷移
+				currentStatus = StatusType::WEIGHT;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.weightAllotted;
+				break;
+			case 6:
+				//ステータスの状態遷移
+				currentStatus = StatusType::MAGICTYPE;
+
+				if (KeyZ.down() || KeyEnter.down() || skillPointNomalAllocationMenu.IsMouseOver() && MouseL.down())
 				{
-				case 0:
-					currentStatus = StatusType::HP;
-					skillPointAdd();
-					skillAllocationIncreaseAmountMenu.menuID = gameObject.status.hitPointAllotted;
-					break;
-				case 1:
-					currentStatus = StatusType::STAMINA;
-					skillPointAdd();
-					skillAllocationIncreaseAmountMenu.menuID = gameObject.status.staminaAllotted;
-					break;
-				case 2:
-					currentStatus = StatusType::MENTAL;
-					skillPointAdd();
-					skillAllocationIncreaseAmountMenu.menuID = gameObject.status.mentalAllotted;
-					break;
-				case 3:
-					currentStatus = StatusType::POWER;
-					skillPointAdd();
-					skillAllocationIncreaseAmountMenu.menuID = gameObject.status.powerAllotted;
-					break;
-				case 4:
-					currentStatus = StatusType::PROTECTION;
-					skillPointAdd();
-					skillAllocationIncreaseAmountMenu.menuID = gameObject.status.protectionAllotted;
-					break;
-				case 5:
-					currentStatus = StatusType::WEIGHT;
-					skillPointAdd();
-					skillAllocationIncreaseAmountMenu.menuID = gameObject.status.weightAllotted;
-					break;
-				case 6:
-					currentStatus = StatusType::MAGICTYPE;
-					if (KeyZ.down() || KeyEnter.down() || skillPointNomalAllocationMenu.IsMouseOver() && MouseL.down())
-					{
-						selectSkillPointMenu = SkillPointMenuTransition::SkillPointMagicSelect;
-					}
-					break;
-				case 7:
-					currentStatus = StatusType::MP;
-					skillPointAdd();
-					skillAllocationIncreaseAmountMenu.menuID = gameObject.status.magicPointAllotted;
-					break;
-				case 8:
-					currentStatus = StatusType::MAGICPOWER;
-					skillPointAdd();
-					skillAllocationIncreaseAmountMenu.menuID = gameObject.status.magicPowerAllotted;
-					break;
-				case 9:
-					if (KeyZ.down() || KeyEnter.down() || skillPointNomalAllocationMenu.IsMouseOver() && MouseL.down())
-					{
-						selectSkillPointMenu = SkillPointMenuTransition::SkillPointFirstMenu;
-					}
-					break;
-				default:
-					break;
+					//魔法変更画面に遷移
+					selectScene = MenuUpdateProcess::MagicSelect;
+					//選択音再生
+					PlayAudio();
 				}
+
 				break;
-			case PlayerClass::SkillPointMenuTransition::SkillPointMagicAllocation:
+			case 7:
+				//ステータスの状態遷移
+				currentStatus = StatusType::MP;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.magicPointAllotted;
 				break;
-			case PlayerClass::SkillPointMenuTransition::SkillPointMagicSelect:
-				magicSelectMenu.Update();
-				ChangeMagic();
+			case 8:
+				//ステータスの状態遷移
+				currentStatus = StatusType::MAGICPOWER;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.magicPowerAllotted;
+				break;
+			case 9://戻る
+				if (KeyZ.down() || KeyEnter.down() || skillPointNomalAllocationMenu.IsMouseOver() && MouseL.down())
+				{
+					//一つ前の画面に戻る
+					selectScene = MenuUpdateProcess::SkillPoint;
+
+					//選択音再生
+					PlayAudio();
+
+					//初期化
+					skillPointNomalAllocationMenu.Initialize();
+				}
 				break;
 			default:
 				break;
 			}
 			break;
 
-			//------------------------------------------------------------------------------
-
+		case PlayerClass::MenuUpdateProcess::SkillPointMagicAllocation:
+			break;
+		case PlayerClass::MenuUpdateProcess::MagicSelect:
+			magicSelectMenu.Update();
+			ChangeMagic();
+			break;
+		case PlayerClass::MenuUpdateProcess::FinalConfirmation:
+			break;
 		default:
 			break;
 		}
+	//	//現在操作できるシーン
+	//	//選択するメニュー数に応じた数が必要
+	//	switch (selectMenu)
+	//	{
+	//		//------------------------------------------------------------------------------
+	//	case PlayerClass::MenuTransition::FirstScene://最初の選択画面{ U"アイテム",U"ステータス",U"スキルポイント",U"閉じる" }
+	//		//最初の選択画面を選択できる処理
+	//		firstMenu.Update();
+	//		//最初の選択画面で選んでいるメニューを選択したときの処理
+	//		switch (firstMenu.IsCurrent())
+	//		{
+	//		case 0://アイテム
+	//			if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
+	//			{
+	//				//アイテムに遷移
+	//				selectMenu = MenuTransition::Item;
+	//				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+	//			}
+	//			break;
+	//		case 1://ステータス
+	//			if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
+	//			{
+	//				//ステータスに遷移
+	//				selectMenu = MenuTransition::Status;
+	//				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+	//			}
+	//			break;
+	//		case 2://スキルポイント
+	//			if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
+	//			{
+	//				//スキルポイントに遷移
+	//				selectMenu = MenuTransition::SkillPoint;
+	//				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+	//			}
+	//			break;
+	//		case 3://閉じる
+	//			if (KeyZ.down() || KeyEnter.down() || firstMenu.IsMouseOver() && MouseL.down())
+	//			{
+	//				//キャラコンフィグ画面を閉じる
+	//				isOnline = false;
+	//				selectMenu = MenuTransition::FirstScene;
+	//				//初期化
+	//				firstMenu.Initialize();
+	//				selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+	//			}
+	//			break;
+	//		default:
+	//			break;
+	//		}
+	//		break;
+	//		//------------------------------------------------------------------------------
+	//		//------------------------------------------------------------------------------
+	//	case PlayerClass::MenuTransition::Item:
+	//		if (KeyZ.down() || KeyEnter.down())
+	//		{
+	//			selectMenu = MenuTransition::FirstScene;
+	//		}
+	//		break;
+	//		//------------------------------------------------------------------------------
+	//		//------------------------------------------------------------------------------
+	//	case PlayerClass::MenuTransition::Status://ステータス確認画面,ここでは上下選択はない{ U"レベル",U"HP",U"MP",U"スタミナ",U"精神力",U"攻撃力",U"魔力",U"防御力",U"重量", U"魔法"}
+	//		if (KeyZ.down() || KeyEnter.down())
+	//		{
+	//			selectMenu = MenuTransition::FirstScene;
+	//		}
+	//		break;
+	//		//------------------------------------------------------------------------------
+	//		//------------------------------------------------------------------------------
+	//	case PlayerClass::MenuTransition::SkillPoint://スキルポイントの最初の画面{ U"通常",U"魔法",U"戻る" }
+	//		switch (selectSkillPointMenu)
+	//		{
+	//		case PlayerClass::SkillPointMenuTransition::SkillPointFirstMenu:
+	//			//スキルポイントの最初の選択画面を選択できる処理
+	//			skillPointMenu.Update();
+	//			//スキルポイントの最初の選択画面で選んでいるメニューを選択したときの処理
+	//			switch (skillPointMenu.IsCurrent())
+	//			{
+	//			case 0://通常
+	//				if (KeyZ.down() || KeyEnter.down() || skillPointMenu.IsMouseOver() && MouseL.down())
+	//				{
+	//					//通常スキルポイント分配画面に遷移
+	//					selectSkillPointMenu = SkillPointMenuTransition::SkillPointNomalAllocation;
+	//					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+	//				}
+	//				break;
+	//			case 1://魔法
+	//				if (KeyZ.down() || KeyEnter.down() || skillPointMenu.IsMouseOver() && MouseL.down())
+	//				{
+	//					//魔法スキルポイント分配画面に遷移
+	//					selectSkillPointMenu = SkillPointMenuTransition::SkillPointMagicAllocation;
+	//					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+	//				}
+	//				break;
+	//			case 2://戻る
+	//				if (KeyZ.down() || KeyEnter.down() || skillPointMenu.IsMouseOver() && MouseL.down())
+	//				{
+	//					//初期化
+	//					skillPointMenu.Initialize();
+	//					//一つ前の画面に戻る
+	//					selectMenu = MenuTransition::FirstScene;
+	//					selectAudio.playOneShot(GameData::MainVolume * GameData::SEVolume);
+	//				}
+	//				break;
+	//			default:
+	//				break;
+	//			}
+	//			break;
+	//		case PlayerClass::SkillPointMenuTransition::SkillPointNomalAllocation:
+	//			//通常スキルポイント分配画面を選択できる処理
+	//			skillPointNomalAllocationMenu.Update();
+	//		
+	//			skillPointStateMenu.InterlockingUpdate(skillPointNomalAllocationMenu);
+	//			switch (skillPointNomalAllocationMenu.IsCurrent())
+	//			{
+	//			case 0:
+	//				currentStatus = StatusType::HP;
+	//				skillPointAdd();
+	//				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.hitPointAllotted;
+	//				break;
+	//			case 1:
+	//				currentStatus = StatusType::STAMINA;
+	//				skillPointAdd();
+	//				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.staminaAllotted;
+	//				break;
+	//			case 2:
+	//				currentStatus = StatusType::MENTAL;
+	//				skillPointAdd();
+	//				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.mentalAllotted;
+	//				break;
+	//			case 3:
+	//				currentStatus = StatusType::POWER;
+	//				skillPointAdd();
+	//				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.powerAllotted;
+	//				break;
+	//			case 4:
+	//				currentStatus = StatusType::PROTECTION;
+	//				skillPointAdd();
+	//				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.protectionAllotted;
+	//				break;
+	//			case 5:
+	//				currentStatus = StatusType::WEIGHT;
+	//				skillPointAdd();
+	//				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.weightAllotted;
+	//				break;
+	//			case 6:
+	//				currentStatus = StatusType::MAGICTYPE;
+	//				if (KeyZ.down() || KeyEnter.down() || skillPointNomalAllocationMenu.IsMouseOver() && MouseL.down())
+	//				{
+	//					selectSkillPointMenu = SkillPointMenuTransition::SkillPointMagicSelect;
+	//				}
+	//				break;
+	//			case 7:
+	//				currentStatus = StatusType::MP;
+	//				skillPointAdd();
+	//				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.magicPointAllotted;
+	//				break;
+	//			case 8:
+	//				currentStatus = StatusType::MAGICPOWER;
+	//				skillPointAdd();
+	//				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.magicPowerAllotted;
+	//				break;
+	//			case 9:
+	//				if (KeyZ.down() || KeyEnter.down() || skillPointNomalAllocationMenu.IsMouseOver() && MouseL.down())
+	//				{
+	//					selectSkillPointMenu = SkillPointMenuTransition::SkillPointFirstMenu;
+	//				}
+	//				break;
+	//			default:
+	//				break;
+	//			}
+	//			break;
+	//		case PlayerClass::SkillPointMenuTransition::SkillPointMagicAllocation:
+	//			break;
+	//		case PlayerClass::SkillPointMenuTransition::SkillPointMagicSelect:
+	//			magicSelectMenu.Update();
+	//			ChangeMagic();
+	//			break;
+	//		default:
+	//			break;
+	//		}
+	//		break;
+	//		//------------------------------------------------------------------------------
+	//	default:
+	//		break;
+	//	}
 	}
 }
 
