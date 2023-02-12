@@ -69,7 +69,7 @@ public:
 	bool specialFunctionVerRelease = false;//魔法によって変わります(ステータスアップとタイムの時に使用)※magicSkillPointの3
 
 
-	WeaponType weapon = WeaponType::FIST;//現在の武器
+	WeaponType weapon = WeaponType::SWORD;//現在の武器
 
 	//レベルアップ時の処理用
 	int preLevel = 1;

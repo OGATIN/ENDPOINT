@@ -14,7 +14,7 @@ void EffectClass::Update()
 	}
 
 
-	if (effectType == EffectType::FISTEFFECT)
+	if (effectType == EffectType::FISTEFFECT || effectType == EffectType::SWORDEFFECT)
 	{
 		Animation();
 
@@ -90,12 +90,12 @@ void EffectClass::EffectTypeChange(EffectType changeType, double changeSpeed, do
 {
 	effectType = changeType;
 
+	CameraFixed();
+
 	if (effectType == EffectType::FIREBALLEFFECT)
 	{
 		vector.x = changeSpeed;
 		effectBase.size = changeSize;
-
-		CameraFixed();
 	}
 }
 

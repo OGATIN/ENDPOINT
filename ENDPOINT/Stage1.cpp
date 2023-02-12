@@ -118,24 +118,19 @@ void Stage1::update()
 			Player.gameObject.MotionStop();
 		}
 
-		if (MouseL.down())
+		if (MouseL.pressed())
 		{
-			//Player.gameObject.ChangeReceive({ -5, -3 });
-
-			//Player.gameObject.EffectAdd(EffectType::FIREBALLEFFECT, Cursor::Pos());
-
 		}
+
+		//	//ガード
+//	if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
+//	{}
 	}
 
 
 
-	//	//ガード
-	//	if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
-	//	{
 
-	//	}
 
-	//}
 
 	Player.ConfigOnlineProcess();
 

@@ -44,7 +44,7 @@ public:
 	double jumpPower = 0;
 	int jumpTiming = 6;
 
-	EffectClass Effects[2];
+	EffectClass Effects[3];
 	Array<EffectClass>effects;
 
 	//デバック用フォント
@@ -60,7 +60,7 @@ public:
 
 	GameObject() {};
 
-	GameObject(Texture _animation[4][20], EffectClass effect[2], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
+	GameObject(Texture _animation[4][20], EffectClass effect[3], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 	{
 		Reload(_animation, effect,_audio, AnimationData, TextureShiftData, statusData, skillPointStatData, experienceBorder, magicSkillPointData, magicOther);
 	};
@@ -68,7 +68,7 @@ public:
 	//機能
 
 	/// @brief 再読み込み
-	void Reload(Texture _animation[4][20], EffectClass effect[2], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther);
+	void Reload(Texture _animation[4][20], EffectClass effect[3], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther);
 
 	/// @brief 毎フレーム更新する情報
 	void Update();
@@ -113,7 +113,9 @@ public:
 	/// @brief 攻撃の処理
 	void AttackProcess();
 
-	void FistHandling();
+	void FistProcess();
+
+	void SwordProcess();
 
 	void MagicProcess();
 

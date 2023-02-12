@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 
-void GameObject::Reload(Texture _animation[4][20], EffectClass effect[2], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
+void GameObject::Reload(Texture _animation[4][20], EffectClass effect[3], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 {
 
 	for (int j = 0; j < 4; j++)
@@ -28,6 +28,11 @@ void GameObject::Reload(Texture _animation[4][20], EffectClass effect[2], Audio 
 
 					break;
 				case 1:
+					if (i == (int)StateType::ATTACK)
+					{
+						//とりあえず共通のデータはここでロード
+						animation[j][i].Load(_animation[j][i], AnimationData, 8, true);
+					}
 					break;
 				case 2:
 					break;
@@ -51,7 +56,7 @@ void GameObject::Reload(Texture _animation[4][20], EffectClass effect[2], Audio 
 		}
 	}
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		Effects[i] = effect[i];
 	}
@@ -61,13 +66,13 @@ void GameObject::Reload(Texture _animation[4][20], EffectClass effect[2], Audio 
 		audio[i] = _audio[i];
 	}
 
-	for (int j = 0; j < 1; j++)
+	for (int j = 0; j < 2; j++)
 	{
 		for (int i = 0; i < 8; i++)
 		{
 			for (int p = 0; p < animation[j][i].totalPatterns; p++)
 			{
-				shiftInternalHitRect[j][i][p] = /*Parse<Rect>(TextureShiftData[1][1])*/Parse<Rect>(TextureShiftData[(j * 14) + i + 1][p + 1]);
+				shiftInternalHitRect[j][i][p] = Parse<Rect>(TextureShiftData[1][1]);//Parse<Rect>(TextureShiftData[(j * 14) + i + 1][p + 1]);
 			}
 			
 		}
@@ -382,8 +387,8 @@ void GameObject::JumpProcess()
 
 	if (animation[(int)status.weapon][(int)state].cutPos.x == jumpTiming)
 	{
-		audio[(int)SEstate::JUMPSE].setVolume(GameData::MainVolume * GameData::SEVolume);
 		audio[(int)SEstate::JUMPSE].stop();
+		audio[(int)SEstate::JUMPSE].setVolume(GameData::MainVolume * GameData::SEVolume);
 		audio[(int)SEstate::JUMPSE].play();
 	}
 
@@ -436,10 +441,10 @@ void GameObject::AttackProcess()
 	switch (status.weapon)
 	{
 	case WeaponType::FIST:
-		FistHandling();
+		FistProcess();
 		break;
 	case WeaponType::SWORD:
-
+		SwordProcess();
 		break;
 	case WeaponType::HAMMER:
 
@@ -453,7 +458,7 @@ void GameObject::AttackProcess()
 
 }
 
-void GameObject::FistHandling()
+void GameObject::FistProcess()
 {
 	if (velocity.x > 0)
 	{
@@ -490,8 +495,8 @@ void GameObject::FistHandling()
 				EffectAdd(EffectType::FISTEFFECT,position + fistFiringMirrorPoint);
 			}
 
-			audio[(int)SEstate::FISTSE].setVolume(GameData::MainVolume * GameData::SEVolume);
 			audio[(int)SEstate::FISTSE].stop();
+			audio[(int)SEstate::FISTSE].setVolume(GameData::MainVolume * GameData::SEVolume);
 			audio[(int)SEstate::FISTSE].play();
 			isRearGap = true;
 		}
@@ -519,6 +524,76 @@ void GameObject::FistHandling()
 
 }
 
+
+void GameObject::SwordProcess()
+{
+	if (velocity.x > 0)
+	{
+		velocity.x -= frictionForce;
+	}
+	else if (velocity.x < 0)
+	{
+		velocity.x += frictionForce;
+	}
+
+	if (currentTime.ms() >= 0 && currentTime.ms() < 100)
+	{
+		animation[(int)status.weapon][(int)state].cutPos.x = 0;
+
+	}
+	else if (currentTime.ms() > 100 && currentTime.ms() < 165)
+	{
+		if (isRearGap == false)
+		{
+			if (isMirror == false)
+			{
+				EffectAdd(EffectType::SWORDEFFECT, position + fistFiringPoint);
+			}
+			else
+			{
+				EffectAdd(EffectType::SWORDEFFECT, position + fistFiringMirrorPoint);
+			}
+
+			audio[(int)SEstate::SWORDSE].stop();
+			audio[(int)SEstate::SWORDSE].setVolume(GameData::MainVolume * GameData::SEVolume);
+			audio[(int)SEstate::SWORDSE].play();
+			isRearGap = true;
+		}
+
+		animation[(int)status.weapon][(int)state].cutPos.x = 1;
+	}
+	else if (currentTime.ms() > 165 && currentTime.ms() < 230)
+	{
+		animation[(int)status.weapon][(int)state].cutPos.x = 2;
+	}
+	else if (currentTime.ms() > 230 && currentTime.ms() < 300)
+	{
+		animation[(int)status.weapon][(int)state].cutPos.x = 3;
+	}
+	else if (currentTime.ms() > 300 && currentTime.ms() < 387.5)
+	{
+		animation[(int)status.weapon][(int)state].cutPos.x = 4;
+	}
+	else if (currentTime.ms() > 387.5 && currentTime.ms() < 475)
+	{
+		animation[(int)status.weapon][(int)state].cutPos.x = 5;
+	}
+	else if (currentTime.ms() > 475 && currentTime.ms() < 562.5)
+	{
+		animation[(int)status.weapon][(int)state].cutPos.x = 6;
+	}
+	else if (currentTime.ms() > 562.5 && currentTime.ms() < animation[(int)status.weapon][(int)state].motionTime)
+	{
+		animation[(int)status.weapon][(int)state].cutPos.x = 7;
+	}
+	else
+	{
+		isRearGap = false;
+		animation[(int)status.weapon][(int)state].ResetImage();
+		ChangeWait();
+	}
+}
+
 void GameObject::MagicProcess()
 {
 	if (velocity.x > 0)
@@ -543,8 +618,8 @@ void GameObject::MagicProcess()
 				EffectAdd(EffectType::FIREBALLEFFECT, position + fistFiringMirrorPoint);
 			}
 
-			audio[(int)SEstate::FIREBALLSE].setVolume(GameData::MainVolume * GameData::SEVolume);
 			audio[(int)SEstate::FIREBALLSE].stop();
+			audio[(int)SEstate::FIREBALLSE].setVolume(GameData::MainVolume * GameData::SEVolume);
 			audio[(int)SEstate::FIREBALLSE].play();
 			isRearGap = true;
 		}
@@ -742,6 +817,7 @@ void GameObject::CoordinateRelated() const
 	font30(U"ジャンプパワー ", jumpPower).draw(0, font30.height() * 3);
 	font30(U"着地してるか ", isLanding).draw(0, font30.height() * 4);
 	font30(U"プレイヤーからのマウス地点 ", Cursor::Pos() - position).draw(0, font30.height() * 5);
+	font30(U"技が出る位置 ", position + fistFiringPoint).draw(0, font30.height() * 6);
 
 }
 
