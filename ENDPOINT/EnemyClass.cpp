@@ -15,7 +15,7 @@ void EnemyClass::AIManegement(Vec2 camerapos,GameObject Player)
 {
 	Update(camerapos);
 
-	switch (gameObject.weapon)
+	switch (gameObject.status.weapon)
 	{
 	case WeaponType::FIST:
 		Fist(Player, camerapos);
@@ -120,7 +120,7 @@ void EnemyClass::Fist(GameObject Player,  Vec2 camerapos)
 void EnemyClass::Draw()const
 {
 	
-	gameObject.animation[(int)gameObject.weapon][(int)gameObject.state].Draw(gameObject.position - localCameraPos, gameObject.isMirror);
+	gameObject.animation[(int)gameObject.status.weapon][(int)gameObject.state].Draw(gameObject.position - localCameraPos, gameObject.isMirror);
 }
 
 

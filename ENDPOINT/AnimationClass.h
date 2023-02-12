@@ -5,10 +5,7 @@ enum class StateType
 	WAIT, WALK, RUN, JUMP,FALLING, RECEIVE, ATTACK,MAGIC, GUARD, NOTSTAMINA,
 };
 
-enum class WeaponType
-{
-	FIST, SWORD, HAMMER, CANE
-};
+
 
 enum class EffectType
 {

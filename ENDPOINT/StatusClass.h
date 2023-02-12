@@ -10,6 +10,11 @@ enum class MagicType
 	FIREBALL , THUNDER , HEAL, STATUSUP , TIME,NONE,
 };
 
+enum class WeaponType
+{
+	FIST, SWORD, HAMMER, CANE
+};
+
 class StatusClass
 {
 public:
@@ -34,7 +39,7 @@ public:
 	int magicProficiency = 0;//現在の魔法熟練度
 	
 	int magicSkillPoint = 0;//魔法スキルポイント
-	int magicSkillPointAllocation[4] = { 0,0,0,0 };//魔法スキルポイントを割り振った値
+	int magicSkillPointAllocation[4] = { 1,0,0,0 };//魔法スキルポイントを割り振った値
 
 
 	/*ここから上をいじると下の数値が変化します。*/
@@ -45,7 +50,7 @@ public:
 	double power = 0;			//攻撃力
 	double protection = 0;		//防御力
 	double weight = 0;			//重量
-	MagicType magicType = MagicType::NONE;//魔法の種類
+	MagicType magicType = MagicType::FIREBALL;//魔法の種類
 	double magicPoint = 0;		//MP
 	double magicPower = 0;		//魔力
 
@@ -58,10 +63,13 @@ public:
 
 	//魔法によって値の意味が変わります。
 	double magicProficiencyPower = 0;//威力 ※magicSkillPointの0
-	double subSkill = 5;//魔法によって変わります。※magicSkillPointの1
+	double subSkill = 4;//魔法によって変わります。※magicSkillPointの1
 	double coolTime = 0;//クールタイム ※magicSkillPointの2
-	double specialFunctioVernValue = 0;//魔法によって変わります (火球、サンダー、ヒールの時に使用) ※magicSkillPointの3
+	double specialFunctioVernValue = 0.2;//魔法によって変わります (火球、サンダー、ヒールの時に使用) ※magicSkillPointの3
 	bool specialFunctionVerRelease = false;//魔法によって変わります(ステータスアップとタイムの時に使用)※magicSkillPointの3
+
+
+	WeaponType weapon = WeaponType::FIST;//現在の武器
 
 	//レベルアップ時の処理用
 	int preLevel = 1;

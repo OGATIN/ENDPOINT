@@ -7,7 +7,7 @@ void GameObject::Reload(Texture _animation[4][20], EffectClass effect[2], Audio 
 
 	for (int j = 0; j < 4; j++)
 	{
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 8; i++)
 		{
 			if (i < 6)
 			{
@@ -37,9 +37,16 @@ void GameObject::Reload(Texture _animation[4][20], EffectClass effect[2], Audio 
 				default:
 					break;
 				}
-
 			}
 
+
+
+			if (i == (int)StateType::MAGIC)
+			{
+				//とりあえず共通のデータはここでロード
+				animation[j][7].Load(_animation[j][7], AnimationData, 11);
+				int a = 0;
+			}
 
 		}
 	}
@@ -56,9 +63,9 @@ void GameObject::Reload(Texture _animation[4][20], EffectClass effect[2], Audio 
 
 	for (int j = 0; j < 1; j++)
 	{
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 8; i++)
 		{
-			for (int p = 0; p < Parse<int>(AnimationData[i + 1][6]); p++)
+			for (int p = 0; p < animation[j][i].totalPatterns; p++)
 			{
 				shiftInternalHitRect[j][i][p] = /*Parse<Rect>(TextureShiftData[1][1])*/Parse<Rect>(TextureShiftData[(j * 14) + i + 1][p + 1]);
 			}
@@ -73,8 +80,6 @@ void GameObject::Update()
 {
 	//重力加算
 	velocity.y += gravity;
-
-	EffectUpdate();
 }
 
 void GameObject::MotionStart()
@@ -103,35 +108,33 @@ void GameObject::PatternLoop()
 	OnePattern();
 
 	//ループ
-	if (animation[(int)weapon][(int)state].cutPos.x >= animation[(int)weapon][(int)state].totalPatterns)
+	if (animation[(int)status.weapon][(int)state].cutPos.x >= animation[(int)status.weapon][(int)state].totalPatterns)
 	{
-		animation[(int)weapon][(int)state].ResetImage();
+		animation[(int)status.weapon][(int)state].ResetImage();
 	}
 
 }
 
 void GameObject::OnePattern()
 {
-	if (animation[(int)weapon][(int)state].totalPatterns > animation[(int)weapon][(int)state].cutPos.x)
+	if (animation[(int)status.weapon][(int)state].totalPatterns > animation[(int)status.weapon][(int)state].cutPos.x)
 	{
 		//タイル遷移
-		if (currentTime.ms() > (animation[(int)weapon][(int)state].OnePatternMotionTime() * motionEndMagnification))
+		if (currentTime.ms() > (animation[(int)status.weapon][(int)state].OnePatternMotionTime() * motionEndMagnification))
 		{
-			animation[(int)weapon][(int)state].cutPos.x++;
+			animation[(int)status.weapon][(int)state].cutPos.x++;
 			currentTime.restart();
 		}
 	}
 
 	//デバック用
-	animation[(int)weapon][(int)state].elapsedTime = (animation[(int)weapon][(int)state].OnePatternMotionTime() * motionEndMagnification * animation[(int)weapon][(int)state].cutPos.x) + currentTime.ms();
+	animation[(int)status.weapon][(int)state].elapsedTime = (animation[(int)status.weapon][(int)state].OnePatternMotionTime() * motionEndMagnification * animation[(int)status.weapon][(int)state].cutPos.x) + currentTime.ms();
 
 }
 
-
-
 void GameObject::EffectAdd(EffectType effectType,Vec2 addpos)
 {
-	Effects[(int)effectType].EffectTypeChange(effectType, status.subSkill);
+	Effects[(int)effectType].EffectTypeChange(effectType, status.subSkill, status.specialFunctioVernValue);
 	Effects[(int)effectType].CreationPosChange(addpos);
 	Effects[(int)effectType].MirrorChange(isMirror);
 
@@ -188,8 +191,30 @@ void GameObject::StateManagement()
 		statename = { U"攻撃" };
 		break;
 	case StateType::MAGIC:
-		OnePattern();
-		statename = { U"魔法" };//未
+
+		statename = { U"魔法" };
+
+		switch (status.magicType)
+		{
+		case MagicType::NONE:
+			ChangeWait();
+			break;
+		case MagicType::FIREBALL:
+			OnePattern();
+			MagicProcess();
+			break;
+		case MagicType::THUNDER:
+			break;
+		case MagicType::STATUSUP:
+			break;
+		case MagicType::HEAL:
+			break;
+		case MagicType::TIME:
+			break;
+		default:
+			break;
+		}
+
 		break;
 	case StateType::GUARD:
 		statename = { U"ガード" };//未
@@ -201,7 +226,7 @@ void GameObject::StateManagement()
 		break;
 	}
 
-	switch (weapon)
+	switch (status.weapon)
 	{
 	case WeaponType::FIST:
 		weaponname = { U"拳" };
@@ -355,14 +380,14 @@ void GameObject::JumpProcess()
 		jumpPower = -1 * charaSpeedMax;
 	}
 
-	if (animation[(int)weapon][(int)state].cutPos.x == jumpTiming)
+	if (animation[(int)status.weapon][(int)state].cutPos.x == jumpTiming)
 	{
 		audio[(int)SEstate::JUMPSE].setVolume(GameData::MainVolume * GameData::SEVolume);
 		audio[(int)SEstate::JUMPSE].stop();
 		audio[(int)SEstate::JUMPSE].play();
 	}
 
-	if ((animation[(int)weapon][(int)state].cutPos.x >= jumpTiming) && (velocity.y > jumpPower))
+	if ((animation[(int)status.weapon][(int)state].cutPos.x >= jumpTiming) && (velocity.y > jumpPower))
 	{
 		velocity.y -= additionalAmount;
 	}
@@ -371,7 +396,7 @@ void GameObject::JumpProcess()
 	if (velocity.y <= jumpPower)
 	{
 		velocity.x += speedAdd;
-		animation[(int)weapon][(int)state].ResetImage();
+		animation[(int)status.weapon][(int)state].ResetImage();
 		isLanding = false;
 		ChangeFalling();
 	}	
@@ -399,7 +424,7 @@ void GameObject::ReceiveProcess()
 
 	if (isOneLoop())
 	{
-		animation[(int)weapon][(int)state].cutPos.x = 0;
+		animation[(int)status.weapon][(int)state].cutPos.x = 0;
 		ChangeWait();
 	}
 }
@@ -408,7 +433,7 @@ void GameObject::AttackProcess()
 {
 	EffectUpdate();
 
-	switch (weapon)
+	switch (status.weapon)
 	{
 	case WeaponType::FIST:
 		FistHandling();
@@ -441,16 +466,16 @@ void GameObject::FistHandling()
 
 	if (currentTime.ms() >= 0 && currentTime.ms() < 60)
 	{
-		animation[(int)weapon][(int)state].cutPos.x = 0;
+		animation[(int)status.weapon][(int)state].cutPos.x = 0;
 		
 	}
 	else if (currentTime.ms() > 60 && currentTime.ms() < 120)
 	{
-		animation[(int)weapon][(int)state].cutPos.x = 1;
+		animation[(int)status.weapon][(int)state].cutPos.x = 1;
 	}
 	else if (currentTime.ms() > 120 && currentTime.ms() < 180)
 	{
-		animation[(int)weapon][(int)state].cutPos.x = 2;
+		animation[(int)status.weapon][(int)state].cutPos.x = 2;
 	}
 	else if (currentTime.ms() > 180 && currentTime.ms() < 300)
 	{
@@ -471,32 +496,72 @@ void GameObject::FistHandling()
 			isRearGap = true;
 		}
 
-		animation[(int)weapon][(int)state].cutPos.x = 3;
+		animation[(int)status.weapon][(int)state].cutPos.x = 3;
 	}
 	else if (currentTime.ms() > 300 && currentTime.ms() < 384)
 	{
-		animation[(int)weapon][(int)state].cutPos.x = 4;
+		animation[(int)status.weapon][(int)state].cutPos.x = 4;
 	}
 	else if (currentTime.ms() > 384 && currentTime.ms() < 468)
 	{
-		animation[(int)weapon][(int)state].cutPos.x = 5;
+		animation[(int)status.weapon][(int)state].cutPos.x = 5;
 	}
-	else if (currentTime.ms() > 468 && currentTime.ms() < animation[(int)weapon][(int)state].motionTime)
+	else if (currentTime.ms() > 468 && currentTime.ms() < animation[(int)status.weapon][(int)state].motionTime)
 	{
-		animation[(int)weapon][(int)state].cutPos.x = 6;
+		animation[(int)status.weapon][(int)state].cutPos.x = 6;
 	}
 	else
 	{
 		isRearGap = false;
-		animation[(int)weapon][(int)state].cutPos.x = 0;
+		animation[(int)status.weapon][(int)state].ResetImage();
 		ChangeWait();
 	}
 
 }
 
+void GameObject::MagicProcess()
+{
+	if (velocity.x > 0)
+	{
+		velocity.x -= frictionForce;
+	}
+	else if (velocity.x < 0)
+	{
+		velocity.x += frictionForce;
+	}
+
+	if (animation[(int)status.weapon][(int)state].cutPos.x >= 4)
+	{
+		if (isRearGap == false)
+		{
+			if (isMirror == false)
+			{
+				EffectAdd(EffectType::FIREBALLEFFECT, position + fistFiringPoint);
+			}
+			else
+			{
+				EffectAdd(EffectType::FIREBALLEFFECT, position + fistFiringMirrorPoint);
+			}
+
+			audio[(int)SEstate::FIREBALLSE].setVolume(GameData::MainVolume * GameData::SEVolume);
+			audio[(int)SEstate::FIREBALLSE].stop();
+			audio[(int)SEstate::FIREBALLSE].play();
+			isRearGap = true;
+		}
+	}
+
+	if (isOneLoop())
+	{
+
+		isRearGap = false;
+		animation[(int)status.weapon][(int)state].ResetImage();
+		ChangeWait();
+	}
+}
+
 void GameObject::ChangeWait()
 {
-	if (state == StateType::WALK || state == StateType::RUN || state == StateType::FALLING || state == StateType::RECEIVE|| state == StateType::ATTACK)
+	if (state == StateType::WALK || state == StateType::RUN || state == StateType::FALLING || state == StateType::RECEIVE || state == StateType::ATTACK || state == StateType::MAGIC)
 	{
 		state = StateType::WAIT;
 		currentTime.restart();
@@ -588,9 +653,19 @@ void GameObject::ChangeAttack()
 	}
 }
 
+void GameObject::ChangeAttackMagic()
+{
+	if (state == StateType::WAIT || state == StateType::WALK || state == StateType::RUN || state == StateType::FALLING)
+	{
+		state = StateType::MAGIC;
+		currentTime.restart();
+
+	}
+}
+
 void GameObject::Draw() const
 {
-	animation[(int)weapon][(int)state].Draw(position,isMirror);
+	animation[(int)status.weapon][(int)state].Draw(position,isMirror);
 }
 
 void GameObject::EffectDraw(bool hitBoxDraw) const
@@ -626,8 +701,6 @@ void GameObject::AudioStop()
 	
 }
 
-
-
 /////////////////////////////////////////////////////////////
 //														   //
 //														   //
@@ -652,13 +725,12 @@ void GameObject::StatusDraw() const
 	font30(U"武器 ", weaponname).draw(Scene::Width() - font30(U"状態 ", weaponname).region().w, font30.height() * 1);
 }
 
-
 void GameObject::TimeDebuggDraw() const
 {
-	font30(U"全体時間 ", animation[(int)weapon][(int)state].motionTime * motionEndMagnification).draw(Scene::Width() - font30(U"全体時間 ", animation[(int)weapon][(int)state].motionTime * motionEndMagnification).region().w, font30.height() * 2);
-	font30(U"経過時間 ", animation[(int)weapon][(int)state].elapsedTime).draw(Scene::Width() - font30(U"経過時間 ", animation[(int)weapon][(int)state].elapsedTime).region().w, font30.height() * 3);
+	font30(U"全体時間 ", animation[(int)status.weapon][(int)state].motionTime * motionEndMagnification).draw(Scene::Width() - font30(U"全体時間 ", animation[(int)status.weapon][(int)state].motionTime * motionEndMagnification).region().w, font30.height() * 2);
+	font30(U"経過時間 ", animation[(int)status.weapon][(int)state].elapsedTime).draw(Scene::Width() - font30(U"経過時間 ", animation[(int)status.weapon][(int)state].elapsedTime).region().w, font30.height() * 3);
 	font30(U"1枚あたりの時間 ", currentTime.ms()).draw(Scene::Width() - font30(U"1枚あたりの時間 ", currentTime.ms()).region().w, font30.height() * 4);
-	font30(U"切り取り位置 ", animation[(int)weapon][(int)state].cutPos).draw(Scene::Width() - font30(U"切り取り位置 ", animation[(int)weapon][(int)state].cutPos).region().w, font30.height() * 5);
+	font30(U"切り取り位置 ", animation[(int)status.weapon][(int)state].cutPos).draw(Scene::Width() - font30(U"切り取り位置 ", animation[(int)status.weapon][(int)state].cutPos).region().w, font30.height() * 5);
 
 }
 

@@ -74,7 +74,7 @@ private:
 
 	Texture playerPNG[4][20] =
 	{
-		/*0が拳*/{{waitingMotionPNG} ,{walkMotionPNG} ,{runMotionPNG},{jumpMotionPNG},{fallingMotionPNG},{receiveMotionPNG},{attackMotionPNG}},
+		/*0が拳*/{{waitingMotionPNG} ,{walkMotionPNG} ,{runMotionPNG},{jumpMotionPNG},{fallingMotionPNG},{receiveMotionPNG},{attackMotionPNG},{magicMotionPNG}},
 		/*1が剣*/{},
 		/*2が鈍器*/{},
 		/*3が杖*/{},
@@ -83,7 +83,7 @@ private:
 
 	Texture enemeyPNG[4][20] =
 	{
-		/*0が拳*/{{enemeyWaitingMotionPNG} ,{enemeyWalkMotionPNG} ,{enemeyRunMotionPNG},{enemeyJumpMotionPNG},{enemeyFallingMotionPNG},{enemeyLandingMotionPNG},{enemeyReceiveMotionPNG},{enemeyAttackMotionPNG}},
+		/*0が拳*/{{enemeyWaitingMotionPNG} ,{enemeyWalkMotionPNG} ,{enemeyRunMotionPNG},{enemeyJumpMotionPNG},{enemeyFallingMotionPNG},{enemeyLandingMotionPNG},{enemeyReceiveMotionPNG},{enemeyAttackMotionPNG},{enemeyMagicMotionPNG}},
 		/*1が剣*/{},
 		/*2が鈍器*/{},
 		/*3が杖*/{},

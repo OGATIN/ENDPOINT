@@ -7,11 +7,10 @@ enum class SEstate
 	WAIKSE, RUNSE, JUMPSE, DAMAGESE,FISTSE,  SWORDSE, FIREBALLSE
 };
 
-
 class GameObject
 {
 public:
-	AnimationClass animation[4][9];//武器の種類×4 各モーションの種類×9
+	AnimationClass animation[4][8];//武器の種類×4 各モーションの種類×9
 
 	Audio audio[19];
 
@@ -20,8 +19,6 @@ public:
 	StatusClass status;//ステータス
 
 	StateType state = StateType::WAIT;//現在の状態
-
-	WeaponType weapon = WeaponType::FIST;//現在の武器
 
 	Rect shiftInternalHitRect[4][13][11];  //補正
 
@@ -88,7 +85,6 @@ public:
 	//一つのモーションを動かす
 	void OnePattern();
 
-
 	void EffectAdd(EffectType effectType, Vec2 addpos);
 
 	void EffectUpdate();
@@ -119,6 +115,8 @@ public:
 
 	void FistHandling();
 
+	void MagicProcess();
+
 	/// @brief 待機状態への遷移
 	void ChangeWait();
 
@@ -146,6 +144,9 @@ public:
 	/// @brief 
 	void ChangeAttack();
 
+	/// @brief 
+	void ChangeAttackMagic();
+
 	/// @brief animationのテクスチャを描画する
 	void Draw()const;
 
@@ -153,8 +154,6 @@ public:
 
 	/// @brief 再生を停止する
 	void AudioStop();
-
-
 
 	/*デバック用*/
 	void Initialize();
@@ -169,7 +168,6 @@ public:
 	void CoordinateRelated()const;
 
 	void EffectsDraw()const;
-
 
 	//一つのモーションが終わったかどうか
 	bool isOneLoop();
@@ -227,6 +225,5 @@ public:
 	/// @param number 分割数から何番目か
 	/// @return MAPの配列番号
 	Point MapRightSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
-
 };
 

@@ -13,6 +13,8 @@ struct GameData
 	inline static int selectMainVolume = 5;   //主音量の大きさ
 	inline static int selectBGMVolume = 5;  //BGMの大きさ
 	inline static int selectSEVolume = 5; //効果音の大きさ
+
+	inline static Vec2 cameraPos = { 0,0 };
 };
 
 enum class SceneName
