@@ -37,14 +37,6 @@ public:
 	int magicSkillPointAllocation[4] = { 0,0,0,0 };//魔法スキルポイントを割り振った値
 
 
-	//魔法によって値の意味が変わります。
-	double magicProficiencyPower = 0;//威力 ※magicSkillPointの0
-	double subSkill = 0;//魔法によって変わります。※magicSkillPointの1
-	double coolTime = 0;//クールタイム ※magicSkillPointの2
-	double specialFunctioVernValue = 0;//魔法によって変わります (火球、サンダー、ヒールの時に使用) ※magicSkillPointの3
-	bool specialFunctionVerRelease = false;//魔法によって変わります(ステータスアップとタイムの時に使用)※magicSkillPointの3
-
-
 	/*ここから上をいじると下の数値が変化します。*/
 
 	double hitPoint = 0;		//HP
@@ -62,6 +54,14 @@ public:
 	double currentStamina = 0;	  //スタミナ
 	double currentMental = 0;	  //精神力
 	double currentMagicPoint = 0; //MP
+
+
+	//魔法によって値の意味が変わります。
+	double magicProficiencyPower = 0;//威力 ※magicSkillPointの0
+	double subSkill = 5;//魔法によって変わります。※magicSkillPointの1
+	double coolTime = 0;//クールタイム ※magicSkillPointの2
+	double specialFunctioVernValue = 0;//魔法によって変わります (火球、サンダー、ヒールの時に使用) ※magicSkillPointの3
+	bool specialFunctionVerRelease = false;//魔法によって変わります(ステータスアップとタイムの時に使用)※magicSkillPointの3
 
 	//レベルアップ時の処理用
 	int preLevel = 1;

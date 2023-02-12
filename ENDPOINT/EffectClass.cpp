@@ -3,6 +3,17 @@
 
 void EffectClass::Update()
 {
+	if (isMirror == false)
+	{
+		creationPos += vector;
+	}
+	else
+	{
+		creationPos -= vector;
+
+	}
+
+
 	if (effectType == EffectType::FISTEFFECT)
 	{
 		Animation();
@@ -10,11 +21,15 @@ void EffectClass::Update()
 	}
 	else if (effectType == EffectType::FIREBALLEFFECT)
 	{
-		LongDistanceAnimation();
+		FireBallAnimation();
 	}
 
-
 	HitBoxUpdate();
+}
+
+void EffectClass::HitBoxUpdate()
+{
+	hitBox = RectF(creationPos, (effectBase.texture.width() / effectBase.totalPatterns * effectBase.size), effectBase.texture.height() * effectBase.size);
 }
 
 void EffectClass::Animation(double _motionEndMagnification)
@@ -34,18 +49,14 @@ void EffectClass::Animation(double _motionEndMagnification)
 		}
 	}
 
-	//デバック用
-	effectBase.elapsedTime = ElapsedTime();
-
 }
 
-void EffectClass::LongDistanceAnimation()
+void EffectClass::FireBallAnimation()
 {
 	if (currentTime.isRunning() == false)
 	{
 		currentTime.start();
 	}
-
 
 	//タイル遷移
 	if ((switchingTime * conut) < currentTime.ms())
@@ -65,26 +76,33 @@ void EffectClass::LongDistanceAnimation()
 	}
 }
 
-
-
 void EffectClass::CreationPosChange(Vec2 changePos)
 {
 	creationPos = changePos - (effectBase.cutPos.size / 2 * effectBase.size);
 }
 
-void EffectClass::EffectTypeChange(EffectType changeType)
+void EffectClass::EffectTypeChange(EffectType changeType, double changeSpeed)
 {
 	effectType = changeType;
+
+	if (effectType == EffectType::FIREBALLEFFECT)
+	{
+		vector.x = changeSpeed;
+	}
 }
 
-void EffectClass::HitBoxUpdate()
+
+
+void EffectClass::MirrorChange(bool changeMirror)
 {
-	hitBox = RectF(creationPos, (effectBase.texture.width() / effectBase.totalPatterns * effectBase.size), effectBase.texture.height() * effectBase.size);
+	isMirror = changeMirror;
 }
 
-double EffectClass::ElapsedTime()
+
+
+void EffectClass::Draw()const
 {
-	return ((effectBase.OnePatternMotionTime() * effectBase.cutPos.x) + currentTime.ms());
+	effectBase.texture(effectBase.cutPos.x * effectBase.cutPos.w, effectBase.cutPos.y * effectBase.cutPos.h, effectBase.cutPos.w, effectBase.cutPos.h).scaled(effectBase.size).mirrored(isMirror).draw(creationPos);
 }
 
 

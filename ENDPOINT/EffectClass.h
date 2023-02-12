@@ -7,11 +7,16 @@ public:
 	AnimationClass effectBase;
 
 	Vec2 creationPos;
+
+	Vec2 vector = {0,0};
+
 	RectF hitBox;
 
 	Stopwatch currentTime;
 
 	EffectType effectType;
+
+	bool isMirror = false;
 
 	double switchingTime = 200;//アニメーションを繰り返したいときの切り替え時間
 
@@ -30,19 +35,19 @@ public:
 
 	void Update();
 
+	void HitBoxUpdate();
+
 	void Animation(double _motionEndMagnification = 1);
 
-	void LongDistanceAnimation();
-
-	void EffectTypeChange(EffectType changeType);
+	void FireBallAnimation();
 
 	void CreationPosChange(Vec2 changePos);
 
-	void HitBoxUpdate();
+	void EffectTypeChange(EffectType changeType, double changeSpeed = 0);
 
-	/// @brief アニメーションの全体時間(現在)
-	/// @return アニメーションの全体時間(現在)
-	double ElapsedTime();
+	void MirrorChange(bool changeMirror);
+
+	void Draw()const;
 
 };
 

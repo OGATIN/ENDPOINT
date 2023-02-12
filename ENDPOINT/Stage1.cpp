@@ -313,11 +313,11 @@ void Stage1::draw() const
 	Player.Draw();
 	Player.gameObject.EffectDraw(true);
 	Player.DebugDraw();
-	Player.gameObject.EffectsDraw();
+	//Player.gameObject.EffectsDraw();
 	//Player.gameObject.status.BaseStatusDrow(true);
 	Enemey.Draw();
 	Enemey.DebugDraw();
-	//Player.gameObject.CoordinateRelated();
+	Player.gameObject.CoordinateRelated();
 	Player.ConfigOnlineDraw();
 	Map.HitJudgmentPointDraw(Player.gameObject);
 

@@ -131,8 +131,10 @@ void GameObject::OnePattern()
 
 void GameObject::EffectAdd(EffectType effectType,Vec2 addpos)
 {
-	Effects[(int)effectType].EffectTypeChange(effectType);
+	Effects[(int)effectType].EffectTypeChange(effectType, status.subSkill);
 	Effects[(int)effectType].CreationPosChange(addpos);
+	Effects[(int)effectType].MirrorChange(isMirror);
+
 	effects << Effects[(int)effectType];
 }
 
@@ -383,7 +385,6 @@ void GameObject::FallingProcess()
 	}
 }
 
-
 void GameObject::ReceiveProcess()
 {
 
@@ -402,7 +403,6 @@ void GameObject::ReceiveProcess()
 		ChangeWait();
 	}
 }
-
 
 void GameObject::AttackProcess()
 {
@@ -588,8 +588,6 @@ void GameObject::ChangeAttack()
 	}
 }
 
-
-
 void GameObject::Draw() const
 {
 	animation[(int)weapon][(int)state].Draw(position,isMirror);
@@ -599,7 +597,7 @@ void GameObject::EffectDraw(bool hitBoxDraw) const
 {
 	for (const auto& _effects : effects)
 	{
-		_effects.effectBase.Draw(_effects.creationPos);
+		_effects.Draw();;
 
 		if (hitBoxDraw == true)
 		{
