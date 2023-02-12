@@ -17,9 +17,6 @@ public:
 	//画像を描画するときのサイズ倍率
 	const double magnification = 2;
 
-	//カメラのポジション
-	Vec2 cameraPos = {0,0};
-
 	//当たり判定の分割数
 	int widthDivisionAmount = 2;//幅
 	int heightDivisionAmount = 4;//高さ
@@ -80,6 +77,9 @@ public:
 
 	/*デバック用*/
 
+
+	void CameraDebuggDrow()const;
+
 	/// @brief 当たり判定のポイント表示
 	/// @param _gameobject ポイントがみたいオブジェクト
 	/// @param circleColor ポイントの色
@@ -88,6 +88,8 @@ public:
 	void EnemySpawnPositionDraw()const;
 
 	void EnemySpawnCircleDrow(ColorF circleColor = ColorF(Palette::Purple, 0.3))const;
+
+
 
 	/*内部判定用*/
 

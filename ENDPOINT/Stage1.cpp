@@ -23,11 +23,12 @@ void Stage1::update()
 {
 	//プレイヤーの処理
 	Player.Update();
+	Player.gameObject.EffectUpdate();
 
 	Map.Camera(Player.gameObject, 8, 3, 5, 8, 2, 7);
 
 	//敵の処理
-	Enemey.TestAI( Map.cameraPos,Vec2{ 1 * Map.MapGameSize().x,0});
+	Enemey.TestAI( GameData::cameraPos,Vec2{ 1 * Map.MapGameSize().x,0});
 	//Enemey.Fist(Player.gameObject,Map.cameraPos);
 
 	Map.MapHitSet(Player.gameObject);
@@ -108,7 +109,7 @@ void Stage1::update()
 		//魔法
 		if (KeyX.down() || controller.buttonA.down())
 		{
-			Player.gameObject.EffectAdd(EffectType::FIREBALLEFFECT,Player.gameObject.position);
+			Player.gameObject.ChangeAttackMagic();
 		}
 
 		if (KeyEnter.down())
@@ -117,21 +118,19 @@ void Stage1::update()
 			Player.gameObject.MotionStop();
 		}
 
-		//if (MouseL.down())
-		//{
-		//	Player.gameObject.ChangeReceive({ -5, -3 });
-		//}
+		if (MouseL.pressed())
+		{
+		}
+
+		//	//ガード
+//	if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
+//	{}
 	}
 
 
 
-	//	//ガード
-	//	if (KeyShift.pressed() || controller.leftTrigger >= 1.0 || controller.rightTrigger >= 1.0)
-	//	{
 
-	//	}
 
-	//}
 
 	Player.ConfigOnlineProcess();
 
@@ -307,7 +306,7 @@ void Stage1::draw() const
 
 	Map.Draw();
 	Map.EnemySpawnCircleDrow();
-
+	Map.CameraDebuggDrow();
 
 	//画像描画
 	Player.Draw();

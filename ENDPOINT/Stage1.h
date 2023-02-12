@@ -12,15 +12,24 @@ private:
     Texture BackScreen      { U"Material/3.MAP/6.町 背景.png" };
     Texture UnderGround     { U"Material/3.MAP/使うやつ.png" };
 
-	Texture waitingMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/1.待機モーション.png" };
-	Texture walkMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/2.歩きモーション.png" };
-	Texture runMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/3.ダッシュモーション.png" };
-	Texture jumpMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/4.ジャンプモーション.png" };
-	Texture fallingMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/5.空中モーション.png" };
-	Texture landingMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/6.着地モーション.png" };
-	Texture receiveMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/10.受けモーション.png" };
-	Texture attackMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/7.拳モーション.png" };
-	Texture magicMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/8.攻撃魔法モーション.png" };
+	Texture fistWaitingMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/1.待機モーション.png" };
+	Texture fistWalkMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/2.歩きモーション.png" };
+	Texture fistRunMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/3.ダッシュモーション.png" };
+	Texture fistJumpMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/4.ジャンプモーション.png" };
+	Texture fistFallingMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/5.空中モーション.png" };
+	Texture fistLandingMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/6.着地モーション.png" };
+	Texture fistReceiveMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/10.受けモーション.png" };
+	Texture fistAttackMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/7.拳モーション.png" };
+	Texture fistMagicMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/8.攻撃魔法モーション.png" };
+	Texture swordWaitingMotionPNG	{ U"Material/1.img/プレイヤー/2.剣/1.待機モーション.png" };
+	Texture swordWalkMotionPNG		{ U"Material/1.img/プレイヤー/2.剣/2.歩きモーション.png" };
+	Texture swordRunMotionPNG		{ U"Material/1.img/プレイヤー/2.剣/3.ダッシュモーション.png" };
+	Texture swordJumpMotionPNG		{ U"Material/1.img/プレイヤー/2.剣/4.ジャンプモーション.png" };
+	Texture swordFallingMotionPNG	{ U"Material/1.img/プレイヤー/2.剣/5.空中モーション.png" };
+	Texture swordLandingMotionPNG	{ U"Material/1.img/プレイヤー/2.剣/6.着地モーション.png" };
+	Texture swordReceiveMotionPNG	{ U"Material/1.img/プレイヤー/2.剣/10.受けモーション.png" };
+	Texture swordAttackMotionPNG	{ U"Material/1.img/プレイヤー/2.剣/7.剣モーション.png" };
+	Texture swordMagicMotionPNG		{ U"Material/1.img/プレイヤー/2.剣/8.攻撃魔法モーション.png" };
 	//Texture guardMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/11.防御モーション.png" };
 	//Texture notstaminaMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/14.スタミナ切れ(待機).png" };
 
@@ -37,6 +46,7 @@ private:
 	//Texture enemeyNotstaminaMotionPNG	{ U"Material/1.img/敵/1.拳/14.スタミナ切れ(待機)-enemey.png" };
 
 	Texture BlowPNG{ U"Material/2.EF/1.拳と杖.png" };
+	Texture SlashingPNG{ U"Material/2.EF/2.剣と鈍器.png" };
 	Texture FireBallPNG{ U"Material/2.EF/３.火球.png" };
 
 	Audio WalkAudio			{ U"Material/4.SE/1.歩き.mp3" , Loop::Yes };
@@ -69,13 +79,17 @@ private:
 	CSV MagicSkillPointData{ U"ConfigData/魔法スキルポイントステータスデータ.csv" };
 	CSV MagicOther{ U"ConfigData/魔法その他.csv" };
 
-	EffectClass Effect[2]{ { BlowPNG ,EffectData ,1 } ,{FireBallPNG ,EffectData ,5 } ,};
+	EffectClass Effect[3]{
+							{ BlowPNG ,EffectData ,1 } ,
+							{ SlashingPNG ,EffectData ,2 } ,
+							{FireBallPNG ,EffectData ,5 } ,
+	};
 
 
 	Texture playerPNG[4][20] =
 	{
-		/*0が拳*/{{waitingMotionPNG} ,{walkMotionPNG} ,{runMotionPNG},{jumpMotionPNG},{fallingMotionPNG},{receiveMotionPNG},{attackMotionPNG}},
-		/*1が剣*/{},
+		/*0が拳*/{{fistWaitingMotionPNG} ,{fistWalkMotionPNG} ,{fistRunMotionPNG},{fistJumpMotionPNG},{fistFallingMotionPNG},{fistReceiveMotionPNG},{fistAttackMotionPNG},{fistMagicMotionPNG}},
+		/*1が剣*/{{swordWaitingMotionPNG} ,{swordWalkMotionPNG} ,{swordRunMotionPNG},{swordJumpMotionPNG},{swordFallingMotionPNG},{swordReceiveMotionPNG},{swordAttackMotionPNG},{swordMagicMotionPNG}},
 		/*2が鈍器*/{},
 		/*3が杖*/{},
 		//各20種
@@ -83,7 +97,7 @@ private:
 
 	Texture enemeyPNG[4][20] =
 	{
-		/*0が拳*/{{enemeyWaitingMotionPNG} ,{enemeyWalkMotionPNG} ,{enemeyRunMotionPNG},{enemeyJumpMotionPNG},{enemeyFallingMotionPNG},{enemeyLandingMotionPNG},{enemeyReceiveMotionPNG},{enemeyAttackMotionPNG}},
+		/*0が拳*/{{enemeyWaitingMotionPNG} ,{enemeyWalkMotionPNG} ,{enemeyRunMotionPNG},{enemeyJumpMotionPNG},{enemeyFallingMotionPNG},{enemeyLandingMotionPNG},{enemeyReceiveMotionPNG},{enemeyAttackMotionPNG},{enemeyMagicMotionPNG}},
 		/*1が剣*/{},
 		/*2が鈍器*/{},
 		/*3が杖*/{},

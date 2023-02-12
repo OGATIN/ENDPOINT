@@ -8,6 +8,8 @@ public:
 
 	Vec2 creationPos;
 
+	Vec2 cameraFixed = {0,0};
+
 	Vec2 vector = {0,0};
 
 	RectF hitBox;
@@ -37,17 +39,20 @@ public:
 
 	void HitBoxUpdate();
 
+	void CameraFixed();
+
 	void Animation(double _motionEndMagnification = 1);
 
 	void FireBallAnimation();
 
 	void CreationPosChange(Vec2 changePos);
 
-	void EffectTypeChange(EffectType changeType, double changeSpeed = 0);
+	void EffectTypeChange(EffectType changeType, double changeSpeed = 0, double changeSize = 0);
 
 	void MirrorChange(bool changeMirror);
 
 	void Draw()const;
 
+	Vec2 AfterCalculationPos()const;
 };
 

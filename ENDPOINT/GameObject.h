@@ -7,11 +7,10 @@ enum class SEstate
 	WAIKSE, RUNSE, JUMPSE, DAMAGESE,FISTSE,  SWORDSE, FIREBALLSE
 };
 
-
 class GameObject
 {
 public:
-	AnimationClass animation[4][9];//武器の種類×4 各モーションの種類×9
+	AnimationClass animation[4][8];//武器の種類×4 各モーションの種類×9
 
 	Audio audio[19];
 
@@ -20,8 +19,6 @@ public:
 	StatusClass status;//ステータス
 
 	StateType state = StateType::WAIT;//現在の状態
-
-	WeaponType weapon = WeaponType::FIST;//現在の武器
 
 	Rect shiftInternalHitRect[4][13][11];  //補正
 
@@ -47,7 +44,7 @@ public:
 	double jumpPower = 0;
 	int jumpTiming = 6;
 
-	EffectClass Effects[2];
+	EffectClass Effects[3];
 	Array<EffectClass>effects;
 
 	//デバック用フォント
@@ -63,7 +60,7 @@ public:
 
 	GameObject() {};
 
-	GameObject(Texture _animation[4][20], EffectClass effect[2], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
+	GameObject(Texture _animation[4][20], EffectClass effect[3], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther)
 	{
 		Reload(_animation, effect,_audio, AnimationData, TextureShiftData, statusData, skillPointStatData, experienceBorder, magicSkillPointData, magicOther);
 	};
@@ -71,7 +68,7 @@ public:
 	//機能
 
 	/// @brief 再読み込み
-	void Reload(Texture _animation[4][20], EffectClass effect[2], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther);
+	void Reload(Texture _animation[4][20], EffectClass effect[3], Audio _audio[19], CSV AnimationData, CSV TextureShiftData, CSV statusData, CSV skillPointStatData, CSV experienceBorder, CSV magicSkillPointData, CSV magicOther);
 
 	/// @brief 毎フレーム更新する情報
 	void Update();
@@ -87,7 +84,6 @@ public:
 
 	//一つのモーションを動かす
 	void OnePattern();
-
 
 	void EffectAdd(EffectType effectType, Vec2 addpos);
 
@@ -117,7 +113,11 @@ public:
 	/// @brief 攻撃の処理
 	void AttackProcess();
 
-	void FistHandling();
+	void FistProcess();
+
+	void SwordProcess();
+
+	void MagicProcess();
 
 	/// @brief 待機状態への遷移
 	void ChangeWait();
@@ -146,6 +146,9 @@ public:
 	/// @brief 
 	void ChangeAttack();
 
+	/// @brief 
+	void ChangeAttackMagic();
+
 	/// @brief animationのテクスチャを描画する
 	void Draw()const;
 
@@ -153,8 +156,6 @@ public:
 
 	/// @brief 再生を停止する
 	void AudioStop();
-
-
 
 	/*デバック用*/
 	void Initialize();
@@ -169,7 +170,6 @@ public:
 	void CoordinateRelated()const;
 
 	void EffectsDraw()const;
-
 
 	//一つのモーションが終わったかどうか
 	bool isOneLoop();
@@ -227,6 +227,5 @@ public:
 	/// @param number 分割数から何番目か
 	/// @return MAPの配列番号
 	Point MapRightSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
-
 };
 

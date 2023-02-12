@@ -1,24 +1,22 @@
 ﻿#include "stdafx.h"
 #include "EnemyClass.h"
 
-void EnemyClass::Update(Vec2 camerapos)
+void EnemyClass::Update()
 {
 	gameObject.Update();
 
 	gameObject.position += gameObject.velocity;
 
-	localCameraPos = camerapos;
-
 }
 
-void EnemyClass::AIManegement(Vec2 camerapos,GameObject Player)
+void EnemyClass::AIManegement(GameObject Player)
 {
-	Update(camerapos);
+	Update();
 
-	switch (gameObject.weapon)
+	switch (gameObject.status.weapon)
 	{
 	case WeaponType::FIST:
-		Fist(Player, camerapos);
+		Fist(Player);
 		break;
 	case WeaponType::SWORD:
 		break;
@@ -33,36 +31,16 @@ void EnemyClass::AIManegement(Vec2 camerapos,GameObject Player)
 
 }
 
-void EnemyClass::TestAI(Vec2 camerapos,Vec2 pos)
+void EnemyClass::TestAI(Vec2 pos)
 {
-	//Update(camerapos);
-
-	//gameObject.StateManagement();
-	//gameObject.MotionStart();
-
-	//gameObject.ChangeWait();
-
-	//int PosL = gameObject.GetLeft();
-	//int PosR = gameObject.GetRight();
-	//int PosT = gameObject.GetTop();
-	//int PosB = gameObject.GetBottom();
-
-	//if (pos.x <= PosL)
-	//{
-	//	gameObject.ChangeWalkL();
-	//}
-	//if (PosR <= pos.x)
-	//{
-	//	gameObject.ChangeWalkR();
-	//}
-
+	
 
 }
 
 //拳
-void EnemyClass::Fist(GameObject Player,  Vec2 camerapos)
+void EnemyClass::Fist(GameObject Player)
 {
-	Update(camerapos);
+	Update();
 
 	//索敵
 	if (sR.intersects(Player.hitBox))
@@ -120,7 +98,7 @@ void EnemyClass::Fist(GameObject Player,  Vec2 camerapos)
 void EnemyClass::Draw()const
 {
 	
-	gameObject.animation[(int)gameObject.weapon][(int)gameObject.state].Draw(gameObject.position - localCameraPos, gameObject.isMirror);
+	gameObject.animation[(int)gameObject.status.weapon][(int)gameObject.state].Draw(gameObject.position - localCameraPos, gameObject.isMirror);
 }
 
 

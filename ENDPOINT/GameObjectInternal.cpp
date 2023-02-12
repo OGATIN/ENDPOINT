@@ -3,35 +3,35 @@
 
 bool GameObject::isOneLoop()
 {
-	return animation[(int)weapon][(int)state].cutPos.x >= animation[(int)weapon][(int)state].totalPatterns;
+	return animation[(int)status.weapon][(int)state].cutPos.x >= animation[(int)status.weapon][(int)state].totalPatterns;
 }
 
 Rect GameObject::GetHitRect()const
 {
-	return Rect{ (int)position.x + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].x
-				,(int)position.y + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].y
-				,shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].w,shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].h };
+	return Rect{ (int)position.x + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].x
+				,(int)position.y + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].y
+				,shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].w,shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].h };
 }
 
 
 int GameObject::GetTop()
 {
-	return (int)position.y + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].y;
+	return (int)position.y + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].y;
 }
 
 int GameObject::GetBottom()
 {
-	return (int)position.y + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].y + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].h;
+	return (int)position.y + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].y + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].h;
 }
 
 int GameObject::GetLeft()
 {
-	return (int)position.x + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].x;
+	return (int)position.x + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].x;
 }
 
 int GameObject::GetRight()
 {
-	return (int)position.x + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].x + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].w;
+	return (int)position.x + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].x + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].w;
 }
 
 
@@ -40,8 +40,8 @@ int GameObject::GetRight()
 Point GameObject::MapTopSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number)
 {
 	return Point(
-		{ (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].pos.x + ((shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].w / division) * number)) / mapchip_px.x },
-		{ (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].pos.y)/ mapchip_px.x });
+		{ (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].pos.x + ((shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].w / division) * number)) / mapchip_px.x },
+		{ (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].pos.y)/ mapchip_px.x });
 }
 
 
@@ -51,8 +51,8 @@ Point GameObject::MapBottomSidePoint(Vec2 camerapos, Point mapchip_px, int divis
 
 
 	return Point(
-			{ (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].pos.x + ((shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].w  / division) * number)) / mapchip_px.x },
-			{ (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].pos.y +   shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].h) / mapchip_px.x });
+			{ (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].pos.x + ((shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].w  / division) * number)) / mapchip_px.x },
+			{ (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].pos.y +   shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].h) / mapchip_px.x });
 }
 
 //左
@@ -60,8 +60,8 @@ Point GameObject::MapLeftSidePoint(Vec2 camerapos, Point mapchip_px, int divisio
 {
 
 	return (Point{
-	 (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].pos.x) / mapchip_px.x,
-	 (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].pos.y + ((shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].h / division) * number)) / mapchip_px.y
+	 (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].pos.x) / mapchip_px.x,
+	 (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].pos.y + ((shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].h / division) * number)) / mapchip_px.y
 	});
 
 }
@@ -70,7 +70,8 @@ Point GameObject::MapLeftSidePoint(Vec2 camerapos, Point mapchip_px, int divisio
 Point GameObject::MapRightSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number)
 {
 	return (Point{
-	 (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].pos.x +   shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].w) / mapchip_px.x,
-	 (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].pos.y + ((shiftInternalHitRect[(int)weapon][(int)state][animation[(int)weapon][(int)state].cutPos.x].h  / division) * number)) / mapchip_px.y
+	 (position.asPoint().x + camerapos.asPoint().x + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].pos.x + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].w) / mapchip_px.x,
+	 (position.asPoint().y + camerapos.asPoint().y + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].pos.y + ((shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].h / division) * number)) / mapchip_px.y
 	});
 }
+
