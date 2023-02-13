@@ -22,9 +22,11 @@ public:
 
 	Rect shiftInternalHitRect[4][13][11];  //補正
 
-	Vec2 position = { 0,0 };//座標
+	Vec2 screenPosition = { 0,0 };//画面の左上を中心とした座標
+	Vec2 MapPosition = { 0,0 };//MAPの左上を中心とした座標
 	Vec2 velocity = { 0,0 };//ベクトル
 	Rect hitBox = { 0,0,0,0 };//当たり判定
+
 	Vec2 fistFiringPoint = { 205,130 };
 	Vec2 fistFiringMirrorPoint = { 115,130 };
 
@@ -158,7 +160,6 @@ public:
 	void AudioStop();
 
 	/*デバック用*/
-	void Initialize();
 
 	/// @brief 現在の 状態 武器 を表示します。
 	void StatusDraw()const;
@@ -171,10 +172,13 @@ public:
 
 	void EffectsDraw()const;
 
+	void HitBoxDraw(ColorF drawColor = Palette::White)const;
+
+	/*内部データ用*/
+
 	//一つのモーションが終わったかどうか
 	bool isOneLoop();
 
-	/*内部データ用*/
 	Rect GetHitRect()const;
 
 	/// @brief 上
@@ -197,35 +201,31 @@ public:
 	/*マップの当たり判定*/
 
 	/// @brief 上面の当たり判定の点を作成できます。
-	/// @param camerapos カメラ座標
 	/// @param mapchip_px MAPのピクセル数
 	/// @param division 当たり判定の分割数
 	/// @param number 分割数から何番目か
 	/// @return MAPの配列番号
-	Point MapTopSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
+	Point MapTopSidePoint(Point mapchip_px, int division, int number);
 
 	/// @brief 下面の当たり判定の点を作成できます。
-	/// @param camerapos カメラ座標
 	/// @param mapchip_px MAPのピクセル数
 	/// @param division 当たり判定の分割数
 	/// @param number 分割数から何番目か
 	/// @return MAPの配列番号
-	Point MapBottomSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
+	Point MapBottomSidePoint(Point mapchip_px, int division, int number);
 
 	/// @brief 左側の当たり判定の点を作成できます。
-	/// @param camerapos カメラ座標
 	/// @param mapchip_px MAPのピクセル数
 	/// @param division 当たり判定の分割数
 	/// @param number 分割数から何番目か
 	/// @return MAPの配列番号
-	Point MapLeftSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
+	Point MapLeftSidePoint(Point mapchip_px, int division, int number);
 
 	/// @brief 右側の当たり判定の点を作成できます。
-	/// @param camerapos カメラ座標
 	/// @param mapchip_px MAPのピクセル数
 	/// @param division 当たり判定の分割数
 	/// @param number 分割数から何番目か
 	/// @return MAPの配列番号
-	Point MapRightSidePoint(Vec2 camerapos, Point mapchip_px, int division, int number);
+	Point MapRightSidePoint(Point mapchip_px, int division, int number);
 };
 

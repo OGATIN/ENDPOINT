@@ -1,11 +1,22 @@
 ﻿#include "stdafx.h"
 #include "EnemyClass.h"
 
+void EnemyClass::Initialize(Vec2 generationPos)
+{
+	gameObject.MapPosition = generationPos;
+
+}
+
 void EnemyClass::Update()
 {
+	gameObject.MotionStart();
+
 	gameObject.Update();
 
-	gameObject.position += gameObject.velocity;
+	gameObject.screenPosition += gameObject.velocity;
+
+	gameObject.screenPosition.x = gameObject.MapPosition.x - GameData::cameraPos.x;
+
 
 }
 
@@ -31,16 +42,22 @@ void EnemyClass::AIManegement(GameObject Player)
 
 }
 
-void EnemyClass::TestAI(Vec2 pos)
+void EnemyClass::TestAI(Vec2 mapPos)
 {
-	
+	if ((mapPos.x - GameData::cameraPos.x) <= gameObject.GetLeft())
+	{
+		gameObject.ChangeWalkL();
+	}
 
+	if (gameObject.GetRight() <= (mapPos.x - GameData::cameraPos.x))
+	{
+		gameObject.ChangeWalkR();
+	}
 }
 
 //拳
 void EnemyClass::Fist(GameObject Player)
 {
-	Update();
 
 	//索敵
 	if (sR.intersects(Player.hitBox))
@@ -95,20 +112,3 @@ void EnemyClass::Fist(GameObject Player)
 
 
 
-void EnemyClass::Draw()const
-{
-	
-	gameObject.animation[(int)gameObject.status.weapon][(int)gameObject.state].Draw(gameObject.position - localCameraPos, gameObject.isMirror);
-}
-
-
-/*デバック表示*/
-
-void EnemyClass::DebugDraw() const
-{
-	gameObject.GetHitRect().drawFrame(2, Palette::Red);
-
-
-	sR.draw(ColorF(255, 255, 0, 0.4));
-	aR.draw(ColorF(0, 255, 0, 0.4));
-}
