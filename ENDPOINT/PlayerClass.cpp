@@ -640,11 +640,8 @@ void PlayerClass::ConfigOnlineDraw() const
 	if (isOnline)
 	{
 		//後ろの四角い枠
-		Rect window1 = { 10,10,300,190 };
-		Rect window2 = { 10,230,200,40 };
-
-		window1.drawFrame(10, Palette::White).draw(Palette::Black);
-		window2.drawFrame(10, Palette::White).draw(Palette::Black);
+		Rect{ 10,10,300,190 }.drawFrame(10, Palette::White).draw(Palette::Black);
+		Rect{ 10,230,200,40 }.drawFrame(10, Palette::White).draw(Palette::Black);
 
 		//メニュー描画
 		firstMenu.InRectDraw(true);
@@ -652,16 +649,13 @@ void PlayerClass::ConfigOnlineDraw() const
 		//所持金を描画
 		font30(U"1000＄").draw(20, 235, Palette::White);
 
-		//シーンごとの描画処理,階層別にする必要がある(裏で描画し続けるため)
-		switch (selectMenu)
+		switch (selectScene)
 		{
-		case PlayerClass::MenuTransition::Item:
+		case PlayerClass::MenuUpdateProcess::Item:
 			break;
-		case PlayerClass::MenuTransition::Status:
+		case PlayerClass::MenuUpdateProcess::Status:
 			//後ろの四角い枠
-			Rect window3 = { 330,10,400,690 };
-
-			window3.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 330,10,400,690 }.drawFrame(10, Palette::White).draw(Palette::Black);
 
 			//ステータスの項目を表示
 			statusMenu.InRectDraw(false);
@@ -723,67 +717,218 @@ void PlayerClass::ConfigOnlineDraw() const
 				font30(gameObject.status.NextLevel(), U"EXP").draw((715 - (15 * 3)) - digit * 15, magicMenu.startPos.y + ((magicMenu.fontSize * 1.5) * 4));
 			}
 			break;
-
-		case PlayerClass::MenuTransition::SkillPoint:
+		case PlayerClass::MenuUpdateProcess::SkillPoint:
 			//後ろの四角い枠
-			Rect window4 = { 330,10,150,140 };
-
-			window4.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 330,10,150,140 }.drawFrame(10, Palette::White).draw(Palette::Black);
 
 			//メニュー描画
 			skillPointMenu.InRectDraw(true);
+			break;
+		case PlayerClass::MenuUpdateProcess::SkillPointNomalAllocation:
+			//後ろの四角い枠
+			Rect{ 330,10,150,140 }.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 500,10,280,460 }.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 610,490,170,40 }.drawFrame(10, Palette::White).draw(Palette::Black);
 
-			switch (selectSkillPointMenu)
+			//メニュー描画
+			skillPointMenu.InRectDraw(true);//スキル最初の画面
+
+			skillPointNomalAllocationMenu.InRectDraw(true);//ステータスポイント分配画面
+
+			skillPointStateMenu.NumberDraw_int(true);//右の変数
+
+			font30(U"ポイント").draw(620, 495);
+			remainingPointMenu.NumberDraw_int(false);//残りスキルポイント数
+
+			//魔法タイプ選択の時以外右のステータス増加量描画
+			if (skillPointNomalAllocationMenu.IsCurrent() != 6)
 			{
-			case PlayerClass::SkillPointMenuTransition::SkillPointNomalAllocation:
-				//後ろの四角い枠
-				Rect window5 = { 500,10,280,460 };
-				Rect window6 = { 610,490,170,40 };
-				
+				Rect window7 = { 800,10,290,380 };
+				window7.drawFrame(10, Palette::White).draw(Palette::Black);
 
-				window5.drawFrame(10, Palette::White).draw(Palette::Black);
-				window6.drawFrame(10, Palette::White).draw(Palette::Black);
-
-				/*font30(U"体力").draw(520,15);
-				font30(U"筋力").draw(520,155);
-				font30(U"魔力").draw(520,290);*/
-
-				//メニュー描画
-				skillPointNomalAllocationMenu.InRectDraw(true);
-
-				skillPointStateMenu.NumberDraw_int(true);
-
-				remainingPointMenu.NumberDraw_int(false);
-
-				if (skillPointNomalAllocationMenu.IsCurrent() != 6)
-				{
-					Rect window7 = { 800,10,290,380 };
-					window7.drawFrame(10, Palette::White).draw(Palette::Black);
-
-					skillAllocationIncreaseAmountMenu.TwoWayDraw();
-				}
-				else
-				{
-					Rect window7 = { 800,10,290,280 };
-					window7.drawFrame(10, Palette::White).draw(Palette::Black);
-
-					magicSelectMenu.InRectDraw(false);
-				}
-				
-
-				font30(U"ポイント").draw(620,495);
-
-				break;
-			case PlayerClass::SkillPointMenuTransition::SkillPointMagicAllocation:
-				break;
-			case PlayerClass::SkillPointMenuTransition::SkillPointMagicSelect:
-				break;
-			default:
-				break;
+				skillAllocationIncreaseAmountMenu.TwoWayDraw();
 			}
-			
+			else
+			{
+				Rect window7 = { 800,10,290,280 };
+				window7.drawFrame(10, Palette::White).draw(Palette::Black);
+
+				magicSelectMenu.InRectDraw(false);
+			}
+
+
+			break;
+		case PlayerClass::MenuUpdateProcess::SkillPointMagicAllocation:
+			//後ろの四角い枠
+			Rect{ 330,10,150,140 }.drawFrame(10, Palette::White).draw(Palette::Black);
+
+			//メニュー描画
+			skillPointMenu.InRectDraw(true);
+			break;
+		case PlayerClass::MenuUpdateProcess::MagicSelect:
+			//後ろの四角い枠
+			Rect{330,10,150,140}.drawFrame(10, Palette::White).draw(Palette::Black);
+
+			//メニュー描画
+			skillPointMenu.InRectDraw(true);
+			break;
+		case PlayerClass::MenuUpdateProcess::FinalConfirmation:
+			//後ろの四角い枠
+			Rect{ 330,10,150,140 }.drawFrame(10, Palette::White).draw(Palette::Black);
+
+			//メニュー描画
+			skillPointMenu.InRectDraw(true);
+			break;
+		default:
 			break;
 		}
+
+
+		////後ろの四角い枠
+		//Rect window1 = { 10,10,300,190 };
+		//Rect window2 = { 10,230,200,40 };
+
+		//window1.drawFrame(10, Palette::White).draw(Palette::Black);
+		//window2.drawFrame(10, Palette::White).draw(Palette::Black);
+
+		////メニュー描画
+		//firstMenu.InRectDraw(true);
+
+		////所持金を描画
+		//font30(U"1000＄").draw(20, 235, Palette::White);
+
+		////シーンごとの描画処理,階層別にする必要がある(裏で描画し続けるため)
+		//switch (selectMenu)
+		//{
+		//case PlayerClass::MenuTransition::Item:
+		//	break;
+		//case PlayerClass::MenuTransition::Status:
+		//	//後ろの四角い枠
+		//	Rect window3 = { 330,10,400,690 };
+
+		//	window3.drawFrame(10, Palette::White).draw(Palette::Black);
+
+		//	//ステータスの項目を表示
+		//	statusMenu.InRectDraw(false);
+		//	magicMenu.InRectDraw(false);
+
+		//	//ステータスの数値を表示
+		//	for (int i = 0; i < statusChar.size(); i++)
+		//	{
+		//		//桁数計算
+		//		int number = statusChar[i];
+		//		int digit = 0;
+		//		while (number != 0)
+		//		{
+		//			number = number / 10;
+		//			digit++;
+		//		}
+		//		//数値が0だと桁数が0になるので加算
+		//		if (digit == 0)digit = 1;
+
+		//		//描画
+		//		font30(statusChar[i]).draw(715 - digit * (statusMenu.fontSize / 2), statusMenu.startPos.y + ((statusMenu.fontSize * 1.5) * i));
+		//	}
+
+		//	//魔法の種類を描画
+		//	font30(gameObject.status.magicTypeMame).draw(715 - gameObject.status.magicTypeMame.length() * (gameObject.status.magicType == MagicType::NONE ? 15 : 30), (statusChar.size() * 45) + 15);
+
+
+		//	//ステータスの数値を表示
+		//	for (int i = 0; i < magicMenuChara.size(); i++)
+		//	{
+		//		//桁数計算
+		//		int number = (int)magicChar[i];
+		//		int digit = 0;
+		//		while (number != 0)
+		//		{
+		//			number = number / 10;
+		//			digit++;
+		//		}
+		//		//数値が0だと桁数が0になるので加算
+		//		if (digit == 0)digit = 1;
+		//		//描画
+		//		font30(magicChar[i]).draw(715 - digit * (magicMenu.fontSize / 2), magicMenu.startPos.y + ((magicMenu.fontSize * 1.5) * i));
+		//	}
+
+		//	font30(U"次のレベルまで").draw(statusMenu.startPos.x, magicMenu.startPos.y + ((magicMenu.fontSize * 1.5) * 4));
+
+		//	for (int i = 0; i < 1; i++)
+		//	{
+		//		//桁数計算
+		//		int number = gameObject.status.NextLevel();
+		//		int digit = 0;
+		//		while (number != 0)
+		//		{
+		//			number = number / 10;
+		//			digit++;
+		//		}
+		//		//数値が0だと桁数が0になるので加算
+		//		if (digit == 0)digit = 1;
+		//		font30(gameObject.status.NextLevel(), U"EXP").draw((715 - (15 * 3)) - digit * 15, magicMenu.startPos.y + ((magicMenu.fontSize * 1.5) * 4));
+		//	}
+		//	break;
+
+		//case PlayerClass::MenuTransition::SkillPoint:
+		//	//後ろの四角い枠
+		//	Rect window4 = { 330,10,150,140 };
+
+		//	window4.drawFrame(10, Palette::White).draw(Palette::Black);
+
+		//	//メニュー描画
+		//	skillPointMenu.InRectDraw(true);
+
+		//	switch (selectSkillPointMenu)
+		//	{
+		//	case PlayerClass::SkillPointMenuTransition::SkillPointNomalAllocation:
+		//		//後ろの四角い枠
+		//		Rect window5 = { 500,10,280,460 };
+		//		Rect window6 = { 610,490,170,40 };
+		//		
+
+		//		window5.drawFrame(10, Palette::White).draw(Palette::Black);
+		//		window6.drawFrame(10, Palette::White).draw(Palette::Black);
+
+		//		/*font30(U"体力").draw(520,15);
+		//		font30(U"筋力").draw(520,155);
+		//		font30(U"魔力").draw(520,290);*/
+
+		//		//メニュー描画
+		//		skillPointNomalAllocationMenu.InRectDraw(true);
+
+		//		skillPointStateMenu.NumberDraw_int(true);
+
+		//		remainingPointMenu.NumberDraw_int(false);
+
+		//		if (skillPointNomalAllocationMenu.IsCurrent() != 6)
+		//		{
+		//			Rect window7 = { 800,10,290,380 };
+		//			window7.drawFrame(10, Palette::White).draw(Palette::Black);
+
+		//			skillAllocationIncreaseAmountMenu.TwoWayDraw();
+		//		}
+		//		else
+		//		{
+		//			Rect window7 = { 800,10,290,280 };
+		//			window7.drawFrame(10, Palette::White).draw(Palette::Black);
+
+		//			magicSelectMenu.InRectDraw(false);
+		//		}
+		//		
+
+		//		font30(U"ポイント").draw(620,495);
+
+		//		break;
+		//	case PlayerClass::SkillPointMenuTransition::SkillPointMagicAllocation:
+		//		break;
+		//	case PlayerClass::SkillPointMenuTransition::SkillPointMagicSelect:
+		//		break;
+		//	default:
+		//		break;
+		//	}
+		//	
+		//	break;
+		//}
 	}
 }
 
