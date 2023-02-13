@@ -90,6 +90,11 @@ public:
 
 	Audio selectAudio{ U"Material/4.SE/16.ゲームを一時停止した時1.mp3" };
 
+
+	void Initialize();
+
+	void Update();
+
 	void PlayAudio();
 
 	void skillPointAdd();
@@ -100,11 +105,7 @@ public:
 
 	void ConfigOnlineDraw()const;
 
-	void Initialize();
-
 	void CharSet();
-
-	void Update();
 
 	void StatusDraw()const;
 
