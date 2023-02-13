@@ -72,6 +72,11 @@ public:
 	Array<String>magicSelectChara;
 	Menu magicSelectMenu;
 
+	Array<String>skillPointMagicAllocationChara;
+	Menu skillPointMagicAllocationMenu;
+
+	Menu skillPointMagicStateMenu;
+
 	Array<double> statusChar;
 	Array<double> magicChar;
 

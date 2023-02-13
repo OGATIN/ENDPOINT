@@ -84,6 +84,17 @@ void PlayerClass::CharSet()
 		U"戻る"
 	};
 
+	skillPointMagicAllocationChara =
+	{
+		U"威力",
+		U"速度",
+		U"クールタイム",
+		U"大きさ",
+		U"戻る"
+	};
+
+
+
 	//String
 	firstMenu.StringSet(firstMenuChara, { 20,20 });
 	itemMenu.StringSet(itemMenuChara, { 100,10 });
@@ -93,10 +104,12 @@ void PlayerClass::CharSet()
 	skillPointNomalAllocationMenu.StringSet(skillPointNomalAllocationChara, { 520,20 });
 	skillAllocationIncreaseAmountMenu.StringSet(skillAllocationIncreaseAmountChara, { 820,20 });
 	magicSelectMenu.StringSet(magicSelectChara, { 820,20 });
+	skillPointMagicAllocationMenu.StringSet(skillPointMagicAllocationChara, { 580,60 });
 
 	//int
 	skillPointStateMenu.intSet(skillPointChar, { 750,20 });
 	remainingPointMenu.intSet(remainingPointChara, { 760,495 });
+	skillPointMagicStateMenu.doubleSet(magicChar, { 785,60 });
 }
 
 void PlayerClass::skillPointAdd()
@@ -105,6 +118,8 @@ void PlayerClass::skillPointAdd()
 	if ((KeyZ.down() || KeyEnter.down()) && gameObject.status.IsEnoughSkillPoint(currentStatus) == 0 && gameObject.status.IsAllocateSkillPoint(currentStatus))
 	{
 		gameObject.status.SkillPointAdd(currentStatus, MagicType::FIREBALL);
+
+		CharSet();
 
 		Initialize();
 	}
@@ -435,7 +450,66 @@ void PlayerClass::ConfigOnlineProcess()
 			break;
 
 		case PlayerClass::MenuUpdateProcess::SkillPointMagicAllocation:
+			skillPointMagicAllocationMenu.Update();
+
+			switch (skillPointMagicAllocationMenu.IsCurrent())
+			{
+			case 0:
+				//ステータスの状態遷移
+				currentStatus = StatusType::HP;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.hitPointAllotted;
+				break;
+			case 1:
+				//ステータスの状態遷移
+				currentStatus = StatusType::STAMINA;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.staminaAllotted;
+				break;
+			case 2:
+				//ステータスの状態遷移
+				currentStatus = StatusType::MENTAL;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.mentalAllotted;
+				break;
+			case 3:
+				//ステータスの状態遷移
+				currentStatus = StatusType::POWER;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.powerAllotted;
+				break;
+			case 4:
+				//ステータスの状態遷移
+				currentStatus = StatusType::PROTECTION;
+
+				//ステータスの状態に応じてステータス加算
+				skillPointAdd();
+
+				//右の表のグレーアウト
+				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.protectionAllotted;
+				break;
+			
+			default:
+				break;
+			}
 			break;
+
 		case PlayerClass::MenuUpdateProcess::MagicSelect:
 			magicSelectMenu.Update();
 			ChangeMagic();
@@ -743,15 +817,13 @@ void PlayerClass::ConfigOnlineDraw() const
 			//魔法タイプ選択の時以外右のステータス増加量描画
 			if (skillPointNomalAllocationMenu.IsCurrent() != 6)
 			{
-				Rect window7 = { 800,10,290,380 };
-				window7.drawFrame(10, Palette::White).draw(Palette::Black);
+				Rect{ 800,10,290,380 }.drawFrame(10, Palette::White).draw(Palette::Black);
 
 				skillAllocationIncreaseAmountMenu.TwoWayDraw();
 			}
 			else
 			{
-				Rect window7 = { 800,10,290,280 };
-				window7.drawFrame(10, Palette::White).draw(Palette::Black);
+				Rect{ 800,10,290,280 }.drawFrame(10, Palette::White).draw(Palette::Black);
 
 				magicSelectMenu.InRectDraw(false);
 			}
@@ -761,10 +833,18 @@ void PlayerClass::ConfigOnlineDraw() const
 		case PlayerClass::MenuUpdateProcess::SkillPointMagicAllocation:
 			//後ろの四角い枠
 			Rect{ 330,10,150,140 }.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 500,10,340,275 }.drawFrame(10, Palette::White).draw(Palette::Black);
+
 
 			//メニュー描画
 			skillPointMenu.InRectDraw(true);
+			skillPointMagicAllocationMenu.InRectDraw(true);
+			skillPointMagicStateMenu.NumberDraw_double(true);
+
+			//魔法の種類を描画
+			font30(gameObject.status.magicTypeMame).draw(520,20);
 			break;
+
 		case PlayerClass::MenuUpdateProcess::MagicSelect:
 			//後ろの四角い枠
 			Rect{330,10,150,140}.drawFrame(10, Palette::White).draw(Palette::Black);
