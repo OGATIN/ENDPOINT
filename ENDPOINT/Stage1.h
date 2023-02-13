@@ -33,15 +33,24 @@ private:
 	//Texture guardMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/11.防御モーション.png" };
 	//Texture notstaminaMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/14.スタミナ切れ(待機).png" };
 
-	Texture enemeyWaitingMotionPNG		{ U"Material/1.img/敵/1.拳/1.待機モーション-enemey.png" };
-	Texture enemeyWalkMotionPNG			{ U"Material/1.img/敵/1.拳/2.歩きモーション-enemey.png" };
-	Texture enemeyRunMotionPNG			{ U"Material/1.img/敵/1.拳/3.ダッシュモーション-enemey.png" };
-	Texture enemeyJumpMotionPNG			{ U"Material/1.img/敵/1.拳/4.ジャンプモーション-enemey.png" };
-	Texture enemeyFallingMotionPNG		{ U"Material/1.img/敵/1.拳/5.空中モーション-enemey.png" };
-	Texture enemeyLandingMotionPNG		{ U"Material/1.img/敵/1.拳/6.着地モーション-enemey.png" };
-	Texture enemeyReceiveMotionPNG		{ U"Material/1.img/敵/1.拳/10.受けモーション-enemey.png" };
-	Texture enemeyAttackMotionPNG		{ U"Material/1.img/敵/1.拳/7.拳モーション-enemey.png" };
-	Texture enemeyMagicMotionPNG		{ U"Material/1.img/敵/1.拳/8.攻撃魔法モーション-enemey.png" };
+	Texture enemeyFistWaitingMotionPNG		{ U"Material/1.img/敵/1.拳/1.待機モーション-enemey.png" };
+	Texture enemeyFistWalkMotionPNG			{ U"Material/1.img/敵/1.拳/2.歩きモーション-enemey.png" };
+	Texture enemeyFistRunMotionPNG			{ U"Material/1.img/敵/1.拳/3.ダッシュモーション-enemey.png" };
+	Texture enemeyFistJumpMotionPNG			{ U"Material/1.img/敵/1.拳/4.ジャンプモーション-enemey.png" };
+	Texture enemeyFistFallingMotionPNG		{ U"Material/1.img/敵/1.拳/5.空中モーション-enemey.png" };
+	Texture enemeyFistLandingMotionPNG		{ U"Material/1.img/敵/1.拳/6.着地モーション-enemey.png" };
+	Texture enemeyFistReceiveMotionPNG		{ U"Material/1.img/敵/1.拳/10.受けモーション-enemey.png" };
+	Texture enemeyFistAttackMotionPNG		{ U"Material/1.img/敵/1.拳/7.拳モーション-enemey.png" };
+	Texture enemeyFistMagicMotionPNG		{ U"Material/1.img/敵/1.拳/8.攻撃魔法モーション-enemey.png" };
+	Texture enemeySwordWaitingMotionPNG		{ U"Material/1.img/敵/2.剣/1.待機モーション-enemey.png" };
+	Texture enemeySwordWalkMotionPNG		{ U"Material/1.img/敵/2.剣/2.歩きモーション-enemey.png" };
+	Texture enemeySwordRunMotionPNG			{ U"Material/1.img/敵/2.剣/3.ダッシュモーション-enemey.png" };
+	Texture enemeySwordJumpMotionPNG		{ U"Material/1.img/敵/2.剣/4.ジャンプモーション-enemey.png" };
+	Texture enemeySwordFallingMotionPNG		{ U"Material/1.img/敵/2.剣/5.空中モーション-enemey.png" };
+	Texture enemeySwordLandingMotionPNG		{ U"Material/1.img/敵/2.剣/6.着地モーション-enemey.png" };
+	Texture enemeySwordReceiveMotionPNG		{ U"Material/1.img/敵/2.剣/10.受けモーション-enemey.png" };
+	Texture enemeySwordAttackMotionPNG		{ U"Material/1.img/敵/2.剣/7.剣モーション-enemey.png" };
+	Texture enemeySwordMagicMotionPNG		{ U"Material/1.img/敵/2.剣/8.攻撃魔法モーション-enemey.png" };
 	//Texture enemeyGuardMotionPNG		{ U"Material/1.img/敵/1.拳/11.防御モーション-enemey.png" };
 	//Texture enemeyNotstaminaMotionPNG	{ U"Material/1.img/敵/1.拳/14.スタミナ切れ(待機)-enemey.png" };
 
@@ -97,8 +106,8 @@ private:
 
 	Texture enemeyPNG[4][20] =
 	{
-		/*0が拳*/{{enemeyWaitingMotionPNG} ,{enemeyWalkMotionPNG} ,{enemeyRunMotionPNG},{enemeyJumpMotionPNG},{enemeyFallingMotionPNG},{enemeyLandingMotionPNG},{enemeyReceiveMotionPNG},{enemeyAttackMotionPNG},{enemeyMagicMotionPNG}},
-		/*1が剣*/{},
+		/*0が拳*/{{enemeyFistWaitingMotionPNG} ,{enemeyFistWalkMotionPNG} ,{enemeyFistRunMotionPNG},{enemeyFistJumpMotionPNG},{enemeyFistFallingMotionPNG},{enemeyFistLandingMotionPNG},{enemeyFistReceiveMotionPNG},{enemeyFistAttackMotionPNG},{enemeyFistMagicMotionPNG}},
+		/*1が剣*/{{enemeySwordWaitingMotionPNG} ,{enemeySwordWalkMotionPNG} ,{enemeySwordRunMotionPNG},{enemeySwordJumpMotionPNG},{enemeySwordFallingMotionPNG},{enemeySwordLandingMotionPNG},{enemeySwordReceiveMotionPNG},{enemeySwordAttackMotionPNG},{enemeySwordMagicMotionPNG}},
 		/*2が鈍器*/{},
 		/*3が杖*/{},
 		//各20種

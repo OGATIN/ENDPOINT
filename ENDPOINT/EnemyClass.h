@@ -15,6 +15,10 @@ public:
 		gameObject.Reload(_animation, effect, _audio, AnimationData, TextureShiftData, statusData, skillPointStatData, experienceBorder, magicSkillPointData, magicOther);
 	};
 
+	/// @brief 
+	/// @param generationPos 
+	void Initialize(Vec2 generationPos);
+
 	/// @brief 座標関連を更新します。
 	/// @param camerapos カメラ座標
 	void Update();
@@ -24,7 +28,7 @@ public:
 	/// @param Player プレイヤーオブジェクト(比較用)
 	void AIManegement(GameObject Player);
 
-	/// @brief テストAI(バグの元なので一旦使わないで)
+	/// @brief テストAI
 	/// @param camerapos カメラ座標
 	/// @param pos 指定位置
 	void TestAI(Vec2 pos);
@@ -34,13 +38,5 @@ public:
 	/// @param camerapos カメラ座標(Update消すときに一緒に消して)
 	void Fist(GameObject Player); //拳
 
-	/// @brief 描画
-	void Draw()const;
-
-
-	/*デバック表示*/
-
-	/// @brief デバック表示(当たり判定など)
-	void DebugDraw()const;
 };
 

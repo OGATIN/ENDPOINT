@@ -10,50 +10,56 @@ void MapClass::Initialize(Texture _mapTileIMG, CSV _mapData)
 void MapClass::Camera(GameObject& _gameobject, int HorizontalScreenDivision, int leftRange, int rightRange, int verticalScreenSplit, int UpRange, int BottomRange)
 {
 
+	//配列外エラーを阻止
+	if (_gameobject.GetLeft() <= 0)
+	{
+		_gameobject.screenPosition.x = -_gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x;
+	}
+
 	//下移動
 	//if (0 < _gameobject.velocity.y)
 	//{
 	//}
-		if (_gameobject.GetBottom() < ((Scene::Height() / verticalScreenSplit) * BottomRange))
+	if (_gameobject.GetBottom() < ((Scene::Height() / verticalScreenSplit) * BottomRange))
+	{
+		_gameobject.screenPosition.y += _gameobject.velocity.y;
+	}
+	else
+	{
+		if (GameData::cameraPos.y < (mapData.rows() * MapGameSize().y) - Scene::Height())
 		{
-			_gameobject.position.y += _gameobject.velocity.y ;
+			GameData::cameraPos.y += _gameobject.jumpPowerMax;
 		}
 		else
 		{
-			if (GameData::cameraPos.y < (mapData.rows() * MapGameSize().y) - Scene::Height())
-			{
-				GameData::cameraPos.y += _gameobject.jumpPowerMax;
-			}
-			else
-			{
-				_gameobject.position.y += _gameobject.velocity.y;
-
-			}
+			_gameobject.screenPosition.y += _gameobject.velocity.y;
 
 		}
-	
+
+	}
+
 
 	//上移動
-	//if (0 > _gameobject.velocity.y)
-	//{}
+	if (0 > _gameobject.velocity.y)
+	{
 		if (_gameobject.GetTop() > ((Scene::Height() / verticalScreenSplit) * UpRange))
 		{
-			_gameobject.position.y += _gameobject.velocity.y;
+			_gameobject.screenPosition.y += _gameobject.velocity.y;
 		}
 		else
 		{
 			if (GameData::cameraPos.y > 0)
 			{
-				GameData::cameraPos.y -= _gameobject.jumpPowerMax;
+				GameData::cameraPos.y += _gameobject.velocity.y;
 			}
 			else
 			{
-				_gameobject.position.y += _gameobject.velocity.y;
+				_gameobject.screenPosition.y += _gameobject.velocity.y;
 
 			}
 
 		}
-	
+	}
 
 
 	//右移動
@@ -61,17 +67,17 @@ void MapClass::Camera(GameObject& _gameobject, int HorizontalScreenDivision, int
 	{
 		if (_gameobject.GetRight() < ((Scene::Width() / HorizontalScreenDivision) * rightRange))
 		{
-			_gameobject.position.x += _gameobject.velocity.x;
+			_gameobject.screenPosition.x += _gameobject.velocity.x;
 		}
 		else
 		{
-			if (GameData::cameraPos.x < (mapData.columns(_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), 1, 0).y) * MapGameSize().x) - Scene::Width())
+			if (GameData::cameraPos.x < (mapData.columns(_gameobject.MapRightSidePoint(MapGameSize().asPoint(), 1, 0).y) * MapGameSize().x) - Scene::Width())
 			{
 				GameData::cameraPos.x += _gameobject.velocity.x;
 			}
 			else
 			{
-				_gameobject.position.x += _gameobject.velocity.x;
+				_gameobject.screenPosition.x += _gameobject.velocity.x;
 
 			}
 
@@ -83,7 +89,7 @@ void MapClass::Camera(GameObject& _gameobject, int HorizontalScreenDivision, int
 	{
 		if (_gameobject.GetLeft() > ((Scene::Width() / HorizontalScreenDivision) * leftRange))
 		{
-			_gameobject.position.x += _gameobject.velocity.x;
+			_gameobject.screenPosition.x += _gameobject.velocity.x;
 		}
 		else
 		{
@@ -93,7 +99,7 @@ void MapClass::Camera(GameObject& _gameobject, int HorizontalScreenDivision, int
 			}
 			else
 			{
-				_gameobject.position.x += _gameobject.velocity.x;
+				_gameobject.screenPosition.x += _gameobject.velocity.x;
 
 			}
 
@@ -111,21 +117,16 @@ void MapClass::MapHitSet(GameObject& _gameobject)
 
 void MapClass::MapHitGround(GameObject& _gameobject)
 {
-	//配列外エラーを阻止
-	if (_gameobject.GetLeft() <= 0)
-	{
-		_gameobject.position.x = -_gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x;
-	}
 
 	//左
 	if (0 > _gameobject.velocity.x)
 	{
 		//当たり判定
 		if (
-			(((Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).x]) < 100)) || //左上
-			 ((Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).x]) < 100)) || //左4/1
-			 ((Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).x]) < 100)) || //左4/2
-			 ((Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).x]) < 100))) //左4/3
+			(((Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).x]) < 100)) || //左上
+			 ((Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).x]) < 100)) || //左4/1
+			 ((Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).x]) < 100)) || //左4/2
+			 ((Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).x]) < 100))) //左4/3
 			)
 		{
 			//ベクトルを0
@@ -133,7 +134,7 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 
 
 			//位置を補正
-			_gameobject.position.x = GetMapRightScreen(_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x + 1;
+			_gameobject.screenPosition.x = GetMapRightScreen(_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x + 1;
 		}
 	}
 
@@ -142,10 +143,10 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 	{
 		//当たり判定
 		if (
-			(((Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).x]) < 100)) || //左上
-			 ((Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).x]) < 100)) || //左4/1
-			 ((Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).x]) < 100)) || //左4/2
-			 ((Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).x]) < 100))) //左4/3 
+			(((Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).x]) < 100)) || //左上
+			 ((Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).x]) < 100)) || //左4/1
+			 ((Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).x]) < 100)) || //左4/2
+			 ((Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).x]) < 100))) //左4/3 
 			)
 		{
 			//ベクトルを0
@@ -153,7 +154,7 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 
 
 			//位置を補正
-			_gameobject.position.x = GetMapLeftScreen(_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].w - 1 ;
+			_gameobject.screenPosition.x = GetMapLeftScreen(_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].w - 1 ;
 
 		}
 	}
@@ -163,16 +164,16 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 	{
 		//当たり判定
 		if (
-			(((Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount,0).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).x]) < 100)) || //左下
-			 ((Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount,1).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).x]) < 100)) || //中下
-			 ((Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount,2).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x]) < 100)))   //右下
+			(((Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount,0).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).x]) < 100)) || //左下
+			 ((Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount,1).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).x]) < 100)) || //中下
+			 ((Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount,2).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).x]) < 100)))   //右下
 			)
 		{
 			//ベクトルを0
 			_gameobject.velocity.y = 0;
 
 			//位置を補正
-			_gameobject.position.y = GetMapTopScreen(_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].h;
+			_gameobject.screenPosition.y = GetMapTopScreen(_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].h;
 
 			//着地した
 			_gameobject.isLanding = true;
@@ -189,16 +190,16 @@ void MapClass::MapHitGround(GameObject& _gameobject)
 	{
 		//当たり判定
 		if (
-			(((Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).x]) < 100)) || //左上
-			 ((Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).x]) < 100)) || //中上
-			 ((Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x]) < 100)))   //右上
+			(((Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).x]) < 100)) || //左上
+			 ((Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).x]) < 100)) || //中上
+			 ((Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).x]) >= 0) && (Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).x]) < 100)))   //右上
 			)
 		{
 			//ベクトルを0
 			_gameobject.velocity.y = 0;
 
 			//位置を補正
-			_gameobject.position.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y;
+			_gameobject.screenPosition.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y;
 
 
 		}
@@ -215,16 +216,16 @@ void MapClass::MapHitStand(GameObject& _gameobject)
 		{
 			//当たり判定
 			if (
-				(((Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).x]) >= 104) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).x]) <= 106)) || //左下
-				 ((Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).x]) >= 104) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).x]) <= 106)) || //中下
-				 ((Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x]) >= 104) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x]) <= 106)))   //右下
+				(((Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).x]) >= 104) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).x]) <= 106)) || //左下
+				 ((Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).x]) >= 104) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).x]) <= 106)) || //中下
+				 ((Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).x]) >= 104) && (Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).x]) <= 106)))   //右下
 				)
 			{
 				//ベクトルを0
 				_gameobject.velocity.y = 0;
 
 				//位置を補正
-				_gameobject.position.y = GetMapTopScreen(_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].h;
+				_gameobject.screenPosition.y = GetMapTopScreen(_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].h;
 
 				//着地した
 				_gameobject.isLanding = true;
@@ -249,10 +250,10 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 		{
 			//当たり判定
 			if (
-				((Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).x]) == 100)  || //左上
-				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).x]) == 100)  || //左4/1
-				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).x]) == 100)  || //左4/2
-				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).x]) == 100)) //左4/3
+				((Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).x]) == 100)  || //左上
+				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).x]) == 100)  || //左4/1
+				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).x]) == 100)  || //左4/2
+				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).x]) == 100)) //左4/3
 				)
 			{
 				//ベクトルを0
@@ -260,7 +261,7 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 
 
 				//位置を補正
-				_gameobject.position.x = GetMapRightScreen(_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x + 1;
+				_gameobject.screenPosition.x = GetMapRightScreen(_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x + 1;
 
 			}
 		}
@@ -270,13 +271,13 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 		{
 			//当たり判定
 			if (
-				((Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).x]) == 100) || //左上
-				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).x]) == 100) || //左4/1
-				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).x]) == 100) || //左4/2
-				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).x]) == 100)) //左4/3
+				((Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).x]) == 100) || //左上
+				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).x]) == 100) || //左4/1
+				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).x]) == 100) || //左4/2
+				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).x]) == 100)) //左4/3
 				)
 			{
-				_gameobject.position.y -= _gameobject.velocity.x;
+				_gameobject.screenPosition.y -= _gameobject.velocity.x;
 			}
 		}
 
@@ -285,16 +286,16 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 		{
 			//当たり判定
 			if (
-				((Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).x]) == 100) || //左下
-				 (Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).x]) == 100) || //中下
-				 (Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x]) == 100))   //右下
+				((Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).x]) == 100) || //左下
+				 (Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).x]) == 100) || //中下
+				 (Parse<int>(mapData[_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).x]) == 100))   //右下
 				)
 			{
 				//ベクトルを0
 				_gameobject.velocity.y = 0;
 
 				//位置を補正
-				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].h - ((_gameobject.position.asPoint().x + GameData::cameraPos.asPoint().x + _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x + _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].w) % MapGameSize().asPoint().x);
+				_gameobject.screenPosition.y = GetMapBottomScreen(_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].h - ((_gameobject.screenPosition.asPoint().x + GameData::cameraPos.asPoint().x + _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x + _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].w) % MapGameSize().asPoint().x);
 
 				//着地した
 				_gameobject.isLanding = true;
@@ -311,23 +312,20 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 		{
 			//当たり判定
 			if (
-				((Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).x]) == 100)  || //左上
-				 (Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).x]) == 100)  || //中上
-				 (Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x]) == 100) )   //右上
+				((Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).x]) == 100)  || //左上
+				 (Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).x]) == 100)  || //中上
+				 (Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).x]) == 100) )   //右上
 				)
 			{
 				//ベクトルを0
 				_gameobject.velocity.y = 0;
 
 				//位置を補正
-				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y;
+				_gameobject.screenPosition.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y;
 
 
 			}
 		}
-
-		
-
 	}
 
 
@@ -339,13 +337,13 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 		{
 			//当たり判定
 			if (
-				((Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).x]) == 101) || //左上
-				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).x]) == 101) || //左4/1
-				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).x]) == 101) || //左4/2
-				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).x]) == 101))//左4/3
+				((Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).x]) == 101) || //左上
+				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).x]) == 101) || //左4/1
+				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).x]) == 101) || //左4/2
+				 (Parse<int>(mapData[_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).x]) == 101))//左4/3
 				)
 			{
-				_gameobject.position.y += _gameobject.velocity.x;
+				_gameobject.screenPosition.y += _gameobject.velocity.x;
 			}
 		}
 
@@ -354,10 +352,10 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 		{
 			//当たり判定
 			if (
-				((Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0).x]) == 101) || //左上
-				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 1).x]) == 101) || //左4/1
-				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 2).x]) == 101) || //左4/2
-				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 3).x]) == 101)) //左4/3
+				((Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0).x]) == 101) || //左上
+				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 1).x]) == 101) || //左4/1
+				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 2).x]) == 101) || //左4/2
+				 (Parse<int>(mapData[_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).y][_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 3).x]) == 101)) //左4/3
 				)
 			{
 
@@ -366,7 +364,7 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 
 
 				//位置を補正
-				_gameobject.position.x = GetMapLeftScreen(_gameobject.MapRightSidePoint(GameData::cameraPos, MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].w - 1;
+				_gameobject.screenPosition.x = GetMapLeftScreen(_gameobject.MapRightSidePoint(MapGameSize().asPoint(), heightDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].x - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].w - 1;
 
 			}
 		}
@@ -376,16 +374,16 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 		{
 			//当たり判定
 			if (
-				((Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).x]) == 101) || //左下
-				 (Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).x]) == 101) || //中下
-				 (Parse<int>(mapData[_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x]) == 101))   //右下
+				((Parse<int>(mapData[_gameobject.MapBottomSidePoint( MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).x]) == 101) || //左下
+				 (Parse<int>(mapData[_gameobject.MapBottomSidePoint( MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).x]) == 101) || //中下
+				 (Parse<int>(mapData[_gameobject.MapBottomSidePoint( MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).x]) == 101))   //右下
 				)
 			{
 				//ベクトルを0
 				_gameobject.velocity.y = 0;
 
 				//位置を補正
-				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapBottomSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].h - (((_gameobject.MapLeftSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x + 1)* MapGameSize().asPoint().x) - (_gameobject.GetLeft() + GameData::cameraPos.x));
+				_gameobject.screenPosition.y = GetMapBottomScreen(_gameobject.MapBottomSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].h - (((_gameobject.MapLeftSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).x + 1)* MapGameSize().asPoint().x) - (_gameobject.GetLeft() + GameData::cameraPos.x));
 
 				//着地した
 				_gameobject.isLanding = true;
@@ -402,16 +400,16 @@ void MapClass::MapHitSlope(GameObject& _gameobject)
 		{
 			//当たり判定
 			if (
-				((Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0).x]) == 101) || //左上
-				 (Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 1).x]) == 101) || //中上
-				 (Parse<int>(mapData[_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 2).x]) == 101))   //右上
+				((Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0).x]) == 101) || //左上
+				 (Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 1).x]) == 101) || //中上
+				 (Parse<int>(mapData[_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).y][_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 2).x]) == 101))   //右上
 				)
 			{
 				//ベクトルを0
 				_gameobject.velocity.y = 0;
 
 				//位置を補正
-				_gameobject.position.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(GameData::cameraPos, MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y;
+				_gameobject.screenPosition.y = GetMapBottomScreen(_gameobject.MapTopSidePoint(MapGameSize().asPoint(), widthDivisionAmount, 0)) - _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].y;
 
 
 			}
@@ -450,10 +448,6 @@ void MapClass::Draw() const
 
 /*デバック用*/
 
-void MapClass::CameraDebuggDrow() const
-{
-	font30(GameData::cameraPos).draw(0,Scene::Height() - font30.height());
-}
 
 void MapClass::HitJudgmentPointDraw(GameObject _gameobject,ColorF circleColor) const
 {
@@ -463,7 +457,7 @@ void MapClass::HitJudgmentPointDraw(GameObject _gameobject,ColorF circleColor) c
 		{
 			if (w == 0 || w == widthDivisionAmount || h == 0 || h == heightDivisionAmount)
 			{
-				Vec2{ (_gameobject.position.asPoint().x  + _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].pos.x + ((_gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].w / widthDivisionAmount) * w)), (_gameobject.position.asPoint().y  + _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].pos.y + ((_gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].h / heightDivisionAmount) * h)) }.asCircle(pointSize).draw(circleColor);
+				Vec2{ (_gameobject.screenPosition.asPoint().x  + _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].pos.x + ((_gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].w / widthDivisionAmount) * w)), (_gameobject.screenPosition.asPoint().y  + _gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].pos.y + ((_gameobject.shiftInternalHitRect[(int)_gameobject.status.weapon][(int)_gameobject.state][_gameobject.animation[(int)_gameobject.status.weapon][(int)_gameobject.state].cutPos.x].h / heightDivisionAmount) * h)) }.asCircle(pointSize).draw(circleColor);
 			}
 		}
 	}

@@ -13,22 +13,25 @@ void Stage1::Initialize()
 
 	//初期化
 	Player.Initialize();
-	Player.gameObject.Initialize();
 
-	//ストップウォッチスタート
-	Player.gameObject.MotionStart();
+	Enemey.Initialize({423,1160});
+
 }
 
 void Stage1::update()
 {
 	//プレイヤーの処理
 	Player.Update();
-	Player.gameObject.EffectUpdate();
 
 	Map.Camera(Player.gameObject, 8, 3, 5, 8, 2, 7);
 
 	//敵の処理
-	//Enemey.TestAI( GameData::cameraPos,Vec2{ 1 * Map.MapGameSize().x,0});
+	Enemey.Update();
+
+	if (MouseL.pressed())
+	{
+		Enemey.TestAI({ 723,1160 });
+	}
 	//Enemey.Fist(Player.gameObject,Map.cameraPos);
 
 	Map.MapHitSet(Player.gameObject);
@@ -127,11 +130,6 @@ void Stage1::update()
 //	{}
 	}
 
-
-
-
-
-
 	Player.ConfigOnlineProcess();
 
 
@@ -140,9 +138,6 @@ void Stage1::update()
 		Player.isOnline ? Player.isOnline = false : Player.isOnline = true;
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
 
 	//当たり判定---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//プレイヤーと敵の体が当たった際の処理
@@ -159,22 +154,22 @@ void Stage1::update()
 		{
 			if (PlayerVelocity > 0)
 			{
-				Enemey.gameObject.position.x += preVelo;
+				Enemey.gameObject.screenPosition.x += preVelo;
 			}
 			else
 			{
-				Enemey.gameObject.position.x -= preVelo;
+				Enemey.gameObject.screenPosition.x -= preVelo;
 			}
 		}
 		else
 		{
 			if (EnemeyVelocity > 0)
 			{
-				Player.gameObject.position.x -= preVelo;
+				Player.gameObject.screenPosition.x -= preVelo;
 			}
 			else
 			{
-				Player.gameObject.position.x += preVelo;
+				Player.gameObject.screenPosition.x += preVelo;
 			}
 		}
 
@@ -289,55 +284,41 @@ void Stage1::update()
 		}
 
 	}
-
-	
-
-
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
 }
 
 void Stage1::draw() const
 {
+	//画像描画
 
 	BackScreen.resized(Scene::Width()).draw();
 
 	Map.Draw();
 	Map.EnemySpawnCircleDrow();
-	Map.CameraDebuggDrow();
 
-	//画像描画
-	Player.Draw();
-	Player.gameObject.EffectDraw(true);
-	Player.DebugDraw();
-	//Player.gameObject.EffectsDraw();
-	//Player.gameObject.status.BaseStatusDrow(true);
-	Enemey.Draw();
-	Enemey.DebugDraw();
-	Player.gameObject.CoordinateRelated();
 	Player.ConfigOnlineDraw();
-	Map.HitJudgmentPointDraw(Player.gameObject);
+	Player.Draw();
 
-
-	//for (int i = 0; i < effects.size(); i++)
-	//{
-	//	font(effects[i].effectBase.cutPos.x).draw(0, font.height() * i);
-	//}
+	Enemey.gameObject.Draw();
 
 
 
-	//デバック用
-	font(U"選択してる状態", statusTypeName).draw(450, 0);
+	//デバック関連
+	Enemey.gameObject.CoordinateRelated();
+	//Player.gameObject.status.BaseStatusDrow(true);
+	Player.gameObject.StatusDraw();
+	Player.gameObject.TimeDebuggDraw();
+	Player.gameObject.HitBoxDraw();
+
+	Enemey.gameObject.HitBoxDraw();
+
+	//font(U"選択してる状態", statusTypeName).draw(450, 0);
 	//font(isMissing, Missing).draw(450, 30);
 	//font(isMax).draw(450, 60);
 
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
 
 }
-
-
 
 double Stage1::HitBodyVelocity(double velox1, double velox2)
 {

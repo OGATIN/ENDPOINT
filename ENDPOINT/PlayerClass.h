@@ -68,8 +68,6 @@ public:
 	Array<double> statusChar;
 	Array<double> magicChar;
 
-
-	
 	Font font30{ 30 ,U"Material/6.font/jfdotfont-20150527/JF-Dot-ShinonomeMin12.ttf" };//フォント
 
 	bool isOnline = false;
@@ -77,6 +75,11 @@ public:
 	StatusClass status;
 
 	Audio selectAudio{ U"Material/4.SE/16.ゲームを一時停止した時1.mp3" };
+
+
+	void Initialize();
+
+	void Update();
 
 	void skillPointAdd();
 
@@ -86,17 +89,12 @@ public:
 
 	void ConfigOnlineDraw()const;
 
-	void Initialize();
-
 	void CharSet();
-
-	void Update();
-
-	void StatusDraw()const;
 
 	void Draw()const;
 
-	void DebugDraw()const;
+	void StatusDraw()const;
+
 };
 
 
