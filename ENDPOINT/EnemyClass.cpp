@@ -98,7 +98,7 @@ void EnemyClass::Fist(GameObject Player)
 void EnemyClass::Draw()const
 {
 	
-	gameObject.animation[(int)gameObject.status.weapon][(int)gameObject.state].Draw(gameObject.position - localCameraPos, gameObject.isMirror);
+	//gameObject.animation[(int)gameObject.status.weapon][(int)gameObject.state].Draw(gameObject.position - localCameraPos, gameObject.isMirror);
 }
 
 

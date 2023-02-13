@@ -28,7 +28,7 @@ void Stage1::update()
 	Map.Camera(Player.gameObject, 8, 3, 5, 8, 2, 7);
 
 	//敵の処理
-	Enemey.TestAI( GameData::cameraPos,Vec2{ 1 * Map.MapGameSize().x,0});
+	//Enemey.TestAI( GameData::cameraPos,Vec2{ 1 * Map.MapGameSize().x,0});
 	//Enemey.Fist(Player.gameObject,Map.cameraPos);
 
 	Map.MapHitSet(Player.gameObject);

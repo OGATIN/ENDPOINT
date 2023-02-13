@@ -72,7 +72,7 @@ void GameObject::Reload(Texture _animation[4][20], EffectClass effect[3], Audio 
 		{
 			for (int p = 0; p < animation[j][i].totalPatterns; p++)
 			{
-				shiftInternalHitRect[j][i][p] = Parse<Rect>(TextureShiftData[1][1]);//Parse<Rect>(TextureShiftData[(j * 14) + i + 1][p + 1]);
+				shiftInternalHitRect[j][i][p] = /*Parse<Rect>(TextureShiftData[1][1]);*/Parse<Rect>(TextureShiftData[(j * 14) + i + 1][p + 1]);
 			}
 			
 		}

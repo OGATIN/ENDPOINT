@@ -25,7 +25,7 @@ private:
 	Texture swordWalkMotionPNG		{ U"Material/1.img/プレイヤー/2.剣/2.歩きモーション.png" };
 	Texture swordRunMotionPNG		{ U"Material/1.img/プレイヤー/2.剣/3.ダッシュモーション.png" };
 	Texture swordJumpMotionPNG		{ U"Material/1.img/プレイヤー/2.剣/4.ジャンプモーション.png" };
-	Texture swordFallingMotionPNG	{ U"Material/1.img/プレイヤー/2.剣/5.空中モーション.png" };
+	Texture swordFallingMotionPNG	{ U"Material/1.img/プレイヤー/2.剣/5.空中モーション .png" };
 	Texture swordLandingMotionPNG	{ U"Material/1.img/プレイヤー/2.剣/6.着地モーション.png" };
 	Texture swordReceiveMotionPNG	{ U"Material/1.img/プレイヤー/2.剣/10.受けモーション.png" };
 	Texture swordAttackMotionPNG	{ U"Material/1.img/プレイヤー/2.剣/7.剣モーション.png" };
