@@ -88,6 +88,8 @@ public:
 
 	void Initialize();
 
+	void BarInitialize();
+
 	void Update();
 
 	void PlayAudio();

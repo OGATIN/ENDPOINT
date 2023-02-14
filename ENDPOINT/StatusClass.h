@@ -63,9 +63,9 @@ public:
 
 	//魔法によって値の意味が変わります。
 	double magicProficiencyPower = 0;//威力 ※magicSkillPointの0
-	double subSkill = 4;//魔法によって変わります。※magicSkillPointの1
+	double subSkill = 0;//魔法によって変わります。※magicSkillPointの1
 	double coolTime = 0;//クールタイム ※magicSkillPointの2
-	double specialFunctioVernValue = 0.2;//魔法によって変わります (火球、サンダー、ヒールの時に使用) ※magicSkillPointの3
+	double specialFunctioVernValue = 0;//魔法によって変わります (火球、サンダー、ヒールの時に使用) ※magicSkillPointの3
 	bool specialFunctionVerRelease = false;//魔法によって変わります(ステータスアップとタイムの時に使用)※magicSkillPointの3
 
 
