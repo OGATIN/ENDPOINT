@@ -60,6 +60,32 @@ void StatusClass::Reload(CSV statusData, CSV skillPointStatData, CSV experienceB
 		magicPower = magicPower + Parse<double>(skillPointStatData[9][i]);
 	}
 
+
+	switch (magicType)
+	{
+	case MagicType::NONE:
+		magicTypeMame = { U"---" };
+		break;
+	case MagicType::FIREBALL:
+		magicTypeMame = { U"火球" };
+		break;
+	case MagicType::THUNDER:
+		magicTypeMame = { U"サンダー" };
+		break;
+	case MagicType::STATUSUP:
+		magicTypeMame = { U"ステータスアップ" };
+		break;
+	case MagicType::HEAL:
+		magicTypeMame = { U"ヒール" };
+		break;
+	case MagicType::TIME:
+		magicTypeMame = { U"タイム" };
+		break;
+	default:
+		break;
+	}
+
+
 	//魔法が解放されているなら
 	if (magicType != MagicType::NONE)
 	{

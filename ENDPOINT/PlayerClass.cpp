@@ -42,6 +42,8 @@ void PlayerClass::Update()
 	CharSet();
 }
 
+
+
 void PlayerClass::CharSet()
 {
 	firstMenuChara = { U"アイテム",U"ステータス",U"スキルポイント",U"閉じる" };
@@ -91,19 +93,25 @@ void PlayerClass::CharSet()
 		gameObject.status.skillPoint
 	};
 
+	for (int i = 0; i < 11; i++)
+	{
+		Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus][i]);
+	}
+
 	skillAllocationIncreaseAmountChara =
 	{
-		U"1            10up",
-		U"2            10up",
-		U"3            10up",
-		U"4            10up",
-		U"5            10up",
-		U"6            10up",
-		U"7            10up",
-		U"8            10up",
-		U"9            10up",
-		U"10           10up"
+		{U"1            " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][1]) + U"up" } ,
+		{U"2            " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][2]) + U"up" } ,
+		{U"3            " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][3]) + U"up" } ,
+		{U"4            " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][4]) + U"up" } ,
+		{U"5            " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][5]) + U"up" } ,
+		{U"6            " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][6]) + U"up" } ,
+		{U"7            " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][7]) + U"up" } ,
+		{U"8            " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][8]) + U"up" } ,
+		{U"9            " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][9]) + U"up" } ,
+		{U"10           " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][10]) + U"up" } ,
 	};
+	
 
 	magicSelectChara =
 	{
@@ -124,6 +132,23 @@ void PlayerClass::CharSet()
 		U"戻る"
 	};
 
+	skillPointMagicStateChar =
+	{
+		gameObject.status.magicSkillPointAllocation[0],
+		gameObject.status.magicSkillPointAllocation[1],
+		gameObject.status.magicSkillPointAllocation[2],
+		gameObject.status.magicSkillPointAllocation[3]
+	};
+
+	skillMagicAllocationIncreaseAmountChara =
+	{
+		U"1            0.2倍up",
+		U"2            0.2倍up",
+		U"3            0.2倍up",
+		U"4            0.2倍up",
+		U"5            0.4倍up"
+	};
+
 
 
 	//String
@@ -133,14 +158,26 @@ void PlayerClass::CharSet()
 	magicMenu.StringSet(magicMenuChara, { 380,((statusMenuChara.size()) * 45) + 15 });
 	skillPointMenu.StringSet(skillPointMenuChara, { 340,20 });
 	skillPointNomalAllocationMenu.StringSet(skillPointNomalAllocationChara, { 520,20 });
-	skillAllocationIncreaseAmountMenu.StringSet(skillAllocationIncreaseAmountChara, { 820,20 });
+	skillAllocationIncreaseAmountMenu.StringSet(skillAllocationIncreaseAmountChara, {820,20});
 	magicSelectMenu.StringSet(magicSelectChara, { 820,20 });
 	skillPointMagicAllocationMenu.StringSet(skillPointMagicAllocationChara, { 580,60 });
+	skillMagicAllocationIncreaseAmountMenu.StringSet(skillMagicAllocationIncreaseAmountChara, { 870,20 });
 
 	//int
 	skillPointStateMenu.intSet(skillPointChar, { 750,20 });
 	remainingPointMenu.intSet(remainingPointChara, { 760,495 });
-	skillPointMagicStateMenu.doubleSet(magicChar, { 785,60 });
+	skillPointMagicStateMenu.intSet(skillPointMagicStateChar, { 815,60 });
+}
+
+void PlayerClass::MagicSkillPointAdd(int changeNumber)
+{
+	//スキルポイント加算
+	if ((KeyZ.down() || KeyEnter.down()) && gameObject.status.IsEnoughMagicSkillPoint(changeNumber) == 0 && gameObject.status.IsAllocateMagicSkillPoint(changeNumber))
+	{
+		gameObject.status.MagicSkillPointAdd(changeNumber);
+
+		CharSet();
+	}
 }
 
 void PlayerClass::skillPointAdd()
@@ -284,7 +321,7 @@ void PlayerClass::ConfigOnlineProcess()
 		case PlayerClass::MenuUpdateProcess::Item:
 
 			//戻る用
-			if (KeyZ.down() || KeyEnter.down()||MouseL.down())
+			if (KeyZ.down() || KeyEnter.down() || MouseL.down())
 			{
 				selectScene = MenuUpdateProcess::FirstScene;
 			}
@@ -342,7 +379,7 @@ void PlayerClass::ConfigOnlineProcess()
 				break;
 			}
 			break;
-			
+
 		case PlayerClass::MenuUpdateProcess::SkillPointNomalAllocation:
 
 			//通常スキルポイント分配画面を選択できる処理
@@ -468,59 +505,51 @@ void PlayerClass::ConfigOnlineProcess()
 		case PlayerClass::MenuUpdateProcess::SkillPointMagicAllocation:
 			skillPointMagicAllocationMenu.Update();
 
+			skillPointMagicStateMenu.InterlockingUpdate(skillPointMagicAllocationMenu);
+
 			switch (skillPointMagicAllocationMenu.IsCurrent())
 			{
 			case 0:
-				//ステータスの状態遷移
-				currentStatus = StatusType::HP;
-
 				//ステータスの状態に応じてステータス加算
-				skillPointAdd();
+				MagicSkillPointAdd(0);
 
 				//右の表のグレーアウト
-				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.hitPointAllotted;
+				skillMagicAllocationIncreaseAmountMenu.menuID = gameObject.status.magicSkillPointAllocation[0];
 				break;
 			case 1:
-				//ステータスの状態遷移
-				currentStatus = StatusType::STAMINA;
-
 				//ステータスの状態に応じてステータス加算
-				skillPointAdd();
+				MagicSkillPointAdd(1);
 
 				//右の表のグレーアウト
-				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.staminaAllotted;
+				skillMagicAllocationIncreaseAmountMenu.menuID = gameObject.status.magicSkillPointAllocation[1];
 				break;
 			case 2:
-				//ステータスの状態遷移
-				currentStatus = StatusType::MENTAL;
-
 				//ステータスの状態に応じてステータス加算
-				skillPointAdd();
+				MagicSkillPointAdd(2);
 
 				//右の表のグレーアウト
-				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.mentalAllotted;
+				skillMagicAllocationIncreaseAmountMenu.menuID = gameObject.status.magicSkillPointAllocation[2];
 				break;
 			case 3:
-				//ステータスの状態遷移
-				currentStatus = StatusType::POWER;
-
 				//ステータスの状態に応じてステータス加算
-				skillPointAdd();
+				MagicSkillPointAdd(3);
 
 				//右の表のグレーアウト
-				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.powerAllotted;
+				skillMagicAllocationIncreaseAmountMenu.menuID = gameObject.status.magicSkillPointAllocation[3];
 				break;
 			case 4:
-				//ステータスの状態遷移
-				currentStatus = StatusType::PROTECTION;
+				if (KeyZ.down() || KeyEnter.down() || skillPointMagicAllocationMenu.IsMouseOver() && MouseL.down())
+				{
+					//一つ前の画面に戻る
+					selectScene = MenuUpdateProcess::SkillPoint;
 
-				//ステータスの状態に応じてステータス加算
-				skillPointAdd();
+					//選択音再生
+					PlayAudio();
 
-				//右の表のグレーアウト
-				skillAllocationIncreaseAmountMenu.menuID = gameObject.status.protectionAllotted;
+					//初期化
+					skillPointMagicAllocationMenu.Initialize();
+				}
 				break;
-			
 			default:
 				break;
 			}
@@ -528,7 +557,7 @@ void PlayerClass::ConfigOnlineProcess()
 
 		case PlayerClass::MenuUpdateProcess::MagicSelect:
 			magicSelectMenu.Update();
-			ChangeMagic();
+
 			break;
 		case PlayerClass::MenuUpdateProcess::FinalConfirmation:
 			break;
@@ -830,43 +859,62 @@ void PlayerClass::ConfigOnlineDraw() const
 			font30(U"ポイント").draw(620, 495);
 			remainingPointMenu.NumberDraw_int(false);//残りスキルポイント数
 
-			//魔法タイプ選択の時以外右のステータス増加量描画
-			if (skillPointNomalAllocationMenu.IsCurrent() != 6)
+			if (skillPointNomalAllocationMenu.IsCurrent() != 9)
 			{
-				Rect{ 800,10,290,380 }.drawFrame(10, Palette::White).draw(Palette::Black);
+				//魔法タイプ選択の時以外右のステータス増加量描画
+				if (skillPointNomalAllocationMenu.IsCurrent() == 6)
+				{
+					Rect{ 800,10,290,280 }.drawFrame(10, Palette::White).draw(Palette::Black);
 
-				skillAllocationIncreaseAmountMenu.TwoWayDraw();
+					magicSelectMenu.InRectDraw(false);
+				}
+
+				else
+				{
+					Rect{ 800,10,290,380 }.drawFrame(10, Palette::White).draw(Palette::Black);
+
+					skillAllocationIncreaseAmountMenu.TwoWayDraw();
+				}
 			}
-			else
-			{
-				Rect{ 800,10,290,280 }.drawFrame(10, Palette::White).draw(Palette::Black);
-
-				magicSelectMenu.InRectDraw(false);
-			}
-
 
 			break;
 		case PlayerClass::MenuUpdateProcess::SkillPointMagicAllocation:
 			//後ろの四角い枠
 			Rect{ 330,10,150,140 }.drawFrame(10, Palette::White).draw(Palette::Black);
 			Rect{ 500,10,340,275 }.drawFrame(10, Palette::White).draw(Palette::Black);
-
+			Rect{ 610,490,170,40 }.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 860,10,290,190 }.drawFrame(10, Palette::White).draw(Palette::Black);
 
 			//メニュー描画
 			skillPointMenu.InRectDraw(true);
 			skillPointMagicAllocationMenu.InRectDraw(true);
-			skillPointMagicStateMenu.NumberDraw_double(true);
+			skillPointMagicStateMenu.NumberDraw_int(true);
+			skillMagicAllocationIncreaseAmountMenu.TwoWayDraw();
 
 			//魔法の種類を描画
 			font30(gameObject.status.magicTypeMame).draw(520,20);
-			break;
 
+			break;
 		case PlayerClass::MenuUpdateProcess::MagicSelect:
 			//後ろの四角い枠
-			Rect{330,10,150,140}.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 330,10,150,140 }.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 500,10,280,460 }.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 610,490,170,40 }.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 800,10,290,280 }.drawFrame(10, Palette::White).draw(Palette::Black);
 
 			//メニュー描画
-			skillPointMenu.InRectDraw(true);
+			skillPointMenu.InRectDraw(true);//スキル最初の画面
+
+			skillPointNomalAllocationMenu.InRectDraw(true);//ステータスポイント分配画面
+
+			skillPointStateMenu.NumberDraw_int(true);//右の変数
+
+			magicSelectMenu.InRectDraw(true);
+
+			remainingPointMenu.NumberDraw_int(false);//残りスキルポイント数
+
+			font30(U"ポイント").draw(620, 495);
+			
 			break;
 		case PlayerClass::MenuUpdateProcess::FinalConfirmation:
 			//後ろの四角い枠
