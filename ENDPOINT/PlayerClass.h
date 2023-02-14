@@ -75,7 +75,11 @@ public:
 	Array<String>skillPointMagicAllocationChara;
 	Menu skillPointMagicAllocationMenu;
 
+	Array<int> skillPointMagicStateChar;
 	Menu skillPointMagicStateMenu;
+
+	Array<String> skillMagicAllocationIncreaseAmountChara;
+	Menu skillMagicAllocationIncreaseAmountMenu{ Palette::Lightgrey,Palette::White };
 
 	Array<double> statusChar;
 	Array<double> magicChar;
@@ -98,6 +102,8 @@ public:
 	void PlayAudio();
 
 	void skillPointAdd();
+
+	void MagicSkillPointAdd(int changeNumber);
 
 	void ChangeMagic();
 

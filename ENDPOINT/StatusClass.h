@@ -22,7 +22,7 @@ public:
 	
 	int level = 1;//プレイヤーのレベル
 
-	int skillPoint = 1;//残ってるスキルポイントの値(デフォルト1)
+	int skillPoint = 19;//残ってるスキルポイントの値(デフォルト1)
 
 	int hitPointAllotted = 0;//割り振られた値(HP)
 	int staminaAllotted = 0;//割り振られた値(スタミナ)
@@ -38,8 +38,8 @@ public:
 
 	int magicProficiency = 0;//現在の魔法熟練度
 	
-	int magicSkillPoint = 0;//魔法スキルポイント
-	int magicSkillPointAllocation[4] = { 1,0,0,0 };//魔法スキルポイントを割り振った値
+	int magicSkillPoint = 10;//魔法スキルポイント
+	int magicSkillPointAllocation[4] = { 0,0,0,0 };//魔法スキルポイントを割り振った値
 
 
 	/*ここから上をいじると下の数値が変化します。*/
@@ -50,7 +50,7 @@ public:
 	double power = 0;			//攻撃力
 	double protection = 0;		//防御力
 	double weight = 0;			//重量
-	MagicType magicType = MagicType::FIREBALL;//魔法の種類
+	MagicType magicType = MagicType::FIREBALL;//魔法の種類e
 	double magicPoint = 0;		//MP
 	double magicPower = 0;		//魔力
 
@@ -63,9 +63,9 @@ public:
 
 	//魔法によって値の意味が変わります。
 	double magicProficiencyPower = 0;//威力 ※magicSkillPointの0
-	double subSkill = 4;//魔法によって変わります。※magicSkillPointの1
+	double subSkill = 0;//魔法によって変わります。※magicSkillPointの1
 	double coolTime = 0;//クールタイム ※magicSkillPointの2
-	double specialFunctioVernValue = 0.2;//魔法によって変わります (火球、サンダー、ヒールの時に使用) ※magicSkillPointの3
+	double specialFunctioVernValue = 0;//魔法によって変わります (火球、サンダー、ヒールの時に使用) ※magicSkillPointの3
 	bool specialFunctionVerRelease = false;//魔法によって変わります(ステータスアップとタイムの時に使用)※magicSkillPointの3
 
 
