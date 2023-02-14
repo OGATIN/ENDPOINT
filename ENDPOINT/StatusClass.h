@@ -22,7 +22,7 @@ public:
 	
 	int level = 1;//プレイヤーのレベル
 
-	int skillPoint = 1;//残ってるスキルポイントの値(デフォルト1)
+	int skillPoint = 6;//残ってるスキルポイントの値(デフォルト1)
 
 	int hitPointAllotted = 0;//割り振られた値(HP)
 	int staminaAllotted = 0;//割り振られた値(スタミナ)
@@ -50,7 +50,7 @@ public:
 	double power = 0;			//攻撃力
 	double protection = 0;		//防御力
 	double weight = 0;			//重量
-	MagicType magicType = MagicType::FIREBALL;//魔法の種類
+	MagicType magicType = MagicType::NONE;//魔法の種類
 	double magicPoint = 0;		//MP
 	double magicPower = 0;		//魔力
 
@@ -161,7 +161,7 @@ public:
 	/// @brief スキルポイントを割り振る際スキルポイントが足りているかを調べてくれます。
 	/// @param statusType 割り振りたいステータスの種類
 	/// @return 0なら足りています。それ以上ならいくら足りていないかを返してくれます。
-	int IsEnoughSkillPoint(StatusType statusType);
+	int IsEnoughSkillPoint(StatusType statusType)const;
 
 	/// @brief スキルポイントポイントが最大値じゃないかを調べてくれます。※魔法の場合は既に魔法が選択されているか(これがないと最悪エラーで起動すらできなくなります)
 	/// @param statusType 割り振りたいステータスの種類

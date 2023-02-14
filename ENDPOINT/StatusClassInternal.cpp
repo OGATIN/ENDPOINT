@@ -3,7 +3,7 @@
 
 /*内部データ*/
 
-int StatusClass::IsEnoughSkillPoint(StatusType statusType)
+int StatusClass::IsEnoughSkillPoint(StatusType statusType)const
 {
 
 	if (statusType == StatusType::MAGICTYPE)

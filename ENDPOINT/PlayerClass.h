@@ -19,21 +19,9 @@ public:
 
 	MenuUpdateProcess selectScene = MenuUpdateProcess::FirstScene;;
 
-	enum class MenuTransition
-	{
-		FirstScene, Item, Status, SkillPoint
-	};
-
-	enum class SkillPointMenuTransition
-	{
-		SkillPointFirstMenu,SkillPointNomalAllocation, SkillPointMagicAllocation, SkillPointMagicSelect
-	};
-
-	MenuTransition selectMenu = MenuTransition::FirstScene;
-
-	SkillPointMenuTransition selectSkillPointMenu = SkillPointMenuTransition::SkillPointFirstMenu;
-
 	GameObject gameObject;
+
+	MagicType ChangeMagicType = MagicType::FIREBALL;
 
 	StatusType currentStatus = StatusType::HP;
 
@@ -81,6 +69,9 @@ public:
 	Array<String> skillMagicAllocationIncreaseAmountChara;
 	Menu skillMagicAllocationIncreaseAmountMenu{ Palette::Lightgrey,Palette::White };
 
+	Array<String>finalConfirmationChara;
+	Menu finalConfirmationMenu;
+
 	Array<double> statusChar;
 	Array<double> magicChar;
 
@@ -105,7 +96,7 @@ public:
 
 	void MagicSkillPointAdd(int changeNumber);
 
-	void ChangeMagic();
+	void ChangeMagic(MagicType currentMagic);
 
 	void ConfigOnlineProcess();
 

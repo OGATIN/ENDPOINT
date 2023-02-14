@@ -126,7 +126,7 @@ void PlayerClass::CharSet()
 	{
 		U"火球",
 		U"サンダー",
-		U"回復",
+		U"ヒール",
 		U"ステータスアップ",
 		U"タイム",
 		U"戻る"
@@ -149,8 +149,11 @@ void PlayerClass::CharSet()
 		gameObject.status.magicSkillPointAllocation[3]
 	};
 
-					   
-
+	finalConfirmationChara =
+	{
+		U"はい",
+		U"いいえ"
+	};
 
 
 	//String
@@ -164,6 +167,7 @@ void PlayerClass::CharSet()
 	magicSelectMenu.StringSet(magicSelectChara, { 820,20 });
 	skillPointMagicAllocationMenu.StringSet(skillPointMagicAllocationChara, { 580,60 });
 	skillMagicAllocationIncreaseAmountMenu.StringSet(skillMagicAllocationIncreaseAmountChara, { 870,20 });
+	finalConfirmationMenu.StringSet(finalConfirmationChara, { 620,300 });
 
 	//int
 	skillPointStateMenu.intSet(skillPointChar, { 750,20 });
@@ -195,16 +199,6 @@ void PlayerClass::skillPointAdd()
 	}
 }
 
-void PlayerClass::ChangeMagic()
-{
-	//スキルポイント加算
-	if ((KeyZ.down() || KeyEnter.down()) && gameObject.status.IsEnoughSkillPoint(currentStatus) == 0 && gameObject.status.IsAllocateSkillPoint(currentStatus))
-	{
-		gameObject.status.SkillPointAdd(currentStatus, gameObject.status.magicType);
-
-		Initialize();
-	}
-}
 
 void PlayerClass::PlayAudio()
 {
@@ -558,27 +552,52 @@ void PlayerClass::ConfigOnlineProcess()
 			break;
 
 		case PlayerClass::MenuUpdateProcess::MagicSelect:
+
 			magicSelectMenu.Update();
 
 			switch (magicSelectMenu.IsCurrent())
 			{
 			case 0:
-				
+				if (KeyZ.down() || KeyEnter.down() || magicSelectMenu.IsMouseOver() && MouseL.down())
+				{
+					ChangeMagicType = MagicType::FIREBALL;
+					selectScene = MenuUpdateProcess::FinalConfirmation;
+				}
 				break;
 			case 1:
-				
+				if (KeyZ.down() || KeyEnter.down() || magicSelectMenu.IsMouseOver() && MouseL.down())
+				{
+					ChangeMagicType = MagicType::THUNDER;
+
+					selectScene = MenuUpdateProcess::FinalConfirmation;
+				}
 				break;
 			case 2:
-				
+				if (KeyZ.down() || KeyEnter.down() || magicSelectMenu.IsMouseOver() && MouseL.down())
+				{
+					ChangeMagicType = MagicType::HEAL;
+
+					selectScene = MenuUpdateProcess::FinalConfirmation;
+				}
 				break;
 			case 3:
-				
+				if (KeyZ.down() || KeyEnter.down() || magicSelectMenu.IsMouseOver() && MouseL.down())
+				{
+					ChangeMagicType = MagicType::STATUSUP;
+
+					selectScene = MenuUpdateProcess::FinalConfirmation;
+				}
 				break;
 			case 4:
-			
+				if (KeyZ.down() || KeyEnter.down() || magicSelectMenu.IsMouseOver() && MouseL.down())
+				{
+					ChangeMagicType = MagicType::TIME;
+
+					selectScene = MenuUpdateProcess::FinalConfirmation;
+				}
 				break;
 			case 5:
-				if (KeyZ.down() || KeyEnter.down() || skillPointMagicAllocationMenu.IsMouseOver() && MouseL.down())
+				if (KeyZ.down() || KeyEnter.down() || magicSelectMenu.IsMouseOver() && MouseL.down())
 				{
 					//一つ前の画面に戻る
 					selectScene = MenuUpdateProcess::SkillPointNomalAllocation;
@@ -596,6 +615,55 @@ void PlayerClass::ConfigOnlineProcess()
 			break;
 
 		case PlayerClass::MenuUpdateProcess::FinalConfirmation:
+
+			//スキルポイントが足りていれば処理,足りていなければ戻る
+			if (gameObject.status.IsEnoughSkillPoint(currentStatus) == 0)
+			{
+				finalConfirmationMenu.Update();
+
+				switch (finalConfirmationMenu.IsCurrent())
+				{
+				case 0:
+					if (KeyZ.down() || KeyEnter.down() || finalConfirmationMenu.IsMouseOver() && MouseL.down())
+					{
+						gameObject.status.SkillPointAdd(currentStatus, ChangeMagicType);
+
+						CharSet();
+
+						//二つ前の画面に戻る
+						selectScene = MenuUpdateProcess::SkillPointNomalAllocation;
+
+						//選択音再生
+						PlayAudio();
+
+						//初期化
+						finalConfirmationMenu.Initialize();
+					}
+					break;
+				case 1:
+					if (KeyZ.down() || KeyEnter.down() || finalConfirmationMenu.IsMouseOver() && MouseL.down())
+					{
+						//一つ前の画面に戻る
+						selectScene = MenuUpdateProcess::MagicSelect;
+
+						//選択音再生
+						PlayAudio();
+
+						//初期化
+						finalConfirmationMenu.Initialize();
+					}
+					break;
+				default:
+					break;
+				}	
+			}
+			else
+			{
+				if (KeyZ.down() || KeyEnter.down() || MouseL.down())
+				{
+					selectScene = MenuUpdateProcess::MagicSelect;
+				}
+			}
 			break;
 		default:
 			break;
@@ -955,9 +1023,61 @@ void PlayerClass::ConfigOnlineDraw() const
 		case PlayerClass::MenuUpdateProcess::FinalConfirmation:
 			//後ろの四角い枠
 			Rect{ 330,10,150,140 }.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 500,10,280,460 }.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 610,490,170,40 }.drawFrame(10, Palette::White).draw(Palette::Black);
+			Rect{ 800,10,290,280 }.drawFrame(10, Palette::White).draw(Palette::Black);
+
 
 			//メニュー描画
-			skillPointMenu.InRectDraw(true);
+			skillPointMenu.InRectDraw(true);//スキル最初の画面
+
+			skillPointNomalAllocationMenu.InRectDraw(true);//ステータスポイント分配画面
+
+			skillPointStateMenu.NumberDraw_int(true);//右の変数
+
+			magicSelectMenu.InRectDraw(true);
+
+			remainingPointMenu.NumberDraw_int(false);//残りスキルポイント数
+
+			font30(U"ポイント").draw(620, 495);
+
+			
+			if (gameObject.status.IsEnoughSkillPoint(currentStatus) == 0)
+			{
+				Rect{ 225,150,900,300 }.drawFrame(10, Palette::White).draw(Palette::Black);
+				finalConfirmationMenu.InRectDraw(true);
+
+				String magicName;
+				switch (ChangeMagicType)
+				{
+				case MagicType::FIREBALL:
+					magicName = { U"火球" };
+					break;
+				case MagicType::THUNDER:
+					magicName = { U"サンダー" };
+					break;
+				case MagicType::STATUSUP:
+					magicName = { U"ステータスアップ" };
+					break;
+				case MagicType::HEAL:
+					magicName = { U"ヒール" };
+					break;
+				case MagicType::TIME:
+					magicName = { U"タイム" };
+					break;
+				default:
+					break;
+				}
+
+				font30(U"5ポイントを消費して", magicName, U"を習得しますか？").draw(400, 170);
+				font30(U"※一度習得すると変更がとても難しくなります。").draw(370, 210);
+			}
+			else
+			{
+				Rect{ 800,400,470,40 }.drawFrame(10, Palette::White).draw(Palette::Black);
+				font30(U"魔法の習得には5ポイント必要です").draw(805, 405, Palette::Red);
+			}
+			
 			break;
 		default:
 			break;

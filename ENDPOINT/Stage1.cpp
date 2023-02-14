@@ -201,21 +201,21 @@ void Stage1::draw() const
 
 
 
-	//デバック関連
-	Player.gameObject.CoordinateRelated();
+	////デバック関連
+	//Player.gameObject.CoordinateRelated();
 	//Player.gameObject.status.BaseStatusDrow(true);
-	Player.gameObject.StatusDraw();
-	Player.gameObject.TimeDebuggDraw();
+	//Player.gameObject.StatusDraw();
+	//Player.gameObject.TimeDebuggDraw();
 
-	Player.gameObject.HitBoxDraw();
+	//Player.gameObject.HitBoxDraw();
 
-	//font(U"選択してる状態", statusTypeName).draw(450, 0);
-	//font(isMissing, Missing).draw(450, 30);
-	//font(isMax).draw(450, 60);
+	////font(U"選択してる状態", statusTypeName).draw(450, 0);
+	////font(isMissing, Missing).draw(450, 30);
+	////font(isMax).draw(450, 60);
 
-	font(Enemey.gameObject.ObjectCenterWorldPoint()).draw(0, Scene::Height() - font.height())/*.asCircle(5).draw(Palette::Blue)*/;
+	//font(Enemey.gameObject.ObjectCenterWorldPoint()).draw(0, Scene::Height() - font.height())/*.asCircle(5).draw(Palette::Blue)*/;
 
-	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
+	//if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
 }
 
 double Stage1::HitBodyVelocity(double velox1, double velox2)
