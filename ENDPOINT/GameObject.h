@@ -179,6 +179,8 @@ public:
 	//一つのモーションが終わったかどうか
 	bool isOneLoop();
 
+	Vec2 ObjectCenterWorldPoint()const noexcept;
+
 	Rect GetHitRect()const;
 
 	/// @brief 上

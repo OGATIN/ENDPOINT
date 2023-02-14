@@ -13,7 +13,8 @@ void EnemyClass::Update()
 
 	gameObject.Update();
 
-	gameObject.screenPosition += gameObject.velocity;
+	gameObject.screenPosition.y += gameObject.velocity.y;
+	gameObject.MapPosition.x += gameObject.velocity.x;
 
 	gameObject.screenPosition.x = gameObject.MapPosition.x - GameData::cameraPos.x;
 
@@ -44,15 +45,19 @@ void EnemyClass::AIManegement(GameObject Player)
 
 void EnemyClass::TestAI(Vec2 mapPos)
 {
-	if ((mapPos.x - GameData::cameraPos.x) <= gameObject.GetLeft())
+	if ((mapPos.x  + AIspace) <= gameObject.ObjectCenterWorldPoint().x)
 	{
 		gameObject.ChangeWalkL();
 	}
-
-	if (gameObject.GetRight() <= (mapPos.x - GameData::cameraPos.x))
+	else if (gameObject.ObjectCenterWorldPoint().x <= (mapPos.x - AIspace))
 	{
 		gameObject.ChangeWalkR();
 	}
+	else
+	{
+		gameObject.ChangeWait();
+	}
+
 }
 
 //拳

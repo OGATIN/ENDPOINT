@@ -7,6 +7,8 @@ public:
 
 	Vec2 localCameraPos;
 
+	double AIspace = 5;
+
 	//Circle sR{gameObject.GetHitRect().topCenter(),300};
 	//Circle aR{gameObject.GetHitRect().topCenter(),100};
 	Circle sR{ gameObject.GetHitRect().pos,300 };

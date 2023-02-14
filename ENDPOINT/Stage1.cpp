@@ -9,6 +9,8 @@ Stage1::~Stage1()
 
 void Stage1::Initialize()
 {
+	Scene::SetBackground(ColorF(0.3, 0.3, 0.3));//シーンの色を灰色に設定
+
 	Map.enemySpawnCircleAdd();
 
 	//初期化
@@ -28,16 +30,9 @@ void Stage1::update()
 	//敵の処理
 	Enemey.Update();
 
-	if (MouseL.pressed())
-	{
-		Enemey.TestAI({ 723,1160 });
-	}
-	//Enemey.Fist(Player.gameObject,Map.cameraPos);
-
+	
 	Map.MapHitSet(Player.gameObject);
 	Map.MapHitSet(Enemey.gameObject);
-
-	Player.gameObject.StateManagement();
 
 	// コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
@@ -177,141 +172,48 @@ void Stage1::update()
 		Player.gameObject.velocity.x = preVelo;
 		Enemey.gameObject.velocity.x = preVelo;
 	}
+
+	EnemeyAdd();
+
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	//デバック用---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-	//経験値関連使い方講座
-
-	if (Player.gameObject.status.IsLevelUp())
-	{
-		Player.Initialize();
-	}
-
-
-	//経験値の増加
-	if (Key1.pressed())
-	{
-		Player.gameObject.status.GetExperience(100);
-	}
-
-	//変えたいステータス変更
-	if (Key2.down())
-	{
-		S++;
-
-		if (S > 9)
-		{
-			S = 0;
-		}
-
-		switch (S)
-		{
-		case 0:
-			tentative = StatusType::HP;
-			statusTypeName = U"HP";
-			break;
-		case 1:
-			tentative = StatusType::STAMINA;
-			statusTypeName = U"スタミナ";
-			break;
-		case 2:
-			tentative = StatusType::MENTAL;
-			statusTypeName = U"メンタル";
-			break;
-		case 3:
-			tentative = StatusType::POWER;
-			statusTypeName = U"パワー";
-			break;
-		case 4:
-			tentative = StatusType::PROTECTION;
-			statusTypeName = U"防御";
-			break;
-		case 5:
-			tentative = StatusType::WEIGHT;
-			statusTypeName = U"重さ";
-			break;
-		case 6:
-			tentative = StatusType::MAGICTYPE;
-			statusTypeName = U"魔法";
-			break;
-		case 7:
-			tentative = StatusType::MP;
-			statusTypeName = U"MP";
-			break;
-		case 8:
-			tentative = StatusType::MAGICPOWER;
-			statusTypeName = U"魔力";
-			break;
-
-		default:
-			break;
-		}
-
-	}
-
-	//判定表示用
-	if (Player.gameObject.status.IsEnoughSkillPoint(tentative) == 0)
-	{
-		Missing = Player.gameObject.status.IsEnoughSkillPoint(tentative);
-		isMissing = U"足りてます";
-	}
-	else
-	{
-		Missing = Player.gameObject.status.IsEnoughSkillPoint(tentative);
-		isMissing = U" 足りてないよ";
-	}
-
-	//判定表示用
-	if (Player.gameObject.status.IsAllocateSkillPoint(tentative))
-	{
-		isMax = U"最大値じゃないよ";
-	}
-	else
-	{
-		isMax = U"最大値です。振り分けれません";
-
-	}
-
-	//ポイント割り振り
-	if (Key3.down())
-	{
-		if (Player.gameObject.status.IsEnoughSkillPoint(tentative) == 0 && Player.gameObject.status.IsAllocateSkillPoint(tentative))
-		{
-			Player.gameObject.status.SkillPointAdd(tentative,MagicType::FIREBALL);
-
-			Player.Initialize();
-		}
-
-	}
-	//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }
 
 void Stage1::draw() const
 {
 	//画像描画
 
-	BackScreen.resized(Scene::Width()).draw();
+	for (int i = 0; i < 3; i++)
+	{
+		BackScreen[i].resized(Scene::Width()).draw();
+	}
 
 	Map.Draw();
 	Map.EnemySpawnCircleDrow();
 
 	Player.Draw();
 
-	Enemey.gameObject.Draw();
+	for (auto& enemeys : Enemeys)
+	{
+		enemeys.gameObject.Draw();
+		enemeys.gameObject.HitBoxDraw();
+	}
+
+
 
 	//デバック関連
-	Enemey.gameObject.CoordinateRelated();
+	Player.gameObject.CoordinateRelated();
 	//Player.gameObject.status.BaseStatusDrow(true);
 	Player.gameObject.StatusDraw();
 	Player.gameObject.TimeDebuggDraw();
-	Player.gameObject.HitBoxDraw();
 
-	Enemey.gameObject.HitBoxDraw();
+	Player.gameObject.HitBoxDraw();
 
 	//font(U"選択してる状態", statusTypeName).draw(450, 0);
 	//font(isMissing, Missing).draw(450, 30);
 	//font(isMax).draw(450, 60);
+
+	font(Enemey.gameObject.ObjectCenterWorldPoint()).draw(0, Scene::Height() - font.height())/*.asCircle(5).draw(Palette::Blue)*/;
 
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
 }
@@ -409,6 +311,22 @@ bool Stage1::Is1PPush(double velox1, double velox2)
 	else is1PPush = false;
 
 	return is1PPush;
+}
+
+void Stage1::EnemeyAdd()
+{
+	for (auto& Circle : Map.enemySpawnCircles)
+	{
+		if (Player.gameObject.GetHitRect().intersects(Vec2{ (Vec2)Circle.center - GameData::cameraPos }.asCircle(Circle.r)))
+		{
+
+			//Enemeys << Enemey.gameObject.MapPosition.intersects((GameData::cameraPos + (Vec2)Circle.center) + Enemey.gameObject.shiftInternalHitRect[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state][Enemey.gameObject.animation[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state].cutPos.x].pos + (Enemey.gameObject.shiftInternalHitRect[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state][Enemey.gameObject.animation[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state].cutPos.x].size / 2));
+
+			Circle.r = 0;
+		}
+	}
+
+	Map.enemySpawnCircles.remove_if([](Circle a) { return (a.r == 0); });
 }
 
 

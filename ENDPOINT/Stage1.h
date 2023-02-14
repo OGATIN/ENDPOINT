@@ -9,8 +9,11 @@ class Stage1 : public App::Scene
 private:
 
 	
-    Texture BackScreen      { U"Material/3.MAP/6.町 背景.png" };
-    Texture UnderGround     { U"Material/3.MAP/使うやつ.png" };
+	Texture BackScreen[3] = { Texture{ U"Material/3.MAP/7._background.png" },  Texture{ U"Material/3.MAP/7.1_background.png" } , Texture{ U"Material/3.MAP/7.2_background.png" } };
+
+
+
+	Texture UnderGround     { U"Material/3.MAP/使うやつ.png" };
 
 	Texture fistWaitingMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/1.待機モーション.png" };
 	Texture fistWalkMotionPNG		{ U"Material/1.img/プレイヤー/1.拳/2.歩きモーション.png" };
@@ -144,7 +147,9 @@ private:
 	CSV mapData{ U"ConfigData/map.csv" };
 
 	MapClass Map{ UnderGround, mapData };
-	
+
+
+	Array<EnemyClass> Enemeys;
 
 	// プレイヤーインデックス (0 - 3)
 	size_t playerIndex = 0;
@@ -166,7 +171,8 @@ private:
 	int Missing;
 	String isMissing = U"";		//足りてないか
 	String isMax = U"";			//
-	
+
+	bool a = false;
 
 public:
 
@@ -195,5 +201,7 @@ public:
 	/// @param velox2 2P
 	/// @return 1Pが押しているならtrue,それ以外ならfalse,同値でもfalse
 	bool Is1PPush(double velox1, double velox2);
+
+	void EnemeyAdd();
 	
 };

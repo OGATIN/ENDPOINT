@@ -6,6 +6,11 @@ bool GameObject::isOneLoop()
 	return animation[(int)status.weapon][(int)state].cutPos.x >= animation[(int)status.weapon][(int)state].totalPatterns;
 }
 
+Vec2 GameObject::ObjectCenterWorldPoint()const noexcept
+{
+	return Vec2(MapPosition + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].pos + (shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].size/2));
+}
+
 Rect GameObject::GetHitRect()const
 {
 	return Rect{ (int)screenPosition.x + shiftInternalHitRect[(int)status.weapon][(int)state][animation[(int)status.weapon][(int)state].cutPos.x].x

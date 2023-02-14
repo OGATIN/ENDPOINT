@@ -89,6 +89,9 @@ void GameObject::Update()
 
 	//エフェクトの更新
 	EffectUpdate();
+
+	StateManagement();
+
 }
 
 void GameObject::MotionStart()

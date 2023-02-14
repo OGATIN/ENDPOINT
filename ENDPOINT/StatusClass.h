@@ -124,7 +124,7 @@ public:
 	void GetExperience(int getValue);
 
 	/// @brief 次にレベルアップするまでの値
-/// @return 次にレベルアップするまでの値
+	/// @return 次にレベルアップするまでの値
 	int NextLevel()const;
 
 	/// @brief スキルポイント割り振りを行えます。(下記のIsEnoughSkillPoints()とIsAllocateSkillPoints()で変更していいかを調べてから変更してください)
