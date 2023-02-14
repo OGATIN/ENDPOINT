@@ -78,8 +78,6 @@ public:
 	/*デバック用*/
 
 
-	void CameraDebuggDrow()const;
-
 	/// @brief 当たり判定のポイント表示
 	/// @param _gameobject ポイントがみたいオブジェクト
 	/// @param circleColor ポイントの色

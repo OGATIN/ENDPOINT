@@ -79,12 +79,16 @@ void GameObject::Reload(Texture _animation[4][20], EffectClass effect[3], Audio 
 	}
 
 	status.Reload(statusData, skillPointStatData, experienceBorder,magicSkillPointData, magicOther);
+	//preCameraPos = GameData::cameraPos;
 }
 
 void GameObject::Update()
 {
 	//重力加算
 	velocity.y += gravity;
+
+	//エフェクトの更新
+	EffectUpdate();
 }
 
 void GameObject::MotionStart()
@@ -488,11 +492,11 @@ void GameObject::FistProcess()
 		{
 			if (isMirror == false)
 			{
-				EffectAdd(EffectType::FISTEFFECT,position + fistFiringPoint);
+				EffectAdd(EffectType::FISTEFFECT, screenPosition + fistFiringPoint);
 			}
 			else
 			{
-				EffectAdd(EffectType::FISTEFFECT,position + fistFiringMirrorPoint);
+				EffectAdd(EffectType::FISTEFFECT, screenPosition + fistFiringMirrorPoint);
 			}
 
 			audio[(int)SEstate::FISTSE].stop();
@@ -524,7 +528,6 @@ void GameObject::FistProcess()
 
 }
 
-
 void GameObject::SwordProcess()
 {
 	if (velocity.x > 0)
@@ -547,11 +550,11 @@ void GameObject::SwordProcess()
 		{
 			if (isMirror == false)
 			{
-				EffectAdd(EffectType::SWORDEFFECT, position + fistFiringPoint);
+				EffectAdd(EffectType::SWORDEFFECT, screenPosition + fistFiringPoint);
 			}
 			else
 			{
-				EffectAdd(EffectType::SWORDEFFECT, position + fistFiringMirrorPoint);
+				EffectAdd(EffectType::SWORDEFFECT, screenPosition + fistFiringMirrorPoint);
 			}
 
 			audio[(int)SEstate::SWORDSE].stop();
@@ -611,11 +614,11 @@ void GameObject::MagicProcess()
 		{
 			if (isMirror == false)
 			{
-				EffectAdd(EffectType::FIREBALLEFFECT, position + fistFiringPoint);
+				EffectAdd(EffectType::FIREBALLEFFECT, screenPosition + fistFiringPoint);
 			}
 			else
 			{
-				EffectAdd(EffectType::FIREBALLEFFECT, position + fistFiringMirrorPoint);
+				EffectAdd(EffectType::FIREBALLEFFECT, screenPosition + fistFiringMirrorPoint);
 			}
 
 			audio[(int)SEstate::FIREBALLSE].stop();
@@ -740,7 +743,10 @@ void GameObject::ChangeAttackMagic()
 
 void GameObject::Draw() const
 {
-	animation[(int)status.weapon][(int)state].Draw(position,isMirror);
+	animation[(int)status.weapon][(int)state].Draw(screenPosition,isMirror);
+
+	EffectDraw(true);
+
 }
 
 void GameObject::EffectDraw(bool hitBoxDraw) const
@@ -785,14 +791,6 @@ void GameObject::AudioStop()
 /////////////////////////////////////////////////////////////
 
 
-void GameObject::Initialize()
-{
-	//初期座標
-	position = { 250,125 };
-
-	//初期移動量
-	velocity = { 0,0 };
-}
 
 void GameObject::StatusDraw() const
 {
@@ -811,13 +809,14 @@ void GameObject::TimeDebuggDraw() const
 
 void GameObject::CoordinateRelated() const
 {
-	font30(U"画面座標", position).draw(0, font30.height() * 0);
-	font30(U"ベクトル", velocity).draw(0, font30.height() * 1);
-	font30(U"スピード", charaSpeed).draw(0, font30.height() * 2);
-	font30(U"ジャンプパワー ", jumpPower).draw(0, font30.height() * 3);
-	font30(U"着地してるか ", isLanding).draw(0, font30.height() * 4);
-	font30(U"プレイヤーからのマウス地点 ", Cursor::Pos() - position).draw(0, font30.height() * 5);
-	font30(U"技が出る位置 ", position + fistFiringPoint).draw(0, font30.height() * 6);
+	font30(U"画面座標", screenPosition).draw(0, font30.height() * 0);
+	font30(U"世界座標", MapPosition).draw(0, font30.height() * 1);
+	font30(U"カメラ座標", GameData::cameraPos).draw(0, font30.height() * 2);
+	font30(U"ベクトル", velocity).draw(0, font30.height() * 3);
+	font30(U"スピード", charaSpeed).draw(0, font30.height() * 4);
+	font30(U"ジャンプパワー ", jumpPower).draw(0, font30.height() * 5);
+	font30(U"着地してるか ", isLanding).draw(0, font30.height() * 6);
+	font30(U"画面座標からマウスの位置 ", Cursor::Pos() - screenPosition).draw(0, font30.height() * 7);
 
 }
 
@@ -828,6 +827,14 @@ void GameObject::EffectsDraw() const
 		font30(effects[i].currentTime.ms()).draw(0, font30.height() * i);
 	}
 }
+
+void GameObject::HitBoxDraw(ColorF drawColor)const
+{
+	GetHitRect().drawFrame(2, drawColor);
+
+}
+
+
 
 
 

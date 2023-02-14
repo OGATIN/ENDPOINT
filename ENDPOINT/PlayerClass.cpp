@@ -3,12 +3,43 @@
 
 void PlayerClass::Initialize()
 {
+	//初期座標
+	gameObject.screenPosition = { 250,125 };
+
+	//初期移動量
+	gameObject.velocity = { 0,0 };
+
+	//ストップウォッチスタート
+	gameObject.MotionStart();
+
+
 	//初期化、初期定義
 	//バーの情報を定義
 	hitpointBar.Initialize(gameObject.status.hitPoint);
 	magicpointBar.Initialize(gameObject.status.magicPoint);
 	mentalpointBar.Initialize(gameObject.status.mental);
 	staminapointBar.Initialize(gameObject.status.stamina);
+}
+
+void PlayerClass::Update()
+{
+	//GameObjectのUpdateを実行
+	gameObject.Update();
+
+	gameObject.MapPosition = gameObject.screenPosition + GameData::cameraPos;
+
+	//バーの見た目を現在の数値に更新
+	hitpointBar.Update(gameObject.status.currentHitPoint);
+	magicpointBar.Update(gameObject.status.currentMagicPoint);
+	mentalpointBar.Update(gameObject.status.currentMental);
+	staminapointBar.Update(gameObject.status.currentStamina);
+
+	//スタミナと魔力が自然回復
+	if (gameObject.status.currentStamina <= gameObject.status.stamina)gameObject.status.currentStamina += 1.0 / 60.0;
+	if (gameObject.status.currentMagicPoint <= gameObject.status.magicPoint)gameObject.status.currentMagicPoint += 1.0 / 60.0;
+
+	//毎フレーム更新
+	CharSet();
 }
 
 void PlayerClass::CharSet()
@@ -121,26 +152,6 @@ void PlayerClass::ChangeMagic()
 	}
 }
 
-void PlayerClass::Update()
-{
-	//GameObjectのUpdateを実行
-	gameObject.Update();
-
-	//バーの見た目を現在の数値に更新
-	hitpointBar.Update(gameObject.status.currentHitPoint);
-	magicpointBar.Update(gameObject.status.currentMagicPoint);
-	mentalpointBar.Update(gameObject.status.currentMental);
-	staminapointBar.Update(gameObject.status.currentStamina);
-
-	//スタミナと魔力が自然回復
-	if(gameObject.status.currentStamina <= gameObject.status.stamina)gameObject.status.currentStamina += 1.0/60.0;
-	if(gameObject.status.currentMagicPoint <= gameObject.status.magicPoint)gameObject.status.currentMagicPoint += 1.0/60.0;
-
-	//毎フレーム更新
-	CharSet();
-}
-
-
 void PlayerClass::Draw()const
 {
 	//GameobjectのDrawを実行
@@ -168,18 +179,6 @@ void PlayerClass::StatusDraw() const
 	{
 		staminapointBar.DrawPortrait(staminapointBarRect);
 	}
-}
-
-void PlayerClass::DebugDraw() const
-{
-	//当たり判定を表示
-	gameObject.GetHitRect().drawFrame(2, Palette::Green);
-
-	//現在の状態を表示
-	gameObject.StatusDraw();
-
-	//画像の時間系を表示
-	gameObject.TimeDebuggDraw();
 }
 
 void PlayerClass::ConfigOnlineProcess()
