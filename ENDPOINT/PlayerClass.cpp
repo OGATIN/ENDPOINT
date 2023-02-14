@@ -558,11 +558,6 @@ void PlayerClass::ConfigOnlineProcess()
 		case PlayerClass::MenuUpdateProcess::MagicSelect:
 			magicSelectMenu.Update();
 
-			switch (magicSelectMenu.in)
-			{
-			default:
-				break;
-			}
 			break;
 		case PlayerClass::MenuUpdateProcess::FinalConfirmation:
 			break;
