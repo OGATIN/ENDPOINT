@@ -39,7 +39,7 @@ public:
 	int magicProficiency = 0;//現在の魔法熟練度
 	
 	int magicSkillPoint = 0;//魔法スキルポイント
-	int magicSkillPointAllocation[4] = { 1,0,0,0 };//魔法スキルポイントを割り振った値
+	int magicSkillPointAllocation[4] = { 0,0,0,0 };//魔法スキルポイントを割り振った値
 
 
 	/*ここから上をいじると下の数値が変化します。*/
