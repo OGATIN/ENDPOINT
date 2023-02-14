@@ -296,12 +296,9 @@ void Stage1::draw() const
 	Map.Draw();
 	Map.EnemySpawnCircleDrow();
 
-	Player.ConfigOnlineDraw();
 	Player.Draw();
 
 	Enemey.gameObject.Draw();
-
-
 
 	//デバック関連
 	Enemey.gameObject.CoordinateRelated();
@@ -317,7 +314,6 @@ void Stage1::draw() const
 	//font(isMax).draw(450, 60);
 
 	if (Player.gameObject.GetHitRect().intersects(Enemey.gameObject.GetHitRect()))font(U"当たった").draw(450, 60);
-
 }
 
 double Stage1::HitBodyVelocity(double velox1, double velox2)

@@ -176,11 +176,15 @@ void PlayerClass::PlayAudio()
 
 void PlayerClass::Draw()const
 {
+	//バーなどの描画
+	StatusDraw();
+
+
 	//GameobjectのDrawを実行
 	gameObject.Draw();
 
-	//バーなどの描画
-	StatusDraw();
+	//キャラコンフィグ描画
+	ConfigOnlineDraw();
 }
 
 void PlayerClass::StatusDraw() const
