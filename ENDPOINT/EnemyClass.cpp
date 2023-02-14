@@ -3,6 +3,17 @@
 
 void EnemyClass::Initialize(Vec2 generationPos)
 {
+	gameObject.status.weight = 3;
+	if (Random<int>(1) == 0)
+	{
+		gameObject.status.weapon = WeaponType::FIST;
+
+	}
+	else
+	{
+		gameObject.status.weapon = WeaponType::SWORD;
+
+	}
 	gameObject.MapPosition = generationPos;
 
 }
@@ -45,17 +56,21 @@ void EnemyClass::AIManegement(GameObject Player)
 
 void EnemyClass::TestAI(Vec2 mapPos)
 {
-	if ((mapPos.x  + AIspace) <= gameObject.ObjectCenterWorldPoint().x)
+	if (gameObject.state != StateType::RECEIVE)
 	{
-		gameObject.ChangeWalkL();
-	}
-	else if (gameObject.ObjectCenterWorldPoint().x <= (mapPos.x - AIspace))
-	{
-		gameObject.ChangeWalkR();
-	}
-	else
-	{
-		gameObject.ChangeWait();
+		if ((mapPos.x + AIspace) <= gameObject.ObjectCenterWorldPoint().x)
+		{
+			gameObject.ChangeWalkL();
+		}
+		else if (gameObject.ObjectCenterWorldPoint().x <= (mapPos.x - AIspace))
+		{
+			gameObject.ChangeWalkR();
+		}
+		else
+		{
+			gameObject.ChangeWait();
+		}
+
 	}
 
 }

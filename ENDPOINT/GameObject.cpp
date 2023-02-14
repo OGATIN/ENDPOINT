@@ -748,7 +748,7 @@ void GameObject::Draw() const
 {
 	animation[(int)status.weapon][(int)state].Draw(screenPosition,isMirror);
 
-	EffectDraw(true);
+	EffectDraw(false);
 
 }
 
@@ -760,7 +760,7 @@ void GameObject::EffectDraw(bool hitBoxDraw) const
 
 		if (hitBoxDraw == true)
 		{
-			//_effects.hitBox.drawFrame();
+			_effects.hitBox.drawFrame();
 		}
 	}
 

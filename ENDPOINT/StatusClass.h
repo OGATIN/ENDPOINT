@@ -39,7 +39,7 @@ public:
 	int magicProficiency = 0;//現在の魔法熟練度
 	
 	int magicSkillPoint = 0;//魔法スキルポイント
-	int magicSkillPointAllocation[4] = { 0,0,0,5 };//魔法スキルポイントを割り振った値
+	int magicSkillPointAllocation[4] = { 0,0,0,0 };//魔法スキルポイントを割り振った値
 
 
 	/*ここから上をいじると下の数値が変化します。*/
@@ -68,8 +68,7 @@ public:
 	double specialFunctioVernValue = 0;//魔法によって変わります (火球、サンダー、ヒールの時に使用) ※magicSkillPointの3
 	bool specialFunctionVerRelease = false;//魔法によって変わります(ステータスアップとタイムの時に使用)※magicSkillPointの3
 
-
-	WeaponType weapon = WeaponType::SWORD;//現在の武器
+	WeaponType weapon = WeaponType::FIST;//現在の武器
 
 	//レベルアップ時の処理用
 	int preLevel = 1;
@@ -79,12 +78,12 @@ public:
 	int totalValue = 0; //魔法スキルポイントの総取得量
 
 	//比較用
-	const int Maxlevel = 30;//プレイヤーの最大レベル
-	const int MaxSkillPoint = 10;//スキルの最大まで割り振れる値
-	const int SkillPointForMagic = 5;//魔法を取得するのに必要なスキルポイント量
-	const int MaxGetMagicSkillPoint = 10;//魔法スキルポイントを取得できる最大値
-	const int MaxMagicSkillPoint = 5;//魔法スキルポイントの最大まで割り振れる値
-	const int SpecialFeaturesMagic = 5;//特殊な機能を魔法に付与させるときの消費量
+	/*const*/ int Maxlevel = 30;//プレイヤーの最大レベル
+	/*const*/ int MaxSkillPoint = 10;//スキルの最大まで割り振れる値
+	/*const*/ int SkillPointForMagic = 5;//魔法を取得するのに必要なスキルポイント量
+	/*const*/ int MaxGetMagicSkillPoint = 10;//魔法スキルポイントを取得できる最大値
+	/*const*/ int MaxMagicSkillPoint = 5;//魔法スキルポイントの最大まで割り振れる値
+	/*const*/ int SpecialFeaturesMagic = 5;//特殊な機能を魔法に付与させるときの消費量
 
 
 	//エクセルデータのコピー保存場所

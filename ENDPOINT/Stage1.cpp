@@ -16,8 +16,6 @@ void Stage1::Initialize()
 	//初期化
 	Player.Initialize();
 
-	Enemey.Initialize({423,1160});
-
 }
 
 void Stage1::update()
@@ -27,12 +25,26 @@ void Stage1::update()
 
 	Map.Camera(Player.gameObject, 8, 3, 5, 8, 2, 7);
 
-	//敵の処理
-	Enemey.Update();
-
-	
 	Map.MapHitSet(Player.gameObject);
-	Map.MapHitSet(Enemey.gameObject);
+	
+	for (auto& enemeys : Enemeys)
+	{
+		enemeys.Update();
+		enemeys.TestAI(Player.gameObject.ObjectCenterWorldPoint());
+
+		Map.MapHitSet(enemeys.gameObject);
+
+		for (auto& effects : Player.gameObject.effects)
+		{
+			if (effects.hitBox.intersects(enemeys.gameObject.GetHitRect()) && enemeys.gameObject.state != StateType::RECEIVE)
+			{
+				enemeys.gameObject.ChangeReceive({ 10,0 });
+				enemeys.gameObject.status.hitPoint = 0;
+			}
+		}
+	}
+
+	Enemeys.remove_if([](EnemyClass enemyClass) { return (enemyClass.gameObject.status.hitPoint == 0); });
 
 	// コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
@@ -118,6 +130,19 @@ void Stage1::update()
 
 		if (MouseL.pressed())
 		{
+
+		}
+
+		if (KeyI.down())
+		{
+			if (Player.gameObject.status.weapon == WeaponType::FIST)
+			{
+				Player.gameObject.status.weapon = WeaponType::SWORD;
+			}
+			else if (Player.gameObject.status.weapon == WeaponType::SWORD)
+			{
+				Player.gameObject.status.weapon = WeaponType::FIST;
+			}
 		}
 
 		//	//ガード
@@ -193,12 +218,21 @@ void Stage1::draw() const
 
 	Player.Draw();
 
-	for (auto& enemeys : Enemeys)
+	for (const auto& enemeys : Enemeys)
 	{
-		enemeys.gameObject.Draw();
-		enemeys.gameObject.HitBoxDraw();
+		if (enemeys.gameObject.screenPosition !=  Vec2{ 0,0 })
+		{
+			enemeys.gameObject.Draw();
+			//enemeys.gameObject.HitBoxDraw();
+
+		}
+
 	}
 
+	for (int i = 0; i < Enemeys.size(); i++)
+	{
+		//font(Enemeys[i].gameObject.MapPosition).draw(0, font.height() * i);
+	}
 
 
 	////デバック関連
@@ -319,8 +353,8 @@ void Stage1::EnemeyAdd()
 	{
 		if (Player.gameObject.GetHitRect().intersects(Vec2{ (Vec2)Circle.center - GameData::cameraPos }.asCircle(Circle.r)))
 		{
-
-			//Enemeys << Enemey.gameObject.MapPosition.intersects((GameData::cameraPos + (Vec2)Circle.center) + Enemey.gameObject.shiftInternalHitRect[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state][Enemey.gameObject.animation[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state].cutPos.x].pos + (Enemey.gameObject.shiftInternalHitRect[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state][Enemey.gameObject.animation[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state].cutPos.x].size / 2));
+			Enemey.Initialize(Vec2{ Circle.center.x - Enemey.gameObject.shiftInternalHitRect[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state][Enemey.gameObject.animation[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state].cutPos.x].x - (Enemey.gameObject.shiftInternalHitRect[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state][Enemey.gameObject.animation[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state].cutPos.x].w / 2) , Circle.center.y - (Enemey.gameObject.shiftInternalHitRect[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state][Enemey.gameObject.animation[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state].cutPos.x].h / 2) }); /*+ (Enemey.gameObject.shiftInternalHitRect[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state][Enemey.gameObject.animation[(int)Enemey.gameObject.status.weapon][(int)Enemey.gameObject.state].cutPos.x].size2)*/
+			Enemeys << Enemey;
 
 			Circle.r = 0;
 		}

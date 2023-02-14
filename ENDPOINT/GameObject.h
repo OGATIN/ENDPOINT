@@ -36,13 +36,13 @@ public:
 	bool isDescendStand = false;//下入力されているか(台用)
 	bool isRearGap = false;
 
-	const double charaSpeedMax = 10;
+	/*const */double charaSpeedMax = 10;
 	double charaSpeed = 0;
 	double speedAdd = 0;
 	double frictionForce = 1;//摩擦力
 	double additionalAmount = 2;//加算量
 
-	const double jumpPowerMax = 20;
+	/*const */double jumpPowerMax = 20;
 	double jumpPower = 0;
 	int jumpTiming = 6;
 

@@ -25,7 +25,7 @@ public:
 	Array<Circle> enemySpawnCircles;
 
 	//敵がスポーンする半径
-	double enemySpawnCircleSize = 200;
+	double enemySpawnCircleSize = 600;
 
 	//デバック用
 	Font font30{ 30 };
