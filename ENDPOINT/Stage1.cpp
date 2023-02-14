@@ -189,7 +189,7 @@ void Stage1::draw() const
 	}
 
 	Map.Draw();
-	Map.EnemySpawnCircleDrow();
+	//Map.EnemySpawnCircleDrow();
 
 	Player.Draw();
 

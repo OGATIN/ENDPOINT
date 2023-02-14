@@ -20,9 +20,9 @@ class StatusClass
 public:
 
 	
-	int level = 1;//プレイヤーのレベル
+	int level = 5;//プレイヤーのレベル
 
-	int skillPoint = 6;//残ってるスキルポイントの値(デフォルト1)
+	int skillPoint = 5;//残ってるスキルポイントの値(デフォルト1)
 
 	int hitPointAllotted = 0;//割り振られた値(HP)
 	int staminaAllotted = 0;//割り振られた値(スタミナ)
@@ -39,7 +39,7 @@ public:
 	int magicProficiency = 0;//現在の魔法熟練度
 	
 	int magicSkillPoint = 0;//魔法スキルポイント
-	int magicSkillPointAllocation[4] = { 0,0,0,0 };//魔法スキルポイントを割り振った値
+	int magicSkillPointAllocation[4] = { 0,0,0,5 };//魔法スキルポイントを割り振った値
 
 
 	/*ここから上をいじると下の数値が変化します。*/

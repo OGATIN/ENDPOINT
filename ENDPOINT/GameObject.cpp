@@ -760,7 +760,7 @@ void GameObject::EffectDraw(bool hitBoxDraw) const
 
 		if (hitBoxDraw == true)
 		{
-			_effects.hitBox.drawFrame();
+			//_effects.hitBox.drawFrame();
 		}
 	}
 
