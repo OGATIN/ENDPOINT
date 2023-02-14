@@ -111,6 +111,15 @@ void PlayerClass::CharSet()
 		{U"9            " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][9]) + U"up" } ,
 		{U"10           " + (String)Parse<String>(gameObject.status.copySkillPointStatData[(int)currentStatus+1][10]) + U"up" } ,
 	};
+
+	skillMagicAllocationIncreaseAmountChara =
+	{
+		{U"1           " + (String)Parse<String>(gameObject.status.copyMagicSkillPointData[(int)gameObject.status.magicType + 2][1]) + U"up"},
+		{U"2           " + (String)Parse<String>(gameObject.status.copyMagicSkillPointData[(int)gameObject.status.magicType + 2][2]) + U"up"},
+		{U"3           " + (String)Parse<String>(gameObject.status.copyMagicSkillPointData[(int)gameObject.status.magicType + 2][3]) + U"up"},
+		{U"4           " + (String)Parse<String>(gameObject.status.copyMagicSkillPointData[(int)gameObject.status.magicType + 2][4]) + U"up"},
+		{U"5           " + (String)Parse<String>(gameObject.status.copyMagicSkillPointData[(int)gameObject.status.magicType + 2][5]) + U"up"}
+	};
 	
 
 	magicSelectChara =
@@ -140,14 +149,7 @@ void PlayerClass::CharSet()
 		gameObject.status.magicSkillPointAllocation[3]
 	};
 
-	skillMagicAllocationIncreaseAmountChara =
-	{
-		U"1            0.2倍up",
-		U"2            0.2倍up",
-		U"3            0.2倍up",
-		U"4            0.2倍up",
-		U"5            0.4倍up"
-	};
+					   
 
 
 
@@ -558,7 +560,41 @@ void PlayerClass::ConfigOnlineProcess()
 		case PlayerClass::MenuUpdateProcess::MagicSelect:
 			magicSelectMenu.Update();
 
+			switch (magicSelectMenu.IsCurrent())
+			{
+			case 0:
+				
+				break;
+			case 1:
+				
+				break;
+			case 2:
+				
+				break;
+			case 3:
+				
+				break;
+			case 4:
+			
+				break;
+			case 5:
+				if (KeyZ.down() || KeyEnter.down() || skillPointMagicAllocationMenu.IsMouseOver() && MouseL.down())
+				{
+					//一つ前の画面に戻る
+					selectScene = MenuUpdateProcess::SkillPointNomalAllocation;
+
+					//選択音再生
+					PlayAudio();
+
+					//初期化
+					magicSelectMenu.Initialize();
+				}
+				break;
+			default:
+				break;
+			}
 			break;
+
 		case PlayerClass::MenuUpdateProcess::FinalConfirmation:
 			break;
 		default:
