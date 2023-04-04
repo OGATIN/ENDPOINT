@@ -11,8 +11,6 @@ private:
 	
 	Texture BackScreen[3] = { Texture{ U"Material/3.MAP/7._background.png" },  Texture{ U"Material/3.MAP/7.1_background.png" } , Texture{ U"Material/3.MAP/7.2_background.png" } };
 
-
-
 	Texture UnderGround     { U"Material/3.MAP/使うやつ.png" };
 
 	Texture fistWaitingMotionPNG	{ U"Material/1.img/プレイヤー/1.拳/1.待機モーション.png" };
@@ -202,6 +200,7 @@ public:
 	/// @return 1Pが押しているならtrue,それ以外ならfalse,同値でもfalse
 	bool Is1PPush(double velox1, double velox2);
 
+	/// @brief 敵生成
 	void EnemeyAdd();
 	
 };

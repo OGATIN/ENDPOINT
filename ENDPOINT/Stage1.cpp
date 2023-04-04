@@ -26,25 +26,28 @@ void Stage1::update()
 	Map.Camera(Player.gameObject, 8, 3, 5, 8, 2, 7);
 
 	Map.MapHitSet(Player.gameObject);
-	
-	for (auto& enemeys : Enemeys)
-	{
-		enemeys.Update();
-		enemeys.TestAI(Player.gameObject.ObjectCenterWorldPoint());
 
-		Map.MapHitSet(enemeys.gameObject);
 
-		for (auto& effects : Player.gameObject.effects)
-		{
-			if (effects.hitBox.intersects(enemeys.gameObject.GetHitRect()) && enemeys.gameObject.state != StateType::RECEIVE)
-			{
-				enemeys.gameObject.ChangeReceive({ 10,0 });
-				enemeys.gameObject.status.hitPoint = 0;
-			}
-		}
-	}
+	////敵の動き
+	//for (auto& enemeys : Enemeys)
+	//{
+	//	enemeys.Update();
+	//	enemeys.TestAI(Player.gameObject.ObjectCenterWorldPoint());
 
-	Enemeys.remove_if([](EnemyClass enemyClass) { return (enemyClass.gameObject.status.hitPoint == 0); });
+	//	Map.MapHitSet(enemeys.gameObject);
+
+	//	for (auto& effects : Player.gameObject.effects)
+	//	{
+	//		if (effects.hitBox.intersects(enemeys.gameObject.GetHitRect()) && enemeys.gameObject.state != StateType::RECEIVE)
+	//		{
+	//			enemeys.gameObject.ChangeReceive({ 10,0 });
+	//			enemeys.gameObject.status.hitPoint = 0;
+	//		}
+	//	}
+	//}
+
+	////敵削除
+	//Enemeys.remove_if([](EnemyClass enemyClass) { return (enemyClass.gameObject.status.hitPoint == 0); });
 
 	// コントローラー処理----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// 指定したプレイヤーインデックスの XInput コントローラを取得
@@ -152,7 +155,6 @@ void Stage1::update()
 
 	Player.ConfigOnlineProcess();
 
-
 	if (KeyE.down())
 	{
 		Player.isOnline ? Player.isOnline = false : Player.isOnline = true;
@@ -198,7 +200,7 @@ void Stage1::update()
 		Enemey.gameObject.velocity.x = preVelo;
 	}
 
-	EnemeyAdd();
+	//EnemeyAdd();
 
 	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
