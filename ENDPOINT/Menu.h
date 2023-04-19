@@ -1,4 +1,6 @@
 ﻿#pragma once
+
+/// @brief UI作成用クラス(要改善)
 class Menu
 {
 public:

@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+/// @brief HPなどのバーを作れるクラス
 class Bar
 {
 public:

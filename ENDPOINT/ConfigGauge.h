@@ -1,4 +1,6 @@
 ﻿#pragma once
+
+/// @brief 音量設定画面などで使うゲージ作成用クラス
 class ConfigGauge
 {
 public:
